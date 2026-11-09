@@ -113,7 +113,7 @@ for cc, keep in SUB_SCOPE.items():
         iso_sub[s.code] = s
 
 # Belgique : régions et provinces depuis Statbel (FR/NL), contrôlées contre ISO
-mun = json.load(open(RAW / "be_municipalities_2020.json"))
+mun = json.load(open(RAW / "be_municipalities_2020.json", encoding="utf-8"))
 reg_be, prov_be, arr_be = {}, {}, {}
 REG_CODE = {"Région flamande": "BE-VLG", "Région wallonne": "BE-WAL", "Région de Bruxelles-Capitale": "BE-BRU"}
 PROV_CODE = {"Anvers": "BE-VAN", "Limbourg": "BE-VLI", "Flandre orientale": "BE-VOV", "Flandre-Orientale": "BE-VOV",
@@ -193,7 +193,7 @@ for code, s in iso_sub.items():
         pass
 
 # ------------------------------------------------------------------ GeoNames
-gn = json.load(open(RAW / "gnc/geonamescache/data/cities500.json")).values()
+gn = json.load(open(RAW / "gnc/geonamescache/data/cities500.json", encoding="utf-8")).values()
 ADMIN = {"FR": {"32": "geo:region:FR-HDF", "44": "geo:region:FR-GES"},
          "NL": {"05": "geo:province:NL-LI", "06": "geo:province:NL-NB"}}
 

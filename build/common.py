@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import csv
+import os
 import re
+import sys
 import unicodedata
 from pathlib import Path
 
@@ -12,6 +14,18 @@ CAT = ROOT / "catalog"
 CHAL = ROOT / "challenges"
 REP = ROOT / "reports"
 SPEC = ROOT / "spec"
+
+
+def console_utf8() -> None:
+    """Sortie console en UTF-8. Sous Windows, une sortie redirigée est en cp1252 et refuse « ← » ou « ── »."""
+    for flux in (sys.stdout, sys.stderr):
+        if hasattr(flux, "reconfigure"):
+            flux.reconfigure(encoding="utf-8", errors="replace")
+
+
+def env_utf8() -> dict:
+    """Environnement des sous-processus Python : mode UTF-8 (fichiers et console), quelle que soit la plateforme."""
+    return {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
 
 
 def load_yaml(path: Path):

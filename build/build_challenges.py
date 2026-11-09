@@ -317,5 +317,5 @@ stats = {"total": len(uniq), "core": len(core),
          "par_categorie": dict(sorted(Counter(c["category"] for c in uniq).items())),
          "par_statut": dict(Counter(c["expected_status"] for c in uniq)),
          "test": sum(1 for x in dev_test if x["split"] == "test")}
-(CHAL / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=1))
+(CHAL / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=1), encoding="utf-8")
 print(json.dumps(stats, ensure_ascii=False, indent=1))

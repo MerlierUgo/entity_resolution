@@ -1,11 +1,11 @@
-# Mesure de référence sur le jeu de défis
+# Mesure de rÃ©fÃ©rence sur le jeu de dÃ©fis
 
-Trois résolveurs volontairement simples (voir `build/baseline.py`). En % des cas de chaque catégorie :
-- **idéal** : la réponse attendue exactement ;
-- **sûr** : idéal, ou une réponse prudente acceptée (unknown face à une faute, ambiguous incluant la bonne entité) ;
-- **silencieux** : une entité résolue qui n'est pas la bonne. C'est l'erreur à ramener à zéro.
+Trois rÃ©solveurs volontairement simples (voir `build/baseline.py`). En % des cas de chaque catÃ©gorie :
+- **idÃ©al** : la rÃ©ponse attendue exactement ;
+- **sÃ»r** : idÃ©al, ou une rÃ©ponse prudente acceptÃ©e (unknown face Ã  une faute, ambiguous incluant la bonne entitÃ©) ;
+- **silencieux** : une entitÃ© rÃ©solue qui n'est pas la bonne. C'est l'erreur Ã  ramener Ã  zÃ©ro.
 
-| Catégorie | Cas | B0_exact idéal | sûr | silencieux | B1_fuzzy_naif idéal | sûr | silencieux | B2_fuzzy_borne idéal | sûr | silencieux |
+| CatÃ©gorie | Cas | B0_exact idÃ©al | sÃ»r | silencieux | B1_fuzzy_naif idÃ©al | sÃ»r | silencieux | B2_fuzzy_borne idÃ©al | sÃ»r | silencieux |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | C01_libelle_canonique | 416 | 100.0 | 100.0 | 0.0 | 100.0 | 100.0 | 0.0 | 100.0 | 100.0 | 0.0 |
 | C02_traduction_officielle | 485 | 100.0 | 100.0 | 0.0 | 100.0 | 100.0 | 0.0 | 100.0 | 100.0 | 0.0 |

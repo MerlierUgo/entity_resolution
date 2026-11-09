@@ -14,7 +14,7 @@ from __future__ import annotations
 import sys
 from collections import Counter
 
-from common import ROOT, SPEC, load_yaml
+from common import ROOT, SPEC, console_utf8, load_yaml
 
 BANNER = ("<!-- Fichier généré par build/build_docs.py depuis {src} : ne pas modifier à la main. "
           "Modifier le YAML, puis relancer le script. -->\n\n")
@@ -102,6 +102,7 @@ def stale() -> list[str]:
 
 
 def main(argv) -> int:
+    console_utf8()
     if "--check" in argv:
         s = stale()
         for f in s:

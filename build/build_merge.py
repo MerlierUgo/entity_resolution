@@ -54,5 +54,5 @@ stats = {
     "cles_ambigues_multi_domaines": sum(1 for v in amb.values() if len({domain[i] for i in v}) > 1),
     "cles_ambigues_multi_types": sum(1 for v in amb.values() if len({etype[i] for i in v}) > 1),
 }
-(REP / "catalog_stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=1))
+(REP / "catalog_stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=1), encoding="utf-8")
 print(json.dumps({k: v for k, v in stats.items() if not isinstance(v, dict)}, ensure_ascii=False))

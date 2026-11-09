@@ -1,0 +1,465 @@
+<title>État du moteur Mécanova</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Mise en page : la fiche de contrôle d'atelier du bilan catalogue, appliquée au moteur. Verdict, mesures, problèmes, plan. */
+:root {
+  --bg: #f3f5f6; --surface: #ffffff; --sunken: #e8ecee;
+  --ink: #15202a; --ink-2: #48555f; --ink-3: #6a7782; --line: #d5dce0; --base: #b9c3ca;
+  --accent: #1c5cab;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --good: #0b7a3e; --good-bg: #dcf1e3; --good-fill: #0ca30c;
+  --warn: #8a5a00; --warn-bg: #fbedc9;
+  --crit: #b3292b; --crit-bg: #fadfde; --crit-fill: #d03b3b;
+  --display: "Barlow Semi Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12181d; --surface: #1a2228; --sunken: #232d34;
+  --ink: #eef2f4; --ink-2: #b7c2ca; --ink-3: #93a0aa; --line: #33404a; --base: #46535d;
+  --accent: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --good: #7fdc9f; --good-bg: #17382a; --good-fill: #0ca30c;
+  --warn: #f3c969; --warn-bg: #3b2f12;
+  --crit: #f5a3a1; --crit-bg: #43201f; --crit-fill: #e66767;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #12181d; --surface: #1a2228; --sunken: #232d34;
+  --ink: #eef2f4; --ink-2: #b7c2ca; --ink-3: #93a0aa; --line: #33404a; --base: #46535d;
+  --accent: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --good: #7fdc9f; --good-bg: #17382a; --good-fill: #0ca30c;
+  --warn: #f3c969; --warn-bg: #3b2f12;
+  --crit: #f5a3a1; --crit-bg: #43201f; --crit-fill: #e66767;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--body); }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 36px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 52px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.12; }
+h1 { font-size: clamp(34px, 5.4vw, 54px); font-weight: 700; }
+h2 { font-size: clamp(26px, 3.2vw, 34px); font-weight: 600; }
+h3 { font-size: 19px; font-weight: 600; }
+p { margin: 0; }
+code { font-family: var(--mono); font-size: .86em; background: var(--sunken); padding: .05em .3em; border-radius: 3px; overflow-wrap: anywhere; }
+.eyebrow { font: 500 12px/1.3 var(--mono); letter-spacing: .05em; color: var(--ink-3); text-transform: uppercase; }
+.lede { font-size: 17px; max-width: 70ch; color: var(--ink-2); }
+section { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; min-width: 0; }
+.head { display: grid; gap: 8px; }
+.head p { max-width: 74ch; color: var(--ink-2); }
+header.top { display: grid; gap: 14px; }
+
+.board { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.post { display: grid; grid-template-columns: minmax(170px, 1.2fr) 118px minmax(0, 3fr); gap: 16px; align-items: baseline; padding: 12px 18px; border-top: 1px solid var(--line); }
+.post:first-child { border-top: 0; }
+.post strong { font-family: var(--display); font-size: 18px; font-weight: 600; }
+.post div:last-child { color: var(--ink-2); font-size: 14px; min-width: 0; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--mono); padding: 5px 8px; border-radius: 3px; white-space: nowrap; width: fit-content; }
+.pill.ok { color: var(--good); background: var(--good-bg); }
+.pill.mid { color: var(--warn); background: var(--warn-bg); }
+.pill.no { color: var(--crit); background: var(--crit-bg); }
+.pill.todo { color: var(--ink-2); background: var(--sunken); }
+.pill.ok::before { content: "✓"; }
+.pill.mid::before { content: "◐"; }
+.pill.no::before { content: "✕"; }
+.pill.todo::before { content: "○"; }
+
+.stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.stat { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+.stat b { font: 600 clamp(26px, 3vw, 36px)/1.05 var(--display); }
+.stat b.good { color: var(--good); }
+.stat span { font-size: 13px; color: var(--ink-2); }
+
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.panel { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.panel > p, .cap { font-size: 13.5px; color: var(--ink-2); max-width: 78ch; }
+
+/* Barres simples (une valeur par ligne, un axe par graphique) */
+.bars { display: grid; gap: 6px; }
+.bar { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) 70px; gap: 10px; align-items: center; font-size: 13.5px; padding: 2px 0; border-radius: 3px; }
+.bar:hover, .row:hover { background: var(--sunken); }
+.bar .track { height: 16px; display: flex; align-items: center; border-left: 1px solid var(--base); }
+.bar .fill { height: 14px; min-width: 2px; background: var(--s1); border-radius: 0 4px 4px 0; }
+.bar .fill.muted { background: var(--base); }
+.bar .fill.crit { background: var(--crit-fill); }
+.bar .val { text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.bar.me .lab { font-weight: 600; }
+.bar .lab small { display: block; font-size: 11.5px; color: var(--ink-3); line-height: 1.2; }
+.axis { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) 70px; gap: 10px; font: 400 11px var(--mono); color: var(--ink-3); }
+.axis div:nth-child(2) { display: flex; justify-content: space-between; }
+
+/* Barres empilées par catégorie */
+.rows { display: grid; gap: 4px; }
+.row { display: grid; grid-template-columns: minmax(150px, 210px) minmax(0, 1fr) 52px; gap: 10px; align-items: center; font-size: 13px; padding: 2px 0; border-radius: 3px; }
+.row .lab b { font: 500 12px var(--mono); color: var(--ink-3); margin-right: 6px; }
+.row .val { text-align: right; font: 400 12px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.seg { display: flex; gap: 2px; height: 16px; }
+.seg i { display: block; height: 100%; min-width: 2px; }
+.seg i:first-child { border-radius: 4px 0 0 4px; }
+.seg i:last-child { border-radius: 0 4px 4px 0; }
+.seg i:only-child { border-radius: 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th { font: 500 11.5px/1.3 var(--mono); text-align: left; color: var(--ink-3); padding: 9px 12px; background: var(--sunken); white-space: nowrap; }
+td { padding: 7px 12px; border-top: 1px solid var(--line); vertical-align: top; }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.r.z { color: var(--good); }
+td.r.bad { color: var(--crit); font-weight: 600; }
+tr.tot td { font-weight: 600; background: var(--sunken); }
+details summary { cursor: pointer; font-size: 14px; color: var(--accent); width: fit-content; }
+details[open] summary { margin-bottom: 10px; }
+
+.done { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0; }
+.done div { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.done dt { font-weight: 600; }
+.done dd { margin: 0; color: var(--ink-2); min-width: 0; }
+
+.issues { display: grid; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.issue { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 16px; padding: 14px 18px; border-top: 1px solid var(--line); }
+.issue:first-child { border-top: 0; }
+.issue h3 { font-size: 17px; margin-bottom: 4px; }
+.issue p { font-size: 14px; color: var(--ink-2); max-width: 80ch; }
+.issue p + p { margin-top: 6px; }
+
+ol.plan { list-style: none; margin: 0; padding: 0; counter-reset: st; display: grid; }
+ol.plan li { counter-increment: st; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 15px 0; border-top: 1px solid var(--line); }
+ol.plan li::before { content: counter(st); font: 600 26px/1 var(--display); color: var(--accent); }
+ol.plan h3 { margin-bottom: 4px; }
+ol.plan p { max-width: 80ch; font-size: 14.5px; color: var(--ink-2); }
+.tag { font: 500 11.5px var(--mono); color: var(--ink-3); }
+.aside { background: var(--sunken); border-radius: 6px; padding: 15px 18px; display: grid; gap: 7px; font-size: 14px; color: var(--ink-2); }
+.aside h3 { color: var(--ink); }
+footer { font-size: 13px; color: var(--ink-3); display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 16px; max-width: 90ch; }
+
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg); padding: 6px 9px; border-radius: 4px; font: 400 12.5px/1.4 var(--body); max-width: 280px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 860px) {
+  .two, .done { grid-template-columns: minmax(0, 1fr); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:last-child { grid-column: 1 / -1; }
+  .post { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  .post div:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .bar, .axis { grid-template-columns: 104px minmax(0, 1fr) 56px; }
+  .row { grid-template-columns: 112px minmax(0, 1fr) 44px; }
+  .row .lab span { display: none; }
+  .done div, .issue { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+}
+</style>
+<style>
+.cause .fill { background: var(--s4); }
+.cause .lab b { font: 500 12px var(--mono); color: var(--ink-3); margin-right: 6px; }
+td.mono { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+td .arrow { color: var(--ink-3); }
+.why { display: grid; gap: 14px; }
+.why p { font-size: 14px; color: var(--ink-2); max-width: 80ch; }
+</style>
+
+<main class="page">
+
+<header class="top">
+  <div class="eyebrow">Moteur d'entity resolution · relevé du 9 novembre 2026 · banc d'essai, partition dev</div>
+  <h1>Étape 1 : la correspondance exacte ne se trompe jamais, et répond juste dans 66 % des cas.</h1>
+  <p class="lede">Le moteur actuel n'utilise que la normalisation de la spec et les alias du catalogue : aucune correspondance approchée, aucun Jaro-Winkler. Quand le terme saisi n'existe pas tel quel dans le catalogue, il répond « inconnu » au lieu de deviner. Les 34 % restants sont tous dans ce cas, et ce rapport explique pourquoi.</p>
+</header>
+
+<div class="board" role="list" aria-label="État de chaque étape">
+  <div class="post" role="listitem"><strong>Catalogue</strong><span class="pill ok">Prêt</span><div>13 351 entités, 36 088 alias, 22 743 termes négatifs. Contrôle complet : « OK · tout est à jour et cohérent ».</div></div>
+  <div class="post" role="listitem"><strong>1 · Résolveur exact</strong><span class="pill ok">Livré</span><div><code>engine/</code> : normalisation, alias exact et mots triés, index négatif, règles de la spec, trace par terme.</div></div>
+  <div class="post" role="listitem"><strong>Évaluation dev</strong><span class="pill ok">Livrée</span><div><code>python -m engine.evaluation</code> écrit <code>reports/moteur_dev.md</code> et le détail de chaque cas dans <code>moteur_dev.json</code>.</div></div>
+  <div class="post" role="listitem"><strong>2 · Correspondance approchée</strong><span class="pill todo">À faire</span><div>Fautes de frappe et abréviations, bornée au type attendu, jamais sur un code.</div></div>
+  <div class="post" role="listitem"><strong>3 · Contexte et Manifest</strong><span class="pill todo">À faire</span><div>Prépositions, profil, rôles, période par défaut, assemblage. Test : les 34 questions de <code>spec/questions.yaml</code>.</div></div>
+  <div class="post" role="listitem"><strong>4 · Extraction LLM</strong><span class="pill todo">À faire</span><div>Découpage en termes, JSON validé, température 0, cache.</div></div>
+  <div class="post" role="listitem"><strong>5 · Examen</strong><span class="pill todo">À faire</span><div>Questions humaines de bout en bout, seulement à ta demande.</div></div>
+</div>
+
+<section id="resultats">
+  <div class="head">
+    <h2>Résultats actuels</h2>
+    <p>7 158 cas, ceux qui servent à régler le moteur. La partition test (2 927 cas) n'a pas été ouverte.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>7 158</b><span>cas évalués, 13 catégories</span></div>
+    <div class="stat"><b>66,1 %</b><span>idéal : 4 734 réponses exactement attendues</span></div>
+    <div class="stat"><b class="good">100 %</b><span>sûr : idéal, ou « inconnu » accepté par le cas</span></div>
+    <div class="stat"><b class="good">0</b><span>erreur silencieuse : aucune entité fausse</span></div>
+    <div class="stat"><b>104</b><span>tests, dont 34 pour le moteur</span></div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Qualité de la réponse, par catégorie</h3>
+      <div class="legend">
+        <span><i style="background:var(--s1)"></i>Réponse attendue</span>
+        <span><i style="background:var(--base)"></i>« Inconnu » prudent, accepté</span>
+      </div>
+      <div class="rows" id="catQual"></div>
+    </div>
+    <div class="panel">
+      <h3>Étape qui a décidé, par catégorie</h3>
+      <div class="legend">
+        <span><i style="background:var(--s1)"></i>Alias exact</span>
+        <span><i style="background:var(--s2)"></i>Mots triés</span>
+        <span><i style="background:var(--s3)"></i>Index négatif</span>
+        <span><i style="background:var(--s4)"></i>Rien trouvé</span>
+      </div>
+      <div class="rows" id="catEtape"></div>
+    </div>
+  </div>
+  <div class="why">
+    <p>Dix catégories sur treize sont à 100 % : libellés, traductions officielles, variantes GeoNames, termes métier, homonymes, indices de type, lieux hors périmètre, codes, marques et véhicules. Pour les homonymes, le moteur rend bien tous les candidats, par exemple les 4 de « Liège » (commune, arrondissement, province et agence).</p>
+    <p>Deux résultats « rien trouvé » sont des succès. Les 330 codes inconnus de C09 sont des références voisines qui n'existent pas : « inconnu » est la réponse attendue, jamais le code le plus proche. Les 436 lieux de C08 (Aalen, Achern…) sont arrêtés par l'index négatif, qui dit pourquoi ils sont inconnus.</p>
+  </div>
+  <details>
+    <summary>Voir le tableau des valeurs</summary>
+    <div class="scroll">
+      <table id="catTable">
+        <thead><tr><th>Catégorie</th><th class="r">Cas</th><th class="r">Idéal</th><th class="r">Inconnu prudent</th><th class="r">Alias exact</th><th class="r">Mots triés</th><th class="r">Index négatif</th><th class="r">Rien trouvé</th><th class="r">Erreurs silencieuses</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<section id="pourquoi">
+  <div class="head">
+    <h2>Pourquoi 2 424 cas n'ont pas la réponse attendue</h2>
+    <p>Tous sont des « inconnu » : le terme saisi, une fois normalisé, n'est égal à aucun alias du catalogue. Le moteur ne se trompe pas, il ne trouve pas. Ces cas viennent de trois catégories et de six causes.</p>
+  </div>
+  <div class="bars" id="causes"></div>
+  <div class="axis" aria-hidden="true"><div></div><div><span>0</span><span>1 000</span><span>2 000 cas</span></div><div></div></div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Cause</th><th>Saisi</th><th>Après normalisation</th><th>Alias du catalogue</th><th>Ce qui manque</th></tr></thead>
+      <tbody>
+        <tr><td>Faute de frappe <span class="tag">C07</span></td><td class="mono">500 HYBRuD</td><td class="mono">500 hybrud</td><td class="mono">500 hybrid</td><td>Une correspondance approchée : une lettre diffère, l'égalité stricte échoue.</td></tr>
+        <tr><td>Faute de frappe <span class="tag">C07</span></td><td class="mono">économqiue</td><td class="mono">economqiue</td><td class="mono">economique</td><td>Idem, deux lettres inversées.</td></tr>
+        <tr><td>Abréviation St, Ste <span class="tag">C13</span></td><td class="mono">Woluwe-St-Lambert</td><td class="mono">woluwe st lambert</td><td class="mono">woluwe saint lambert</td><td>« st » n'est pas développé en saint, sint ou sainte.</td></tr>
+        <tr><td>Abréviation s/ <span class="tag">C13</span></td><td class="mono">Ailly-s/-Noye</td><td class="mono">ailly s noye</td><td class="mono">ailly sur noye</td><td>« s/ » n'est pas développé en « sur ».</td></tr>
+        <tr><td>Abréviation Mt <span class="tag">C13</span></td><td class="mono">Mt-Gauthier</td><td class="mono">mt gauthier</td><td class="mono">mont gauthier</td><td>« mt » n'est pas développé en « mont ».</td></tr>
+        <tr><td>Forme juridique à points <span class="tag">C10</span></td><td class="mono">Anderlecht Lease S.R.L</td><td class="mono">anderlecht lease s r</td><td class="mono">anderlecht lease srl</td><td>La normalisation coupe « S.R.L » en lettres isolées, puis retire « l », qui est un mot vide.</td></tr>
+        <tr><td>Forme juridique sans points <span class="tag">C10</span></td><td class="mono">Transports Langlois SARL</td><td class="mono">transport langloi sarl</td><td class="mono">transport langloi s r</td><td>Le cas inverse : le catalogue n'a que « S.à r.l. », normalisé en « s r ».</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="why">
+    <p>Les fautes de frappe sont attendues : l'étape 1 ne fait que de l'égalité stricte, c'est le rôle de l'étape 2. 1 765 de ces cas attendent une seule entité, 167 plusieurs (la faute rend le terme proche de deux noms). Sept fautes tombent par hasard sur un vrai lieu hors périmètre et sont arrêtées par l'index négatif.</p>
+    <p>Les abréviations et les formes juridiques sont un autre problème : elles ne demandent pas de correspondance approchée. Une règle de développement des abréviations et une forme juridique compactée (« S.R.L » → « srl ») les résoudraient par l'exact, sans aucun risque de confusion. Un fuzzy risquerait au contraire de se tromper : « St.-Niklaas » est aussi proche d’une ville française que de Sint-Niklaas.</p>
+  </div>
+</section>
+
+<section id="acquis">
+  <div class="head"><h2>Ce qui a été fait</h2></div>
+  <dl class="done">
+    <div><dt>Chargement du catalogue</dt><dd><code>engine/catalogue.py</code> : index exact, index des mots triés, index négatif, choix des tiers. La normalisation et les règles sont importées de <code>build/</code>, jamais recopiées.</dd></div>
+    <div><dt>Résolveur exact</dt><dd><code>engine/resolveur.py</code> : statut resolved, ambiguous ou unknown, identifiants triés, jamais de « candidat le plus probable » (R-RES-05).</dd></div>
+    <div><dt>Trace par terme</dt><dd>Forme normalisée, étape décisive, entités ajoutées ou retirées avec leur règle (R-GEO-02, R-CTX-05, R-ART-03, R-RES-09).</dd></div>
+    <div><dt>Index négatif</dt><dd>R-RES-07 passe de « à coder » à « codée ». Le catalogue l'emporte toujours : la gamme Éco reste résolue.</dd></div>
+    <div><dt>Évaluation</dt><dd><code>engine/evaluation.py</code> : même notation que <code>build/baseline.py</code>, rapport par catégorie, partition test protégée.</dd></div>
+    <div><dt>Tests</dt><dd>34 tests : Liège à 4 candidats, collisions Champion, Seres, Tivoli, « en ligne », « appel », codes voisins, index négatif, déterminisme, et zéro erreur silencieuse sur tout dev.</dd></div>
+    <div><dt>Encodage Windows</dt><dd>7 lectures ou écritures de fichiers passent en <code>encoding="utf-8"</code>. La console et les sous-processus sont forcés en UTF-8 : <code>rebuild_spec.py</code> ne plante plus.</dd></div>
+    <div><dt>Rapport de référence</dt><dd><code>reports/baseline.md</code> était enregistré en cp1252 (« r&#xFFFD;f&#xFFFD;rence ») ; il est maintenant en UTF-8.</dd></div>
+  </dl>
+</section>
+
+<section id="problemes">
+  <div class="head">
+    <h2>Problèmes relevés</h2>
+    <p>Aucun ne crée d'erreur dans le moteur livré. Ils expliquent des réponses manquantes ou demandent une décision.</p>
+  </div>
+  <div class="issues">
+    <div class="issue">
+      <span class="pill mid">À décider</span>
+      <div>
+        <h3>La normalisation casse les formes juridiques à points</h3>
+        <p>« S.R.L » devient « s r », « s.a. » devient « s », « B.V. » devient « b v » : chaque point coupe le sigle, et les lettres « l » et « a » sont retirées comme mots vides. Le catalogue indexe « SRL », « SA », « BV » d'un côté et « S.à r.l. » (« s r ») de l'autre, d'où 139 clients non trouvés.</p>
+        <p>Deux corrections possibles : compacter les sigles dans <code>normalize()</code>, ce qui modifie R-RES-02 et donc tout le catalogue, ou ajouter les variantes à points dans les alias de clients. La première est plus générale, la seconde plus sûre.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À décider</span>
+      <div>
+        <h3>Les abréviations de toponymes ne sont pas développées</h3>
+        <p>« St », « Ste », « St. », « s/ », « Mt » : 353 cas. Le catalogue en indexe quelques-unes comme alias (160 alias de type abréviation), mais pas de façon systématique. Une règle de développement avant la recherche exacte est plus fiable qu'un fuzzy pour ces cas.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À surveiller</span>
+      <div>
+        <h3>Charger seulement le tier 1 crée des erreurs</h3>
+        <p>Avec les seuls alias officiels, l'idéal tombe de 66,1 % à 34,5 % et 30 erreurs silencieuses apparaissent, plus 63 réponses trop confiantes. Un homonyme indexé seulement en tier 2 ou 3 disparaît, et un terme ambigu devient résolu. Exemple : « Batteries » donne la catégorie au lieu de la famille, dont l'alias est en tier 3. Le moteur charge donc les trois tiers.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À arbitrer</span>
+      <div>
+        <h3>« Dinan » est déjà un alias de Dinant</h3>
+        <p>CLAUDE.md cite Dinan / Dinant comme piège de lieu hors périmètre. En fait « Dinan » est une variante GeoNames (tier 2) de la commune de Dinant, absente de l'index négatif : le moteur répond Dinant, ce qui suit le catalogue. Variante voulue ou erreur de source ?</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À arbitrer</span>
+      <div>
+        <h3>15 lacunes de spec venues des questions humaines</h3>
+        <p>Synonymes manquants (G01), périodes non déclarées (G03), axes flous (G05), mesures absentes (G06 à G08), fuzzy sur les noms de clients (G14)… Elles concernent surtout les étapes 2 et 3. Ajouter à la spec du vocabulaire tiré d'une question de test oblige à passer cette question en dev.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill todo">Mineur</span>
+      <div>
+        <h3>Fichiers compilés suivis par git</h3>
+        <p><code>build/__pycache__/*.pyc</code> est dans le dépôt et apparaît modifié à chaque exécution. Un <code>.gitignore</code> réglerait le problème. Rien n'est encore committé.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Effet du chargement par tier</h3>
+      <div class="bars" id="tiers"></div>
+      <div class="axis" aria-hidden="true"><div></div><div><span>0 %</span><span>50 %</span><span>100 %</span></div><div></div></div>
+    </div>
+    <div class="panel">
+      <h3>Règles de la spec, état d'implémentation</h3>
+      <div class="legend">
+        <span><i style="background:var(--good-fill)"></i>Codée</span>
+        <span><i style="background:var(--s4)"></i>Prototypée</span>
+        <span><i style="background:var(--base)"></i>À coder</span>
+      </div>
+      <div class="rows" id="regles"></div>
+      <p>6 règles codées sur 56. Les 18 règles de calcul attendent l'étape Power BI ; les 18 règles de résolution restantes se répartissent entre les étapes 2 et 3.</p>
+    </div>
+  </div>
+</section>
+
+<section id="suite">
+  <div class="head">
+    <h2>Reste à faire</h2>
+    <p>Dans l'ordre. Chaque brique n'est gardée que si elle augmente les réponses idéales sur dev sans créer d'erreur silencieuse.</p>
+  </div>
+  <ol class="plan">
+    <li><div><h3>Formes juridiques à points</h3><p>Choisir entre compacter les sigles dans la normalisation et ajouter des alias. Concerne 139 cas clients aujourd'hui sans réponse, résolubles par l'exact.</p><span class="tag">décision · R-RES-02, C10</span></div></li>
+    <li><div><h3>Développer les abréviations avant la recherche exacte</h3><p>« St », « Ste », « St. » vers Saint, Sainte, Sint selon la langue du lieu ; « s/ » vers sur ; « Mt » vers Mont. Concerne 353 cas, résolubles par l'exact.</p><span class="tag">étape 2 · C13</span></div></li>
+    <li><div><h3>Correspondance approchée bornée</h3><p>Seulement si l'exact et l'index négatif n'ont rien donné. Bornée au type attendu, seuil 0,88, au moins 4 caractères, jamais sur un code, ambiguë si les deux meilleurs noms sont à moins de 0,03. Un nom trouvé ramène tous ses homonymes, puis les règles tranchent. Concerne les 1 932 fautes de frappe.</p><span class="tag">étape 2 · R-RES-01, R-RES-03, C07</span></div></li>
+    <li><div><h3>Mots distinctifs pour les raisons sociales</h3><p>Ignorer « garage », « auto », « carrosserie » dans le score des noms de clients, pour que le préfixe commun ne gonfle pas la ressemblance.</p><span class="tag">étape 2 · G14</span></div></li>
+    <li><div><h3>Contexte et assemblage du Manifest</h3><p>Prépositions et mots de contexte, profil « mon agence », rôles filtre / axe / mesure, période par défaut, puis validation par <code>build/manifest.py</code>. Test : les 34 questions de référence.</p><span class="tag">étape 3 · R-CTX-02, R-CTX-03, R-TPS-02, R-RES-06, R-RES-08</span></div></li>
+    <li><div><h3>Extraction LLM, puis examen</h3><p>Découpage des questions en termes, puis passage des questions humaines de bout en bout, à ta demande.</p><span class="tag">étapes 4 et 5</span></div></li>
+    <li><div><h3>Ménage du dépôt</h3><p>Ajouter un <code>.gitignore</code> pour les caches Python, trancher le cas « Dinan », puis committer l'étape 1 si tu le souhaites.</p><span class="tag">maintenance</span></div></li>
+  </ol>
+  <div class="aside">
+    <h3>Reproduire ces chiffres</h3>
+    <p><code>python -m engine.evaluation</code> pour le moteur, <code>python -m pytest -q tests</code> pour les tests, <code>python build/rebuild_spec.py</code> pour le contrôle complet. Le détail de chaque cas non idéal, avec sa trace, est dans <code>reports/moteur_dev.json</code>.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Banc d'essai : <code>challenges/cases.csv</code>, partition dev de <code>challenges/split.csv</code>. Aucune donnée de l'examen (<code>human/attendus.yaml</code>, réponses attendues des questions humaines) n'a servi à concevoir ou mesurer le moteur.</p>
+  <p>Idéal : la réponse attendue exactement. Sûr : idéal, ou réponse prudente prévue par le cas. Erreur silencieuse : une entité résolue qui n'est pas la bonne.</p>
+</footer>
+</main>
+<div id="tip" hidden></div>
+
+<script>
+const fr = (x, d = 1) => x.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const nb = x => x.toLocaleString("fr-FR");
+const tip = document.getElementById("tip");
+function hover(el, html) {
+  el.tabIndex = 0;
+  const show = e => { tip.innerHTML = html; tip.hidden = false; move(e); };
+  const move = e => {
+    const r = el.getBoundingClientRect();
+    const x = e && e.clientX ? e.clientX : r.left + 20, y = e && e.clientY ? e.clientY : r.top;
+    tip.style.left = Math.max(8, Math.min(x + 14, innerWidth - tip.offsetWidth - 8)) + "px";
+    tip.style.top = Math.max(8, y - tip.offsetHeight - 10) + "px";
+  };
+  el.addEventListener("mouseenter", show); el.addEventListener("mousemove", move);
+  el.addEventListener("focus", show);
+  el.addEventListener("mouseleave", () => tip.hidden = true); el.addEventListener("blur", () => tip.hidden = true);
+}
+function bars(id, rows, max, txt, cls, info) {
+  const box = document.getElementById(id);
+  rows.forEach(r => {
+    const el = document.createElement("div");
+    el.className = "bar" + (r.me ? " me" : "") + (r.cls ? " " + r.cls : "");
+    el.innerHTML = `<div class="lab">${r.lab}<small>${r.sub}</small></div><div class="track"><div class="fill ${cls(r)}" style="width:${r.v / max * 100}%"></div></div><div class="val">${txt(r.v)}</div>`;
+    hover(el, info(r)); box.appendChild(el);
+  });
+}
+function stack(id, rows, parts, end, info) {
+  const box = document.getElementById(id);
+  rows.forEach(r => {
+    const el = document.createElement("div"); el.className = "row";
+    const segs = parts(r).filter(p => p[0] > 0).map(p => `<i style="flex:${p[0]} 0 0;background:var(${p[1]})"></i>`).join("");
+    el.innerHTML = `<div class="lab"><b>${r.code}</b><span>${r.lab}</span></div><div class="seg">${segs}</div><div class="val">${end(r)}</div>`;
+    hover(el, info(r)); box.appendChild(el);
+  });
+}
+
+// code, libellé, cas, idéal, inconnu prudent, alias exact, mots triés, index négatif, rien trouvé
+const CAT = [
+  ["C01","libellé canonique",299,299,0,299,0,0,0],
+  ["C02","traduction officielle",345,345,0,345,0,0,0],
+  ["C03","variante GeoNames",349,349,0,349,0,0,0],
+  ["C04","terme métier",63,63,0,63,0,0,0],
+  ["C05","homonyme",491,491,0,489,2,0,0],
+  ["C06","indice de type",598,598,0,598,0,0,0],
+  ["C07","faute de frappe",1932,0,1932,0,0,7,1925],
+  ["C08","hors périmètre proche",436,436,0,0,0,436,0],
+  ["C09","code",791,791,0,461,0,0,330],
+  ["C10","client",822,683,139,489,194,0,139],
+  ["C11","marque",127,127,0,127,0,0,0],
+  ["C12","véhicule",551,551,0,548,3,0,0],
+  ["C13","abréviation",354,1,353,1,0,0,353],
+].map(c => ({ code: c[0], lab: c[1], n: c[2], ideal: c[3], prud: c[4], ex: c[5], tri: c[6], neg: c[7], rien: c[8] }));
+const pct = (a, n) => fr(a / n * 100);
+stack("catQual", CAT, r => [[r.ideal, "--s1"], [r.prud, "--base"]], r => pct(r.ideal, r.n) + "%",
+  r => `<b>${r.code} · ${r.lab}</b> · ${nb(r.n)} cas<br>Réponse attendue ${nb(r.ideal)} (${pct(r.ideal, r.n)} %)<br>Inconnu prudent ${nb(r.prud)}<br>Erreur silencieuse 0`);
+stack("catEtape", CAT, r => [[r.ex, "--s1"], [r.tri, "--s2"], [r.neg, "--s3"], [r.rien, "--s4"]], r => nb(r.n),
+  r => `<b>${r.code} · ${r.lab}</b><br>Alias exact ${nb(r.ex)} · mots triés ${nb(r.tri)}<br>Index négatif ${nb(r.neg)} · rien trouvé ${nb(r.rien)}`);
+
+const tb = document.querySelector("#catTable tbody"); const T = { n: 0, ideal: 0, prud: 0, ex: 0, tri: 0, neg: 0, rien: 0 };
+CAT.forEach(r => {
+  Object.keys(T).forEach(k => T[k] += r[k]);
+  tb.insertAdjacentHTML("beforeend", `<tr><td>${r.code} · ${r.lab}</td><td class="r">${nb(r.n)}</td><td class="r">${pct(r.ideal, r.n)} %</td><td class="r">${nb(r.prud)}</td><td class="r">${nb(r.ex)}</td><td class="r">${nb(r.tri)}</td><td class="r">${nb(r.neg)}</td><td class="r">${nb(r.rien)}</td><td class="r z">0</td></tr>`);
+});
+tb.insertAdjacentHTML("beforeend", `<tr class="tot"><td>Total dev</td><td class="r">${nb(T.n)}</td><td class="r">${pct(T.ideal, T.n)} %</td><td class="r">${nb(T.prud)}</td><td class="r">${nb(T.ex)}</td><td class="r">${nb(T.tri)}</td><td class="r">${nb(T.neg)}</td><td class="r">${nb(T.rien)}</td><td class="r z">0</td></tr>`);
+
+const CAUSES = [
+  { lab: "Faute de frappe", sub: "C07 · étape 2, approchée", v: 1932 },
+  { lab: "Abréviation St, Ste", sub: "C13 · développement", v: 221 },
+  { lab: "Abréviation s/ (sur)", sub: "C13 · développement", v: 127 },
+  { lab: "Forme juridique à points", sub: "C10 · normalisation", v: 119 },
+  { lab: "Forme juridique sans points", sub: "C10 · normalisation", v: 20 },
+  { lab: "Abréviation Mt (mont)", sub: "C13 · développement", v: 5 },
+].map(r => ({ ...r, cls: "cause" }));
+bars("causes", CAUSES, 2000, v => nb(v), () => "", r => `<b>${r.lab}</b><br>${nb(r.v)} cas (${fr(r.v / 2424 * 100)} % des non idéaux)<br>Réponse actuelle : inconnu`);
+
+bars("tiers", [
+  { lab: "Idéal · tiers 1, 2, 3", sub: "configuration du moteur", v: 66.1, me: true, info: "4 734 cas sur 7 158" },
+  { lab: "Idéal · tier 1 seul", sub: "alias officiels", v: 34.5, info: "2 469 cas sur 7 158" },
+  { lab: "Sûr · tiers 1, 2, 3", sub: "configuration du moteur", v: 100.0, me: true, info: "Aucune erreur silencieuse" },
+  { lab: "Sûr · tier 1 seul", sub: "alias officiels", v: 68.6, info: "30 erreurs silencieuses, 63 trop confiantes, 2 153 incorrectes" },
+], 100, v => fr(v) + " %", r => r.me ? "" : "muted", r => `<b>${r.lab}</b><br>${fr(r.v)} %<br>${r.info}`);
+
+stack("regles", [
+  { code: "", lab: "Résolution", c: 6, p: 2, a: 18 },
+  { code: "", lab: "Manifest", c: 0, p: 0, a: 7 },
+  { code: "", lab: "Calcul", c: 0, p: 0, a: 18 },
+  { code: "", lab: "Affichage", c: 0, p: 0, a: 5 },
+].map(r => ({ ...r, n: r.c + r.p + r.a })), r => [[r.c, "--good-fill"], [r.p, "--s4"], [r.a, "--base"]], r => nb(r.n),
+  r => `<b>${r.lab}</b> · ${r.n} règles<br>Codées ${r.c} · prototypées ${r.p} · à coder ${r.a}`);
+document.querySelectorAll("#regles .lab span").forEach(s => s.style.display = "inline");
+</script>

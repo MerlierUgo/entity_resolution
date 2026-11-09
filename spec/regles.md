@@ -7,7 +7,7 @@
 >
 > Ces règles s'appliquent partout : génération des données, mesures DAX, oracle, résolution des termes par l'agent. Chaque règle a un identifiant stable, à citer dans le code et dans les tests.
 
-**État d'implémentation** : 56 règles · 5 codées · 2 prototypées · 49 à coder
+**État d'implémentation** : 56 règles · 6 codées · 2 prototypées · 48 à coder
 
 ## Chiffre d'affaires et montants
 
@@ -237,7 +237,7 @@ Tous les calculs de dates partent de `data_as_of` = **2026-09-30**. L'horloge du
 
 **R-RES-07 · Index négatif.** `catalog/negatifs.csv` rassemble les valeurs plausibles mais absentes : celles du glossaire (« Allemagne », « pneus », « Michelin ») et 23 418 lieux réels hors périmètre issus de GeoNames (dont « Dinan », proche de « Dinant »). Il est consulté juste après la correspondance exacte et **avant** toute correspondance approchée : une valeur du catalogue l'emporte toujours sur l'index négatif (un lieu hors périmètre nommé « Éco » ne doit pas masquer la gamme Éco).
 
-*à coder · resolution*
+*codée · resolution* · `engine/resolveur.py · ResolveurExact.resoudre()`
 
 **R-RES-08 · Termes sans filtre.** Un terme du glossaire « sans filtre » (« Mécanova », « total », « groupe ») l'emporte sur un alias de marque : « CA total » ne filtre pas sur TotalEnergies. Il faut écrire « marque Total ».
 

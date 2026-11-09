@@ -306,7 +306,9 @@ sections:
         titre: "Index négatif"
         texte: "`catalog/negatifs.csv` rassemble les valeurs plausibles mais absentes : celles du glossaire (« Allemagne », « pneus », « Michelin ») et 23 418 lieux réels hors périmètre issus de GeoNames (dont « Dinan », proche de « Dinant »). Il est consulté juste après la correspondance exacte et **avant** toute correspondance approchée : une valeur du catalogue l'emporte toujours sur l'index négatif (un lieu hors périmètre nommé « Éco » ne doit pas masquer la gamme Éco)."
         composant: "resolution"
-        statut: "a_coder"
+        statut: "codee"
+        implementation: ["engine/resolveur.py · ResolveurExact.resoudre()"]
+        tests: ["tests/test_engine_exact.py", "challenges/cases.csv"]
       - id: "R-RES-08"
         titre: "Termes sans filtre"
         texte: "Un terme du glossaire « sans filtre » (« Mécanova », « total », « groupe ») l'emporte sur un alias de marque : « CA total » ne filtre pas sur TotalEnergies. Il faut écrire « marque Total »."

@@ -15,6 +15,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from common import console_utf8, env_utf8
+
 ROOT = Path(__file__).resolve().parent.parent
 BUILD = [
     ("vues lisibles (.md) depuis les YAML", ["build/build_docs.py"]),
@@ -31,12 +33,13 @@ CHECKS = [
 
 
 def run(label: str, args: list[str]) -> bool:
-    print(f"\n── {label}")
-    r = subprocess.run([sys.executable, *args], cwd=ROOT)
+    print(f"\n── {label}", flush=True)
+    r = subprocess.run([sys.executable, *args], cwd=ROOT, env=env_utf8())
     return r.returncode == 0
 
 
 def main() -> int:
+    console_utf8()
     steps = CHECKS if "--rapide" in sys.argv else BUILD + CHECKS
     failed = []
     for label, args in steps:

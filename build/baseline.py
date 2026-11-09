@@ -113,7 +113,7 @@ for name, fn in (("B0_exact", b0), ("B1_fuzzy_naif", b1), ("B2_fuzzy_borne", b2)
         per[c["category"]][score(c, st, hits)] += 1
         per["TOTAL"][score(c, st, hits)] += 1
     out[name] = {k: dict(v) for k, v in sorted(per.items())}
-(REP / "baseline.json").write_text(json.dumps(out, ensure_ascii=False, indent=1))
+(REP / "baseline.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
 
 lines = ["# Mesure de référence sur le jeu de défis", "",
          "Trois résolveurs volontairement simples (voir `build/baseline.py`). En % des cas de chaque catégorie :",
@@ -131,5 +131,5 @@ for cat in sorted(out["B0_exact"]):
         safe = ideal + c.get("acceptable", 0) + c.get("partiel", 0)
         cells += [f"{100 * ideal / tot:.1f}", f"{100 * safe / tot:.1f}", f"{100 * c.get('erreur_silencieuse', 0) / tot:.1f}"]
     lines.append(f"| {cat} | {tot} | " + " | ".join(cells) + " |")
-(REP / "baseline.md").write_text("\n".join(lines) + "\n")
+(REP / "baseline.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 print("\n".join(lines))

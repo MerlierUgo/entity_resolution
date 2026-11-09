@@ -12,7 +12,9 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-from common import CAT, CHAL, REP, ROOT, read_csv
+from common import CAT, CHAL, REP, ROOT, console_utf8, env_utf8, read_csv
+
+console_utf8()
 
 STEPS = ["build_open.py", "build_mecanova.py", "build_docs.py", "build_glossary.py", "build_merge.py", "build_challenges.py",
          "baseline.py"]
@@ -23,7 +25,7 @@ results: list[tuple[str, bool, str]] = []
 
 def run_all():
     for s in STEPS:
-        r = subprocess.run([sys.executable, s], cwd=ROOT / "build", capture_output=True, text=True)
+        r = subprocess.run([sys.executable, s], cwd=ROOT / "build", capture_output=True, text=True, encoding="utf-8", env=env_utf8())
         if r.returncode:
             raise SystemExit(f"échec de {s} :\n{r.stderr[-2000:]}")
 
@@ -42,7 +44,7 @@ run_all()
 h2 = digest()
 check("Déterminisme : deux reconstructions identiques", h1 == h2, f"{len(h1)} fichiers comparés")
 
-spec = subprocess.run([sys.executable, "spec/check_spec.py"], cwd=ROOT, capture_output=True, text=True)
+spec = subprocess.run([sys.executable, "spec/check_spec.py"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", env=env_utf8())
 check("Spec v2 cohérente avec le catalogue (34 questions)", spec.returncode == 0, spec.stdout.strip().splitlines()[-1])
 
 ents = read_csv(CAT / "entities.csv")
@@ -64,15 +66,15 @@ check("Jeu de défis : chaque cas a une partition dev/test", set(split) == {c["c
 core = read_csv(CHAL / "cases_core.csv")
 check("Jeu « core » : toutes les catégories représentées",
       {c["category"] for c in core} == {c["category"] for c in cases}, f"{len(core)} cas")
-hq = subprocess.run([sys.executable, "build/human_questions.py", "check"], cwd=ROOT, capture_output=True, text=True)
+hq = subprocess.run([sys.executable, "build/human_questions.py", "check"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", env=env_utf8())
 check("Questions humaines : texte inchangé, références valides (human/questions.csv)", hq.returncode == 0,
       hq.stdout.strip().splitlines()[-1])
-tests = subprocess.run([sys.executable, "-m", "pytest", "-q", "tests"], cwd=ROOT, capture_output=True, text=True)
+tests = subprocess.run([sys.executable, "-m", "pytest", "-q", "tests"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", env=env_utf8())
 check("Tests unitaires", tests.returncode == 0, (tests.stdout.strip().splitlines() or ["pytest absent"])[-1])
 sys.path.insert(0, str(ROOT / "build"))
 from human_questions import read_questions  # noqa: E402
 human = [h for h in read_questions() if h["etat"] == "active"]
-base = json.loads((REP / "baseline.json").read_text())
+base = json.loads((REP / "baseline.json").read_text(encoding="utf-8"))
 check("Mesure de référence calculée", "B2_fuzzy_borne" in base,
       f"B2 erreurs silencieuses : {base['B2_fuzzy_borne']['TOTAL'].get('erreur_silencieuse', 0)}")
 licences = {p.name for p in (ROOT / "sources").iterdir()}
