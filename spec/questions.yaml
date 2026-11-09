@@ -1,0 +1,615 @@
+# Questions des personas · v2
+# Les valeurs attendues sont des identifiants du knowledge catalog (catalog/entities.csv).
+#
+# Statuts : resolved | ambiguous | unknown | out_of_scope
+# Références attendues des termes :
+#   entite:<id catalogue> | mesure:Mxx | axe:<dimension> | periode:<id> | comparaison:n_moins_1
+#   profil:<champ> | ambigu | absent:<terme> | hors_perimetre:<sujet> | sans_filtre | seuil
+# Dans les Manifest, les filtres portent sur les dimensions de glossaire.yaml et les valeurs sont des
+# identifiants du catalogue, triés.
+
+version: 2.0.0
+data_as_of: 2026-09-30
+
+profils:
+  P1: {nom: Isabelle Moreau, role: directrice commerciale groupe, perimetre: groupe, agence_rattachement: null}
+  P2: {nom: Julien Lefèvre, role: chef de produit, perimetre: groupe, agence_rattachement: null}
+  P3: {nom: Karim Benali, role: responsable d'agence, perimetre: "mecanova:site:agence-liege", agence_rattachement: "mecanova:site:agence-liege"}
+
+questions:
+
+# ===================== P1 · Directrice commerciale groupe =====================
+
+  - id: P1-01
+    persona: P1
+    question: "Quel est le CA de l'année dernière ?"
+    type: T01
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: l'année dernière, attendu: "periode:annee_precedente"}
+    pieges: []
+    manifest_attendu: {intent: aggregate, mesures: [M05], filtres: [], axes: [], periode: {debut: 2025-01-01, fin: 2025-12-31}}
+
+  - id: P1-02
+    persona: P1
+    question: "CA cumulé par pays depuis le début de l'année"
+    type: T12
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: pays, attendu: "axe:pays"}
+      - {texte: depuis le début de l'année, attendu: "periode:annee_en_cours"}
+    pieges: ["« cumulé » et « depuis le début de l'année » désignent la même période."]
+    manifest_attendu: {intent: aggregate, mesures: [M05], filtres: [], axes: [pays], periode: {debut: 2026-01-01, fin: 2026-09-30}}
+
+  - id: P1-03
+    persona: P1
+    question: "Comment évolue le chiffre d'affaires de la Belgique par rapport à l'an dernier ?"
+    type: T09
+    statut_attendu: resolved
+    termes:
+      - {texte: chiffre d'affaires, attendu: "mesure:M05"}
+      - {texte: Belgique, attendu: "entite:geo:pays:BE"}
+      - {texte: par rapport à l'an dernier, attendu: "comparaison:n_moins_1"}
+    pieges:
+      - "« l'an dernier » est un marqueur de comparaison, pas la période étudiée."
+      - "Période implicite : année en cours à date (R-TPS-02), comparée au 30 septembre 2025 (R-TPS-03)."
+    manifest_attendu:
+      intent: compare
+      mesures: [M05]
+      filtres: [{dimension: pays, valeurs: ["geo:pays:BE"]}]
+      axes: []
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+      comparaison: {type: n_moins_1, debut: 2025-01-01, fin: 2025-09-30}
+
+  - id: P1-04
+    persona: P1
+    question: "Top 10 des clients pro en 2025"
+    type: T06
+    statut_attendu: resolved
+    termes:
+      - {texte: clients, attendu: "axe:client"}
+      - {texte: pro, attendu: "entite:metier:segment:professionnel"}
+      - {texte: "2025", attendu: "periode:annee_nommee"}
+    pieges: ["Aucune mesure citée : CA net (R-AFF-05).", "« pro » fait 3 caractères : exact uniquement."]
+    manifest_attendu:
+      intent: ranking
+      mesures: [M05]
+      filtres: [{dimension: segment, valeurs: ["metier:segment:professionnel"]}]
+      axes: [client]
+      periode: {debut: 2025-01-01, fin: 2025-12-31}
+      tri: {mesure: M05, ordre: desc}
+      limite: 10
+
+  - id: P1-05
+    persona: P1
+    question: "Quelle est la part du web dans nos ventes ?"
+    type: T11
+    statut_attendu: resolved
+    termes:
+      - {texte: web, attendu: "entite:metier:groupe_canal:digital"}
+      - {texte: ventes, attendu: "mesure:M05"}
+      - {texte: nos, attendu: sans_filtre}
+    pieges: ["Période implicite : année en cours à date."]
+    manifest_attendu:
+      intent: share
+      mesures: [M05]
+      filtres: []
+      axes: [groupe_canal]
+      cible: {dimension: groupe_canal, valeur: "metier:groupe_canal:digital"}
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+
+  - id: P1-06
+    persona: P1
+    question: "Marge % par agence sur les 12 derniers mois"
+    type: T04
+    statut_attendu: resolved
+    termes:
+      - {texte: marge %, attendu: "mesure:M14"}
+      - {texte: agence, attendu: "axe:site"}
+      - {texte: les 12 derniers mois, attendu: "periode:douze_mois_glissants"}
+    pieges: ["Sans « % → pourcent » (R-RES-02), « marge % » deviendrait « marge » (M13)."]
+    manifest_attendu:
+      intent: breakdown
+      mesures: [M14]
+      filtres: []
+      axes: [site]
+      periode: {debut: 2025-10-01, fin: 2026-09-30}
+      tri: {mesure: M14, ordre: desc}
+
+  - id: P1-07
+    persona: P1
+    question: "Compare Liège et Namur sur le CA du trimestre dernier"
+    type: T10
+    statut_attendu: ambiguous
+    termes:
+      - {texte: Liège, attendu: ambigu}
+      - {texte: Namur, attendu: ambigu}
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: le trimestre dernier, attendu: "periode:trimestre_precedent"}
+    pieges:
+      - "Commune, arrondissement, province ou agence : clarification obligatoire (R-RES-05, R-CTX-05)."
+      - "Les localités postales « Liège » (4000, 4020) sont absorbées par la commune (R-GEO-02)."
+      - "Namur accueille aussi l'entrepôt central."
+    clarification_attendue:
+      Liège: ["geo:arrondissement:be-liege", "geo:commune:BE-62063", "geo:province:BE-WLG", "mecanova:site:agence-liege"]
+      Namur: ["geo:arrondissement:be-namur", "geo:commune:BE-92094", "geo:province:BE-WNA", "mecanova:site:agence-namur", "mecanova:site:entrepot-central"]
+
+  - id: P1-08
+    persona: P1
+    question: "Taux de remise moyen par pays et par type de client en 2025"
+    type: T05
+    statut_attendu: resolved
+    termes:
+      - {texte: taux de remise moyen, attendu: "mesure:M16"}
+      - {texte: pays, attendu: "axe:pays"}
+      - {texte: type de client, attendu: "axe:type_client"}
+      - {texte: "2025", attendu: "periode:annee_nommee"}
+    pieges: ["Ratio recalculé dans chaque case."]
+    manifest_attendu: {intent: breakdown, mesures: [M16], filtres: [], axes: [pays, type_client], periode: {debut: 2025-01-01, fin: 2025-12-31}}
+
+  - id: P1-09
+    persona: P1
+    question: "Évolution mensuelle du CA au Luxembourg depuis janvier 2024"
+    type: T08
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: au Luxembourg, attendu: "entite:geo:pays:LU"}
+      - {texte: mensuelle, attendu: "axe:mois"}
+      - {texte: depuis janvier 2024, attendu: "periode:depuis_date"}
+    pieges: ["« Luxembourg » : pays, canton, commune, province belge et agence. « au » désigne le pays (R-CTX-03)."]
+    manifest_attendu:
+      intent: timeseries
+      mesures: [M05]
+      filtres: [{dimension: pays, valeurs: ["geo:pays:LU"]}]
+      axes: [mois]
+      periode: {debut: 2024-01-01, fin: 2026-09-30}
+
+  - id: P1-10
+    persona: P1
+    question: "Quelle prévision de CA pour décembre ?"
+    type: T17
+    statut_attendu: out_of_scope
+    termes:
+      - {texte: prévision, attendu: "hors_perimetre:prévisions"}
+      - {texte: CA, attendu: "mesure:M05"}
+    pieges: ["« décembre » seul pointerait vers décembre 2025 : ne jamais le renvoyer comme une prévision."]
+
+  - id: P1-11
+    persona: P1
+    question: "CA total du groupe en 2025"
+    type: T01
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: total, attendu: sans_filtre}
+      - {texte: groupe, attendu: sans_filtre}
+      - {texte: "2025", attendu: "periode:annee_nommee"}
+    pieges: ["« total » est aussi un alias de la marque TotalEnergies : le terme sans filtre l'emporte (R-RES-08)."]
+    manifest_attendu: {intent: aggregate, mesures: [M05], filtres: [], axes: [], periode: {debut: 2025-01-01, fin: 2025-12-31}}
+
+# ===================== P2 · Chef de produit =====================
+
+  - id: P2-01
+    persona: P2
+    question: "Ventes de plaquettes de frein Brembo en 2025"
+    type: T03
+    statut_attendu: resolved
+    termes:
+      - {texte: ventes, attendu: "mesure:M05"}
+      - {texte: plaquettes de frein, attendu: "entite:piece:cat:vp-1-4-1-7"}
+      - {texte: Brembo, attendu: "entite:piece:marque:brembo"}
+      - {texte: "2025", attendu: "periode:annee_nommee"}
+    pieges: ["« ventes » sans unité = CA net (R-CA-01)."]
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M05]
+      filtres:
+        - {dimension: marque, valeurs: ["piece:marque:brembo"]}
+        - {dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-1-7"]}
+      axes: []
+      periode: {debut: 2025-01-01, fin: 2025-12-31}
+
+  - id: P2-02
+    persona: P2
+    question: "Combien de disques on a vendu le mois dernier ?"
+    type: T02
+    statut_attendu: resolved
+    termes:
+      - {texte: combien vendu, attendu: "mesure:M09"}
+      - {texte: disques, attendu: "entite:piece:cat:vp-1-4-1-8"}
+      - {texte: le mois dernier, attendu: "periode:mois_precedent"}
+    pieges: ["« disques » n'existe que comme synonyme d'atelier du glossaire.", "Le mois dernier = août 2026."]
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M09]
+      filtres: [{dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-1-8"]}]
+      axes: []
+      periode: {debut: 2026-08-01, fin: 2026-08-31}
+
+  - id: P2-03
+    persona: P2
+    question: "Taux de retour par marque sur la famille freinage"
+    type: T13
+    statut_attendu: resolved
+    termes:
+      - {texte: taux de retour, attendu: "mesure:M20"}
+      - {texte: marque, attendu: "axe:marque"}
+      - {texte: freinage, attendu: "entite:mecanova:famille:freinage"}
+    pieges:
+      - "Le liquide de frein est dans Freinage chez Shopify, mais dans Huiles et liquides chez Mécanova : la famille Mécanova fait foi."
+      - "Période implicite : année en cours à date."
+    manifest_attendu:
+      intent: breakdown
+      mesures: [M20]
+      filtres: [{dimension: famille, valeurs: ["mecanova:famille:freinage"]}]
+      axes: [marque]
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+      tri: {mesure: M20, ordre: desc}
+
+  - id: P2-04
+    persona: P2
+    question: "Quelles marques ont le plus de retours pour pièce défectueuse cette année ?"
+    type: T06
+    statut_attendu: resolved
+    termes:
+      - {texte: marques, attendu: "axe:marque"}
+      - {texte: retours, attendu: "mesure:M08"}
+      - {texte: pièce défectueuse, attendu: "entite:metier:motif_retour:piece-defectueuse"}
+      - {texte: cette année, attendu: "periode:annee_en_cours"}
+    pieges: ["« le plus de retours » = quantité retournée, pas un taux."]
+    manifest_attendu:
+      intent: ranking
+      mesures: [M08]
+      filtres: [{dimension: motif_retour, valeurs: ["metier:motif_retour:piece-defectueuse"]}]
+      axes: [marque]
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+      tri: {mesure: M08, ordre: desc}
+      limite: 10
+
+  - id: P2-05
+    persona: P2
+    question: "Marge brute des filtres à huile en gamme éco vs premium"
+    type: T10
+    statut_attendu: resolved
+    termes:
+      - {texte: marge brute, attendu: "mesure:M13"}
+      - {texte: filtres à huile, attendu: "entite:piece:cat:vp-1-4-5-5"}
+      - {texte: éco, attendu: "entite:mecanova:gamme:eco"}
+      - {texte: premium, attendu: "entite:mecanova:gamme:premium"}
+    pieges: ["« filtres à huile » l'emporte sur « filtres » (famille Filtration) : terme le plus long (R-RES-06)."]
+    manifest_attendu:
+      intent: compare
+      mesures: [M13]
+      filtres:
+        - {dimension: gamme, valeurs: ["mecanova:gamme:eco", "mecanova:gamme:premium"]}
+        - {dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-5-5"]}
+      axes: [gamme]
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+
+  - id: P2-06
+    persona: P2
+    question: "CA de la marque maison par famille"
+    type: T04
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: marque maison, attendu: "entite:piece:marque:mecanova-select"}
+      - {texte: famille, attendu: "axe:famille"}
+    pieges: ["Alias sans ressemblance lexicale : seul le catalogue le résout."]
+    manifest_attendu:
+      intent: breakdown
+      mesures: [M05]
+      filtres: [{dimension: marque, valeurs: ["piece:marque:mecanova-select"]}]
+      axes: [famille]
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+      tri: {mesure: M05, ordre: desc}
+
+  - id: P2-07
+    persona: P2
+    question: "Valeur du stock de batteries à fin août"
+    type: T02
+    statut_attendu: resolved
+    termes:
+      - {texte: valeur du stock, attendu: "mesure:M24"}
+      - {texte: batteries, attendu: "entite:mecanova:famille:batterie"}
+      - {texte: à fin août, attendu: "periode:fin_de_mois"}
+    pieges:
+      - "La famille Batteries ne contient qu'une catégorie (libellée « Piles » par Shopify) : même périmètre, niveau famille (R-ART-03)."
+      - "Photo au 31 août 2026, jamais une somme (R-STK-01)."
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M24]
+      filtres: [{dimension: famille, valeurs: ["mecanova:famille:batterie"]}]
+      axes: []
+      periode: {photo: 2026-08-31}
+
+  - id: P2-08
+    persona: P2
+    question: "Quelles sont les 5 sous-familles les moins rentables cette année ?"
+    type: T07
+    statut_attendu: resolved
+    termes:
+      - {texte: sous-familles, attendu: "axe:sous_famille"}
+      - {texte: rentables, attendu: "mesure:M14"}
+      - {texte: cette année, attendu: "periode:annee_en_cours"}
+    pieges: ["« rentables » = marge % par convention (R-MRG-01) ; « les moins » = tri croissant."]
+    manifest_attendu:
+      intent: ranking
+      mesures: [M14]
+      filtres: []
+      axes: [sous_famille]
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+      tri: {mesure: M14, ordre: asc}
+      limite: 5
+
+  - id: P2-09
+    persona: P2
+    question: "Détail des ventes de la référence mn plq 57932 en 2026"
+    type: T16
+    statut_attendu: resolved
+    termes:
+      - {texte: mn plq 57932, attendu: "entite:mecanova:article:MN-PLQ-57932"}
+      - {texte: ventes, attendu: "mesure:M05"}
+      - {texte: "2026", attendu: "periode:annee_nommee"}
+    pieges: ["MN-PLQ-57933 existe aussi : aucune correspondance approchée sur un code (R-ART-01)."]
+    manifest_attendu:
+      intent: detail
+      mesures: [M05, M09, M14]
+      filtres: [{dimension: article, valeurs: ["mecanova:article:MN-PLQ-57932"]}]
+      axes: []
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+
+  - id: P2-10
+    persona: P2
+    question: "Part des pièces d'origine dans le CA éclairage"
+    type: T11
+    statut_attendu: resolved
+    termes:
+      - {texte: pièces d'origine, attendu: "entite:mecanova:qualite:origine"}
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: éclairage, attendu: "entite:mecanova:famille:eclairage"}
+    pieges: ["Le total de référence est le CA Éclairage, pas celui de l'entreprise."]
+    manifest_attendu:
+      intent: share
+      mesures: [M05]
+      filtres: [{dimension: famille, valeurs: ["mecanova:famille:eclairage"]}]
+      axes: [qualite]
+      cible: {dimension: qualite, valeur: "mecanova:qualite:origine"}
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+
+  - id: P2-11
+    persona: P2
+    question: "CA des pièces compatibles avec la Clio en 2025"
+    type: T02
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: compatibles avec la Clio, attendu: "entite:veh:modele:renault-clio"}
+      - {texte: "2025", attendu: "periode:annee_nommee"}
+    pieges:
+      - "Compatibilité plusieurs-à-plusieurs : aucune ligne comptée deux fois (R-VEH-01)."
+      - "La Clio E-Tech Hybrid et la Clio Autoscuola sont des modèles distincts, non inclus (R-VEH-02)."
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M05]
+      filtres: [{dimension: modele_vehicule, valeurs: ["veh:modele:renault-clio"]}]
+      axes: []
+      periode: {debut: 2025-01-01, fin: 2025-12-31}
+
+  - id: P2-12
+    persona: P2
+    question: "Ventes de bougies cette année"
+    type: T02
+    statut_attendu: ambiguous
+    termes:
+      - {texte: ventes, attendu: "mesure:M05"}
+      - {texte: bougies, attendu: ambigu}
+      - {texte: cette année, attendu: "periode:annee_en_cours"}
+    pieges: ["Bougies d'allumage ou de préchauffage : ambiguïté voulue du glossaire."]
+    clarification_attendue:
+      bougies: ["piece:cat:vp-1-4-14-5", "piece:cat:vp-1-4-6-5-1"]
+
+# ===================== P3 · Responsable de l'agence de Liège =====================
+
+  - id: P3-01
+    persona: P3
+    question: "CA de mon agence ce mois-ci"
+    type: T02
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: mon agence, attendu: "profil:agence_rattachement"}
+      - {texte: ce mois-ci, attendu: "periode:mois_en_cours"}
+    pieges: ["« mon agence » se résout par le profil (R-CTX-02)."]
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M05]
+      filtres: [{dimension: site, valeurs: ["mecanova:site:agence-liege"]}]
+      axes: []
+      periode: {debut: 2026-09-01, fin: 2026-09-30}
+
+  - id: P3-02
+    persona: P3
+    question: "Taux de service de l'agence Liège le mois dernier"
+    type: T02
+    statut_attendu: resolved
+    termes:
+      - {texte: taux de service, attendu: "mesure:M22"}
+      - {texte: agence Liège, attendu: "entite:mecanova:site:agence-liege"}
+      - {texte: le mois dernier, attendu: "periode:mois_precedent"}
+    pieges: ["« agence » devant Liège lève l'ambiguïté (R-CTX-03)."]
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M22]
+      filtres: [{dimension: site, valeurs: ["mecanova:site:agence-liege"]}]
+      axes: []
+      periode: {debut: 2026-08-01, fin: 2026-08-31}
+
+  - id: P3-03
+    persona: P3
+    question: "Quels garages n'ont rien commandé depuis 90 jours ?"
+    type: T15
+    statut_attendu: resolved
+    termes:
+      - {texte: garages, attendu: "entite:mecanova:type_client:garage-independant"}
+      - {texte: n'ont rien commandé depuis 90 jours, attendu: "mesure:M19"}
+    pieges:
+      - "Périmètre implicite : clients rattachés à l'agence de Liège (R-CTX-04, R-CLI-03)."
+      - "Fenêtre d'inactivité : 2026-07-03 → 2026-09-30."
+    manifest_attendu:
+      intent: list
+      mesures: [M19]
+      filtres:
+        - {dimension: agence_client, valeurs: ["mecanova:site:agence-liege"]}
+        - {dimension: type_client, valeurs: ["mecanova:type_client:garage-independant"]}
+      axes: [client]
+      periode: {debut: 2025-10-01, fin: 2026-09-30}
+
+  - id: P3-04
+    persona: P3
+    question: "Panier moyen des garagistes en livraison vs comptoir"
+    type: T10
+    statut_attendu: resolved
+    termes:
+      - {texte: panier moyen, attendu: "mesure:M17"}
+      - {texte: garagistes, attendu: "entite:mecanova:type_client:garage-independant"}
+      - {texte: livraison, attendu: "entite:metier:canal:livraison-garage"}
+      - {texte: comptoir, attendu: "entite:metier:canal:comptoir"}
+    pieges: ["Périmètre implicite : site Agence Liège (R-CTX-04)."]
+    manifest_attendu:
+      intent: compare
+      mesures: [M17]
+      filtres:
+        - {dimension: canal, valeurs: ["metier:canal:comptoir", "metier:canal:livraison-garage"]}
+        - {dimension: site, valeurs: ["mecanova:site:agence-liege"]}
+        - {dimension: type_client, valeurs: ["mecanova:type_client:garage-independant"]}
+      axes: [canal]
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+
+  - id: P3-05
+    persona: P3
+    question: "Top 5 des articles vendus en quantité à l'agence de Liège en septembre"
+    type: T06
+    statut_attendu: resolved
+    termes:
+      - {texte: articles, attendu: "axe:article"}
+      - {texte: vendus en quantité, attendu: "mesure:M09"}
+      - {texte: agence de Liège, attendu: "entite:mecanova:site:agence-liege"}
+      - {texte: septembre, attendu: "periode:mois_nomme"}
+    pieges: ["« de » est un mot vide : « agence de Liège » = « Agence Liège »."]
+    manifest_attendu:
+      intent: ranking
+      mesures: [M09]
+      filtres: [{dimension: site, valeurs: ["mecanova:site:agence-liege"]}]
+      axes: [article]
+      periode: {debut: 2026-09-01, fin: 2026-09-30}
+      tri: {mesure: M09, ordre: desc}
+      limite: 5
+
+  - id: P3-06
+    persona: P3
+    question: "Nombre de clients actifs par commercial cette année"
+    type: T04
+    statut_attendu: resolved
+    termes:
+      - {texte: clients actifs, attendu: "mesure:M18"}
+      - {texte: commercial, attendu: "axe:commercial"}
+      - {texte: cette année, attendu: "periode:annee_en_cours"}
+    pieges: ["Périmètre implicite : site Agence Liège (R-CTX-04)."]
+    manifest_attendu:
+      intent: breakdown
+      mesures: [M18]
+      filtres: [{dimension: site, valeurs: ["mecanova:site:agence-liege"]}]
+      axes: [commercial]
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+      tri: {mesure: M18, ordre: desc}
+
+  - id: P3-07
+    persona: P3
+    question: "Ruptures à l'agence ce mois-ci"
+    type: T02
+    statut_attendu: resolved
+    termes:
+      - {texte: ruptures, attendu: "mesure:M26"}
+      - {texte: l'agence, attendu: "profil:agence_rattachement"}
+      - {texte: ce mois-ci, attendu: "periode:mois_en_cours"}
+    pieges: ["Mesure de stock : photo au 30 septembre 2026."]
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M26]
+      filtres: [{dimension: site, valeurs: ["mecanova:site:agence-liege"]}]
+      axes: []
+      periode: {photo: 2026-09-30}
+
+  - id: P3-08
+    persona: P3
+    question: "Clients avec plus de 20 000 € de CA en 2025 à Liège"
+    type: T14
+    statut_attendu: ambiguous
+    termes:
+      - {texte: clients, attendu: "axe:client"}
+      - {texte: plus de 20 000 €, attendu: seuil}
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: "2025", attendu: "periode:annee_nommee"}
+      - {texte: à Liège, attendu: ambigu}
+    pieges: ["« à » exclut province et arrondissement, mais laisse la commune et l'agence (R-CTX-03, R-CTX-05)."]
+    clarification_attendue:
+      Liège: ["geo:commune:BE-62063", "mecanova:site:agence-liege"]
+
+  - id: P3-09
+    persona: P3
+    question: "Combien de plaquettes Brembbo on a vendu à Verviers ?"
+    type: T03
+    statut_attendu: resolved
+    termes:
+      - {texte: combien vendu, attendu: "mesure:M09"}
+      - {texte: plaquettes, attendu: "entite:piece:cat:vp-1-4-1-7"}
+      - {texte: Brembbo, attendu: "entite:piece:marque:brembo"}
+      - {texte: à Verviers, attendu: "entite:geo:commune:BE-63079"}
+    pieges:
+      - "« Brembbo » : faute rattrapée par Jaro-Winkler borné aux marques."
+      - "La localité postale « Verviers » est absorbée par la commune (R-GEO-02)."
+      - "Périmètre implicite : site Agence Liège (R-CTX-04)."
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M09]
+      filtres:
+        - {dimension: marque, valeurs: ["piece:marque:brembo"]}
+        - {dimension: site, valeurs: ["mecanova:site:agence-liege"]}
+        - {dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-1-7"]}
+        - {dimension: ville, valeurs: ["geo:commune:BE-63079"]}
+      axes: []
+      periode: {debut: 2026-01-01, fin: 2026-09-30}
+
+  - id: P3-10
+    persona: P3
+    question: "Ventes en Allemagne cette année"
+    type: T02
+    statut_attendu: unknown
+    termes:
+      - {texte: ventes, attendu: "mesure:M05"}
+      - {texte: en Allemagne, attendu: "absent:Allemagne"}
+      - {texte: cette année, attendu: "periode:annee_en_cours"}
+    pieges: ["Index négatif (R-RES-07). Répondre 0 € serait faux."]
+
+  - id: P3-11
+    persona: P3
+    question: "CA du Garage Baudoux Frères cette année"
+    type: T02
+    statut_attendu: resolved
+    termes:
+      - {texte: CA, attendu: "mesure:M05"}
+      - {texte: Garage Baudoux Frères, attendu: "entite:mecanova:client:CL-103315"}
+      - {texte: cette année, attendu: "periode:annee_en_cours"}
+    pieges: ["Nom commercial sans forme juridique : alias du catalogue.", "Périmètre implicite : site Agence Liège (R-CTX-04)."]
+    manifest_attendu:
+      intent: aggregate
+      mesures: [M05]
+      filtres:
+        - {dimension: client, valeurs: ["mecanova:client:CL-103315"]}
+        - {dimension: site, valeurs: ["mecanova:site:agence-liege"]}
+      axes: []
+      periode: {debut: 2026-01-01, fin: 2026-09-30}

@@ -1,0 +1,331 @@
+# Mesures de Mécanova · source unique, lue par le code
+#
+# Chaque mesure : identifiant, libellé, formule, unité, additivité, mots qui y mènent par défaut, alias.
+# Lu par : build/build_glossary.py (alias compilés dans le catalogue), build/manifest.py et
+# build/human_questions.py (identifiants valides), spec/check_spec.py. Futur : templates DAX.
+# Vue lisible générée : spec/mesures.md (build/build_docs.py), à ne pas modifier à la main.
+# Les formules portent sur les colonnes des tables de faits ; elles font foi pour le DAX, l'oracle et les tests.
+
+version: "2.1.0"
+statut: "figée"
+conventions:
+  - "Montants **en euros, hors taxes**. Aucune TVA n'est jamais incluse."
+  - "`Σ` porte sur les lignes de la période et des filtres demandés."
+  - "Sauf mention contraire, `fact_ventes` est filtrée sur `type_ligne = 'Vente'` : les lignes de type `Consigne` sont exclues (règle R-CA-03)."
+  - "`fact_retours` est filtrée sur `statut = 'Accepté'` : les retours refusés n'ont aucun effet."
+  - "Un ratio dont le dénominateur vaut 0 renvoie **vide**, jamais 0 (règle R-AFF-03)."
+  - "Les montants sont calculés à pleine précision et arrondis **uniquement à l'affichage** (règle R-AFF-01)."
+
+tables:
+  - table: "fact_ventes"
+    colonnes:
+      - "date_facture"
+      - "num_facture"
+      - "num_commande"
+      - "code_client"
+      - "ref_article"
+      - "site"
+      - "canal"
+      - "type_ligne"
+      - "quantite"
+      - "prix_tarif_unitaire"
+      - "taux_remise"
+      - "montant_net"
+      - "cout_unitaire_standard"
+  - table: "fact_retours"
+    colonnes:
+      - "date_retour"
+      - "num_facture_origine"
+      - "code_client"
+      - "ref_article"
+      - "site"
+      - "quantite_retournee"
+      - "montant_rembourse"
+      - "motif"
+      - "statut"
+  - table: "fact_commandes"
+    colonnes: ["date_commande", "num_commande", "code_client", "ref_article", "site", "canal", "quantite_demandee", "quantite_servie_immediate"]
+  - table: "fact_stock"
+    colonnes: ["date_fin_mois", "site", "ref_article", "quantite_stock", "cout_unitaire_standard"]
+
+identite_generateur: "`montant_net = quantite × prix_tarif_unitaire × (1 − taux_remise)`, au centime près."
+additivite:
+  oui: "s'additionne dans le temps et entre membres"
+  ratio: "recalculée à chaque niveau, jamais additionnée"
+  non (distinct): "comptage distinct : ne s'additionne pas entre périodes"
+  liste: "renvoie une liste d'éléments"
+  non: "semi-additive (stock) : photo de fin de période, jamais additionnée dans le temps"
+
+familles:
+  - famille: "Chiffre d'affaires"
+    titre: "Chiffre d'affaires"
+  - famille: "Volumes"
+    titre: "Volumes"
+  - famille: "Marge"
+    titre: "Marge"
+  - famille: "Clients"
+    titre: "Clients"
+  - famille: "Retours"
+    titre: "Retours"
+  - famille: "Service"
+    titre: "Service"
+  - famille: "Stock"
+    titre: "Stock (mesures semi-additives)"
+    note: "Le stock est une **photo de fin de mois**. Il ne s'additionne **jamais** dans le temps. Sur une période de plusieurs mois, on prend la photo du **dernier mois** de la période (règle R-STK-01)."
+
+mesures:
+  - id: "M01"
+    libelle: "CA brut"
+    famille: "Chiffre d'affaires"
+    formule: "Σ fact_ventes.quantite × prix_tarif_unitaire"
+    unite: "€"
+    additivite: "oui"
+    description: "CA au prix tarif, avant remises et avant retours."
+    alias: ["CA brut", "CA tarif", "chiffre d'affaires brut"]
+  - id: "M02"
+    libelle: "Remises"
+    famille: "Chiffre d'affaires"
+    formule: "Σ fact_ventes.quantite × prix_tarif_unitaire × taux_remise"
+    unite: "€"
+    additivite: "oui"
+    description: "Montant total accordé en remises. Identité : `M01 − M02 = M03`."
+    alias: ["remises", "montant des remises", "remises accordées"]
+  - id: "M03"
+    libelle: "CA net facturé"
+    famille: "Chiffre d'affaires"
+    formule: "Σ fact_ventes.montant_net"
+    unite: "€"
+    additivite: "oui"
+    description: "CA après remises, **avant** déduction des retours. C'est le montant facturé."
+    defaut_pour: ["facturé", "facturation"]
+    alias: ["CA net facturé", "facturé", "facturation", "CA facturé", "montant facturé"]
+  - id: "M04"
+    libelle: "Montant des retours"
+    famille: "Chiffre d'affaires"
+    formule: "Σ fact_retours.montant_rembourse (statut Accepté)"
+    unite: "€"
+    additivite: "oui"
+    description: "Rattaché à la **date de retour**."
+    alias: ["montant des retours", "retours en euros", "avoirs"]
+  - id: "M05"
+    libelle: "CA net"
+    famille: "Chiffre d'affaires"
+    formule: "M03 − M04"
+    unite: "€"
+    additivite: "oui"
+    description: "Chiffre d'affaires de référence de Mécanova : remises et retours acceptés déduits. Quand un utilisateur dit « CA », « chiffre d'affaires » ou « ventes » sans autre précision, c'est **cette** mesure (règle R-CA-01)."
+    defaut_pour: ["CA", "ventes"]
+    alias: ["CA", "CA net", "chiffre d'affaires", "chiffre d'affaires net", "chiffre", "ventes", "ventes en euros", "revenus", "omzet"]
+    regles: ["R-CA-01"]
+  - id: "M06"
+    libelle: "Montant des consignes"
+    famille: "Chiffre d'affaires"
+    formule: "Σ fact_ventes.montant_net où type_ligne = 'Consigne'"
+    unite: "€"
+    additivite: "oui"
+    description: "Information seule : jamais inclus dans un CA."
+    alias: ["consignes", "montant des consignes"]
+  - id: "M07"
+    libelle: "Quantité facturée"
+    famille: "Volumes"
+    formule: "Σ fact_ventes.quantite"
+    unite: "pièces"
+    additivite: "oui"
+    description: "Unités facturées, avant retours."
+    alias: ["quantité facturée", "unités facturées"]
+  - id: "M08"
+    libelle: "Quantité retournée"
+    famille: "Volumes"
+    formule: "Σ fact_retours.quantite_retournee (statut Accepté)"
+    unite: "pièces"
+    additivite: "oui"
+    defaut_pour: ["retours", "en volume"]
+    alias: ["retours", "quantité retournée", "pièces retournées", "nombre de retours"]
+  - id: "M09"
+    libelle: "Quantité vendue nette"
+    famille: "Volumes"
+    formule: "M07 − M08"
+    unite: "pièces"
+    additivite: "oui"
+    defaut_pour: ["combien… vendu"]
+    alias:
+      - "quantité vendue"
+      - "quantité"
+      - "volume"
+      - "volumes"
+      - "unités vendues"
+      - "pièces vendues"
+      - "ventes en volume"
+      - "ventes en unités"
+      - "combien vendu"
+      - "vendus en quantité"
+      - "besoin de pièces"
+      - "besoin de plus de pièces"
+  - id: "M10"
+    libelle: "Nombre de commandes"
+    famille: "Volumes"
+    formule: "COUNT(DISTINCT fact_ventes.num_commande)"
+    unite: "commandes"
+    additivite: "oui"
+    description: "Commandes ayant donné lieu à au moins une ligne facturée sur la période."
+    alias: ["nombre de commandes", "commandes"]
+  - id: "M11"
+    libelle: "Nombre de lignes facturées"
+    famille: "Volumes"
+    formule: "COUNT(*) fact_ventes"
+    unite: "lignes"
+    additivite: "oui"
+    alias: ["nombre de lignes", "lignes facturées"]
+  - id: "M12"
+    libelle: "Coût des ventes nettes"
+    famille: "Marge"
+    formule: "Σ fact_ventes.quantite × cout_unitaire_standard − Σ fact_retours.quantite_retournee × coût standard de l'article"
+    unite: "€"
+    additivite: "oui"
+    description: "Le coût standard d'un retour est celui de l'article pour l'année de la date de retour."
+    alias: ["coût des ventes", "coût", "coût d'achat des ventes"]
+  - id: "M13"
+    libelle: "Marge brute"
+    famille: "Marge"
+    formule: "M05 − M12"
+    unite: "€"
+    additivite: "oui"
+    defaut_pour: ["marge"]
+    alias: ["marge", "marge brute", "marge en euros", "marge €"]
+  - id: "M14"
+    libelle: "Marge % (taux de marque)"
+    famille: "Marge"
+    formule: "M13 / M05"
+    unite: "%"
+    additivite: "ratio"
+    description: "Part de la marge dans le prix de vente. **Convention Mécanova : tout le reporting interne affiche ce taux.**"
+    defaut_pour: ["marge %", "rentabilité"]
+    alias: ["marge %", "% de marge", "marge en pourcentage", "taux de marque", "rentabilité", "rentable", "rentables"]
+  - id: "M15"
+    libelle: "Taux de marge (sur coût)"
+    famille: "Marge"
+    formule: "M13 / M12"
+    unite: "%"
+    additivite: "ratio"
+    description: "Définition comptable stricte du « taux de marge » : marge rapportée au coût d'achat. Utilisée seulement si l'utilisateur écrit exactement « taux de marge ». Voir la règle R-MRG-01 et le piège associé dans `glossaire.yaml`."
+    defaut_pour: ["taux de marge", "exactement"]
+    alias: ["taux de marge", "marge sur coût"]
+    regles: ["R-MRG-01"]
+  - id: "M16"
+    libelle: "Taux de remise moyen"
+    famille: "Marge"
+    formule: "M02 / M01"
+    unite: "%"
+    additivite: "ratio"
+    alias: ["taux de remise", "remise moyenne", "taux de remise moyen"]
+  - id: "M17"
+    libelle: "Panier moyen"
+    famille: "Clients"
+    formule: "M03 / M10"
+    unite: "€"
+    additivite: "ratio"
+    description: "CA net facturé moyen par commande, **avant** retours (un retour n'est pas rattaché à une commande)."
+    alias: ["panier moyen", "panier", "ticket moyen", "valeur moyenne de commande"]
+  - id: "M18"
+    libelle: "Clients actifs"
+    famille: "Clients"
+    formule: "COUNT(DISTINCT fact_ventes.code_client)"
+    unite: "clients"
+    additivite: "non (distinct)"
+    description: "Sur la période, **clients professionnels uniquement** (règle R-CLI-02)."
+    alias: ["clients actifs", "nombre de clients", "clients qui achètent"]
+    regles: ["R-CLI-02"]
+  - id: "M19"
+    libelle: "Clients inactifs"
+    famille: "Clients"
+    unite: "clients"
+    additivite: "liste"
+    description: |-
+      Clients professionnels ayant au moins une facture dans les **365 jours** précédant `data_as_of`, mais **aucune** dans les **90 derniers jours** (du 2026-07-03 au 2026-09-30 inclus).
+      Mesure de liste : elle renvoie les clients concernés, triés par CA net des 365 jours décroissant.
+    alias: ["clients inactifs", "inactifs", "clients dormants", "clients qui décrochent", "n'ont rien commandé depuis 90 jours"]
+  - id: "M20"
+    libelle: "Taux de retour"
+    famille: "Retours"
+    formule: "M08 / M07"
+    unite: "%"
+    additivite: "ratio"
+    description: "Rapport des flux de la même période : retours datés à la date de retour, ventes à la date de facture. Approximation assumée (règle R-RET-02)."
+    alias: ["taux de retour", "taux de retours"]
+    regles: ["R-RET-02"]
+  - id: "M21"
+    libelle: "Taux de retour pour défaut"
+    famille: "Retours"
+    formule: "Σ quantite_retournee (motif = 'Pièce défectueuse', Accepté) / M07"
+    unite: "%"
+    additivite: "ratio"
+    alias: ["taux de retour pour défaut", "taux de défaut"]
+  - id: "M22"
+    libelle: "Taux de service immédiat"
+    famille: "Service"
+    formule: "COUNT(lignes fact_commandes où quantite_servie_immediate = quantite_demandee) / COUNT(lignes fact_commandes)"
+    unite: "%"
+    additivite: "ratio"
+    description: "Part des lignes de commande servies **en totalité** dès la commande, depuis le stock de l'agence. Une ligne partiellement servie compte comme non servie."
+    alias: ["taux de service", "taux de service immédiat", "taux de dispo", "taux de disponibilité", "disponibilité", "dispo"]
+  - id: "M23"
+    libelle: "Quantité en stock"
+    famille: "Stock"
+    formule: "Σ fact_stock.quantite_stock"
+    unite: "pièces"
+    additivite: "non"
+    description: "À la dernière fin de mois de la période."
+    alias: ["quantité en stock", "stock en quantité", "pièces en stock"]
+  - id: "M24"
+    libelle: "Valeur du stock"
+    famille: "Stock"
+    formule: "Σ fact_stock.quantite_stock × cout_unitaire_standard"
+    unite: "€"
+    additivite: "non"
+    description: "À la dernière fin de mois de la période."
+    defaut_pour: ["stock"]
+    alias: ["stock", "valeur du stock", "stock en valeur", "valeur stock"]
+  - id: "M25"
+    libelle: "Couverture de stock"
+    famille: "Stock"
+    formule: "M24 / (M12 sur les 90 jours se terminant à cette fin de mois / 90)"
+    unite: "jours"
+    additivite: "non"
+    description: "Nombre de jours de ventes que le stock permet de couvrir. Calculée sur le périmètre d'articles et de sites filtré."
+    alias: ["couverture", "couverture de stock", "jours de stock"]
+  - id: "M26"
+    libelle: "Ruptures"
+    famille: "Stock"
+    unite: "couples site × article"
+    additivite: "non"
+    description: |-
+      Nombre de couples (site, article) tels que :
+      1. `quantite_stock = 0` à la dernière fin de mois de la période ;
+      2. l'article a été facturé au moins une fois par ce site dans les 90 jours précédant cette fin de mois.
+
+      L'entrepôt central est exclu (il ne facture pas).
+    alias: ["ruptures", "articles en rupture", "ruptures de stock", "manquants"]
+  - id: "M27"
+    libelle: "CA par client actif"
+    famille: "Clients"
+    formule: "M05 / M18"
+    unite: "€"
+    additivite: "ratio"
+    description: "Chiffre d'affaires net moyen par client actif sur la période."
+    alias: ["CA par client", "CA moyen par client"]
+  - id: "M28"
+    libelle: "Prix tarif unitaire"
+    famille: "Volumes"
+    formule: "prix_tarif_unitaire de l'article (tarif en vigueur à la date)"
+    unite: "€"
+    additivite: "non"
+    description: "Prix catalogue d'un article, hors remise. Attribut de l'article : ne s'additionne jamais."
+    alias: ["prix tarif", "prix catalogue", "prix unitaire"]
+  - id: "M29"
+    libelle: "Clients au référentiel"
+    famille: "Clients"
+    formule: "COUNT(DISTINCT dim_client.code_client), hors clients techniques particuliers"
+    unite: "clients"
+    additivite: "non (distinct)"
+    description: "Nombre de clients présents au référentiel à la date, qu'ils aient acheté ou non. À distinguer de M18 (clients actifs)."
+    alias: ["clients au référentiel", "nombre de clients au référentiel"]

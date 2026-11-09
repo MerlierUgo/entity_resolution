@@ -1,0 +1,76 @@
+# Lacunes de la spec révélées par les questions humaines · source unique, lue par le code
+#
+# Lu par : build/human_questions.py (codes valides dans questions.csv). Vue lisible générée : human/LACUNES.md.
+
+intro: "Les 39 questions écrites à la main révèlent des manques que les 10 078 cas générés n'avaient pas fait apparaître. C'est exactement le rôle de ce jeu."
+lacunes:
+  - id: "G01"
+    lacune: "Synonyme d'atelier manquant : « durites » pour les flexibles de frein"
+    questions: ["H-001", "H-029"]
+    piste: "ajouter le synonyme au glossaire"
+  - id: "G02"
+    lacune: "Attribut non modélisé : technologie d'ampoule (LED, halogène, xénon)"
+    questions: ["H-016"]
+    piste: "attribut d'article, ou unknown assumé"
+  - id: "G03"
+    lacune: "Périodes manquantes : « les N derniers mois », « le dernier mois »"
+    questions: ["H-007", "H-021"]
+    piste: "ajouter au glossaire (R-TPS-01)"
+  - id: "G04"
+    lacune: "« le plus vendu » : volume ou CA ? La règle R-AFF-05 choisit le CA, l'intention est souvent le volume"
+    questions: ["H-011"]
+    piste: "règle explicite : « vendu » → M09"
+  - id: "G05"
+    lacune: "Axe flou : « composant », « pièce », « les plus grosses remises » (par article, sous-famille, client, ligne ?)"
+    questions: ["H-017", "H-026", "H-030"]
+    piste: "définir l'axe par défaut ou demander"
+  - id: "G06"
+    lacune: "Mesures non définies : « productif », « mieux », « en positif », « a besoin de pièces », « problème »"
+    questions: ["H-005", "H-013", "H-014", "H-019", "H-021"]
+    piste: "demander la mesure (comportement attendu) ou définir des mesures composites"
+  - id: "G07"
+    lacune: "Mesures absentes : montant d'une commande (le plus gros panier), prix unitaire (la pièce la moins chère)"
+    questions: ["H-024", "H-032"]
+    piste: "ajouter M27 montant de commande, M28 prix tarif"
+  - id: "G08"
+    lacune: "Nombre de clients au référentiel, distinct du nombre de clients actifs (M18)"
+    questions: ["H-035", "H-036"]
+    piste: "ajouter une mesure de comptage du référentiel"
+  - id: "G09"
+    lacune: "Seuil écrit « 200e » (e pour euros)"
+    questions: ["H-023"]
+    piste: "normaliser « e » après un nombre en « euros »"
+  - id: "G10"
+    lacune: "Expressions « tout pays confondu », « tous les pays » non déclarées (pas de filtre, ou axe pays ?)"
+    questions: ["H-009", "H-030"]
+    piste: "les ajouter aux termes sans filtre, ou comme axe"
+  - id: "G11"
+    lacune: "Hors périmètre non déclaré : organisation (« qui s'occupe »), causalité et actualité (« le covid », « actualité »), conseil (« comment améliorer »)"
+    questions: ["H-008", "H-020", "H-038", "H-039"]
+    piste: "élargir la liste hors périmètre du glossaire"
+  - id: "G12"
+    lacune: "Mesure de stock avec un nom de ville : seule l'agence a un sens, mais la règle R-CTX-05 propose aussi la ville"
+    questions: ["H-004"]
+    piste: "règle : une mesure de stock restreint les candidats aux sites"
+  - id: "G13"
+    lacune: "« Le Luxembourg » sans préposition, comparé à la France : la spec impose de demander, un humain comprendrait le pays"
+    questions: ["H-036"]
+    piste: "règle : comparaison avec un pays → pays"
+  - id: "G14"
+    lacune: "Fuzzy sur les noms de clients : le préfixe commun « garage » gonfle le score (« garage roulageauto » ≈ « garage gare », 0,90)"
+    questions: ["H-027"]
+    piste: "fuzzy sur les mots distinctifs, sans « garage », « auto », « carrosserie »"
+  - id: "G15"
+    lacune: "Questions d'impact d'un événement (covid…) : aucun calendrier d'événements"
+    questions: ["H-020"]
+    piste: "section evenements dans glossaire.yaml (covid : 2020-03-01 → 2021-06-30, dates à valider) + règle R-EVT-01 + compilation dans le catalogue"
+
+attention: |-
+  Ces 39 questions forment un jeu de **test**. Si tu corriges la spec pour qu'elles passent, elles ne mesurent plus rien : tu auras appris la réponse.
+
+  Deux façons propres de procéder :
+
+  1. **Corriger, puis déplacer.** Tu corriges les lacunes (spec v3), tu passes ces 39 questions en `dev`, puis tu écris (ou fais écrire) un nouveau lot de test que personne n'a regardé.
+  2. **Ne rien corriger maintenant.** Tu gardes ces questions en test, et tu mesures le POC tel quel. Les lacunes deviennent des résultats du POC (« voici ce que le moteur ne sait pas encore faire »).
+
+  La première option est la plus utile si tu prévois d'autres questions humaines. La seconde est la plus honnête si ces 39 sont les seules.

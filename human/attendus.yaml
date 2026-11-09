@@ -1,0 +1,459 @@
+# Réponses attendues des questions humaines · schéma du Manifest v0.1 (spec/manifest_schema.yaml)
+#
+# Une entrée par question de human/questions.csv. Tu écris ici TA réponse : ce que le moteur doit rendre.
+# Une entrée vide (rien après « H-0xx: ») signifie « pas encore écrite ».
+#
+# Selon le statut, une seule de ces clés :
+#   resolved      → manifest:        le cœur du Manifest (intent, champs, tri, limite)
+#   ambiguous     → ambiguites:      [{terme, candidats: [au moins deux]}]
+#   unknown       → inconnus:        [{terme, raison}]   raisons : spec/manifest_schema.yaml
+#   out_of_scope  → hors_perimetre:  {sujet}
+# Clé facultative partout : commentaire.
+#
+# Écris d'abord sans regarder les colonnes proposées dans questions.csv : le contrôle te montrera
+# ensuite les écarts entre ta réponse et la proposition de départ, à arbitrer un par un.
+#
+# Contrôle : python build/human_questions.py check
+# 
+# Modèles (copier, puis adapter) :
+#
+#   H-0xx:
+#     statut: ambiguous
+#     ambiguites:
+#       - {terme: "bruxelles", candidats: ["geo:commune:BE-21004", "mecanova:site:agence-bruxelle"]}
+#
+#   H-0xx:
+#     statut: unknown
+#     inconnus:
+#       - {terme: "durites de frein", raison: absent_du_catalogue}
+#
+#   H-0xx:
+#     statut: out_of_scope
+#     hors_perimetre: {sujet: conseil}
+
+# Combien avons-nous de stock pour les durites de frein ?
+H-001:
+  statut: unknown
+  inconnus:
+    - {terme: "durites de frein", raison: absent_du_catalogue}
+  commentaire: "synonyme d'atelier manquant : « durites » = flexibles de frein (piece:cat:vp-1-4-1-13) (G01)"
+
+# Où y a-t-il le plus de stock de pneu ?
+H-002:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M24}                                         # « stock » → valeur du stock
+      - {role: filtre,  dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-20-3"]}   # Pneus
+      - {role: axe,     dimension: site}                                  # « où »
+      - {role: periode, photo: "2026-09-30"}                              # stock sans période (R-STK-03)
+    tri: {mesure: M24, ordre: desc}
+    limite: 1
+  commentaire: "« où » non défini dans la spec (G15) ; pour le stock, seul l'axe site a un sens ; pneus hors assortiment (R-ART-04)"
+
+# Quelle ville à le plus grand ca ?
+H-003:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M05}                                         # « ca » → CA net (R-CA-01)
+      - {role: axe,     dimension: ville}                                 # ville du client
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}           # défaut (R-TPS-02)
+    tri: {mesure: M05, ordre: desc}
+    limite: 1
+  commentaire: "limite 1 car singulier, alors que R-AFF-02 dit 10 sans N précisé"
+
+# Quelle est le stock de pièce à bruxelles ?
+H-004:
+  statut: resolved
+  manifest:
+    intent: aggregate
+    champs:
+      - {role: mesure,  ref: M23}                                         # quantité en stock
+      - {role: filtre,  dimension: ville, valeurs: ["geo:commune:BE-21004"]}   # Bruxelles, commune
+      - {role: periode, photo: "2026-09-30"}                              # défaut stock (R-STK-03)
+  commentaire: "le stock est détenu par les sites, pas par les villes des clients : voir la note ; « pièce » ne filtre rien"
+
+# Quel Pays est plus productif ?
+H-005:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M27}                                         # productif = CA net / clients actifs
+      - {role: axe,     dimension: pays}                                  # « Quel pays »
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}           # « sur l'année » = année en cours à date
+    tri: {mesure: M27, ordre: desc}
+    limite: 1
+  commentaire: "décision auteur : productif = CA par client actif (M05 / M18) ; ⚠ M27 à créer dans mesures.yaml, sans l'alias « productif » (G06)"
+
+# Comment évolue les ventes en France ?
+H-006:
+  statut: resolved
+  manifest:
+    intent: timeseries
+    champs:
+      - {role: mesure,  ref: M05}                                         # « ventes » → CA net (R-CA-01)
+      - {role: filtre,  dimension: pays, valeurs: ["geo:pays:FR"]}
+      - {role: axe,     dimension: mois}                                  # ⚠ obligatoire pour une timeseries
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}           # défaut (R-TPS-02)
+  commentaire: "décision auteur : évolution = courbe mensuelle ; la spec dit comparaison N-1 (R-TPS-03)"
+
+# Les dispo à Paris sur les 3 derniers mois
+H-007:
+  statut: unknown
+  inconnus:
+    - {terme: "Paris", raison: index_negatif}
+  commentaire: "Paris est hors périmètre (index négatif) ; sinon : timeseries, M23, axe mois, 2026-07-01 → 2026-09-30 ; « 3 derniers mois » absent du glossaire (G03)"
+
+# Qui s'occupe du stock en France
+H-008:
+  statut: out_of_scope
+  hors_perimetre: {sujet: organisation}
+  commentaire: "demande une personne responsable, pas un chiffre (G11)"
+
+# Donne moi le ca de juin dernier pour tous les pays
+H-009:
+  statut: resolved
+  manifest:
+    intent: breakdown                                                     # ⚠ « pour tous les pays » : une ligne par pays, pas de classement
+    champs:
+      - {role: mesure,  ref: M05}
+      - {role: axe,     dimension: pays}                                  # « tous les pays »
+      - {role: periode, debut: "2026-06-01", fin: "2026-06-30"}           # « juin dernier » au 30/09/2026
+  commentaire: "« juin dernier » : aucune règle pour un nom de mois (G03) ; « tous les pays » = axe (G10)"
+
+# Donne le taux de retour sur les amortos
+H-010:
+  statut: resolved
+  manifest:
+    intent: aggregate
+    champs:
+      - {role: mesure,  ref: M20}                                         # ⚠ « taux » → taux de retour (M08 / M07)
+      - {role: filtre,  dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-17-5"]}   # « amortos » → amortisseurs
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}           # ⚠ défaut (R-TPS-02)
+  commentaire: " septembre → période par défaut : à confirmer"
+
+# Quelle huile est la plus vendu ?
+H-011:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M05}                                         # « la plus vendu » → CA net (R-AFF-05)
+      - {role: filtre,  dimension: sous_famille, valeurs: ["mecanova:cat:huile-moteur"]}
+      - {role: axe,     dimension: article}                               # ⚠ « Quelle huile » : quel produit
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}           # défaut (R-TPS-02)
+    tri: {mesure: M05, ordre: desc}
+    limite: 1
+  commentaire: "M05 selon R-AFF-05, intention probable : volume (G04) ; ⚠ axe article ou marque ?"
+
+# Quelle marque filtre a carburant se vend le mieux ?
+H-012:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M05}
+      - {role: filtre,  dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-10-3"]}
+      - {role: axe,     dimension: marque}
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}
+    tri: {mesure: M05, ordre: desc}
+    limite: 1
+  commentaire: "M05 selon R-AFF-05 ; intention probable : volume (G04)"
+
+# Quelle voiture à besoin de plus de pièce ?
+H-013:
+  statut: resolved
+  manifest:
+    intent: share
+    champs:
+      - {role: mesure,  ref: M09}                                         # pièces vendues nettes
+      - {role: axe,     dimension: modele_vehicule}                       # « voiture »
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}
+    tri: {mesure: M09, ordre: desc}
+    limite: 1
+  commentaire: "décision auteur : « besoin de pièces » = quantité vendue nette par modèle compatible ; aucune règle ne le dit encore (G06)"
+
+# Quelle voiture a le plus de problème de radiateur ?
+H-014:
+  statut: ambiguous
+  ambiguites:
+    - {terme: "problème", candidats: ["M08", "M20", "M21"]}   # quantité retournée, taux de retour, taux de retour pour défaut
+  commentaire: "« problème » non défini (G06) ; radiateurs (piece:cat:vp-1-4-22-10) et axe modele_vehicule sont résolus"
+
+# Quelle marque a le plus gros ca ?
+H-015:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M05}                              # « ca » → CA net (R-CA-01)
+      - {role: axe,     dimension: marque}                     # « marque » seul = marque de pièce (R-CTX-03)
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}   # défaut (R-TPS-02)
+    tri: {mesure: M05, ordre: desc}
+    limite: 1
+  commentaire: "marque de pièce, pas de véhicule ; limite 1 car singulier"
+
+# Quelle marque de led est le plus vendue ?
+H-016:
+  statut: unknown
+  inconnus:
+    - {terme: "led", raison: attribut_non_modelise}
+  commentaire: "la technologie d'ampoule n'existe pas dans le modèle (G02)"
+
+# Donne moi le composant le plus vendu au luxambourg ?
+H-017:
+  statut: resolved
+  manifest:
+    intent: share
+    champs:
+      - {role: mesure,  ref: M05}                              # « le plus vendu » → CA net (R-AFF-05 ; G04)
+      - {role: filtre,  dimension: pays, valeurs: ["geo:pays:LU"]}   # « au luxambourg » : faute + « au » → pays
+      - {role: axe,     dimension: sous_famille}               # « composant » = catégorie de pièce (décision auteur, G05)
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}   # défaut (R-TPS-02)
+    tri: {mesure: M05, ordre: desc}
+    limite: 1
+  commentaire: "décision auteur : composant = sous-famille ; aucune règle ne le dit encore (G05)"
+
+  
+# Stock batterie en mai 2025
+H-018:
+  statut: resolved
+  manifest:
+    intent: aggregate
+    champs:
+      - {role: mesure,  ref: M24}                              # « stock » → valeur du stock
+      - {role: filtre,  dimension: famille, valeurs: ["mecanova:famille:batterie"]}   # R-ART-03
+      - {role: periode, photo: "2025-05-31"}                   # stock sur un mois = fin du mois (R-STK-01)
+  commentaire: " « batterie » = famille Batteries et catégorie « Piles » ; la famille l'emporte (R-ART-03)"
+
+# l'année 2024 était mieux que 2025 ?
+H-019:
+  statut: ambiguous
+  ambiguites:
+    - {terme: "mieux", candidats: ["M05", "M13", "M09"]}       # CA net, marge brute, quantité vendue
+  commentaire: "« mieux » non défini (G06) ; une fois choisi : compare 2024 vs 2025, années complètes"
+
+# Le covid a fait baisser les ventes ?
+H-020:
+  statut: out_of_scope
+  hors_perimetre: {sujet: causalite}
+  commentaire: "question de cause sur un événement extérieur ; données 2023-2026 seulement (G11)"
+
+
+# l'agence de namur est elle en positif sur le dernier mois ?
+H-021:
+  statut: resolved
+  manifest:
+    intent: compare                                                  # « en positif » = en hausse par rapport à l'an dernier
+    champs:
+      - {role: mesure,      ref: M05}                                # CA net
+      - {role: filtre,      dimension: site, valeurs: ["mecanova:site:agence-namur"]}   # « l'agence de namur »
+      - {role: periode,     debut: "2026-08-01", fin: "2026-08-31"}  # « le dernier mois » = août 2026
+      - {role: comparaison, type: n_moins_1, debut: "2025-08-01", fin: "2025-08-31"}
+  commentaire: " « en positif » = croissance du CA vs N-1 (G06) ; « le dernier mois » = « le mois dernier » (G03)"
+
+# Il y a plus de commande Bosh ou brembo ?
+H-022:
+  statut: resolved
+  manifest:
+    intent: compare                                                  # A ou B
+    champs:
+      - {role: mesure,  ref: M10}                                    # « commande » → nombre de commandes
+      - {role: filtre,  dimension: marque, valeurs: ["piece:marque:bosch", "piece:marque:brembo"]}   # « Bosh » : faute rattrapable
+      - {role: axe,     dimension: marque}                           # une ligne par marque
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+  commentaire: "« Bosh » → Bosch par Jaro-Winkler borné aux marques"
+
+# Les clients avec un panier à plus de 200e
+H-023:
+  statut: resolved
+  manifest:
+    intent: list
+    champs:
+      - {role: mesure,  ref: M17}                                    # « panier » → panier moyen
+      - {role: axe,     dimension: client}                           # « les clients »
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+      - {role: seuil,   mesure: M17, operateur: ">", valeur: 200}    # « plus de 200e »
+  commentaire: " « 200e » = 200 euros (G09) ; panier moyen par client sur la période"
+
+# Le plus gros panier de mars 2025, avec les infos du client
+H-024:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M03}                                    # montant facturé de la commande
+      - {role: axe,     dimension: commande}                         
+      - {role: axe,     dimension: client}                           # « avec les infos du client »
+      - {role: periode, debut: "2025-03-01", fin: "2025-03-31"}
+    tri: {mesure: M03, ordre: desc}
+    limite: 1
+  commentaire: "dimension « commande » à créer (G07) ; M17 est une moyenne, pas le montant d'un panier"
+
+# Qui de Liége, Namur et Bruxelles vend le plus de pièce de clio ?
+H-025:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M09}                                    # « vend le plus de pièce » → quantité (R-CA-02)
+      - {role: filtre,  dimension: site, valeurs: ["mecanova:site:agence-bruxelle", "mecanova:site:agence-liege", "mecanova:site:agence-namur"]}
+      - {role: filtre,  dimension: modele_vehicule, valeurs: ["veh:modele:renault-clio"]}   # « clio » (R-VEH-02)
+      - {role: axe,     dimension: site}                             # « Qui de … »
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+    tri: {mesure: M09, ordre: desc}
+    limite: 1
+  commentaire: "« vend » + ville → agence, pas la commune : aucune règle ne le dit encore"
+
+# Quelles sont les plus grosses remise données en 2025 ?
+H-026:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M02}                                    # « remises » → montant des remises
+      - {role: axe,     dimension: client}                           # ⚠ remises par client
+      - {role: periode, debut: "2025-01-01", fin: "2025-12-31"}      # « en 2025 »
+    tri: {mesure: M02, ordre: desc}
+    limite: 10                                                       # pluriel sans N → 10 (R-AFF-02)
+  commentaire: "axe client choisi parmi client, article ou ligne (G05)"
+
+# Le garage roulageAuto a-t-il vendu des brembo ?
+H-027:
+  statut: unknown
+  inconnus:
+    - {terme: "garage roulageAuto", raison: absent_du_catalogue}
+  commentaire: "client inexistant : doit rester unknown ; piège : le fuzzy le rapproche de « Garage de la Gare » (0,90) (G14)"
+
+# Donne moi les infos sur cette reference : MN-PLQ-12347
+H-028:
+  statut: unknown
+  inconnus:
+    - {terme: "MN-PLQ-12347", raison: code_inexistant}
+  commentaire: "référence inexistante : doit rester unknown ; jamais d'approximation sur un code (R-RES-03)"
+
+# Maastricht vend des durites ?
+H-029:
+  statut: resolved
+  manifest:
+    intent: aggregate                                                # oui ou non : la quantité vendue suffit
+    champs:
+      - {role: mesure,  ref: M09}
+      - {role: filtre,  dimension: site, valeurs: ["mecanova:site:agence-maastricht"]}    # « Maastricht vend » → l'agence
+      - {role: filtre,  dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-1-13"]}      # « durites » → flexibles de frein
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+  commentaire: " suppose le synonyme durites = flexibles (G01) et « vend » + ville → agence"
+
+# Quel est le composant le plus vendu tout pays confondu ?
+H-030:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M05}                                    # « le plus vendu » → CA net (R-AFF-05 ; G04)
+      - {role: axe,     dimension: sous_famille}                     # « composant » = catégorie (comme H-017)
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+    tri: {mesure: M05, ordre: desc}
+    limite: 1
+  commentaire: "« tout pays confondu » = aucun filtre (G10) ; composant = sous-famille (G05)"
+
+# Le panier moyen est de combien ?
+H-031:
+  statut: resolved
+  manifest:
+    intent: aggregate
+    champs:
+      - {role: mesure,  ref: M17}                                    # « panier moyen »
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+  commentaire: " question simple, période implicite"
+
+# Quelle est la pièce la moins chère ?
+H-032:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M28}                                    # ⚠ prix tarif unitaire, mesure à créer
+      - {role: axe,     dimension: article}                          # « la pièce » = une référence
+      - {role: periode, photo: "2026-09-30"}                         # tarif en vigueur à la date des données
+    tri: {mesure: M28, ordre: asc}                                   # « la moins chère » : ordre croissant
+    limite: 1
+  commentaire: "M28 à créer (G07) ; « moins » = tri croissant"
+
+# Quelle carrossier a le plus de retour ?
+H-033:
+  statut: resolved
+  manifest:
+    intent: ranking
+    champs:
+      - {role: mesure,  ref: M08}                                    # « retour » → quantité retournée
+      - {role: filtre,  dimension: type_client, valeurs: ["mecanova:type_client:carrossier"]}
+      - {role: axe,     dimension: client}                           # « quel carrossier » = quel client
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+    tri: {mesure: M08, ordre: desc}
+    limite: 1
+  commentaire: " « le plus de retours » = nombre de pièces retournées (M08), pas le montant (M04)"
+
+# Donner pourcentages des marques par flottes
+H-034:
+  statut: resolved
+  manifest:
+    intent: share                                                    # « pourcentages »
+    champs:
+      - {role: mesure,  ref: M05}                                    # part du CA net
+      - {role: filtre,  dimension: type_client, valeurs: ["mecanova:type_client:flotte-loueur"]}   # « flottes »
+      - {role: axe,     dimension: marque}                           # part de chaque marque
+      - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}      # défaut (R-TPS-02)
+  commentaire: "part de chaque marque de pièce dans le CA des clients flotte"
+
+# Nombre de concession en Belgique
+H-035:
+  statut: resolved
+  manifest:
+    intent: aggregate
+    champs:
+      - {role: mesure,  ref: M29}                                    # ⚠ clients au référentiel, mesure à créer
+      - {role: filtre,  dimension: pays, valeurs: ["geo:pays:BE"]}
+      - {role: filtre,  dimension: type_client, valeurs: ["mecanova:type_client:concession"]}
+      - {role: periode, photo: "2026-09-30"}                         # référentiel à date
+  commentaire: " M29 à créer ; M18 ne compte que les clients ayant acheté (G08)"
+
+# Le Luxembourg a plus ou moins de concession que la France ?
+H-036:
+  statut: resolved
+  manifest:
+    intent: compare
+    champs:
+      - {role: mesure,  ref: M29}
+      - {role: filtre,  dimension: pays, valeurs: ["geo:pays:FR", "geo:pays:LU"]}
+      - {role: filtre,  dimension: type_client, valeurs: ["mecanova:type_client:concession"]}
+      - {role: axe,     dimension: pays}                             # une ligne par pays
+      - {role: periode, photo: "2026-09-30"}
+  commentaire: " « Le Luxembourg » comparé à la France = le pays ; la spec dit ambigu sans préposition (G13)"
+
+# Mon agence est elle rentable en 2025 ?
+H-037:
+  statut: resolved
+  manifest:
+    intent: aggregate
+    champs:
+      - {role: mesure,  ref: M14}                                    # « rentable » → marge % (R-MRG-01)
+      - {role: filtre,  dimension: site, valeurs: ["mecanova:site:agence-liege"]}   # « mon agence » : profil P3 (R-CTX-02)
+      - {role: periode, debut: "2025-01-01", fin: "2025-12-31"}      # « en 2025 »
+  commentaire: "brouillon Claude · persona P3, Karim Benali, agence de Liège ; posée par P1 (sans agence), elle serait ambiguous"
+
+# Comment améliorer mon business ?
+H-038:
+  statut: out_of_scope
+  hors_perimetre: {sujet: conseil}
+  commentaire: "demande de conseil, rien à calculer (G11)"
+
+# Quelle actualité est en ma faveur en Belgique ?
+H-039:
+  statut: out_of_scope
+  hors_perimetre: {sujet: actualite}
+  commentaire: " actualité extérieure, absente des données (G11)"

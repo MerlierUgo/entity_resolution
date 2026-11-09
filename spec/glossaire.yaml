@@ -1,0 +1,226 @@
+# Glossaire métier de Mécanova SA (entreprise fictive) · v2
+#
+# Partage des rôles :
+#   - le KNOWLEDGE CATALOG (catalog/*.csv) détient les référentiels : géographie, catégories de pièces,
+#     marques, véhicules, clients, articles, sites, commerciaux. Le glossaire ne les recopie jamais :
+#     il y renvoie par identifiant ("geo:commune:BE-62063") ou par type d'entité.
+#   - le GLOSSAIRE détient le vocabulaire métier : périodes, mots de contexte, expressions
+#     liées au profil, petites listes métier (canaux, segments, motifs de retour), synonymes d'atelier,
+#     termes hors périmètre et valeurs absentes connues.
+#
+# build/build_glossary.py compile ce fichier dans le catalogue (tier 3, source « Glossaire métier v2 »),
+# pour que le moteur n'interroge qu'un seul index.
+# Mesures : spec/mesures.yaml. Normalisation des termes : regles.yaml, R-RES-02.
+
+version: 2.0.0
+statut: figée
+data_as_of: 2026-09-30
+catalogue: knowledge-catalog-mecanova-v1
+
+# ---------------------------------------------------------------------------
+# MESURES : définies dans spec/mesures.yaml (formules, unités, alias), source unique.
+# Le glossaire n'en garde aucune copie.
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# DIMENSIONS DU SEMANTIC MODEL
+# Chaque dimension dit où chercher ses valeurs : des types d'entités du catalogue, ou une liste métier
+# définie plus bas. "filtre_via" décrit le chemin du graphe quand l'entité n'est pas filtrée directement.
+# ---------------------------------------------------------------------------
+dimensions:
+  - {id: pays, libelle: Pays, catalogue: [pays], champ_pbi: "'Client'[Pays]"}
+  - {id: region_belge, libelle: Région belge, catalogue: [region], pays: [BE], champ_pbi: "'Client'[Région belge]"}
+  - {id: region, libelle: "Province, région (FR) ou canton", catalogue: [province, canton, region], exclure_pays_pour_region: [BE],
+     champ_pbi: "'Client'[Région]"}
+  - {id: arrondissement, libelle: Arrondissement, catalogue: [arrondissement], champ_pbi: "'Client'[Arrondissement]"}
+  - {id: ville, libelle: Ville ou commune du client, catalogue: [commune, ville], champ_pbi: "'Client'[Ville]",
+     note: "Une localité postale saisie est ramenée à sa commune (R-GEO-01)."}
+  - {id: site, libelle: Site, catalogue: [site], champ_pbi: "'Site'[Site]"}
+  - {id: agence_client, libelle: Agence de rattachement du client, catalogue: [site], exposee: false,
+     filtre_via: "client -rattache_a-> site", champ_pbi: "'Client'[Agence de rattachement]"}
+  - {id: commercial, libelle: Commercial, catalogue: [commercial], filtre_via: "client -suivi_par-> commercial",
+     champ_pbi: "'Client'[Commercial]"}
+  - {id: client, libelle: Client, catalogue: [client], est_code: true, champ_pbi: "'Client'[Raison sociale]"}
+  - {id: type_client, libelle: Type de client, catalogue: [type_client], champ_pbi: "'Client'[Type de client]"}
+  - {id: segment, libelle: Segment, liste_metier: segment, champ_pbi: "'Client'[Segment]"}
+  - {id: groupe_canal, libelle: Groupe de canaux, liste_metier: groupe_canal, champ_pbi: "'Canal'[Groupe de canaux]"}
+  - {id: canal, libelle: Canal, liste_metier: canal, champ_pbi: "'Canal'[Canal]"}
+  - {id: famille, libelle: Famille, catalogue: [famille_mecanova], champ_pbi: "'Article'[Famille]"}
+  - {id: sous_famille, libelle: Sous-famille, catalogue: [categorie_piece], champ_pbi: "'Article'[Sous-famille]",
+     note: "Seules les catégories reliées à une famille Mécanova portent des ventes ; les autres catégories de la taxonomie servent à reconnaître le vocabulaire."}
+  - {id: article, libelle: Article, catalogue: [article], est_code: true, champ_pbi: "'Article'[Référence]"}
+  - {id: marque, libelle: Marque, catalogue: [marque_piece], champ_pbi: "'Article'[Marque]"}
+  - {id: groupe_industriel, libelle: Groupe industriel, catalogue: [groupe_industriel], filtre_via: "marque -appartient_au_groupe-> groupe",
+     champ_pbi: "'Article'[Groupe]"}
+  - {id: gamme, libelle: Gamme, catalogue: [gamme], champ_pbi: "'Article'[Gamme]"}
+  - {id: qualite, libelle: Qualité, catalogue: [qualite], champ_pbi: "'Article'[Qualité]"}
+  - {id: marque_vehicule, libelle: Marque de véhicule, catalogue: [marque_vehicule],
+     filtre_via: "article -compatible_avec-> modèle -modele_de-> marque", champ_pbi: "'Compatibilité'[Marque véhicule]"}
+  - {id: modele_vehicule, libelle: Modèle de véhicule, catalogue: [modele_vehicule],
+     filtre_via: "article -compatible_avec-> modèle", champ_pbi: "'Compatibilité'[Modèle]"}
+  - {id: motif_retour, libelle: Motif de retour, liste_metier: motif_retour, champ_pbi: "'Motif de retour'[Motif]"}
+  - {id: motif_retour, libelle: Motif de retour, liste_metier: motif_retour, champ_pbi: "'Motif de retour'[Motif]"}
+  - {id: commande, libelle: Commande, champ_pbi: "'Ventes'[N° commande]"}
+# ---------------------------------------------------------------------------
+# LISTES MÉTIER : petites énumérations qui appartiennent au métier, pas à un référentiel externe.
+# Compilées dans le catalogue sous l'identifiant "metier:<liste>:<slug>".
+# ---------------------------------------------------------------------------
+listes_metier:
+  segment:
+    - {canonique: Professionnel, alias: [pro, pros, professionnels, clients pro, clients professionnels, B2B]}
+    - {canonique: Particulier, alias: [particuliers, B2C, grand public, clients particuliers]}
+  groupe_canal:
+    - {canonique: En agence, alias: [physique, vente en agence]}
+    - {canonique: Digital, alias: [web, internet, en ligne, e-commerce, ecommerce, site web]}
+    - {canonique: Téléphone, alias: [par téléphone, appel, appels]}
+  canal:
+    - {canonique: Comptoir, groupe: En agence, alias: [au comptoir, vente comptoir, magasin]}
+    - {canonique: Livraison garage, groupe: En agence, alias: [livraison, livraisons, tournée, tournées, en livraison]}
+    - {canonique: E-commerce pro, groupe: Digital, alias: [webshop pro, portail pro, web pro]}
+    - {canonique: E-commerce particulier, groupe: Digital, alias: [site particulier, site grand public, web particulier]}
+    - {canonique: Téléphone (canal), groupe: Téléphone, alias: []}
+  motif_retour:
+    - {canonique: Erreur de commande, alias: [erreur client, commandé par erreur]}
+    - {canonique: Pièce défectueuse, alias: [défaut, défectueuse, défectueux, garantie, pièces défectueuses, pièce défectueuse]}
+    - {canonique: Incompatibilité véhicule, alias: [incompatibilité, mauvaise référence, ne correspond pas]}
+    - {canonique: Colis endommagé, alias: [colis abîmé, casse transport]}
+
+# ---------------------------------------------------------------------------
+# SYNONYMES D'ATELIER : vocabulaire des utilisateurs, rattaché aux entités du catalogue.
+# Une cible multiple déclare une ambiguïté voulue (le moteur doit demander).
+# ---------------------------------------------------------------------------
+synonymes_metier:
+  # pièces
+  - {terme: plaquettes, cibles: ["piece:cat:vp-1-4-1-7"]}
+  - {terme: disques, cibles: ["piece:cat:vp-1-4-1-8"]}
+  - {terme: étriers, cibles: ["piece:cat:vp-1-4-1-3"]}
+  - {terme: mâchoires, cibles: ["piece:cat:vp-1-4-1-11"]}
+  - {terme: tambours, cibles: ["piece:cat:vp-1-4-1-9"]}
+  - {terme: flexibles, cibles: ["piece:cat:vp-1-4-1-13"]}
+  - {terme: filtres à pollen, cibles: ["mecanova:cat:filtre-habitacle"]}
+  - {terme: bougies, cibles: ["piece:cat:vp-1-4-14-5", "piece:cat:vp-1-4-6-5-1"], note: "allumage ou préchauffage : ambiguïté voulue"}
+  - {terme: alterno, cibles: ["piece:cat:vp-1-4-14-1"]}
+  - {terme: démarreur, cibles: ["piece:cat:vp-1-4-14-6"]}
+  - {terme: kit embrayage, cibles: ["piece:cat:vp-1-4-19-2"]}
+  - {terme: bimasse, cibles: ["piece:cat:vp-1-4-19-13"]}
+  - {terme: cata, cibles: ["piece:cat:vp-1-4-8-2"]}
+  - {terme: pots d'échappement, cibles: ["piece:cat:vp-1-4-8-5"]}
+  - {terme: essuie-glaces, cibles: ["piece:cat:vp-1-4-21-4-2"]}
+  - {terme: balais, cibles: ["piece:cat:vp-1-4-21-4-2"]}
+  - {terme: tapis, cibles: ["piece:cat:vp-1-4-11-3"]}
+  # clients
+  - {terme: garages, cibles: ["mecanova:type_client:garage-independant"]}
+  - {terme: garagistes, cibles: ["mecanova:type_client:garage-independant"]}
+  - {terme: indépendants, cibles: ["mecanova:type_client:garage-independant"]}
+  - {terme: concessionnaires, cibles: ["mecanova:type_client:concession"]}
+  - {terme: carrosseries, cibles: ["mecanova:type_client:carrossier"]}
+  - {terme: centres auto, cibles: ["mecanova:type_client:centre-auto"]}
+  - {terme: flottes, cibles: ["mecanova:type_client:flotte-loueur"]}
+  - {terme: loueurs, cibles: ["mecanova:type_client:flotte-loueur"]}
+  # géographie et sites
+  - {terme: Grand-Duché, cibles: ["geo:pays:LU"]}
+  - {terme: Hollande, cibles: ["geo:pays:NL"]}
+  - {terme: Bxl, cibles: ["geo:commune:BE-21004"]}
+  - {terme: plateforme, cibles: ["mecanova:site:entrepot-central"]}
+  # véhicules
+  - {terme: Merco, cibles: ["veh:marque:mercedes-benz"]}
+
+# ---------------------------------------------------------------------------
+# VALEURS ABSENTES CONNUES (index négatif, R-RES-07)
+# En plus de catalog/hors_perimetre_geonames.csv (lieux réels hors périmètre).
+# ---------------------------------------------------------------------------
+valeurs_absentes:
+  - {terme: Allemagne, ressemble_a: pays}
+  - {terme: Espagne, ressemble_a: pays}
+  - {terme: Italie, ressemble_a: pays}
+  - {terme: Suède, ressemble_a: pays}
+  - {terme: Suisse, ressemble_a: pays}
+  - {terme: Royaume-Uni, ressemble_a: pays}
+  - {terme: Michelin, ressemble_a: marque, note: "Marque de pneus, absente du catalogue."}
+  - {terme: Agence Gand, ressemble_a: site, note: "Gand est une commune cliente, pas une agence."}
+
+# Attention : « pneus » ou « jantes » ne sont PAS des valeurs absentes. Ce sont des catégories de la
+# taxonomie (vp-1-4-20-*) sans assortiment Mécanova : elles se résolvent, puis R-ART-04 s'applique.
+
+# ---------------------------------------------------------------------------
+# MOTS DE CONTEXTE ET PRÉPOSITIONS (R-CTX-03) : lus sur la question brute, avant normalisation.
+# ---------------------------------------------------------------------------
+mots_contexte:
+  - {mots: [agence, "l'agence de", "à l'agence de"], dimension: site}
+  - {mots: [province, canton, région], dimension: region}
+  - {mots: [arrondissement], dimension: arrondissement}
+  - {mots: [pays], dimension: pays}
+  - {mots: [ville, "ville de", commune], dimension: ville}
+  - {mots: [marque], dimension: marque}
+  - {mots: [véhicule, véhicules, voiture, voitures, "compatible avec", compatibles], dimension: modele_vehicule}
+  - {mots: [commercial, commerciale, vendeur], dimension: commercial}
+  - {mots: [famille], dimension: famille}
+  - {mots: [composant, composants, "type de pièce", "types de pièces"], dimension: sous_famille}
+  - {mots: [client, "chez"], dimension: client}
+prepositions:
+  - {mots: [en, au, aux], dimension: pays, note: "devant un nom de pays : « au Luxembourg », « aux Pays-Bas »"}
+  - {mots: ["à"], dimensions: [ville, site], note: "jamais pays ni région"}
+
+# ---------------------------------------------------------------------------
+# PROFIL UTILISATEUR (R-CTX-02, R-CTX-04)
+# ---------------------------------------------------------------------------
+expressions_profil:
+  - {expressions: [mon agence, notre agence, "l'agence"], cible: "profil.agence_rattachement", si_absent: ambiguous}
+  - {expressions: [mes clients, nos clients], cible: "clients rattachés à profil.agence_rattachement (R-CLI-03)", si_absent: "aucun filtre"}
+
+# ---------------------------------------------------------------------------
+# TERMES SANS FILTRE (R-RES-08) : reconnus, ne filtrent rien. Ils l'emportent sur un alias de marque.
+# ---------------------------------------------------------------------------
+termes_sans_filtre:
+  - {terme: Mécanova, note: "L'entreprise entière, jamais la marque Mécanova Select."}
+  - {terme: groupe, note: "Tout le périmètre."}
+  - {terme: total, note: "Tout le périmètre. Collision connue avec l'alias « Total » de TotalEnergies : il faut « marque Total »."}
+  - {terme: nos, note: "Tout le périmètre pour un profil groupe."}
+
+# ---------------------------------------------------------------------------
+# PÉRIODES (R-TPS-01), calculées depuis data_as_of
+# ---------------------------------------------------------------------------
+periodes:
+  - {id: annee_en_cours, alias: [cette année, depuis le début de l'année, YTD, cumulé, cumul annuel], debut: 2026-01-01, fin: 2026-09-30}
+  - {id: annee_precedente, alias: [l'an dernier, l'année dernière, l'année passée, N-1], debut: 2025-01-01, fin: 2025-12-31}
+  - {id: mois_en_cours, alias: [ce mois-ci, ce mois], debut: 2026-09-01, fin: 2026-09-30}
+  - {id: mois_precedent, alias: [le mois dernier, le mois passé], debut: 2026-08-01, fin: 2026-08-31}
+  - {id: trimestre_en_cours, alias: [ce trimestre], debut: 2026-07-01, fin: 2026-09-30}
+  - {id: trimestre_precedent, alias: [le trimestre dernier, le trimestre passé], debut: 2026-04-01, fin: 2026-06-30}
+  - {id: douze_mois_glissants, alias: [les 12 derniers mois, sur un an glissant, 12 mois glissants], debut: 2025-10-01, fin: 2026-09-30}
+  - {id: n_derniers_jours, alias: [les N derniers jours, depuis N jours], regle: "data_as_of − (N − 1) jours → data_as_of"}
+  - {id: mois_nomme, alias: [janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre],
+     regle: "dernière occurrence ≤ data_as_of"}
+  - {id: annee_nommee, alias: ["2023", "2024", "2025", "2026"], regle: "année civile ; 2026 s'arrête au 2026-09-30"}
+  - {id: depuis_date, alias: ["depuis <mois> <année>"], regle: "du premier jour cité → data_as_of"}
+  - {id: fin_de_mois, alias: ["à fin <mois>", "fin <mois>"], regle: "photo de stock au dernier jour du mois (R-STK-01)"}
+
+axes_temporels:
+  - {id: jour, alias: [par jour, quotidien, quotidienne]}
+  - {id: semaine, alias: [par semaine, hebdomadaire]}
+  - {id: mois, alias: [par mois, mensuel, mensuelle]}
+  - {id: trimestre, alias: [par trimestre, trimestriel, trimestrielle]}
+  - {id: annee, alias: [par an, par année, annuel, annuelle]}
+
+# ---------------------------------------------------------------------------
+# HORS PÉRIMÈTRE (R-HP-01)
+# ---------------------------------------------------------------------------
+hors_perimetre:
+  - {termes: [prévision, prévisions, prévoir, forecast, projection], sujet: prévisions}
+  - {termes: [budget, objectif, objectifs], sujet: budgets et objectifs}
+  - {termes: [TVA, TTC], sujet: fiscalité}
+  - {termes: [achats, commandes fournisseurs, prix d'achat], sujet: achats fournisseurs}
+  - {termes: [salaires, effectifs, absentéisme], sujet: ressources humaines}
+
+# ---------------------------------------------------------------------------
+# COLLISIONS CONNUES entre le vocabulaire métier et le catalogue (contrôlées par check_spec.py)
+# ---------------------------------------------------------------------------
+collisions_connues:
+  - {terme: appel, entites: ["metier:groupe_canal:telephone", "geo:localite:BE-9200-appel"],
+     note: "« Appels » est une localité réelle (Termonde). Résolu par l'indice de type (R-RES-09)."}
+  - {terme: en ligne, entites: ["metier:groupe_canal:digital", "geo:localite:BE-7812-ligne"],
+     note: "La normalisation supprime « en » : « en ligne » devient « ligne », localité réelle (Ath)."}
+
+# evenement connus
+evenements:
+  - {id: covid, termes: [covid, pandémie, confinement], debut: "2020-03-01", fin: "2021-06-30"}

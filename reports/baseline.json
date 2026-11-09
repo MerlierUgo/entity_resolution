@@ -1,0 +1,171 @@
+{
+ "B0_exact": {
+  "C01_libelle_canonique": {
+   "correct": 416
+  },
+  "C02_traduction_officielle": {
+   "correct": 485
+  },
+  "C03_variante_geonames": {
+   "correct": 499
+  },
+  "C04_terme_metier": {
+   "correct": 98
+  },
+  "C05_homonyme": {
+   "correct": 700
+  },
+  "C06_indice_de_type": {
+   "correct": 844
+  },
+  "C07_faute_de_frappe": {
+   "acceptable": 2738
+  },
+  "C08_hors_perimetre_proche": {
+   "correct": 594
+  },
+  "C09_code": {
+   "correct": 1097
+  },
+  "C10_client": {
+   "correct": 961,
+   "acceptable": 188
+  },
+  "C11_marque": {
+   "correct": 176
+  },
+  "C12_vehicule": {
+   "correct": 789
+  },
+  "C13_abreviation": {
+   "acceptable": 499,
+   "correct": 1
+  },
+  "TOTAL": {
+   "correct": 6660,
+   "acceptable": 3425
+  }
+ },
+ "B1_fuzzy_naif": {
+  "C01_libelle_canonique": {
+   "correct": 416
+  },
+  "C02_traduction_officielle": {
+   "correct": 485
+  },
+  "C03_variante_geonames": {
+   "correct": 499
+  },
+  "C04_terme_metier": {
+   "correct": 98
+  },
+  "C05_homonyme": {
+   "correct": 700
+  },
+  "C06_indice_de_type": {
+   "correct": 844
+  },
+  "C07_faute_de_frappe": {
+   "correct": 2494,
+   "erreur_silencieuse": 23,
+   "trop_confiant": 208,
+   "acceptable": 13
+  },
+  "C08_hors_perimetre_proche": {
+   "erreur_silencieuse": 591,
+   "incorrect": 3
+  },
+  "C09_code": {
+   "correct": 648,
+   "erreur_silencieuse": 449
+  },
+  "C10_client": {
+   "correct": 1120,
+   "trop_confiant": 28,
+   "erreur_silencieuse": 1
+  },
+  "C11_marque": {
+   "correct": 176
+  },
+  "C12_vehicule": {
+   "correct": 789
+  },
+  "C13_abreviation": {
+   "correct": 371,
+   "trop_confiant": 10,
+   "erreur_silencieuse": 18,
+   "acceptable": 101
+  },
+  "TOTAL": {
+   "correct": 8640,
+   "erreur_silencieuse": 1082,
+   "trop_confiant": 246,
+   "acceptable": 114,
+   "incorrect": 3
+  }
+ },
+ "B2_fuzzy_borne": {
+  "C01_libelle_canonique": {
+   "correct": 416
+  },
+  "C02_traduction_officielle": {
+   "correct": 485
+  },
+  "C03_variante_geonames": {
+   "correct": 499
+  },
+  "C04_terme_metier": {
+   "correct": 98
+  },
+  "C05_homonyme": {
+   "correct": 700
+  },
+  "C06_indice_de_type": {
+   "correct": 844
+  },
+  "C07_faute_de_frappe": {
+   "acceptable": 110,
+   "correct": 2428,
+   "incorrect": 139,
+   "partiel": 50,
+   "trop_confiant": 10,
+   "erreur_silencieuse": 1
+  },
+  "C08_hors_perimetre_proche": {
+   "incorrect": 329,
+   "erreur_silencieuse": 260,
+   "correct": 5
+  },
+  "C09_code": {
+   "correct": 1097
+  },
+  "C10_client": {
+   "correct": 1128,
+   "incorrect": 16,
+   "partiel": 3,
+   "trop_confiant": 2
+  },
+  "C11_marque": {
+   "correct": 176
+  },
+  "C12_vehicule": {
+   "correct": 789
+  },
+  "C13_abreviation": {
+   "correct": 356,
+   "incorrect": 29,
+   "acceptable": 101,
+   "erreur_silencieuse": 10,
+   "trop_confiant": 2,
+   "partiel": 2
+  },
+  "TOTAL": {
+   "correct": 9021,
+   "acceptable": 211,
+   "incorrect": 513,
+   "partiel": 55,
+   "trop_confiant": 14,
+   "erreur_silencieuse": 271
+  }
+ }
+}

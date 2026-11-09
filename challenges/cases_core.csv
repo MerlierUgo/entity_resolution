@@ -1,0 +1,781 @@
+﻿case_id,category,input_text,hint_type,expected_status,expected_ids,accepted,difficulty,ground_truth,note
+ER-00005,C01_libelle_canonique,A 250 E,,resolved,veh:modele:mercedes-benz-a-250-e,,1,index du catalogue,
+ER-00008,C01_libelle_canonique,ABARTH,,resolved,veh:marque:abarth,,1,index du catalogue,
+ER-00010,C01_libelle_canonique,ASTON MARTIN,,resolved,veh:marque:aston-martin,,1,index du catalogue,
+ER-00016,C01_libelle_canonique,Agence Bruxelles,,resolved,mecanova:site:agence-bruxelle,,1,index du catalogue,
+ER-00025,C01_libelle_canonique,"Air conditioning machines; comprising a motor driven fan and elements for changing the temperature and humidity, including those machines in which the humidity cannot be separately regulated",,resolved,douane:sh:8415,,1,index du catalogue,
+ER-00026,C01_libelle_canonique,Allumage et démarrage,,resolved,mecanova:famille:allumage-demarrage,,1,index du catalogue,
+ER-00027,C01_libelle_canonique,Alost,,ambiguous,geo:arrondissement:be-alost|geo:commune:BE-41002,,1,index du catalogue,
+ER-00034,C01_libelle_canonique,Auto Antoine SRL,,ambiguous,mecanova:client:CL-506057|mecanova:client:CL-509971,,1,index du catalogue,
+ER-00037,C01_libelle_canonique,Auto Philippe SRL,,resolved,mecanova:client:CL-326753,,1,index du catalogue,
+ER-00049,C01_libelle_canonique,Barry,,resolved,geo:localite:BE-7534-barry,,1,index du catalogue,
+ER-00057,C01_libelle_canonique,Bellecourt,,resolved,geo:localite:BE-7170-bellecourt,,1,index du catalogue,
+ER-00067,C01_libelle_canonique,Bosal,,resolved,piece:marque:bosal,,1,index du catalogue,
+ER-00068,C01_libelle_canonique,Bouchons de vase d'expansion,,resolved,piece:cat:vp-1-4-22-9,,1,index du catalogue,
+ER-00069,C01_libelle_canonique,Bouchons de vidange d'huile,,resolved,piece:cat:vp-1-4-5-3,,1,index du catalogue,
+ER-00085,C01_libelle_canonique,C3,,resolved,veh:modele:citroen-c3,,1,index du catalogue,
+ER-00092,C01_libelle_canonique,Capteurs de position de papillon,,resolved,piece:cat:vp-1-4-16-18,,1,index du catalogue,
+ER-00134,C01_libelle_canonique,Disques de frein arrière – Mécanova Select Standard,,ambiguous,mecanova:article:MN-DSQ-18212|mecanova:article:MN-DSQ-21935|mecanova:article:MN-DSQ-56750|mecanova:article:MN-DSQ-86731,,1,index du catalogue,
+ER-00139,C01_libelle_canonique,E-commerce pro,,resolved,metier:canal:e-commerce-pro,,1,index du catalogue,
+ER-00145,C01_libelle_canonique,Eeklo,,ambiguous,geo:arrondissement:be-eeklo|geo:commune:BE-43005,,1,index du catalogue ; règles de la spec appliquées,
+ER-00154,C01_libelle_canonique,"Engines; parts, suitable for use solely or principally with spark-ignition internal combustion piston engines (for other than aircraft)",,resolved,douane:sh:840991,,1,index du catalogue,
+ER-00156,C01_libelle_canonique,Entrepôt central,,resolved,mecanova:site:entrepot-central,,1,index du catalogue,
+ER-00157,C01_libelle_canonique,Erreur de commande,,resolved,metier:motif_retour:erreur-commande,,1,index du catalogue,
+ER-00161,C01_libelle_canonique,Exide Technologies,,resolved,organisation:exide-technologie,,1,index du catalogue,
+ER-00171,C01_libelle_canonique,Filtre à huile – Mann-Filter Standard,,ambiguous,mecanova:article:MN-FHU-21896|mecanova:article:MN-FHU-21946|mecanova:article:MN-FHU-23001|mecanova:article:MN-FHU-39002|mecanova:article:MN-FHU-42806|mecanova:article:MN-FHU-57756|mecanova:article:MN-FHU-61418|mecanova:article:MN-FHU-75425|mecanova:article:MN-FHU-86794|mecanova:article:MN-FHU-94601,,1,index du catalogue,
+ER-00181,C01_libelle_canonique,Forges,,ambiguous,geo:localite:BE-6464-forge|geo:ville:FR-3001020|geo:ville:FR-3009341,,1,index du catalogue,
+ER-00183,C01_libelle_canonique,France,,resolved,geo:pays:FR,,1,index du catalogue,
+ER-00187,C01_libelle_canonique,GT2STRADALE,,resolved,veh:modele:maserati-gt2stradale,,1,index du catalogue,
+ER-00201,C01_libelle_canonique,Guillou Carrosserie S.à r.l.,,resolved,mecanova:client:CL-983840,,1,index du catalogue,
+ER-00202,C01_libelle_canonique,Gérardmer,,resolved,geo:ville:FR-3016274,,1,index du catalogue,
+ER-00203,C01_libelle_canonique,HONDA,,resolved,veh:marque:honda,,1,index du catalogue,
+ER-00214,C01_libelle_canonique,Houthalen-Helchteren,,resolved,geo:commune:BE-72039,,1,index du catalogue ; règles de la spec appliquées,
+ER-00223,C01_libelle_canonique,Instruments and apparatus; for measuring or checking the flow or level of liquids,,resolved,douane:sh:902610,,1,index du catalogue,
+ER-00226,C01_libelle_canonique,JIAYUAN,,resolved,veh:marque:jiayuan,,1,index du catalogue,
+ER-00235,C01_libelle_canonique,Kinrooi,,resolved,geo:commune:BE-72018,,1,index du catalogue ; règles de la spec appliquées,
+ER-00247,C01_libelle_canonique,Laura Fontaine,,resolved,mecanova:commercial:laura-fontaine,,1,index du catalogue,
+ER-00250,C01_libelle_canonique,Leval-Trahegnies,,resolved,geo:localite:BE-7134-leval-trahegnie,,1,index du catalogue,
+ER-00256,C01_libelle_canonique,Liquide de refroidissement – ATE Standard,,ambiguous,mecanova:article:MN-LRF-36243|mecanova:article:MN-LRF-50177|mecanova:article:MN-LRF-50178|mecanova:article:MN-LRF-72517|mecanova:article:MN-LRF-89235|mecanova:article:MN-LRF-99863,,1,index du catalogue,
+ER-00259,C01_libelle_canonique,Livraison garage,,resolved,metier:canal:livraison-garage,,1,index du catalogue,
+ER-00264,C01_libelle_canonique,MASERATI,,resolved,veh:marque:maserati,,1,index du catalogue,
+ER-00266,C01_libelle_canonique,Maaseik,,ambiguous,geo:arrondissement:be-maaseik|geo:commune:BE-72021,,1,index du catalogue ; règles de la spec appliquées,
+ER-00269,C01_libelle_canonique,Mann+Hummel,,resolved,organisation:mann-hummel,,1,index du catalogue,
+ER-00278,C01_libelle_canonique,Mons,,ambiguous,geo:arrondissement:be-mon|geo:commune:BE-53053|geo:ville:FR-2993203|geo:ville:FR-2993207,,1,index du catalogue ; règles de la spec appliquées,
+ER-00283,C01_libelle_canonique,Mécanova Select,,resolved,piece:marque:mecanova-select,,1,index du catalogue,
+ER-00308,C01_libelle_canonique,Pays-Bas,,resolved,geo:pays:NL,,1,index du catalogue,
+ER-00327,C01_libelle_canonique,Reckange-sur-Mess,,resolved,geo:commune:LU-2960164,,1,index du catalogue,
+ER-00335,C01_libelle_canonique,Robert Bosch GmbH,,resolved,organisation:robert-bosch-gmbh,,1,index du catalogue,
+ER-00339,C01_libelle_canonique,Rotule – Sachs Premium,,resolved,mecanova:article:MN-ROT-10802,,1,index du catalogue,
+ER-00348,C01_libelle_canonique,S.à r.l.,,ambiguous,juridique:BE:srl|juridique:FR:sarl|juridique:LU:s-r,,1,index du catalogue,
+ER-00351,C01_libelle_canonique,SAS,,resolved,juridique:FR:sas,,1,index du catalogue,
+ER-00352,C01_libelle_canonique,SC,,resolved,juridique:BE:sc,,1,index du catalogue,
+ER-00359,C01_libelle_canonique,Saint-Omer-en-Chaussée,,resolved,geo:ville:FR-2977841,,1,index du catalogue,
+ER-00373,C01_libelle_canonique,TMD Friction,,resolved,organisation:tmd-friction,,1,index du catalogue,
+ER-00378,C01_libelle_canonique,Taux de remise moyen,,resolved,metier:mesure:M16,,1,index du catalogue,
+ER-00381,C01_libelle_canonique,Tenneco,,resolved,organisation:tenneco,,1,index du catalogue,
+ER-00385,C01_libelle_canonique,Thomas Renard,,resolved,mecanova:commercial:thoma-renard,,1,index du catalogue,
+ER-00391,C01_libelle_canonique,Tournai-Mouscron,,resolved,geo:arrondissement:be-tournai-mouscron,,1,index du catalogue,
+ER-00403,C01_libelle_canonique,Weiler-la-Tour,,resolved,geo:commune:LU-2959996,,1,index du catalogue,
+ER-00409,C01_libelle_canonique,ams OSRAM,,resolved,organisation:ams-osram,,1,index du catalogue,
+ER-00411,C01_libelle_canonique,thyssenkrupp,,resolved,organisation:thyssenkrupp,,1,index du catalogue,
+ER-00412,C01_libelle_canonique,Échappement,,ambiguous,mecanova:famille:echappement|piece:cat:vp-1-4-8,,1,index du catalogue,
+ER-00421,C02_traduction_officielle,Aandrijfassen,,resolved,piece:cat:vp-1-4-19-4,,1,traduction officielle de la source,
+ER-00424,C02_traduction_officielle,Aat,,ambiguous,geo:arrondissement:be-ath|geo:commune:BE-51004,,1,traduction officielle de la source,
+ER-00426,C02_traduction_officielle,Abschleppstangen,,resolved,piece:cat:vp-1-4-18-3,,1,traduction officielle de la source,
+ER-00432,C02_traduction_officielle,Anhängerkupplungen,,resolved,piece:cat:vp-1-4-18-6,,1,traduction officielle de la source,
+ER-00441,C02_traduction_officielle,Autobanden,,resolved,piece:cat:vp-1-4-20-3-1,,1,traduction officielle de la source,
+ER-00443,C02_traduction_officielle,Autospiegel,,resolved,piece:cat:vp-1-4-11-1,,1,traduction officielle de la source,
+ER-00450,C02_traduction_officielle,Batterijen,,resolved,piece:cat:vp-1-4-14-2,,1,traduction officielle de la source,
+ER-00453,C02_traduction_officielle,Bekleding voor laadruimtes,,resolved,piece:cat:vp-1-4-2-1,,1,traduction officielle de la source,
+ER-00465,C02_traduction_officielle,Brake Boosters,,resolved,piece:cat:vp-1-4-1-2,,1,traduction officielle de la source,
+ER-00473,C02_traduction_officielle,Brandstofpompen,,resolved,piece:cat:vp-1-4-10-7,,1,traduction officielle de la source,
+ER-00483,C02_traduction_officielle,Bremstrommeln,,resolved,piece:cat:vp-1-4-1-9,,1,traduction officielle de la source,
+ER-00484,C02_traduction_officielle,Brugge,,ambiguous,geo:arrondissement:be-bruge|geo:commune:BE-31005,,1,traduction officielle de la source ; règles de la spec appliquées,
+ER-00485,C02_traduction_officielle,Brussel-Hoofdstad,,resolved,geo:arrondissement:be-bruxelle-capitale,,1,traduction officielle de la source,
+ER-00501,C02_traduction_officielle,Clutch Slave Cylinders,,resolved,piece:cat:vp-1-4-19-10,,1,traduction officielle de la source,
+ER-00508,C02_traduction_officielle,Deurafdichtingen,,resolved,piece:cat:vp-1-4-9-13,,1,traduction officielle de la source,
+ER-00550,C02_traduction_officielle,Gas Struts,,resolved,piece:cat:vp-1-4-9-10,,1,traduction officielle de la source,
+ER-00555,C02_traduction_officielle,Genepiën,,resolved,geo:commune:BE-25031,,1,traduction officielle de la source,
+ER-00561,C02_traduction_officielle,Getriebelager,,resolved,piece:cat:vp-1-4-19-7,,1,traduction officielle de la source,
+ER-00570,C02_traduction_officielle,Hannuit,,resolved,geo:commune:BE-64034,,1,traduction officielle de la source,
+ER-00572,C02_traduction_officielle,Heater Controls,,resolved,piece:cat:vp-1-4-3-7,,1,traduction officielle de la source,
+ER-00573,C02_traduction_officielle,Heater Cores,,resolved,piece:cat:vp-1-4-3-8,,1,traduction officielle de la source,
+ER-00587,C02_traduction_officielle,Ignition Leads,,resolved,piece:cat:vp-1-4-6-5-3,,1,traduction officielle de la source,
+ER-00599,C02_traduction_officielle,Kfz-Sitze,,resolved,piece:cat:vp-1-4-15,,1,traduction officielle de la source,
+ER-00603,C02_traduction_officielle,Kilometertellers,,resolved,piece:cat:vp-1-4-16-2,,1,traduction officielle de la source,
+ER-00617,C02_traduction_officielle,Koppelingskogels,,resolved,piece:cat:vp-1-4-18-1,,1,traduction officielle de la source,
+ER-00618,C02_traduction_officielle,Koppelingsleidingen,,resolved,piece:cat:vp-1-4-19-17,,1,traduction officielle de la source,
+ER-00639,C02_traduction_officielle,Lange Blöcke,,resolved,piece:cat:vp-1-4-7-7,,1,traduction officielle de la source,
+ER-00651,C02_traduction_officielle,Leuven,,ambiguous,geo:arrondissement:be-louvain|geo:commune:BE-24062,,1,traduction officielle de la source ; règles de la spec appliquées,
+ER-00663,C02_traduction_officielle,Luchtmassameters (MAF-sensoren),,resolved,piece:cat:vp-1-4-16-11,,1,traduction officielle de la source,
+ER-00666,C02_traduction_officielle,Lüfterhauben,,resolved,piece:cat:vp-1-4-22-2,,1,traduction officielle de la source,
+ER-00672,C02_traduction_officielle,Motor Vehicle Climate Control,,resolved,piece:cat:vp-1-4-3,,1,traduction officielle de la source,
+ER-00675,C02_traduction_officielle,Motor Vehicle Exhaust Pipes & Tubings,,resolved,piece:cat:vp-1-4-8-4,,1,traduction officielle de la source,
+ER-00680,C02_traduction_officielle,Motor Vehicle Lighting,,resolved,piece:cat:vp-1-4-12,,1,traduction officielle de la source,
+ER-00699,C02_traduction_officielle,Motoronderdelen voor motorvoertuigen,,resolved,piece:cat:vp-1-4-6,,1,traduction officielle de la source,
+ER-00724,C02_traduction_officielle,Oliekoelerleidingen en -slangen,,resolved,piece:cat:vp-1-4-5-11,,1,traduction officielle de la source,
+ER-00743,C02_traduction_officielle,Pedalen,,resolved,piece:cat:vp-1-4-4-2,,1,traduction officielle de la source,
+ER-00751,C02_traduction_officielle,Radiatordoppen,,resolved,piece:cat:vp-1-4-22-1,,1,traduction officielle de la source,
+ER-00764,C02_traduction_officielle,Remslangen,,resolved,piece:cat:vp-1-4-1-13,,1,traduction officielle de la source,
+ER-00767,C02_traduction_officielle,Richtingaanwijzers,,resolved,piece:cat:vp-1-4-12-8,,1,traduction officielle de la source,
+ER-00768,C02_traduction_officielle,Roeselare,,ambiguous,geo:arrondissement:be-rouler|geo:commune:BE-36015,,1,traduction officielle de la source ; règles de la spec appliquées,
+ER-00775,C02_traduction_officielle,Scherpenheuvel-Zichem,,resolved,geo:commune:BE-24134,,1,traduction officielle de la source ; règles de la spec appliquées,
+ER-00789,C02_traduction_officielle,Spannungsregler,,resolved,piece:cat:vp-1-4-14-7,,1,traduction officielle de la source,
+ER-00797,C02_traduction_officielle,Steering Columns,,resolved,piece:cat:vp-1-4-4-3,,1,traduction officielle de la source,
+ER-00801,C02_traduction_officielle,Steering Racks,,resolved,piece:cat:vp-1-4-4-5,,1,traduction officielle de la source,
+ER-00807,C02_traduction_officielle,Strut Mounts,,resolved,piece:cat:vp-1-4-17-10,,1,traduction officielle de la source,
+ER-00819,C02_traduction_officielle,Tankdeckel,,resolved,piece:cat:vp-1-4-10-2,,1,traduction officielle de la source,
+ER-00825,C02_traduction_officielle,Throttle Position Sensors,,resolved,piece:cat:vp-1-4-16-18,,1,traduction officielle de la source,
+ER-00827,C02_traduction_officielle,Timing Chains,,resolved,piece:cat:vp-1-4-6-8,,1,traduction officielle de la source,
+ER-00828,C02_traduction_officielle,Tongeren,,ambiguous,geo:arrondissement:be-tongre|geo:commune:BE-73083,,1,traduction officielle de la source ; règles de la spec appliquées,
+ER-00844,C02_traduction_officielle,Ventile,,resolved,piece:cat:vp-1-4-6-9,,1,traduction officielle de la source,
+ER-00850,C02_traduction_officielle,Versnellingsbakken,,resolved,piece:cat:vp-1-4-19-8,,1,traduction officielle de la source,
+ER-00856,C02_traduction_officielle,Vlaams-Brabant,,resolved,geo:province:BE-VBR,,1,traduction officielle de la source,
+ER-00858,C02_traduction_officielle,Voeren,,resolved,geo:commune:BE-73109,,1,traduction officielle de la source ; règles de la spec appliquées,
+ER-00865,C02_traduction_officielle,West-Vlaanderen,,resolved,geo:province:BE-VWV,,1,traduction officielle de la source,
+ER-00870,C02_traduction_officielle,Wheel Weights & Balancing,,resolved,piece:cat:vp-1-4-20-4-3,,1,traduction officielle de la source,
+ER-00877,C02_traduction_officielle,Wiper Arms,,resolved,piece:cat:vp-1-4-21-4-3,,1,traduction officielle de la source,
+ER-00883,C02_traduction_officielle,Wischermotoren,,resolved,piece:cat:vp-1-4-21-4-4,,1,traduction officielle de la source,
+ER-00887,C02_traduction_officielle,Zinnik,,ambiguous,geo:arrondissement:be-soignie|geo:commune:BE-55040,,1,traduction officielle de la source,
+ER-00889,C02_traduction_officielle,Zuigers,,resolved,piece:cat:vp-1-4-6-6,,1,traduction officielle de la source,
+ER-00899,C02_traduction_officielle,Ölkühlerleitungen & -schläuche,,resolved,piece:cat:vp-1-4-5-11,,1,traduction officielle de la source,
+ER-00906,C03_variante_geonames,Aiweye,,resolved,geo:commune:BE-62009,,2,nom alternatif GeoNames,
+ER-00909,C03_variante_geonames,Allankur,,resolved,geo:ville:FR-3014050,,2,nom alternatif GeoNames,
+ER-00911,C03_variante_geonames,Amand-du-Fion,,resolved,geo:ville:FR-2981835,,2,nom alternatif GeoNames,
+ER-00917,C03_variante_geonames,Angen,,resolved,geo:commune:BE-51067,,2,nom alternatif GeoNames,
+ER-00926,C03_variante_geonames,Bael'-le-Sok,,resolved,geo:ville:FR-3035356,,2,nom alternatif GeoNames,
+ER-00928,C03_variante_geonames,Barenthal,,resolved,geo:ville:FR-3035445,,2,nom alternatif GeoNames,
+ER-00935,C03_variante_geonames,Bergem,,ambiguous,geo:commune:LU-2960791|geo:ville:FR-3033382,,2,nom alternatif GeoNames,
+ER-00938,C03_variante_geonames,Bernardsviller,,resolved,geo:ville:FR-3033316,,2,nom alternatif GeoNames,
+ER-00950,C03_variante_geonames,Billy,,ambiguous,geo:ville:FR-3032615|geo:ville:FR-3032618,,2,nom alternatif GeoNames,
+ER-00958,C03_variante_geonames,Bollezele,,resolved,geo:ville:FR-3031865,,2,nom alternatif GeoNames,
+ER-00968,C03_variante_geonames,Brel,,resolved,geo:ville:FR-3030323,,2,nom alternatif GeoNames,
+ER-00969,C03_variante_geonames,Brin,,resolved,geo:ville:FR-3030023,,2,nom alternatif GeoNames,
+ER-00970,C03_variante_geonames,Brisel,,ambiguous,geo:commune:BE-21004|mecanova:site:agence-bruxelle,,2,nom alternatif GeoNames ; règles de la spec appliquées,
+ER-00986,C03_variante_geonames,Buven,,resolved,geo:ville:FR-3030721,,2,nom alternatif GeoNames,
+ER-00993,C03_variante_geonames,Charmont,,resolved,geo:ville:FR-3026553,,2,nom alternatif GeoNames,
+ER-01035,C03_variante_geonames,Ejndgoven,,resolved,geo:ville:NL-2756253,,2,nom alternatif GeoNames,
+ER-01040,C03_variante_geonames,Eragny,,resolved,geo:ville:FR-3019951,,2,nom alternatif GeoNames,
+ER-01046,C03_variante_geonames,Etampes,,resolved,geo:ville:FR-3019458,,2,nom alternatif GeoNames,
+ER-01055,C03_variante_geonames,Fontenua-le-Shato,,resolved,geo:ville:FR-3017864,,2,nom alternatif GeoNames,
+ER-01057,C03_variante_geonames,Fore-an-Kambrezi,,resolved,geo:ville:FR-3017770,,2,nom alternatif GeoNames,
+ER-01058,C03_variante_geonames,Fort-la-Montagne,,resolved,geo:ville:FR-3015904,,2,nom alternatif GeoNames,
+ER-01072,C03_variante_geonames,Gauchin,,resolved,geo:ville:FR-3016525,,2,nom alternatif GeoNames,
+ER-01084,C03_variante_geonames,Gournay,,resolved,geo:ville:FR-3015508,,2,nom alternatif GeoNames,
+ER-01088,C03_variante_geonames,Grehange,,resolved,geo:ville:FR-3022612,,2,nom alternatif GeoNames,
+ER-01102,C03_variante_geonames,Heele,,resolved,geo:ville:NL-2754652,,2,nom alternatif GeoNames,
+ER-01103,C03_variante_geonames,Helleng,,resolved,geo:commune:LU-2960470,,2,nom alternatif GeoNames,
+ER-01124,C03_variante_geonames,Kenigzmaker,,resolved,geo:ville:FR-3011437,,2,nom alternatif GeoNames,
+ER-01136,C03_variante_geonames,Kortryk,,resolved,geo:commune:BE-34022,,2,nom alternatif GeoNames,
+ER-01148,C03_variante_geonames,La Montagne-des-Piques,,resolved,geo:ville:FR-3034877,,2,nom alternatif GeoNames,
+ER-01151,C03_variante_geonames,Lachapelle,,ambiguous,geo:ville:FR-3010262|geo:ville:FR-3010400,,2,nom alternatif GeoNames,
+ER-01157,C03_variante_geonames,Laputrua,,resolved,geo:ville:FR-3007160,,2,nom alternatif GeoNames,
+ER-01160,C03_variante_geonames,Le-Sindika,,resolved,geo:ville:FR-2999303,,2,nom alternatif GeoNames,
+ER-01165,C03_variante_geonames,Liberkur,,resolved,geo:ville:FR-2998520,,2,nom alternatif GeoNames,
+ER-01184,C03_variante_geonames,Maerel,,resolved,geo:commune:LU-2960277,,2,nom alternatif GeoNames,
+ER-01209,C03_variante_geonames,Monsa,,resolved,geo:commune:BE-53053,,2,nom alternatif GeoNames,
+ER-01228,C03_variante_geonames,Neumerl,,resolved,geo:commune:LU-12035864,,2,nom alternatif GeoNames,
+ER-01236,C03_variante_geonames,Oberaspach,,resolved,geo:ville:FR-3036553,,2,nom alternatif GeoNames,
+ER-01249,C03_variante_geonames,Ottrot,,resolved,geo:ville:FR-2989082,,2,nom alternatif GeoNames,
+ER-01252,C03_variante_geonames,Pekken,,resolved,geo:commune:LU-2960805,,2,nom alternatif GeoNames,
+ER-01253,C03_variante_geonames,Pel'tr,,resolved,geo:ville:FR-2988161,,2,nom alternatif GeoNames,
+ER-01260,C03_variante_geonames,Prezo,,resolved,geo:ville:FR-2985416,,2,nom alternatif GeoNames,
+ER-01274,C03_variante_geonames,Roeselave,,resolved,geo:commune:BE-36015,,2,nom alternatif GeoNames,
+ER-01282,C03_variante_geonames,Ryckevorsel,,resolved,geo:commune:BE-13037,,2,nom alternatif GeoNames,
+ER-01286,C03_variante_geonames,Saint-Gilles - Sint-Gillis,,resolved,geo:commune:BE-21013,,2,nom alternatif GeoNames,
+ER-01292,C03_variante_geonames,Sainte-Marie-Cappel Bree,,resolved,geo:ville:FR-2980437,,2,nom alternatif GeoNames,
+ER-01310,C03_variante_geonames,Sermaize-sur-Saulx,,resolved,geo:ville:FR-2974901,,2,nom alternatif GeoNames,
+ER-01312,C03_variante_geonames,Sharlvil Mezjer,,resolved,geo:ville:FR-3026613,,2,nom alternatif GeoNames,
+ER-01313,C03_variante_geonames,Shastr,,resolved,geo:commune:BE-25117,,2,nom alternatif GeoNames,
+ER-01329,C03_variante_geonames,Stenverk,,resolved,geo:ville:FR-2973821,,2,nom alternatif GeoNames,
+ER-01335,C03_variante_geonames,Sulz,,ambiguous,geo:ville:FR-2973992|geo:ville:FR-2973993,,2,nom alternatif GeoNames,
+ER-01341,C03_variante_geonames,Temsche,,resolved,geo:commune:BE-46025,,2,nom alternatif GeoNames,
+ER-01343,C03_variante_geonames,Tenlo,,resolved,geo:commune:BE-61081,,2,nom alternatif GeoNames,
+ER-01350,C03_variante_geonames,Toerkonje,,resolved,geo:ville:FR-2972284,,2,nom alternatif GeoNames,
+ER-01355,C03_variante_geonames,Trecae,,resolved,geo:ville:FR-2971549,,2,nom alternatif GeoNames,
+ER-01362,C03_variante_geonames,Val'shed,,resolved,geo:ville:FR-2967490,,2,nom alternatif GeoNames,
+ER-01368,C03_variante_geonames,Verneuil-sur-Oise,,resolved,geo:ville:FR-2969806,,2,nom alternatif GeoNames,
+ER-01372,C03_variante_geonames,Vervia,,resolved,geo:commune:BE-63079,,2,nom alternatif GeoNames,
+ER-01374,C03_variante_geonames,Vienne-le-Bourg,,resolved,geo:ville:FR-2969274,,2,nom alternatif GeoNames,
+ER-01384,C03_variante_geonames,Vjugt,,resolved,geo:ville:NL-2745154,,2,nom alternatif GeoNames,
+ER-01400,C03_variante_geonames,Zuid-Wervik,,resolved,geo:ville:FR-2967397,,2,nom alternatif GeoNames,
+ER-01401,C04_terme_metier,B2B,,resolved,metier:segment:professionnel,,2,terme métier curé,
+ER-01402,C04_terme_metier,B2C,,resolved,metier:segment:particulier,,2,terme métier curé,
+ER-01403,C04_terme_metier,Butée d'embrayage,,resolved,piece:cat:vp-1-4-19-16,,2,terme métier curé,
+ER-01404,C04_terme_metier,Catalyseur,,resolved,piece:cat:vp-1-4-8-2,,2,terme métier curé,
+ER-01407,C04_terme_metier,Huile de boîte de vitesses,,resolved,piece:cat:vp-1-4-19-6,,2,terme métier curé,
+ER-01409,C04_terme_metier,Kit chaîne de distribution,,resolved,piece:cat:vp-1-4-6-8,,2,terme métier curé,
+ER-01410,C04_terme_metier,Kit d'embrayage,,resolved,piece:cat:vp-1-4-19-2,,2,terme métier curé,
+ER-01411,C04_terme_metier,OE,,resolved,mecanova:qualite:origine,,2,terme métier curé,
+ER-01413,C04_terme_metier,Ressort de suspension,,resolved,piece:cat:vp-1-4-17-2,,2,terme métier curé,
+ER-01415,C04_terme_metier,Tapis de sol,,resolved,piece:cat:vp-1-4-11-3,,2,terme métier curé,
+ER-01417,C04_terme_metier,Volant moteur,,resolved,piece:cat:vp-1-4-19-13,,2,terme métier curé,
+ER-01418,C04_terme_metier,aftermarket,,resolved,mecanova:qualite:adaptable,,2,terme métier curé,
+ER-01419,C04_terme_metier,allumage,,resolved,mecanova:famille:allumage-demarrage,,2,terme métier curé,
+ER-01421,C04_terme_metier,amortos,,resolved,piece:cat:vp-1-4-17-5,,2,terme métier curé,
+ER-01422,C04_terme_metier,antigel,,resolved,mecanova:cat:liquide-refroidissement,,2,terme métier curé,
+ER-01423,C04_terme_metier,appel,,ambiguous,geo:localite:BE-9200-appel|metier:groupe_canal:telephone,,2,terme métier curé,
+ER-01426,C04_terme_metier,boîtiers de sortie d'eau,,resolved,piece:cat:vp-1-4-22-7,,2,terme métier curé,
+ER-01427,C04_terme_metier,bras de suspension,,resolved,piece:cat:vp-1-4-17-3,,2,terme métier curé,
+ER-01429,C04_terme_metier,chaînes,,resolved,mecanova:cat:chaine-neige,,2,terme métier curé,
+ER-01430,C04_terme_metier,clients particuliers,,resolved,metier:segment:particulier,,2,terme métier curé,
+ER-01431,C04_terme_metier,clients pro,,resolved,metier:segment:professionnel,,2,terme métier curé,
+ER-01434,C04_terme_metier,commandé par erreur,,resolved,metier:motif_retour:erreur-commande,,2,terme métier curé,
+ER-01435,C04_terme_metier,condenseurs de climatisation,,resolved,piece:cat:vp-1-4-3-2,,2,terme métier curé,
+ER-01437,C04_terme_metier,culasses,,resolved,piece:cat:vp-1-4-6-3,,2,terme métier curé,
+ER-01439,C04_terme_metier,défaut,,resolved,metier:motif_retour:piece-defectueuse,,2,terme métier curé,
+ER-01440,C04_terme_metier,défectueuse,,resolved,metier:motif_retour:piece-defectueuse,,2,terme métier curé,
+ER-01443,C04_terme_metier,dépôt,,resolved,mecanova:site:entrepot-central,,2,terme métier curé,
+ER-01446,C04_terme_metier,en ligne,,ambiguous,geo:localite:BE-7812-ligne|metier:groupe_canal:digital,,2,terme métier curé,
+ER-01447,C04_terme_metier,entrepôt,,resolved,mecanova:site:entrepot-central,,2,terme métier curé,
+ER-01448,C04_terme_metier,entrée de gamme,,resolved,mecanova:gamme:eco,,2,terme métier curé,
+ER-01449,C04_terme_metier,erreur client,,resolved,metier:motif_retour:erreur-commande,,2,terme métier curé,
+ER-01451,C04_terme_metier,filtres à pollen,,resolved,mecanova:cat:filtre-habitacle,,2,terme métier curé,
+ER-01452,C04_terme_metier,freins,,resolved,mecanova:famille:freinage,,2,terme métier curé,
+ER-01454,C04_terme_metier,grand public,,resolved,metier:segment:particulier,,2,terme métier curé,
+ER-01456,C04_terme_metier,huile,,resolved,mecanova:cat:huile-moteur,,2,terme métier curé,
+ER-01458,C04_terme_metier,internet,,resolved,metier:groupe_canal:digital,,2,terme métier curé,
+ER-01459,C04_terme_metier,kit distri,,resolved,piece:cat:vp-1-4-6-7,,2,terme métier curé,
+ER-01460,C04_terme_metier,kits de distribution,,resolved,piece:cat:vp-1-4-6-7,,2,terme métier curé,
+ER-01463,C04_terme_metier,lubrifiants,,resolved,mecanova:famille:huile-liquide,,2,terme métier curé,
+ER-01464,C04_terme_metier,lumière,,resolved,mecanova:famille:eclairage,,2,terme métier curé,
+ER-01465,C04_terme_metier,magasin,,resolved,metier:canal:comptoir,,2,terme métier curé,
+ER-01466,C04_terme_metier,mauvaise référence,,resolved,metier:motif_retour:incompatibilite-vehicule,,2,terme métier curé,
+ER-01467,C04_terme_metier,milieu de gamme,,resolved,mecanova:gamme:standard,,2,terme métier curé,
+ER-01469,C04_terme_metier,ne correspond pas,,resolved,metier:motif_retour:incompatibilite-vehicule,,2,terme métier curé,
+ER-01470,C04_terme_metier,optique,,resolved,mecanova:famille:eclairage,,2,terme métier curé,
+ER-01471,C04_terme_metier,par téléphone,,resolved,metier:groupe_canal:telephone,,2,terme métier curé,
+ER-01472,C04_terme_metier,physique,,resolved,metier:groupe_canal:agence,,2,terme métier curé,
+ER-01473,C04_terme_metier,pièce d'origine,,resolved,mecanova:qualite:origine,,2,terme métier curé,
+ER-01477,C04_terme_metier,pro,,resolved,metier:segment:professionnel,,2,terme métier curé,
+ER-01479,C04_terme_metier,rotules,,resolved,piece:cat:vp-1-4-17-1,,2,terme métier curé,
+ER-01480,C04_terme_metier,servo-frein,,resolved,piece:cat:vp-1-4-1-2,,2,terme métier curé,
+ER-01482,C04_terme_metier,site grand public,,resolved,metier:canal:e-commerce-particulier,,2,terme métier curé,
+ER-01485,C04_terme_metier,soupapes,,resolved,piece:cat:vp-1-4-6-9,,2,terme métier curé,
+ER-01486,C04_terme_metier,suspension,,resolved,mecanova:famille:suspension-direction,,2,terme métier curé,
+ER-01487,C04_terme_metier,tournée,,resolved,metier:canal:livraison-garage,,2,terme métier curé,
+ER-01492,C04_terme_metier,visibilité,,resolved,mecanova:famille:essuyage,,2,terme métier curé,
+ER-01493,C04_terme_metier,web,,resolved,metier:groupe_canal:digital,,2,terme métier curé,
+ER-01494,C04_terme_metier,web particulier,,resolved,metier:canal:e-commerce-particulier,,2,terme métier curé,
+ER-01496,C04_terme_metier,webshop pro,,resolved,metier:canal:e-commerce-pro,,2,terme métier curé,
+ER-01498,C04_terme_metier,électricité moteur,,resolved,mecanova:famille:allumage-demarrage,,2,terme métier curé,
+ER-01499,C05_homonyme,1,,ambiguous,veh:modele:cirelli-1|veh:modele:smart-1,,3,plusieurs entités partagent la forme normalisée,types : modele_vehicule
+ER-01508,C05_homonyme,Alken,,resolved,geo:commune:BE-73001,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01513,C05_homonyme,Amortisseur arrière – KYB Premium,,ambiguous,mecanova:article:MN-AMO-28965|mecanova:article:MN-AMO-46664|mecanova:article:MN-AMO-79190,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01517,C05_homonyme,Amortisseur arrière – TRW Éco,,ambiguous,mecanova:article:MN-AMO-44335|mecanova:article:MN-AMO-44534|mecanova:article:MN-AMO-84614,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01526,C05_homonyme,Ampoule – Valeo Standard,,ambiguous,mecanova:article:MN-AMP-20344|mecanova:article:MN-AMP-23576|mecanova:article:MN-AMP-62364|mecanova:article:MN-AMP-62365|mecanova:article:MN-AMP-65189|mecanova:article:MN-AMP-65871|mecanova:article:MN-AMP-65971|mecanova:article:MN-AMP-77217|mecanova:article:MN-AMP-81812|mecanova:article:MN-AMP-84830|mecanova:article:MN-AMP-91905,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01530,C05_homonyme,Anhée,,resolved,geo:commune:BE-91005,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01547,C05_homonyme,Auto Lejeune SRL,,ambiguous,mecanova:client:CL-649481|mecanova:client:CL-737287,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01548,C05_homonyme,Auto Libert,,ambiguous,mecanova:client:CL-311099|mecanova:client:CL-472874,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01550,C05_homonyme,Auto Libert SRL,,ambiguous,mecanova:client:CL-311099|mecanova:client:CL-472874,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01552,C05_homonyme,Autoservice Claeys,,ambiguous,mecanova:client:CL-163713|mecanova:client:CL-850492,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01566,C05_homonyme,Bassenge,,resolved,geo:commune:BE-62011,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01572,C05_homonyme,Beaumont,,ambiguous,geo:commune:BE-56005|geo:ville:FR-3034139,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale, ville"
+ER-01596,C05_homonyme,Bornem,,resolved,geo:commune:BE-12007,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01600,C05_homonyme,Bougie d'allumage – Champion Standard,,ambiguous,mecanova:article:MN-BGA-11979|mecanova:article:MN-BGA-18889|mecanova:article:MN-BGA-20978|mecanova:article:MN-BGA-38076|mecanova:article:MN-BGA-43857|mecanova:article:MN-BGA-48091|mecanova:article:MN-BGA-55862|mecanova:article:MN-BGA-56919|mecanova:article:MN-BGA-66394|mecanova:article:MN-BGA-74002|mecanova:article:MN-BGA-83608|mecanova:article:MN-BGA-85238|mecanova:article:MN-BGA-85239|mecanova:article:MN-BGA-88350|mecanova:article:MN-BGA-92917,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01611,C05_homonyme,Boutersem,,resolved,geo:commune:BE-24016,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01627,C05_homonyme,Butée d'embrayage – Mécanova Select Premium,,ambiguous,mecanova:article:MN-BUT-38966|mecanova:article:MN-BUT-55427|mecanova:article:MN-BUT-56190|mecanova:article:MN-BUT-95688,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01632,C05_homonyme,Calonne,,ambiguous,geo:localite:BE-7642-calonne|geo:ville:FR-3029098|geo:ville:FR-3029099,,3,plusieurs entités partagent la forme normalisée,"types : localite_postale, ville"
+ER-01634,C05_homonyme,Capellen,,ambiguous,geo:canton:LU-CA|geo:commune:LU-2960697,,3,plusieurs entités partagent la forme normalisée,"types : canton, commune"
+ER-01636,C05_homonyme,Carrosserie Charleroi,,ambiguous,mecanova:client:CL-424207|mecanova:client:CL-739618,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01660,C05_homonyme,Clignotant – Valeo Premium,,ambiguous,mecanova:article:MN-CLI-44183|mecanova:article:MN-CLI-54904|mecanova:article:MN-CLI-59348,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01665,C05_homonyme,Couvin,,resolved,geo:commune:BE-93014,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01668,C05_homonyme,Crouy,,ambiguous,geo:ville:FR-3022269|geo:ville:FR-3022271,,3,plusieurs entités partagent la forme normalisée,types : ville
+ER-01681,C05_homonyme,Diksmuide,,ambiguous,geo:arrondissement:be-dixmude|geo:commune:BE-32003,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : arrondissement, commune, localite_postale"
+ER-01766,C05_homonyme,GLB 200,,ambiguous,veh:modele:mercedes-benz-glb-200|veh:modele:mercedes-benz-glb-200-d,,3,plusieurs entités partagent la forme normalisée,types : modele_vehicule
+ER-01775,C05_homonyme,Gar. de la Gare,,ambiguous,mecanova:client:CL-236111|mecanova:client:CL-238512|mecanova:client:CL-242304|mecanova:client:CL-245945|mecanova:client:CL-257301|mecanova:client:CL-455248|mecanova:client:CL-507127|mecanova:client:CL-507730|mecanova:client:CL-523564|mecanova:client:CL-528773|mecanova:client:CL-538383|mecanova:client:CL-558614|mecanova:client:CL-569492|mecanova:client:CL-609686|mecanova:client:CL-809634|mecanova:client:CL-881858|mecanova:client:CL-922277|mecanova:client:CL-928667,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01780,C05_homonyme,Garage Gustin & Fils,,ambiguous,mecanova:client:CL-284473|mecanova:client:CL-778311,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01788,C05_homonyme,Garage Piette SC,,ambiguous,mecanova:client:CL-730106|mecanova:client:CL-911008,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01792,C05_homonyme,Garage Servais,,ambiguous,mecanova:client:CL-478550|mecanova:client:CL-910736,,3,plusieurs entités partagent la forme normalisée,types : client
+ER-01805,C05_homonyme,Gent,,ambiguous,geo:arrondissement:be-gand|geo:commune:BE-44021,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : arrondissement, commune, localite_postale"
+ER-01809,C05_homonyme,Grevenmacher,,ambiguous,geo:canton:LU-GR|geo:commune:LU-2960515,,3,plusieurs entités partagent la forme normalisée,"types : canton, commune"
+ER-01811,C05_homonyme,Grobbendonk,,resolved,geo:commune:BE-13010,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01820,C05_homonyme,Haren,,ambiguous,geo:localite:BE-1130-haren|geo:localite:BE-3700-haren|geo:localite:BE-3840-haren|geo:ville:NL-2754842,,3,plusieurs entités partagent la forme normalisée,"types : localite_postale, ville"
+ER-01839,C05_homonyme,Hofstade,,ambiguous,geo:localite:BE-1981-hofstade|geo:localite:BE-9308-hofstade,,3,plusieurs entités partagent la forme normalisée,types : localite_postale
+ER-01859,C05_homonyme,INEOS GRENADIER,,ambiguous,veh:marque:ineos-grenadier|veh:modele:ineos-grenadier-ineos-grenadier,,3,plusieurs entités partagent la forme normalisée,"types : marque_vehicule, modele_vehicule"
+ER-01864,C05_homonyme,Jeneffe,,ambiguous,geo:localite:BE-4357-jeneffe|geo:localite:BE-5370-jeneffe,,3,plusieurs entités partagent la forme normalisée,types : localite_postale
+ER-01871,C05_homonyme,Kit chaîne de distribution – Gates Standard,,ambiguous,mecanova:article:MN-CHD-71889|mecanova:article:MN-CHD-90006|mecanova:article:MN-CHD-93723|mecanova:article:MN-CHD-97719,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01899,C05_homonyme,Laarne,,resolved,geo:commune:BE-42010,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01902,C05_homonyme,Lasne,,resolved,geo:commune:BE-25119,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-01903,C05_homonyme,Le Mesnil,,ambiguous,geo:localite:BE-5670-mesnil|geo:ville:FR-2994223|geo:ville:FR-2994224|geo:ville:FR-3003351|geo:ville:FR-3003393,,3,plusieurs entités partagent la forme normalisée,"types : localite_postale, ville"
+ER-01926,C05_homonyme,Liquide de refroidissement – Castrol Standard,,ambiguous,mecanova:article:MN-LRF-48660|mecanova:article:MN-LRF-53983|mecanova:article:MN-LRF-70845,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-01943,C05_homonyme,MERCEDES-BENZ GLS 450 4MATIC,,ambiguous,veh:modele:mercedes-benz-gls-450-4matic|veh:modele:mercedes-benz-gls-450-d-4matic,,3,plusieurs entités partagent la forme normalisée,types : modele_vehicule
+ER-01949,C05_homonyme,Malle,,ambiguous,geo:commune:BE-11057|piece:cat:vp-1-4-9-8,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : categorie_piece, commune, localite_postale"
+ER-01967,C05_homonyme,Mersch,,ambiguous,geo:canton:LU-ME|geo:commune:LU-2960276,,3,plusieurs entités partagent la forme normalisée,"types : canton, commune"
+ER-01976,C05_homonyme,Moere,,ambiguous,geo:localite:BE-8470-moere|geo:ville:FR-3000275,,3,plusieurs entités partagent la forme normalisée,"types : localite_postale, ville"
+ER-01992,C05_homonyme,Neuville,,ambiguous,geo:localite:BE-5600-neuville|geo:ville:FR-2990520|geo:ville:FR-2990524|geo:ville:FR-2990526|geo:ville:FR-2990527|geo:ville:FR-2990528|geo:ville:FR-2990543|geo:ville:FR-2990548|geo:ville:FR-3007755|geo:ville:FR-3007772,,3,plusieurs entités partagent la forme normalisée,"types : localite_postale, ville"
+ER-01998,C05_homonyme,Norroy,,ambiguous,geo:ville:FR-2990089|geo:ville:FR-2990090,,3,plusieurs entités partagent la forme normalisée,types : ville
+ER-02010,C05_homonyme,Ostende,,ambiguous,geo:arrondissement:be-ostende|geo:commune:BE-35013,,3,plusieurs entités partagent la forme normalisée,"types : arrondissement, commune"
+ER-02015,C05_homonyme,Oupeye,,resolved,geo:commune:BE-62079,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-02026,C05_homonyme,Phare – Osram Standard,,ambiguous,mecanova:article:MN-PHA-11351|mecanova:article:MN-PHA-13557|mecanova:article:MN-PHA-37589,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-02029,C05_homonyme,Plaquettes de frein arrière – Brembo Standard,,ambiguous,mecanova:article:MN-PLQ-27163|mecanova:article:MN-PLQ-30872|mecanova:article:MN-PLQ-44164|mecanova:article:MN-PLQ-60208|mecanova:article:MN-PLQ-66023|mecanova:article:MN-PLQ-75417|mecanova:article:MN-PLQ-77106|mecanova:article:MN-PLQ-95138,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-02036,C05_homonyme,Plaquettes de frein avant – Brembo Éco,,ambiguous,mecanova:article:MN-PLQ-67953|mecanova:article:MN-PLQ-74983,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-02054,C05_homonyme,Rendeux,,resolved,geo:commune:BE-83044,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-02064,C05_homonyme,Roeselare,,ambiguous,geo:arrondissement:be-rouler|geo:commune:BE-36015,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : arrondissement, commune, localite_postale"
+ER-02113,C05_homonyme,Tambour de frein – ATE Standard,,ambiguous,mecanova:article:MN-TBF-13444|mecanova:article:MN-TBF-14239|mecanova:article:MN-TBF-52681|mecanova:article:MN-TBF-72828|mecanova:article:MN-TBF-97189,,3,plusieurs entités partagent la forme normalisée,types : article
+ER-02151,C05_homonyme,Vitry,,ambiguous,geo:ville:FR-2967850|geo:ville:FR-2967860|geo:ville:FR-2967863,,3,plusieurs entités partagent la forme normalisée,types : ville
+ER-02167,C05_homonyme,Waremme,,ambiguous,geo:arrondissement:be-waremme|geo:commune:BE-64074,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : arrondissement, commune, localite_postale"
+ER-02176,C05_homonyme,Westerlo,,resolved,geo:commune:BE-13049,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-02188,C05_homonyme,Zandhoven,,resolved,geo:commune:BE-11054,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-02190,C05_homonyme,Zemst,,resolved,geo:commune:BE-23096,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-02194,C05_homonyme,Zuienkerke,,resolved,geo:commune:BE-31042,,3,plusieurs entités partagent la forme normalisée ; règles de la spec appliquées,"types : commune, localite_postale"
+ER-02208,C06_indice_de_type,Aartselaar,localite_postale,resolved,geo:localite:BE-2630-aartselaar,,2,candidats du type indiqué,
+ER-02213,C06_indice_de_type,Amay,commune,resolved,geo:commune:BE-61003,,2,candidats du type indiqué,
+ER-02217,C06_indice_de_type,Angre,localite_postale,resolved,geo:localite:BE-7387-angre,,2,candidats du type indiqué,
+ER-02230,C06_indice_de_type,Ardooie,localite_postale,resolved,geo:localite:BE-8850-ardooie,,2,candidats du type indiqué,
+ER-02247,C06_indice_de_type,Baarle-Hertog,commune,resolved,geo:commune:BE-13002,,2,candidats du type indiqué,
+ER-02248,C06_indice_de_type,Baarle-Hertog,localite_postale,resolved,geo:localite:BE-2387-baarle-hertog,,2,candidats du type indiqué,
+ER-02250,C06_indice_de_type,Baelen,localite_postale,resolved,geo:localite:BE-4837-baelen,,2,candidats du type indiqué,
+ER-02252,C06_indice_de_type,Bailleul,ville,ambiguous,geo:ville:FR-3035351|geo:ville:FR-3035352|geo:ville:FR-3035356|geo:ville:FR-3035359,,2,candidats du type indiqué,
+ER-02266,C06_indice_de_type,Beauraing,commune,resolved,geo:commune:BE-91013,,2,candidats du type indiqué,
+ER-02272,C06_indice_de_type,Begijnendijk,commune,resolved,geo:commune:BE-24007,,2,candidats du type indiqué,
+ER-02296,C06_indice_de_type,Bertogne,commune,resolved,geo:commune:BE-82005,,2,candidats du type indiqué,
+ER-02311,C06_indice_de_type,Bièvre,commune,resolved,geo:commune:BE-91015,,2,candidats du type indiqué,
+ER-02332,C06_indice_de_type,Braine-le-Château,localite_postale,resolved,geo:localite:BE-1440-braine-chateau,,2,candidats du type indiqué,
+ER-02334,C06_indice_de_type,Braine-l’Alleud,localite_postale,resolved,geo:localite:BE-1420-braine-alleud,,2,candidats du type indiqué,
+ER-02336,C06_indice_de_type,Braives,localite_postale,resolved,geo:localite:BE-4260-braive,,2,candidats du type indiqué,
+ER-02368,C06_indice_de_type,Carnières,localite_postale,resolved,geo:localite:BE-7141-carniere,,2,candidats du type indiqué,
+ER-02381,C06_indice_de_type,Chaudfontaine,commune,resolved,geo:commune:BE-62022,,2,candidats du type indiqué,
+ER-02466,C06_indice_de_type,Ferrières,commune,resolved,geo:commune:BE-61019,,2,candidats du type indiqué,
+ER-02475,C06_indice_de_type,Forest,ville,ambiguous,geo:ville:FR-3017766|geo:ville:FR-3017770,,2,candidats du type indiqué,
+ER-02488,C06_indice_de_type,Geetbets,commune,resolved,geo:commune:BE-24028,,2,candidats du type indiqué,
+ER-02505,C06_indice_de_type,Grandville,ville,ambiguous,geo:ville:FR-3008958|geo:ville:FR-3023861,,2,candidats du type indiqué,
+ER-02509,C06_indice_de_type,Grez-Doiceau,localite_postale,resolved,geo:localite:BE-1390-grez-doiceau,,2,candidats du type indiqué,
+ER-02511,C06_indice_de_type,Grimbergen,localite_postale,resolved,geo:localite:BE-1850-grimbergen,,2,candidats du type indiqué,
+ER-02520,C06_indice_de_type,Haelen,commune,resolved,geo:commune:BE-71020,,2,candidats du type indiqué,
+ER-02539,C06_indice_de_type,Heist-op-den-Berg,commune,resolved,geo:commune:BE-12014,,2,candidats du type indiqué,
+ER-02559,C06_indice_de_type,Herne,commune,resolved,geo:commune:BE-23032,,2,candidats du type indiqué,
+ER-02564,C06_indice_de_type,Herstal,localite_postale,resolved,geo:localite:BE-4040-herstal,,2,candidats du type indiqué,
+ER-02571,C06_indice_de_type,Hoeilaart,commune,resolved,geo:commune:BE-23033,,2,candidats du type indiqué,
+ER-02599,C06_indice_de_type,Izel,ville,ambiguous,geo:ville:FR-3012608|geo:ville:FR-3012609,,2,candidats du type indiqué,
+ER-02602,C06_indice_de_type,Jemeppe-sur-Sambre,commune,resolved,geo:commune:BE-92140,,2,candidats du type indiqué,
+ER-02603,C06_indice_de_type,Jemeppe-sur-Sambre,localite_postale,resolved,geo:localite:BE-5190-jemeppe-sur-sambre,,2,candidats du type indiqué,
+ER-02626,C06_indice_de_type,Kortemark,commune,resolved,geo:commune:BE-32011,,2,candidats du type indiqué,
+ER-02643,C06_indice_de_type,Landen,localite_postale,resolved,geo:localite:BE-3400-landen,,2,candidats du type indiqué,
+ER-02649,C06_indice_de_type,Le Roeulx,localite_postale,resolved,geo:localite:BE-7070-roeul,,2,candidats du type indiqué,
+ER-02667,C06_indice_de_type,Liedekerke,commune,resolved,geo:commune:BE-23044,,2,candidats du type indiqué,
+ER-02692,C06_indice_de_type,Lo-Reninge,commune,resolved,geo:commune:BE-32030,,2,candidats du type indiqué,
+ER-02698,C06_indice_de_type,Londerzeel,commune,resolved,geo:commune:BE-23045,,2,candidats du type indiqué,
+ER-02710,C06_indice_de_type,Luxemburg,province,resolved,geo:province:BE-WLX,,2,candidats du type indiqué,
+ER-02715,C06_indice_de_type,Maasmechelen,commune,resolved,geo:commune:BE-73107,,2,candidats du type indiqué,
+ER-02726,C06_indice_de_type,Martelange,localite_postale,resolved,geo:localite:BE-6630-martelange,,2,candidats du type indiqué,
+ER-02729,C06_indice_de_type,Mechelen,localite_postale,resolved,geo:localite:BE-2800-mechelen,,2,candidats du type indiqué,
+ER-02736,C06_indice_de_type,Meise,localite_postale,resolved,geo:localite:BE-1860-meise,,2,candidats du type indiqué,
+ER-02764,C06_indice_de_type,Mont,localite_postale,ambiguous,geo:localite:BE-5530-mont|geo:localite:BE-6661-mont,,2,candidats du type indiqué,
+ER-02813,C06_indice_de_type,Ouffet,localite_postale,resolved,geo:localite:BE-4590-ouffet,,2,candidats du type indiqué,
+ER-02851,C06_indice_de_type,Redingen,ville,resolved,geo:ville:FR-2984200,,2,candidats du type indiqué,
+ER-02867,C06_indice_de_type,Rosières,ville,ambiguous,geo:ville:FR-2982774|geo:ville:FR-2982775|geo:ville:FR-2982778,,2,candidats du type indiqué,
+ER-02876,C06_indice_de_type,Saint-Nicolas,arrondissement,resolved,geo:arrondissement:be-saint-nicola,,2,candidats du type indiqué,
+ER-02894,C06_indice_de_type,Seneffe,commune,resolved,geo:commune:BE-55085,,2,candidats du type indiqué,
+ER-02899,C06_indice_de_type,Silly,localite_postale,resolved,geo:localite:BE-7830-silly,,2,candidats du type indiqué,
+ER-02902,C06_indice_de_type,Sint-Agatha-Berchem,localite_postale,resolved,geo:localite:BE-1082-sint-agatha-berchem,,2,candidats du type indiqué,
+ER-02916,C06_indice_de_type,Sombreffe,commune,resolved,geo:commune:BE-92114,,2,candidats du type indiqué,
+ER-02944,C06_indice_de_type,Thuin,localite_postale,resolved,geo:localite:BE-6530-thuin,,2,candidats du type indiqué,
+ER-02953,C06_indice_de_type,Vannes,categorie_piece,resolved,piece:cat:vp-1-4-6-9,,2,candidats du type indiqué,
+ER-02960,C06_indice_de_type,Verlaine,localite_postale,resolved,geo:localite:BE-4537-verlaine,,2,candidats du type indiqué,
+ER-02968,C06_indice_de_type,Villers-la-Ville,commune,resolved,geo:commune:BE-25107,,2,candidats du type indiqué,
+ER-02979,C06_indice_de_type,Vorst,commune,resolved,geo:commune:BE-21007,,2,candidats du type indiqué,
+ER-03004,C06_indice_de_type,Wellen,localite_postale,resolved,geo:localite:BE-3830-wellen,,2,candidats du type indiqué,
+ER-03016,C06_indice_de_type,Wuustwezel,localite_postale,resolved,geo:localite:BE-2990-wuustwezel,,2,candidats du type indiqué,
+ER-03019,C06_indice_de_type,Zele,commune,resolved,geo:commune:BE-42028,,2,candidats du type indiqué,
+ER-03022,C06_indice_de_type,Zelzate,localite_postale,resolved,geo:localite:BE-9060-zelzate,,2,candidats du type indiqué,
+ER-03046,C07_faute_de_frappe,230E XDRIVVE ACTIVE TOURER,,resolved,veh:modele:bmw-230e-xdrive-active-tourer,unknown,2,faute générée sur le libellé,origine : 230E XDRIVE ACTIVE TOURER
+ER-03082,C07_faute_de_frappe,Abancourt-l-aMontagne,,resolved,geo:ville:FR-3038806,unknown,3,faute générée sur un alias,origine : Abancourt-la-Montagne
+ER-03100,C07_faute_de_frappe,Afence Charleroi,,resolved,mecanova:site:agence-charleroi,unknown,2,faute générée sur le libellé,origine : Agence Charleroi
+ER-03117,C07_faute_de_frappe,Alije,,ambiguous,geo:ville:FR-3014034|geo:ville:FR-3038005,unknown,3,faute générée sur un alias,origine : Alvije
+ER-03151,C07_faute_de_frappe,Anthines,,resolved,geo:commune:BE-61079,unknown,2,faute générée sur le libellé ; règles de la spec appliquées,origine : Anthisnes
+ER-03170,C07_faute_de_frappe,Arrville,,resolved,geo:localite:BE-6870-arville,unknown,2,faute générée sur le libellé,origine : Arville
+ER-03235,C07_faute_de_frappe,Banden voor motorvoertuiggen,,resolved,piece:cat:vp-1-4-20-3,unknown,3,faute générée sur un alias,origine : Banden voor motorvoertuigen
+ER-03241,C07_faute_de_frappe,Bareembach,,resolved,geo:ville:FR-3034954,unknown,2,faute générée sur le libellé,origine : Barembach
+ER-03247,C07_faute_de_frappe,Bau-Bernar,,resolved,geo:ville:FR-3032083,unknown,3,faute générée sur un alias,origine : Bua-Bernar
+ER-03256,C07_faute_de_frappe,Bebjer,,resolved,geo:ville:FR-3030446,unknown,3,faute générée sur un alias,origine : Brebjer
+ER-03312,C07_faute_de_frappe,Bierfem,,resolved,geo:commune:LU-2960791,unknown,3,faute générée sur un alias,origine : Biergem
+ER-03336,C07_faute_de_frappe,Bllezeele,,resolved,geo:ville:FR-3031865,unknown,2,faute générée sur le libellé,origine : Bollezeele
+ER-03354,C07_faute_de_frappe,Bonneeuil,,ambiguous,geo:ville:FR-3031711|geo:ville:FR-3031712,unknown,3,faute générée sur un alias,origine : Bonneuil
+ER-03432,C07_faute_de_frappe,Btting-les-Saint-Avold,,resolved,geo:ville:FR-3032967,unknown,3,faute générée sur un alias,origine : Betting-les-Saint-Avold
+ER-03447,C07_faute_de_frappe,Bussag,,resolved,geo:ville:FR-3029462,unknown,2,faute générée sur le libellé,origine : Bussang
+ER-03492,C07_faute_de_frappe,Capteurs de débit d'air massiqque (MAF),,resolved,piece:cat:vp-1-4-16-11,unknown,2,faute générée sur le libellé,origine : Capteurs de débit d'air massique (MAF)
+ER-03556,C07_faute_de_frappe,Contactschakelaaars,,resolved,piece:cat:vp-1-4-14-10,unknown,3,faute générée sur un alias,origine : Contactschakelaars
+ER-03578,C07_faute_de_frappe,Couvot,,resolved,geo:ville:FR-3022769,unknown,2,faute générée sur le libellé,origine : Couvrot
+ER-03585,C07_faute_de_frappe,Cufies,,resolved,geo:ville:FR-3022155,unknown,2,faute générée sur le libellé,origine : Cuffies
+ER-03592,C07_faute_de_frappe,DALLARA STRADALLE,,resolved,veh:modele:dallara-stradale,unknown,3,faute générée sur un alias,origine : DALLARA STRADALE
+ER-03687,C07_faute_de_frappe,Edelre,,resolved,geo:localite:BE-9700-edelare,unknown,2,faute générée sur le libellé,origine : Edelare
+ER-03709,C07_faute_de_frappe,El-Caucie-a-lTour,,resolved,geo:ville:FR-3028219,unknown,3,faute générée sur un alias,origine : El-Cauchie-a-lTour
+ER-03722,C07_faute_de_frappe,Entrrepôt central,,resolved,mecanova:site:entrepot-central,unknown,2,faute générée sur le libellé,origine : Entrepôt central
+ER-03774,C07_faute_de_frappe,FRIDY 1.5T DCT,,resolved,veh:modele:forthing-friday-1-5t-dct,unknown,2,faute générée sur le libellé,origine : FRIDAY 1.5T DCT
+ER-04114,C07_faute_de_frappe,ID.5 GTX 250 jW,,resolved,veh:modele:volkswagen-id-5-gtx-250-kw,unknown,2,faute générée sur le libellé,origine : ID.5 GTX 250 KW
+ER-04147,C07_faute_de_frappe,Jebsehim,,resolved,geo:ville:FR-3012365,unknown,2,faute générée sur le libellé,origine : Jebsheim
+ER-04169,C07_faute_de_frappe,Kaahlei,,resolved,geo:ville:NL-2753167,unknown,3,faute générée sur un alias,origine : Kaalhei
+ER-04201,C07_faute_de_frappe,Kfz-Siyze,,resolved,piece:cat:vp-1-4-15,unknown,3,faute générée sur un alias,origine : Kfz-Sitze
+ER-04215,C07_faute_de_frappe,Kluerf,,resolved,geo:commune:LU-2960684,unknown,3,faute générée sur un alias,origine : Klierf
+ER-04269,C07_faute_de_frappe,Kzpel an Pevel,,resolved,geo:ville:FR-3028691,unknown,3,faute générée sur un alias,origine : Kapel an Pevel
+ER-04286,C07_faute_de_frappe,La Nevuille,,ambiguous,geo:localite:BE-5600-neuville|geo:ville:FR-2990520|geo:ville:FR-2990524|geo:ville:FR-2990526|geo:ville:FR-2990527|geo:ville:FR-2990528|geo:ville:FR-2990543|geo:ville:FR-2990548|geo:ville:FR-3007755|geo:ville:FR-3007772,unknown,3,faute générée sur un alias,origine : La Neuville
+ER-04291,C07_faute_de_frappe,La-Vanecno,,resolved,geo:ville:FR-3005422,unknown,3,faute générée sur un alias,origine : La-Vanceno
+ER-04328,C07_faute_de_frappe,Lderengem,,resolved,geo:ville:FR-3004318,unknown,3,faute générée sur un alias,origine : Ledrengem
+ER-04404,C07_faute_de_frappe,Lonvgi,,resolved,geo:ville:FR-2997638,unknown,3,faute générée sur un alias,origine : Longvi
+ER-04483,C07_faute_de_frappe,Marc-qen-Ostrevent,,resolved,geo:ville:FR-2995907,unknown,2,faute générée sur le libellé,origine : Marcq-en-Ostrevent
+ER-04506,C07_faute_de_frappe,Masrihta,,ambiguous,geo:ville:NL-2751283|mecanova:site:agence-maastricht,unknown,3,faute générée sur un alias ; règles de la spec appliquées,origine : Mastrihta
+ER-04534,C07_faute_de_frappe,Melkwwezer,,resolved,geo:localite:BE-3350-melkwezer,unknown,2,faute générée sur le libellé,origine : Melkwezer
+ER-04646,C07_faute_de_frappe,Motorlufyfilter,,resolved,piece:cat:vp-1-4-23-1,unknown,3,faute générée sur un alias,origine : Motorluftfilter
+ER-04657,C07_faute_de_frappe,Mouxaux,,resolved,geo:ville:FR-2991302,unknown,2,faute générée sur le libellé,origine : Mouvaux
+ER-04658,C07_faute_de_frappe,Mouzn,,resolved,geo:ville:FR-2991283,unknown,2,faute générée sur le libellé,origine : Mouzon
+ER-04661,C07_faute_de_frappe,Mrale-et-Behaine,,resolved,geo:ville:FR-2995675,unknown,3,faute générée sur un alias,origine : Marle-et-Behaine
+ER-04754,C07_faute_de_frappe,Nosegem,,resolved,geo:localite:BE-1930-nossegem,unknown,2,faute générée sur le libellé,origine : Nossegem
+ER-04821,C07_faute_de_frappe,Orp-Le-GGrand,,resolved,geo:localite:BE-1350-orp-grand,unknown,2,faute générée sur le libellé,origine : Orp-Le-Grand
+ER-04843,C07_faute_de_frappe,PANAMERRA GTS,,resolved,veh:modele:porsche-panamera-gts,unknown,2,faute générée sur le libellé,origine : PANAMERA GTS
+ER-04918,C07_faute_de_frappe,Prix tairf unitaire,,resolved,metier:mesure:M28,unknown,2,faute générée sur le libellé,origine : Prix tarif unitaire
+ER-04953,C07_faute_de_frappe,RENAULT AUSTRzL,,resolved,veh:modele:renault-austral,unknown,3,faute générée sur un alias,origine : RENAULT AUSTRAL
+ER-04985,C07_faute_de_frappe,Reimmsa,,resolved,geo:ville:FR-2984114,unknown,3,faute générée sur un alias,origine : Reimsa
+ER-05016,C07_faute_de_frappe,Rimbach-près-Masevzux,,resolved,geo:ville:FR-2983524,unknown,2,faute générée sur le libellé,origine : Rimbach-près-Masevaux
+ER-05041,C07_faute_de_frappe,Roncuort,,resolved,geo:ville:FR-2982939,unknown,2,faute générée sur le libellé,origine : Roncourt
+ER-05089,C07_faute_de_frappe,SEAL U MD-I,,resolved,veh:modele:byd-seal-u-dm-i,unknown,2,faute générée sur le libellé,origine : SEAL U DM-I
+ER-05108,C07_faute_de_frappe,Saarunon,,resolved,geo:ville:FR-2975957,unknown,3,faute générée sur un alias,origine : Saarunion
+ER-05153,C07_faute_de_frappe,Saivt-Trond,,resolved,geo:commune:BE-71053,unknown,2,faute générée sur le libellé,origine : Saint-Trond
+ER-05163,C07_faute_de_frappe,Sanngatt,,resolved,geo:ville:FR-2976217,unknown,3,faute générée sur un alias,origine : Sangatt
+ER-05193,C07_faute_de_frappe,Schoonaaarde,,resolved,geo:localite:BE-9200-schoonaarde,unknown,2,faute générée sur le libellé,origine : Schoonaarde
+ER-05266,C07_faute_de_frappe,Sint-Pils,,resolved,geo:ville:FR-2977388,unknown,3,faute générée sur un alias,origine : Sint-Pols
+ER-05305,C07_faute_de_frappe,Souhez,,resolved,geo:ville:FR-2974123,unknown,2,faute générée sur le libellé,origine : Souchez
+ER-05501,C07_faute_de_frappe,Vedan,,resolved,geo:ville:FR-2969958,unknown,3,faute générée sur un alias,origine : Verdan
+ER-05653,C07_faute_de_frappe,Wih-rau-Val,,resolved,geo:ville:FR-2967370,unknown,2,faute générée sur le libellé,origine : Wihr-au-Val
+ER-05716,C07_faute_de_frappe,Zjujdokot,,resolved,geo:ville:FR-2967110,unknown,3,faute générée sur un alias,origine : Zjujdkoot
+ER-05753,C07_faute_de_frappe,mnquants,,resolved,metier:mesure:M26,unknown,3,faute générée sur un alias,origine : manquants
+ER-05781,C08_hors_perimetre_proche,Aalen,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « aarlen » (JW 0.956) → geo:arrondissement:be-arlon
+ER-05790,C08_hors_perimetre_proche,Angresse,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « angre » (JW 0.925) → geo:localite:BE-7387-angre
+ER-05795,C08_hors_perimetre_proche,Arronville,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « baronville » (JW 0.933) → geo:localite:BE-5570-baronville
+ER-05799,C08_hors_perimetre_proche,Authie,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « athie » (JW 0.950) → geo:ville:FR-3036464
+ER-05808,C08_hors_perimetre_proche,Beaurecueil,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « beaurieu » (JW 0.920) → geo:ville:FR-3034051
+ER-05812,C08_hors_perimetre_proche,Bermatingen,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « beringen » (JW 0.936) → geo:commune:BE-71004
+ER-05829,C08_hors_perimetre_proche,Bolanden,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « blanden » (JW 0.963) → geo:localite:BE-3052-blanden
+ER-05830,C08_hors_perimetre_proche,Bonneuil-Matours,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « bonneuil eau » (JW 0.930) → geo:ville:FR-3031711
+ER-05832,C08_hors_perimetre_proche,Bouaye,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « boulay » (JW 0.922) → geo:ville:FR-3031182
+ER-05834,C08_hors_perimetre_proche,Bougligny,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « bouligny » (JW 0.945) → geo:ville:FR-3031158
+ER-05848,C08_hors_perimetre_proche,Brussieu,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « brussel » (JW 0.921) → geo:commune:BE-21004
+ER-05854,C08_hors_perimetre_proche,Calden,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « cale » (JW 0.922) → geo:ville:FR-3029162
+ER-05858,C08_hors_perimetre_proche,Chagny,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « cagny » (JW 0.950) → geo:ville:FR-3029222
+ER-05878,C08_hors_perimetre_proche,Clapiers,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « clavier » (JW 0.933) → geo:commune:BE-61012
+ER-05882,C08_hors_perimetre_proche,Colombiès,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « colombey » (JW 0.950) → geo:ville:FR-3024262
+ER-05893,C08_hors_perimetre_proche,Deiningen,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « heiningen » (JW 0.926) → geo:ville:NL-2754553
+ER-05909,C08_hors_perimetre_proche,Elden,,unknown,,,3,lieu GeoNames réel hors périmètre,NL ; proche de « elen » (JW 0.947) → geo:localite:BE-3650-elen
+ER-05914,C08_hors_perimetre_proche,Erlenbach,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « merlebach » (JW 0.926) → geo:ville:FR-3017059
+ER-05916,C08_hors_perimetre_proche,Eymoutiers,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « moutier » (JW 0.926) → geo:ville:FR-2991320
+ER-05918,C08_hors_perimetre_proche,Fichtenberg,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « lichtenberg » (JW 0.939) → geo:ville:FR-2998497
+ER-05928,C08_hors_perimetre_proche,Fremdingen,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « redingen » (JW 0.933) → geo:commune:LU-2960160
+ER-05942,C08_hors_perimetre_proche,Grünberg,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « grune » (JW 0.925) → geo:localite:BE-6952-grune
+ER-05947,C08_hors_perimetre_proche,Hagenbüchach,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « hagenbach » (JW 0.928) → geo:ville:FR-3014089
+ER-05950,C08_hors_perimetre_proche,Hasel,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « haselt » (JW 0.967) → geo:commune:BE-71022
+ER-05963,C08_hors_perimetre_proche,Hettingen,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « ettingen » (JW 0.963) → geo:ville:FR-3019338
+ER-06004,C08_hors_perimetre_proche,Laigné,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « ligne » (JW 0.950) → geo:localite:BE-7812-ligne
+ER-06048,C08_hors_perimetre_proche,Mably,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « ambly » (JW 0.933) → geo:localite:BE-6953-ambly
+ER-06057,C08_hors_perimetre_proche,Mantel,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « mane » (JW 0.922) → geo:commune:BE-83055
+ER-06062,C08_hors_perimetre_proche,Marcollin,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « marcin » (JW 0.933) → geo:commune:BE-61039
+ER-06070,C08_hors_perimetre_proche,Marseille 16,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « marseille » (JW 0.950) → geo:ville:FR-2995463
+ER-06074,C08_hors_perimetre_proche,Mazangé,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « marange » (JW 0.924) → geo:ville:FR-2996106
+ER-06087,C08_hors_perimetre_proche,Montaudin,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « montaulin » (JW 0.956) → geo:ville:FR-2992983
+ER-06091,C08_hors_perimetre_proche,Montesquieu,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « montriqueu » (JW 0.921) → geo:ville:FR-2981284
+ER-06093,C08_hors_perimetre_proche,Montrabé,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « monte » (JW 0.925) → geo:commune:BE-53053
+ER-06102,C08_hors_perimetre_proche,Mélisey,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « meise » (JW 0.924) → geo:commune:BE-23050
+ER-06121,C08_hors_perimetre_proche,Orcier,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « orchie » (JW 0.922) → geo:ville:FR-2989422
+ER-06141,C08_hors_perimetre_proche,Périgné,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « perne » (JW 0.933) → geo:ville:FR-2987947
+ER-06146,C08_hors_perimetre_proche,Remlingen,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « rumelingen » (JW 0.937) → geo:commune:LU-2960123
+ER-06153,C08_hors_perimetre_proche,Rognes,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « rognee » (JW 0.967) → geo:localite:BE-5651-rognee
+ER-06161,C08_hors_perimetre_proche,Saint-Alban,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint amand » (JW 0.927) → geo:localite:BE-6221-saint-amand
+ER-06176,C08_hors_perimetre_proche,Saint-Denis-lès-Sens,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint deni » (JW 0.943) → geo:localite:BE-7034-saint-deni
+ER-06181,C08_hors_perimetre_proche,Saint-Frégant,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint germain » (JW 0.920) → geo:localite:BE-5310-saint-germain
+ER-06184,C08_hors_perimetre_proche,Saint-Georges-Motel,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint george » (JW 0.933) → geo:commune:BE-64065
+ER-06185,C08_hors_perimetre_proche,Saint-Georges-de-Noisné,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint george » (JW 0.926) → geo:commune:BE-64065
+ER-06208,C08_hors_perimetre_proche,Saint-Just-d'Ardèche,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint just chaussee » (JW 0.921) → geo:ville:FR-2979010
+ER-06225,C08_hors_perimetre_proche,Saint-Martin-le-Châtel,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint martin laert » (JW 0.956) → geo:ville:FR-2978447
+ER-06231,C08_hors_perimetre_proche,Saint-Mexant,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint jean » (JW 0.930) → geo:ville:FR-2979197
+ER-06249,C08_hors_perimetre_proche,Saint-Rémy-du-Plain,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint remy » (JW 0.925) → geo:localite:BE-4672-saint-remy
+ER-06258,C08_hors_perimetre_proche,Saint-Étienne-de-Crossey,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « saint etienne » (JW 0.924) → geo:ville:FR-2980219
+ER-06266,C08_hors_perimetre_proche,Sargé-lès-le-Mans,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « sargemin » (JW 0.931) → geo:ville:FR-2975964
+ER-06274,C08_hors_perimetre_proche,Schillingen,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « schilige » (JW 0.945) → geo:ville:FR-2975446
+ER-06280,C08_hors_perimetre_proche,Schönecken,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « schoenecken » (JW 0.942) → geo:ville:FR-2975432
+ER-06292,C08_hors_perimetre_proche,Steggerda,,unknown,,,3,lieu GeoNames réel hors périmètre,NL ; proche de « steger » (JW 0.933) → geo:ville:FR-3019578
+ER-06297,C08_hors_perimetre_proche,Steuden,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « steen » (JW 0.933) → geo:ville:FR-2973825
+ER-06306,C08_hors_perimetre_proche,Ter Aar,,unknown,,,3,lieu GeoNames réel hors périmètre,NL ; proche de « termaar » (JW 0.933) → geo:ville:NL-2746431
+ER-06308,C08_hors_perimetre_proche,Theillay,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « thilay » (JW 0.933) → geo:ville:FR-2972829
+ER-06311,C08_hors_perimetre_proche,Tignes,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « tignee » (JW 0.967) → geo:localite:BE-4630-tignee
+ER-06318,C08_hors_perimetre_proche,Vandré,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « andre » (JW 0.944) → geo:ville:FR-3037694
+ER-06336,C08_hors_perimetre_proche,Voulangis,,unknown,,,3,lieu GeoNames réel hors périmètre,FR ; proche de « vouloni » (JW 0.921) → geo:ville:FR-3031133
+ER-06346,C08_hors_perimetre_proche,Wattenheim,,unknown,,,3,lieu GeoNames réel hors périmètre,DE ; proche de « waltenheim » (JW 0.947) → geo:ville:FR-2967487
+ER-06376,C09_code,2710.99,,resolved,douane:sh:271099,,1,code SH au format pointé,
+ER-06394,C09_code,8301.10,,resolved,douane:sh:830110,,1,code SH au format pointé,
+ER-06403,C09_code,8407.90,,resolved,douane:sh:840790,,1,code SH au format pointé,
+ER-06412,C09_code,8414.60,,resolved,douane:sh:841460,,1,code SH au format pointé,
+ER-06429,C09_code,8507.80,,resolved,douane:sh:850780,,1,code SH au format pointé,
+ER-06438,C09_code,8536.49,,resolved,douane:sh:853649,,1,code SH au format pointé,
+ER-06471,C09_code,CL-139729,,resolved,mecanova:client:CL-139729,,1,code client exact,
+ER-06474,C09_code,CL-142979,,unknown,,,3,code client voisin inexistant,voisin de CL-142978
+ER-06477,C09_code,CL-146669,,resolved,mecanova:client:CL-146669,,1,code client exact,
+ER-06481,C09_code,CL-152176,,resolved,mecanova:client:CL-152176,,1,code client exact,
+ER-06509,C09_code,CL-245250,,resolved,mecanova:client:CL-245250,,1,code client exact,
+ER-06521,C09_code,CL-293068,,resolved,mecanova:client:CL-293068,,1,code client exact,
+ER-06530,C09_code,CL-329284,,unknown,,,3,code client voisin inexistant,voisin de CL-329283
+ER-06569,C09_code,CL-455248,,resolved,mecanova:client:CL-455248,,1,code client exact,
+ER-06577,C09_code,CL-484344,,resolved,mecanova:client:CL-484344,,1,code client exact,
+ER-06599,C09_code,CL-545701,,resolved,mecanova:client:CL-545701,,1,code client exact,
+ER-06631,C09_code,CL-636494,,resolved,mecanova:client:CL-636494,,1,code client exact,
+ER-06642,C09_code,CL-659992,,unknown,,,3,code client voisin inexistant,voisin de CL-659991
+ER-06646,C09_code,CL-701512,,unknown,,,3,code client voisin inexistant,voisin de CL-701511
+ER-06649,C09_code,CL-708599,,resolved,mecanova:client:CL-708599,,1,code client exact,
+ER-06670,C09_code,CL-768214,,unknown,,,3,code client voisin inexistant,voisin de CL-768213
+ER-06697,C09_code,CL-855695,,resolved,mecanova:client:CL-855695,,1,code client exact,
+ER-06708,C09_code,CL-893156,,unknown,,,3,code client voisin inexistant,voisin de CL-893155
+ER-06714,C09_code,CL-923359,,unknown,,,3,code client voisin inexistant,voisin de CL-923358
+ER-06740,C09_code,CL-974009,,unknown,,,3,code client voisin inexistant,voisin de CL-974008
+ER-06822,C09_code,MN PLQ 19740,,resolved,mecanova:article:MN-PLQ-19740,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-06869,C09_code,MN-AMP-50887,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-AMP-50886
+ER-06910,C09_code,MN-BES-76975,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-BES-76974
+ER-06927,C09_code,MN-BGA-56919,,resolved,mecanova:article:MN-BGA-56919,,3,référence valide à un caractère d'une autre,voisine existante : MN-BGA-56819
+ER-06938,C09_code,MN-BGA-89186,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-BGA-89185
+ER-06954,C09_code,MN-BST-22934,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-BST-22933
+ER-06961,C09_code,MN-BST-83585,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-BST-83584
+ER-06988,C09_code,MN-CLI-29489,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-CLI-29488
+ER-06996,C09_code,MN-DEM-57177,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-DEM-57176
+ER-06999,C09_code,MN-DEM-77067,,resolved,mecanova:article:MN-DEM-77067,,3,référence valide à un caractère d'une autre,voisine existante : MN-DEM-77066
+ER-07017,C09_code,MN-DSQ-88543,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-DSQ-88542
+ER-07025,C09_code,MN-FAI-10298,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-FAI-10297
+ER-07055,C09_code,MN-FCA-11565,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-FCA-11564
+ER-07095,C09_code,MN-FLX-85381,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-FLX-85380
+ER-07106,C09_code,MN-KDI-18196,,resolved,mecanova:article:MN-KDI-18196,,3,référence valide à un caractère d'une autre,voisine existante : MN-KDI-18096
+ER-07120,C09_code,MN-KDI-57364,,resolved,mecanova:article:MN-KDI-57364,,3,référence valide à un caractère d'une autre,voisine existante : MN-KDI-57363
+ER-07135,C09_code,MN-KEM-67893,,resolved,mecanova:article:MN-KEM-67893,,3,référence valide à un caractère d'une autre,voisine existante : MN-KEM-67843
+ER-07165,C09_code,MN-MES-96247,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-MES-96246
+ER-07176,C09_code,MN-PHA-40299,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-PHA-40298
+ER-07182,C09_code,MN-PLQ-13139,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-PLQ-13138
+ER-07184,C09_code,MN-PLQ-27164,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-PLQ-27163
+ER-07230,C09_code,MN-TBF-14240,,unknown,,,3,référence voisine inexistante : jamais de correspondance approchée,voisine de MN-TBF-14239
+ER-07264,C09_code,MN.BES.42273,,resolved,mecanova:article:MN-BES-42273,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07275,C09_code,MN.BST.22933,,resolved,mecanova:article:MN-BST-22933,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07312,C09_code,MN.SIL.51949,,resolved,mecanova:article:MN-SIL-51949,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07330,C09_code,MNBAT66325,,resolved,mecanova:article:MN-BAT-66325,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07346,C09_code,MNDEM66928,,resolved,mecanova:article:MN-DEM-66928,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07361,C09_code,MNFLX81838,,resolved,mecanova:article:MN-FLX-81838,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07374,C09_code,MNPHA37149,,resolved,mecanova:article:MN-PHA-37149,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07398,C09_code,mn-amo-61135,,resolved,mecanova:article:MN-AMO-61135,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07407,C09_code,mn-bat-10371,,resolved,mecanova:article:MN-BAT-10371,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07425,C09_code,mn-dem-16182,,resolved,mecanova:article:MN-DEM-16182,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07430,C09_code,mn-fap-50178,,resolved,mecanova:article:MN-FAP-50178,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07435,C09_code,mn-feu-64723,,resolved,mecanova:article:MN-FEU-64723,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07450,C09_code,mn-lfr-81745,,resolved,mecanova:article:MN-LFR-81745,,1,"référence Mécanova, format toléré (R-ART-01)",
+ER-07473,C10_client,Adam Fleet Services SC,,resolved,mecanova:client:CL-129322,,2,variante de raison sociale indexée,client : Adam Fleet Services SC
+ER-07491,C10_client,Auto Barbier,,resolved,mecanova:client:CL-237849,,2,variante de raison sociale indexée,client : Auto Barbier SPRL
+ER-07500,C10_client,Auto Center Legrand Srl,,resolved,mecanova:client:CL-351331,,2,variante de raison sociale indexée,client : Auto Center Legrand SRL
+ER-07509,C10_client,Auto Center Salmon,,resolved,mecanova:client:CL-670134,,2,variante de raison sociale indexée,client : Auto Center Salmon S.A.
+ER-07526,C10_client,Auto David SARL,,resolved,mecanova:client:CL-256073,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Auto David S.à r.l.
+ER-07535,C10_client,Auto Gallo,,resolved,mecanova:client:CL-887743,,2,variante de raison sociale indexée,client : Auto Gallo SRL
+ER-07568,C10_client,Auto Pierard,,resolved,mecanova:client:CL-419762,,2,variante de raison sociale indexée,client : Auto Pierard SRL
+ER-07571,C10_client,Auto Renard Srl,,resolved,mecanova:client:CL-881197,,2,variante de raison sociale indexée,client : Auto Renard SRL
+ER-07574,C10_client,Auto Stassin,,resolved,mecanova:client:CL-554823,,2,variante de raison sociale indexée,client : Auto Stassin SA
+ER-07578,C10_client,Autobedrijf Arts,,resolved,mecanova:client:CL-347217,,2,variante de raison sociale indexée,client : Autobedrijf Arts V.O.F.
+ER-07606,C10_client,Autobedrijf van der Stael de Jonge,,resolved,mecanova:client:CL-968431,,2,variante de raison sociale indexée,client : Autobedrijf van der Stael de Jonge B.V.
+ER-07618,C10_client,Automobiles Delaunay,,resolved,mecanova:client:CL-846706,,2,variante de raison sociale indexée,client : Delaunay Automobiles S.à r.l.
+ER-07627,C10_client,Automobiles Louis,,resolved,mecanova:client:CL-473744,,2,variante de raison sociale indexée,client : Louis Automobiles SARL
+ER-07666,C10_client,Aywaille Carrosserie,,ambiguous,mecanova:client:CL-299302|mecanova:client:CL-405570,,2,variante de raison sociale indexée,client : Carrosserie Aywaille SPRL
+ER-07674,C10_client,Becker Automobiles,,ambiguous,mecanova:client:CL-163837|mecanova:client:CL-841456,,2,variante de raison sociale indexée,client : Becker Automobiles SRL
+ER-07696,C10_client,Bourlon Fiat,,resolved,mecanova:client:CL-762837,,2,variante de raison sociale indexée,client : Fiat Bourlon SARL
+ER-07728,C10_client,Carrosserie Casier s.a.,,resolved,mecanova:client:CL-244987,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Carrosserie Casier SA
+ER-07739,C10_client,Carrosserie Collette,,resolved,mecanova:client:CL-749875,,2,variante de raison sociale indexée,client : Collette Carrosserie SRL
+ER-07743,C10_client,Carrosserie Dudelange,,resolved,mecanova:client:CL-219554,,2,variante de raison sociale indexée,client : Carrosserie Dudelange S.A.
+ER-07746,C10_client,Carrosserie Dumont s.a.,,resolved,mecanova:client:CL-344373,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Carrosserie Dumont SA
+ER-07767,C10_client,Carrosserie Hannut Srl,,resolved,mecanova:client:CL-774124,,2,variante de raison sociale indexée,client : Carrosserie Hannut SRL
+ER-07794,C10_client,Carrosserie Martin S.A,,ambiguous,mecanova:client:CL-248657|mecanova:client:CL-925337,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Carrosserie Martin SA
+ER-07805,C10_client,Carrosserie Rixensart,,ambiguous,mecanova:client:CL-126021|mecanova:client:CL-773650,,2,variante de raison sociale indexée,client : Carrosserie Rixensart SRL
+ER-07811,C10_client,Carrosserie Saint-Josse-ten-Noode,,resolved,mecanova:client:CL-993465,,2,variante de raison sociale indexée,client : Carrosserie Saint-Josse-ten-Noode SC
+ER-07837,C10_client,Carrosseriebedrijf De Bruyne s.a.,,resolved,mecanova:client:CL-212055,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Carrosseriebedrijf De Bruyne SA
+ER-07919,C10_client,Delforge Mercedes-Benz Bernissart,,resolved,mecanova:client:CL-625116,,2,variante de raison sociale indexée,client : Delforge Mercedes-Benz Bernissart SRL
+ER-08007,C10_client,Flament Transports,,resolved,mecanova:client:CL-452394,,2,variante de raison sociale indexée,client : Transports Flament SRL
+ER-08024,C10_client,Garage Bury Frères,,resolved,mecanova:client:CL-531480,,2,variante de raison sociale indexée,client : Garage Bury Frères SPRL
+ER-08035,C10_client,Garage Cordier,,resolved,mecanova:client:CL-484344,,2,variante de raison sociale indexée,client : Garage Cordier SRL
+ER-08051,C10_client,Garage Dewulf,,resolved,mecanova:client:CL-102123,,2,variante de raison sociale indexée,client : Garage Dewulf SA
+ER-08058,C10_client,Garage Dijoux SARL,,resolved,mecanova:client:CL-187973,,2,variante de raison sociale indexée,client : Garage Dijoux S.à r.l.
+ER-08085,C10_client,Garage Gautier Frères,,resolved,mecanova:client:CL-833865,,2,variante de raison sociale indexée,client : Garage Gautier Frères S.à r.l.
+ER-08093,C10_client,Garage Gosselin Frères,,resolved,mecanova:client:CL-180418,,2,variante de raison sociale indexée,client : Garage Gosselin Frères S.à r.l.
+ER-08096,C10_client,Garage Grégoire & Fils s.a.,,resolved,mecanova:client:CL-993655,,2,variante de raison sociale indexée,client : Garage Grégoire & Fils SA
+ER-08114,C10_client,Garage Kisman BV,,resolved,mecanova:client:CL-167149,,2,variante de raison sociale indexée,client : Garage Kisman B.V.
+ER-08152,C10_client,Garage Malfait & Zonen S.R.L,,resolved,mecanova:client:CL-771074,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Garage Malfait & Zonen SRL
+ER-08192,C10_client,Garage Pons Frères Sàrl,,resolved,mecanova:client:CL-764184,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Garage Pons Frères S.à r.l.
+ER-08203,C10_client,Garage Ruelle,,ambiguous,mecanova:client:CL-309686|mecanova:client:CL-493512,,2,variante de raison sociale indexée,client : Garage Ruelle SPRL
+ER-08217,C10_client,Garage Thirion Frères,,resolved,mecanova:client:CL-310811,,2,variante de raison sociale indexée,client : Garage Thirion Frères SPRL
+ER-08232,C10_client,Garage Wouters S.R.L,,resolved,mecanova:client:CL-206481,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Garage Wouters SRL
+ER-08262,C10_client,Gembloux Auto Center,,resolved,mecanova:client:CL-886085,,2,variante de raison sociale indexée,client : Gembloux Auto Center SC
+ER-08273,C10_client,Gilson Carrosserie,,resolved,mecanova:client:CL-609876,,2,variante de raison sociale indexée,client : Carrosserie Gilson SRL
+ER-08279,C10_client,Goetzingen Lease,,resolved,mecanova:client:CL-392519,,2,variante de raison sociale indexée,client : Goetzingen Lease S.à r.l.
+ER-08281,C10_client,Gomes Fleet Services,,resolved,mecanova:client:CL-108845,,2,variante de raison sociale indexée,client : Gomes Fleet Services S.A.
+ER-08327,C10_client,La Louvière Lease,,resolved,mecanova:client:CL-918215,,2,variante de raison sociale indexée,client : La Louvière Lease SRL
+ER-08361,C10_client,Lejeune Auto,,ambiguous,mecanova:client:CL-649481|mecanova:client:CL-737287,,2,variante de raison sociale indexée,client : Auto Lejeune SRL
+ER-08372,C10_client,Logistics Charles,,resolved,mecanova:client:CL-700930,,2,variante de raison sociale indexée,client : Charles Logistics SA
+ER-08409,C10_client,Mathieu Transports,,ambiguous,mecanova:client:CL-703743|mecanova:client:CL-972705,,2,variante de raison sociale indexée,client : Transports Mathieu SPRL
+ER-08427,C10_client,Mettet Auto Center S.P.R.L,,resolved,mecanova:client:CL-389928,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Mettet Auto Center SPRL
+ER-08443,C10_client,Naastenbest Peugeot,,resolved,mecanova:client:CL-684471,,2,variante de raison sociale indexée,client : Peugeot Naastenbest B.V.
+ER-08458,C10_client,Opel Manage s.a.,,resolved,mecanova:client:CL-516921,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Opel Manage SA
+ER-08471,C10_client,Peugeot Dubois srl,,resolved,mecanova:client:CL-948230,,2,variante de raison sociale indexée,client : Peugeot Dubois SRL
+ER-08495,C10_client,Renault Dison,,resolved,mecanova:client:CL-600426,,2,variante de raison sociale indexée,client : Renault Dison SA
+ER-08504,C10_client,Rodange Auto Center,,resolved,mecanova:client:CL-356319,,2,variante de raison sociale indexée,client : Rodange Auto Center S.A.
+ER-08522,C10_client,Schaerbeek Lease s.a.,,resolved,mecanova:client:CL-958104,unknown,3,variante non indexée : l'intention est le client d'origine (ou ses homonymes),client : Schaerbeek Lease SA
+ER-08527,C10_client,Servais Garage,,ambiguous,mecanova:client:CL-478550|mecanova:client:CL-910736,,2,variante de raison sociale indexée,client : Garage Servais SRL
+ER-08532,C10_client,Skoda Eghezée,,resolved,mecanova:client:CL-592663,,2,variante de raison sociale indexée,client : Skoda Eghezée SA
+ER-08547,C10_client,Thiry Automobiles srl,,ambiguous,mecanova:client:CL-299097|mecanova:client:CL-382839,,2,variante de raison sociale indexée,client : Thiry Automobiles SRL
+ER-08583,C10_client,Transports Robert,,resolved,mecanova:client:CL-724001,,2,variante de raison sociale indexée,client : Transports Robert SRL
+ER-08603,C10_client,Waimes Carrosserie,,ambiguous,mecanova:client:CL-109578|mecanova:client:CL-956636,,2,variante de raison sociale indexée,client : Carrosserie Waimes SRL
+ER-08621,C11_marque,ABARTH,,resolved,veh:marque:abarth,,1,alias de marque_vehicule,
+ER-08623,C11_marque,ALPINE,,resolved,veh:marque:alpine,,1,alias de marque_vehicule,
+ER-08624,C11_marque,ASTON MARTIN,,resolved,veh:marque:aston-martin,,1,alias de marque_vehicule,
+ER-08625,C11_marque,ATE,,resolved,piece:marque:ate,,1,alias de marque_piece,
+ER-08628,C11_marque,BENTLEY,,resolved,veh:marque:bentley,,1,alias de marque_vehicule,
+ER-08633,C11_marque,Behr Hella Service,,resolved,piece:marque:behr,,1,alias de marque_piece,
+ER-08634,C11_marque,Bilstein,,resolved,piece:marque:bilstein,,1,alias de marque_piece,
+ER-08637,C11_marque,Bosch,,resolved,piece:marque:bosch,,1,alias de marque_piece,
+ER-08639,C11_marque,CATERHAM,,resolved,veh:marque:caterham,,1,alias de marque_vehicule,
+ER-08641,C11_marque,CHERY,,ambiguous,geo:ville:FR-3025410|veh:marque:chery,,3,alias de marque_vehicule,
+ER-08645,C11_marque,CUPRA,,resolved,veh:marque:cupra,,1,alias de marque_vehicule,
+ER-08646,C11_marque,Castrol,,resolved,piece:marque:castrol,,1,alias de marque_piece,
+ER-08649,C11_marque,Conti Tech,,resolved,piece:marque:contitech,,1,alias de marque_piece,
+ER-08654,C11_marque,DALLARA,,resolved,veh:marque:dallara,,1,alias de marque_vehicule,
+ER-08655,C11_marque,DFSK,,resolved,veh:marque:dfsk,,1,alias de marque_vehicule,
+ER-08656,C11_marque,DONGFENG,,resolved,veh:marque:dongfeng,,1,alias de marque_vehicule,
+ER-08663,C11_marque,EVO,,resolved,veh:marque:evo,,1,alias de marque_vehicule,
+ER-08666,C11_marque,FERRARI,,resolved,veh:marque:ferrari,,1,alias de marque_vehicule,
+ER-08687,C11_marque,KG MOBILITY,,resolved,veh:marque:kg-mobility,,1,alias de marque_vehicule,
+ER-08690,C11_marque,KYB Corporation,,resolved,organisation:kyb-corporation,,1,alias de groupe_industriel,
+ER-08693,C11_marque,LAMBORGHINI,,resolved,veh:marque:lamborghini,,1,alias de marque_vehicule,
+ER-08694,C11_marque,LANCIA,,resolved,veh:marque:lancia,,1,alias de marque_vehicule,
+ER-08697,C11_marque,LEXUS,,resolved,veh:marque:lexus,,1,alias de marque_vehicule,
+ER-08698,C11_marque,LOTUS,,resolved,veh:marque:lotus,,1,alias de marque_vehicule,
+ER-08699,C11_marque,LYNK&CO,,resolved,veh:marque:lynk-co,,1,alias de marque_vehicule,
+ER-08701,C11_marque,Lemförder,,resolved,piece:marque:lemforder,,1,alias de marque_piece,
+ER-08706,C11_marque,MAHINDRA,,resolved,veh:marque:mahindra,,1,alias de marque_vehicule,
+ER-08707,C11_marque,MASERATI,,resolved,veh:marque:maserati,,1,alias de marque_vehicule,
+ER-08710,C11_marque,MCLAREN,,resolved,veh:marque:mclaren,,1,alias de marque_vehicule,
+ER-08711,C11_marque,MDD,,resolved,piece:marque:mecanova-select,,1,alias de marque_piece,
+ER-08712,C11_marque,MERCEDES,,resolved,veh:marque:mercedes-benz,,1,alias de marque_vehicule,
+ER-08714,C11_marque,MERCEDES-BENZ,,resolved,veh:marque:mercedes-benz,,1,alias de marque_vehicule,
+ER-08715,C11_marque,MG,,resolved,veh:marque:mg,,1,alias de marque_vehicule,
+ER-08721,C11_marque,Mahle Original,,resolved,piece:marque:mahle,,1,alias de marque_piece,
+ER-08722,C11_marque,Mann,,resolved,piece:marque:mann-filter,,1,alias de marque_piece,
+ER-08727,C11_marque,Mécanova SA (fictive),,resolved,organisation:mecanova-sa-fictive,,1,alias de groupe_industriel,
+ER-08728,C11_marque,Mécanova Select,,resolved,piece:marque:mecanova-select,,1,alias de marque_piece,
+ER-08729,C11_marque,NGK,,resolved,piece:marque:ngk,,1,alias de marque_piece,
+ER-08732,C11_marque,Nissens,,resolved,piece:marque:nissen,,1,alias de marque_piece,
+ER-08733,C11_marque,Niterra,,resolved,organisation:niterra,,1,alias de groupe_industriel,
+ER-08738,C11_marque,Osram,,resolved,piece:marque:osram,,1,alias de marque_piece,
+ER-08739,C11_marque,PAGANI,,resolved,veh:marque:pagani,,1,alias de marque_vehicule,
+ER-08740,C11_marque,PEUGEOT,,ambiguous,veh:marque:peugeot|veh:modele:peugeot-peugeot,,3,alias de marque_vehicule,
+ER-08742,C11_marque,PORSCHE,,resolved,veh:marque:porsche,,1,alias de marque_vehicule,
+ER-08744,C11_marque,Purflux,,resolved,piece:marque:purflu,,1,alias de marque_piece,
+ER-08745,C11_marque,RENAULT,,resolved,veh:marque:renault,,1,alias de marque_vehicule,
+ER-08748,C11_marque,Robert Bosch GmbH,,resolved,organisation:robert-bosch-gmbh,,1,alias de groupe_industriel,
+ER-08750,C11_marque,SERES,,ambiguous,geo:commune:BE-62096|veh:marque:seres,,3,alias de marque_vehicule,
+ER-08752,C11_marque,"SHINERAY, SWM, JINBEI, SRM",,resolved,veh:marque:shineray-swm-jinbei-srm,,1,alias de marque_vehicule,
+ER-08753,C11_marque,SKODA,,resolved,veh:marque:skoda,,1,alias de marque_vehicule,
+ER-08755,C11_marque,SOCIETE DES AUTOMOBILES ALPINE(SAA),,resolved,veh:marque:alpine,,1,alias de marque_vehicule,
+ER-08762,C11_marque,Sachs,,resolved,piece:marque:sach,,1,alias de marque_piece,
+ER-08768,C11_marque,TESLA,,resolved,veh:marque:tesla,,1,alias de marque_vehicule,
+ER-08770,C11_marque,TMD Friction,,resolved,organisation:tmd-friction,,1,alias de groupe_industriel,
+ER-08774,C11_marque,Tenneco,,resolved,organisation:tenneco,,1,alias de groupe_industriel,
+ER-08775,C11_marque,Textar,,resolved,piece:marque:textar,,1,alias de marque_piece,
+ER-08784,C11_marque,Varta,,resolved,piece:marque:varta,,1,alias de marque_piece,
+ER-08785,C11_marque,Walker,,resolved,piece:marque:walker,,1,alias de marque_piece,
+ER-08792,C11_marque,ams OSRAM,,resolved,organisation:ams-osram,,1,alias de groupe_industriel,
+ER-08794,C11_marque,marque maison,,resolved,piece:marque:mecanova-select,,1,alias de marque_piece,
+ER-08806,C12_vehicule,218D Active Tourer,,resolved,veh:modele:bmw-218d-active-tourer,,2,alias de modèle (libelle_canonique),
+ER-08811,C12_vehicule,296 gtb,,resolved,veh:modele:ferrari-296-gtb,,2,alias de modèle (libelle_canonique),
+ER-08815,C12_vehicule,3008,,resolved,veh:modele:peugeot-3008,,2,alias de modèle (libelle_canonique),
+ER-08828,C12_vehicule,5,,ambiguous,veh:modele:cirelli-5|veh:modele:dr-5|veh:modele:evo-5|veh:modele:omoda-5|veh:modele:smart-5|veh:modele:sportequipe-5,,3,alias de modèle (libelle_canonique),
+ER-08845,C12_vehicule,7.0,,resolved,veh:modele:dr-7-0,,2,alias de modèle (libelle_canonique),
+ER-08846,C12_vehicule,718 Boxster,,resolved,veh:modele:porsche-718-boxster,,2,alias de modèle (libelle_canonique),
+ER-08848,C12_vehicule,718 Spyder Rs,,resolved,veh:modele:porsche-718-spyder-rs,,2,alias de modèle (libelle_canonique),
+ER-08850,C12_vehicule,740D Xdrive,,resolved,veh:modele:bmw-740d-xdrive,,2,alias de modèle (libelle_canonique),
+ER-08864,C12_vehicule,A3 40 Tfsie,,resolved,veh:modele:audi-a3-40-tfsie,,2,alias de modèle (libelle_canonique),
+ER-08870,C12_vehicule,A7 55 Tfsi E,,resolved,veh:modele:audi-a7-55-tfsi-e,,2,alias de modèle (libelle_canonique),
+ER-08894,C12_vehicule,Audi Q5 Sportback 55 Tfsi E,,resolved,veh:modele:audi-q5-sportback-55-tfsi-e,,2,alias de modèle (marque_et_modele),
+ER-08898,C12_vehicule,Audi S3 Sportback,,resolved,veh:modele:audi-s3-sportback,,2,alias de modèle (marque_et_modele),
+ER-08909,C12_vehicule,Bmw 316D,,resolved,veh:modele:bmw-316d,,2,alias de modèle (marque_et_modele),
+ER-08930,C12_vehicule,Bmw X3Sdrive 18D,,resolved,veh:modele:bmw-x3sdrive-18d,,2,alias de modèle (marque_et_modele),
+ER-08932,C12_vehicule,Bmw X6 M60I Xdrive,,resolved,veh:modele:bmw-x6-m60i-xdrive,,2,alias de modèle (marque_et_modele),
+ER-08934,C12_vehicule,Bmw X6 Xdrive40I,,resolved,veh:modele:bmw-x6-xdrive40i,,2,alias de modèle (marque_et_modele),
+ER-08966,C12_vehicule,Dr 6.0 H,,resolved,veh:modele:dr-6-0-h,,2,alias de modèle (alias_source),
+ER-08979,C12_vehicule,Ecosport,,resolved,veh:modele:ford-ecosport,,2,alias de modèle (libelle_canonique),
+ER-09064,C12_vehicule,Mercedes-Benz Amg Eqe 43 4Matic,,resolved,veh:modele:mercedes-benz-amg-eqe-43-4matic,,2,alias de modèle (marque_et_modele),
+ER-09073,C12_vehicule,Mercedes-Benz C 300 E,,resolved,veh:modele:mercedes-benz-c-300-e,,2,alias de modèle (marque_et_modele),
+ER-09086,C12_vehicule,Mercedes-Benz Gle 350 De 4Matic,,resolved,veh:modele:mercedes-benz-gle-350-de-4matic,,2,alias de modèle (marque_et_modele),
+ER-09090,C12_vehicule,Mercedes-Benz S 350 D,,resolved,veh:modele:mercedes-benz-s-350-d,,2,alias de modèle (marque_et_modele),
+ER-09103,C12_vehicule,Model Y,,resolved,veh:modele:tesla-model-y,,2,alias de modèle (libelle_canonique),
+ER-09107,C12_vehicule,Morgan Plus Four,,resolved,veh:modele:morgan-plus-four,,2,alias de modèle (marque_et_modele),
+ER-09109,C12_vehicule,Niro,,resolved,veh:modele:kia-niro,,2,alias de modèle (libelle_canonique),
+ER-09118,C12_vehicule,Peugeot 208,,resolved,veh:modele:peugeot-208,,2,alias de modèle (marque_et_modele),
+ER-09137,C12_vehicule,Q5 Sb 220Kw Tfsi E,,resolved,veh:modele:audi-q5-sb-220kw-tfsi-e,,2,alias de modèle (libelle_canonique),
+ER-09157,C12_vehicule,Smart #1,,resolved,veh:modele:smart-1,,2,alias de modèle (marque_et_modele),
+ER-09162,C12_vehicule,Sportequipe X K2,,resolved,veh:modele:sportequipe-x-k2,,2,alias de modèle (marque_et_modele),
+ER-09169,C12_vehicule,Suzuki S-Cross,,resolved,veh:modele:suzuki-s-cross,,2,alias de modèle (marque_et_modele),
+ER-09197,C12_vehicule,Volkswagen Transporter Caravelle,,resolved,veh:modele:volkswagen-transporter-caravelle,,2,alias de modèle (marque_et_modele),
+ER-09200,C12_vehicule,Wave 3,,resolved,veh:modele:emc-wave-3,,2,alias de modèle (libelle_canonique),
+ER-09201,C12_vehicule,Wave 3 Gpl,,resolved,veh:modele:emc-wave-3-gpl,,2,alias de modèle (libelle_canonique),
+ER-09224,C12_vehicule,a 220 d,,ambiguous,veh:modele:bmw-220|veh:modele:mercedes-benz-a-220-d,,3,alias de modèle (libelle_canonique),
+ER-09241,C12_vehicule,amg gla 35 4matic,,resolved,veh:modele:mercedes-benz-amg-gla-35-4matic,,2,alias de modèle (libelle_canonique),
+ER-09247,C12_vehicule,audi a3 allstreet,,resolved,veh:modele:audi-a3-allstreet,,2,alias de modèle (marque_et_modele),
+ER-09265,C12_vehicule,audi s3 limousine,,resolved,veh:modele:audi-s3-limousine,,2,alias de modèle (marque_et_modele),
+ER-09274,C12_vehicule,bmw 120d xdrive,,resolved,veh:modele:bmw-120d-xdrive,,2,alias de modèle (marque_et_modele),
+ER-09290,C12_vehicule,bmw x1 xdrive18d,,resolved,veh:modele:bmw-x1-xdrive18d,,2,alias de modèle (marque_et_modele),
+ER-09296,C12_vehicule,bz4x,,resolved,veh:modele:toyota-bz4x,,2,alias de modèle (libelle_canonique),
+ER-09308,C12_vehicule,cirelli 4,,resolved,veh:modele:cirelli-4,,2,alias de modèle (alias_source),
+ER-09313,C12_vehicule,citroen e-berlingo,,resolved,veh:modele:citroen-e-berlingo,,2,alias de modèle (marque_et_modele),
+ER-09324,C12_vehicule,cupra formentor e-hybrid,,resolved,veh:modele:cupra-formentor-e-hybrid,,2,alias de modèle (marque_et_modele),
+ER-09327,C12_vehicule,dacia jogger,,resolved,veh:modele:dacia-jogger,,2,alias de modèle (marque_et_modele),
+ER-09334,C12_vehicule,dr dr6.0,,resolved,veh:modele:dr-dr6-0,,2,alias de modèle (marque_et_modele),
+ER-09352,C12_vehicule,ev3,,resolved,veh:modele:kia-ev3,,2,alias de modèle (libelle_canonique),
+ER-09362,C12_vehicule,ford ecosport,,resolved,veh:modele:ford-ecosport,,2,alias de modèle (marque_et_modele),
+ER-09411,C12_vehicule,kia niro gpl,,resolved,veh:modele:kia-niro-gpl,,2,alias de modèle (marque_et_modele),
+ER-09449,C12_vehicule,mercedes-benz e 400 e 4matic,,resolved,veh:modele:mercedes-benz-e-400-e-4matic,,2,alias de modèle (marque_et_modele),
+ER-09465,C12_vehicule,mercedes-benz vito tourer,,resolved,veh:modele:mercedes-benz-vito-tourer,,2,alias de modèle (marque_et_modele),
+ER-09474,C12_vehicule,morgan plus six supersport,,resolved,veh:modele:morgan-plus-six-supersport,,2,alias de modèle (marque_et_modele),
+ER-09492,C12_vehicule,porsche 911 carrera 4 gts,,resolved,veh:modele:porsche-911-carrera-4-gts,,2,alias de modèle (marque_et_modele),
+ER-09497,C12_vehicule,porsche cayenne turbo e-hybrid,,resolved,veh:modele:porsche-cayenne-turbo-e-hybrid,,2,alias de modèle (marque_et_modele),
+ER-09500,C12_vehicule,porsche panamera,,resolved,veh:modele:porsche-panamera,,2,alias de modèle (marque_et_modele),
+ER-09514,C12_vehicule,renault megane e-tech electric,,resolved,veh:modele:renault-megane-e-tech-electric,,2,alias de modèle (marque_et_modele),
+ER-09542,C12_vehicule,suzuki across,,resolved,veh:modele:suzuki-across,,2,alias de modèle (alias_source),
+ER-09551,C12_vehicule,toyota bz4x,,resolved,veh:modele:toyota-bz4x,,2,alias de modèle (alias_source),
+ER-09558,C12_vehicule,vantage roadster,,resolved,veh:modele:aston-martin-vantage-roadster,,2,alias de modèle (libelle_canonique),
+ER-09566,C12_vehicule,volkswagen id.7 gtx,,resolved,veh:modele:volkswagen-id-7-gtx,,2,alias de modèle (marque_et_modele),
+ER-09577,C12_vehicule,x5 xdrive50e,,resolved,veh:modele:bmw-x5-xdrive50e,,2,alias de modèle (libelle_canonique),
+ER-09590,C13_abreviation,Aire-s/-la-Lys,,resolved,geo:ville:FR-3038393,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Aire-sur-la-Lys
+ER-09593,C13_abreviation,Arcis-s/-Aube,,resolved,geo:ville:FR-3037186,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Arcis-sur-Aube
+ER-09595,C13_abreviation,Art-s/-Meurthe,,resolved,geo:ville:FR-3036637,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Art-sur-Meurthe
+ER-09601,C13_abreviation,Bailleul-s/-Thérain,,resolved,geo:ville:FR-3035351,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Bailleul-sur-Thérain
+ER-09610,C13_abreviation,Beaumont-s/-Vesle,,resolved,geo:ville:FR-3034139,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Beaumont-sur-Vesle
+ER-09612,C13_abreviation,Berchem-Ste-Agathe,,resolved,geo:commune:BE-21003,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Berchem-Sainte-Agathe
+ER-09619,C13_abreviation,Blangy-s/-Ternoise,,resolved,geo:ville:FR-3032348,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Blangy-sur-Ternoise
+ER-09622,C13_abreviation,Boubers-s/-Canche,,resolved,geo:ville:FR-3031399,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Boubers-sur-Canche
+ER-09634,C13_abreviation,Béthisy-St-Martin,,resolved,geo:ville:FR-3033011,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Béthisy-Saint-Martin
+ER-09642,C13_abreviation,Chaudeney-s/-Moselle,,resolved,geo:ville:FR-3025984,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Chaudeney-sur-Moselle
+ER-09652,C13_abreviation,Corny-s/-Moselle,,resolved,geo:ville:FR-3023560,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Corny-sur-Moselle
+ER-09653,C13_abreviation,Courcelles-s/-Nied,,resolved,geo:ville:FR-3023086,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Courcelles-sur-Nied
+ER-09654,C13_abreviation,Court-St-Etienne,,resolved,geo:commune:BE-25023,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Court-Saint-Etienne
+ER-09670,C13_abreviation,Forest-s/-Marque,,resolved,geo:ville:FR-3017766,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Forest-sur-Marque
+ER-09677,C13_abreviation,Griesheim-s/-Souffel,,resolved,geo:ville:FR-3014662,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Griesheim-sur-Souffel
+ER-09719,C13_abreviation,Louette-St-Pierre,,resolved,geo:localite:BE-5575-louette-saint-pierre,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Louette-Saint-Pierre
+ER-09724,C13_abreviation,Marcilly-s/-Seine,,resolved,geo:ville:FR-2995941,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Marcilly-sur-Seine
+ER-09730,C13_abreviation,Merck-St-Liévin,,resolved,geo:ville:FR-2994460,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Merck-Saint-Liévin
+ER-09739,C13_abreviation,Monchaux-s/-Écaillon,,resolved,geo:ville:FR-2993406,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Monchaux-sur-Écaillon
+ER-09741,C13_abreviation,Mont-St-André,,resolved,geo:localite:BE-1367-mont-saint-andre,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Mont-Saint-André
+ER-09742,C13_abreviation,Mont-St-Aubert,,resolved,geo:localite:BE-7542-mont-saint-aubert,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Mont-Saint-Aubert
+ER-09756,C13_abreviation,Mt-Sur-Marchienne,,resolved,geo:localite:BE-6032-mont-sur-marchienne,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Mont-Sur-Marchienne
+ER-09768,C13_abreviation,Neuville-s/-Escaut,,resolved,geo:ville:FR-2990520,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Neuville-sur-Escaut
+ER-09772,C13_abreviation,Nogent-s/-Seine,,resolved,geo:ville:FR-2990263,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Nogent-sur-Seine
+ER-09786,C13_abreviation,Pont-Ste-Marie,,resolved,geo:ville:FR-2986111,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Pont-Sainte-Marie
+ER-09787,C13_abreviation,Pont-Ste-Maxence,,resolved,geo:ville:FR-2986110,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Pont-Sainte-Maxence
+ER-09808,C13_abreviation,Roodt-s/-Syre,,resolved,geo:commune:LU-2960128,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Roodt-sur-Syre
+ER-09820,C13_abreviation,Sorcy-St-Martin,,resolved,geo:ville:FR-2974208,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sorcy-Saint-Martin
+ER-09832,C13_abreviation,St-Aubin,,ambiguous,geo:localite:BE-5620-saint-aubin|geo:ville:FR-2981604,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Aubin
+ER-09835,C13_abreviation,St-Blimont,,resolved,geo:ville:FR-2981367,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Blimont
+ER-09841,C13_abreviation,St-Dizier,,resolved,geo:ville:FR-2980816,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Dizier
+ER-09844,C13_abreviation,St-Folquin,,resolved,geo:ville:FR-2980098,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Folquin
+ER-09849,C13_abreviation,St-Germain-la-Ville,,resolved,geo:ville:FR-2979768,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Germain-la-Ville
+ER-09868,C13_abreviation,St-Josse,,resolved,geo:ville:FR-2979162,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Josse
+ER-09893,C13_abreviation,St-Masmes,,resolved,geo:ville:FR-2978203,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Masmes
+ER-09912,C13_abreviation,St-Ouen,,resolved,geo:ville:FR-2977821,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Ouen
+ER-09920,C13_abreviation,St-Pol-sur-Ternoise,,resolved,geo:ville:FR-2977387,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Pol-sur-Ternoise
+ER-09933,C13_abreviation,St-Servais,,resolved,geo:localite:BE-5002-saint-servai,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Servais
+ER-09936,C13_abreviation,St-Sulpice,,resolved,geo:ville:FR-2976866,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Sulpice
+ER-09937,C13_abreviation,St-Sylvestre-Cappel,,resolved,geo:ville:FR-2976823,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Sylvestre-Cappel
+ER-09944,C13_abreviation,St-Vaast,,ambiguous,geo:localite:BE-7100-saint-vaast|geo:ville:FR-2976711|geo:ville:FR-2976717,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Saint-Vaast
+ER-09958,C13_abreviation,St.-Andries,,resolved,geo:localite:BE-8200-sint-andrie,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Andries
+ER-09966,C13_abreviation,St.-Eloois-Winkel,,resolved,geo:localite:BE-8880-sint-elooi-winkel,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Eloois-Winkel
+ER-09970,C13_abreviation,St.-Gillis-Waas,,resolved,geo:commune:BE-46020,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Gillis-Waas
+ER-09976,C13_abreviation,St.-Jan-In-Eremo,,resolved,geo:localite:BE-9982-sint-jan-in-eremo,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Jan-In-Eremo
+ER-09994,C13_abreviation,St.-Lievens-Esse,,resolved,geo:localite:BE-9550-sint-lieven-esse,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Lievens-Esse
+ER-09996,C13_abreviation,St.-Margriete,,resolved,geo:localite:BE-9981-sint-margriete,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Margriete
+ER-09997,C13_abreviation,St.-Margriete-Houtem,,ambiguous,geo:localite:BE-3300-sint-margriete-houtem|geo:localite:BE-3470-sint-margriete-houtem,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Margriete-Houtem
+ER-10013,C13_abreviation,St.-Pieters-Kapelle,,ambiguous,geo:localite:BE-1541-sint-pieter-kapelle|geo:localite:BE-8433-sint-pieter-kapelle,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Pieters-Kapelle
+ER-10019,C13_abreviation,St.-Stevens-Woluwe,,resolved,geo:localite:BE-1932-sint-steven-woluwe,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sint-Stevens-Woluwe
+ER-10025,C13_abreviation,Ste-Croix-en-Plaine,,resolved,geo:ville:FR-2980648,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sainte-Croix-en-Plaine
+ER-10027,C13_abreviation,Ste-Geneviève,,resolved,geo:ville:FR-2980562,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sainte-Geneviève
+ER-10034,C13_abreviation,Ste-Marie-aux-Mines,,resolved,geo:ville:FR-2980438,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Sainte-Marie-aux-Mines
+ER-10039,C13_abreviation,Taisnières-s/-Hon,,resolved,geo:ville:FR-2973528,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Taisnières-sur-Hon
+ER-10046,C13_abreviation,Tourinnes-St-Lambert,,resolved,geo:localite:BE-1457-tourinne-saint-lambert,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Tourinnes-Saint-Lambert
+ER-10052,C13_abreviation,Vailly-s/-Aisne,,resolved,geo:ville:FR-2971169,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Vailly-sur-Aisne
+ER-10056,C13_abreviation,Ver-s/-Launette,,resolved,geo:ville:FR-2969658,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Ver-sur-Launette
+ER-10058,C13_abreviation,Vic-s/-Aisne,,resolved,geo:ville:FR-2969366,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Vic-sur-Aisne
+ER-10068,C13_abreviation,Villers-St-Sépulcre,,resolved,geo:ville:FR-2968347,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Villers-Saint-Sépulcre
+ER-10084,C13_abreviation,Éragny-s/-Epte,,resolved,geo:ville:FR-3019951,unknown,3,abréviation usuelle non indexée : l'intention est le toponyme d'origine,origine : Éragny-sur-Epte

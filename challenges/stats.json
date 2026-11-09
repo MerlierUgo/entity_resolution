@@ -1,0 +1,25 @@
+{
+ "total": 10085,
+ "core": 780,
+ "par_categorie": {
+  "C01_libelle_canonique": 416,
+  "C02_traduction_officielle": 485,
+  "C03_variante_geonames": 499,
+  "C04_terme_metier": 98,
+  "C05_homonyme": 700,
+  "C06_indice_de_type": 844,
+  "C07_faute_de_frappe": 2738,
+  "C08_hors_perimetre_proche": 594,
+  "C09_code": 1097,
+  "C10_client": 1149,
+  "C11_marque": 176,
+  "C12_vehicule": 789,
+  "C13_abreviation": 500
+ },
+ "par_statut": {
+  "ambiguous": 1096,
+  "resolved": 7946,
+  "unknown": 1043
+ },
+ "test": 2927
+}

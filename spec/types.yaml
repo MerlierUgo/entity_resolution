@@ -1,0 +1,136 @@
+# Typologie des questions
+# Chaque type a un gabarit de Manifest. L'étape « intention » classe la question dans un type ;
+# le scoring engine remplit les champs ; le template DAX correspondant génère la requête.
+#
+# Champs du Manifest (format v2 historique ; le format de référence est désormais
+# spec/manifest_schema.yaml v0.1, où mesures, filtres, axes et période deviennent une liste « champs » avec un rôle) :
+#   intent       : aggregate | breakdown | ranking | timeseries | compare | share | list | detail | out_of_scope
+#   mesures      : liste d'identifiants de mesures (M01…M26)
+#   filtres      : liste de {dimension, valeurs}
+#   axes         : dimensions de regroupement
+#   periode      : {debut, fin} ou {photo: date} pour le stock
+#   comparaison  : {type: n_moins_1, debut, fin}
+#   tri, limite  : pour les classements
+#   seuil        : pour les filtres sur une mesure
+
+version: 2.0.0
+
+types:
+  - id: T01
+    nom: Valeur simple
+    intent: aggregate
+    description: "Une mesure sur une période, sans filtre."
+    exemple: "Quel est le CA de l'année dernière ?"
+    gabarit: {mesures: [1], filtres: [], axes: [], periode: requis}
+
+  - id: T02
+    nom: Valeur filtrée
+    intent: aggregate
+    description: "Une mesure filtrée par une valeur d'une dimension."
+    exemple: "Taux de service de l'agence Liège le mois dernier"
+    gabarit: {mesures: [1], filtres: [1], axes: [], periode: requis}
+
+  - id: T03
+    nom: Valeur multi-filtres
+    intent: aggregate
+    description: "Une mesure filtrée par plusieurs dimensions."
+    exemple: "Ventes de plaquettes de frein Brakor en 2025"
+    gabarit: {mesures: [1], filtres: "2 ou plus", axes: [], periode: requis}
+
+  - id: T04
+    nom: Répartition par une dimension
+    intent: breakdown
+    description: "Une mesure ventilée selon une dimension."
+    exemple: "Marge % par agence sur les 12 derniers mois"
+    gabarit: {mesures: [1], axes: [1], periode: requis, tri: "mesure décroissante"}
+
+  - id: T05
+    nom: Répartition par deux dimensions
+    intent: breakdown
+    description: "Tableau croisé de deux dimensions."
+    exemple: "Taux de remise moyen par pays et par type de client en 2025"
+    gabarit: {mesures: [1], axes: [2], periode: requis}
+
+  - id: T06
+    nom: Top N
+    intent: ranking
+    description: "Les N premiers selon une mesure."
+    exemple: "Top 10 des clients pro en 2025"
+    gabarit: {mesures: [1], axes: [1], tri: desc, limite: "N, 10 par défaut (R-AFF-02)"}
+
+  - id: T07
+    nom: Flop N
+    intent: ranking
+    description: "Les N derniers selon une mesure."
+    exemple: "Les 5 sous-familles les moins rentables cette année"
+    gabarit: {mesures: [1], axes: [1], tri: asc, limite: "N, 10 par défaut"}
+
+  - id: T08
+    nom: Série temporelle
+    intent: timeseries
+    description: "Évolution d'une mesure par mois (ou semaine, trimestre, année)."
+    exemple: "Évolution mensuelle du CA au Luxembourg depuis janvier 2024"
+    gabarit: {mesures: [1], axes: [mois], periode: requis}
+
+  - id: T09
+    nom: Comparaison à l'année précédente
+    intent: compare
+    description: "Valeur N, valeur N-1 à périmètre de dates équivalent, et évolution en % (R-TPS-03)."
+    exemple: "Comment évolue le CA de la Belgique par rapport à l'an dernier ?"
+    gabarit: {mesures: [1], periode: requis, comparaison: n_moins_1}
+
+  - id: T10
+    nom: Comparaison de valeurs
+    intent: compare
+    description: "Une mesure pour deux valeurs ou plus d'une même dimension, côte à côte."
+    exemple: "Panier moyen des garagistes en livraison vs comptoir"
+    gabarit: {mesures: [1], axes: [1], filtres: "la dimension comparée est limitée aux valeurs citées"}
+
+  - id: T11
+    nom: Part du total
+    intent: share
+    description: "Contribution d'une valeur au total du périmètre, en %."
+    exemple: "Quelle est la part du web dans nos ventes ?"
+    gabarit: {mesures: [1], axes: [1], calcul: "valeur / total du périmètre sans ce filtre"}
+
+  - id: T12
+    nom: Cumul à date
+    intent: aggregate
+    description: "Cumul depuis le début de l'année, éventuellement ventilé."
+    exemple: "CA cumulé par pays depuis le début de l'année"
+    gabarit: {mesures: [1], periode: annee_en_cours}
+
+  - id: T13
+    nom: Ratio
+    intent: aggregate
+    description: "Un taux ou un ratio défini dans mesures.yaml (marge %, taux de retour, taux de service…)."
+    exemple: "Taux de retour par marque sur la famille freinage"
+    gabarit: {mesures: [1], note: "Un ratio ne s'additionne jamais : il est recalculé à chaque niveau."}
+
+  - id: T14
+    nom: Filtre sur une mesure
+    intent: list
+    description: "Les entités dont la mesure dépasse (ou reste sous) un seuil."
+    exemple: "Clients avec plus de 20 000 € de CA en 2025"
+    gabarit: {mesures: [1], axes: [1], seuil: {operateur: "> | >= | < | <=", valeur: nombre}}
+
+  - id: T15
+    nom: Liste d'entités par règle
+    intent: list
+    description: "Une liste définie par une règle métier (clients inactifs, ruptures)."
+    exemple: "Quels garages n'ont rien commandé depuis 90 jours ?"
+    gabarit: {mesures: [1], axes: [1]}
+
+  - id: T16
+    nom: Détail d'une référence
+    intent: detail
+    description: "Mesures d'un article précis, identifié par son code."
+    exemple: "Détail des ventes de la référence MN-PLQ-10234 en 2026"
+    gabarit: {mesures: "M05, M09, M14 par défaut", filtres: [article], periode: requis}
+
+  - id: T17
+    nom: Hors périmètre
+    intent: out_of_scope
+    description: "Sujet non couvert (R-HP-01). Réponse explicite, aucun chiffre."
+    exemple: "Prévision de CA pour décembre"
+    gabarit: {}

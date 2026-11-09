@@ -1,0 +1,44 @@
+﻿entity_id,entity_type,domain,label,code,tier,source,licence
+metier:canal:comptoir,canal,metier,Comptoir,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-particulier,canal,metier,E-commerce particulier,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-pro,canal,metier,E-commerce pro,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:livraison-garage,canal,metier,Livraison garage,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:telephone-canal,canal,metier,Téléphone (canal),,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:agence,groupe_canal,metier,En agence,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,groupe_canal,metier,Digital,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:telephone,groupe_canal,metier,Téléphone,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:mesure:M01,mesure,metier,CA brut,M01,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M02,mesure,metier,Remises,M02,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M03,mesure,metier,CA net facturé,M03,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M04,mesure,metier,Montant des retours,M04,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,mesure,metier,CA net,M05,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M06,mesure,metier,Montant des consignes,M06,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M07,mesure,metier,Quantité facturée,M07,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M08,mesure,metier,Quantité retournée,M08,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,mesure,metier,Quantité vendue nette,M09,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M10,mesure,metier,Nombre de commandes,M10,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M11,mesure,metier,Nombre de lignes facturées,M11,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M12,mesure,metier,Coût des ventes nettes,M12,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M13,mesure,metier,Marge brute,M13,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,mesure,metier,Marge % (taux de marque),M14,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M15,mesure,metier,Taux de marge (sur coût),M15,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M16,mesure,metier,Taux de remise moyen,M16,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M17,mesure,metier,Panier moyen,M17,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M18,mesure,metier,Clients actifs,M18,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M19,mesure,metier,Clients inactifs,M19,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M20,mesure,metier,Taux de retour,M20,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M21,mesure,metier,Taux de retour pour défaut,M21,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,mesure,metier,Taux de service immédiat,M22,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M23,mesure,metier,Quantité en stock,M23,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M24,mesure,metier,Valeur du stock,M24,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M25,mesure,metier,Couverture de stock,M25,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M26,mesure,metier,Ruptures,M26,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M27,mesure,metier,CA par client actif,M27,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M28,mesure,metier,Prix tarif unitaire,M28,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M29,mesure,metier,Clients au référentiel,M29,3,Mesures (spec/mesures.yaml),CC0
+metier:motif_retour:coli-endommage,motif_retour,metier,Colis endommagé,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:erreur-commande,motif_retour,metier,Erreur de commande,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:incompatibilite-vehicule,motif_retour,metier,Incompatibilité véhicule,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,motif_retour,metier,Pièce défectueuse,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:particulier,segment,metier,Particulier,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,segment,metier,Professionnel,,3,Glossaire métier v2 (spec/glossaire.yaml),CC0

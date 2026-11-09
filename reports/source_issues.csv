@@ -1,0 +1,65 @@
+﻿source,type,detail
+"ISO 3166-1 et 3166-2, traductions iso-codes (via pycountry 26.2.16)",traduction_corrigee,BE-VLI : traduction fr « Limourg » corrigée en « Limbourg »
+"ISO 3166-1 et 3166-2, traductions iso-codes (via pycountry 26.2.16)",traduction_corrigee,NL-LI : traduction fr « Limourg » corrigée en « Limbourg »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,1357 « HÉlÉcine » → « HÉlécine »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,1440 « Braine-Le-ChÂteau » → « Braine-Le-Château »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4000 « LiÈge » → « Liège »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4020 « LiÈge » → « Liège »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4120 « NeuprÉ » → « Neupré »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4190 « FerriÈres » → « Ferrières »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4367 « CrisnÉe » → « Crisnée »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4400 « FlÉmalle » → « Flémalle »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4460 « GrÂce-Hollogne » → « Grâce-Hollogne »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4600 « VisÉ » → « Visé »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4620 « FlÉron » → « Fléron »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4670 « BlÉgny » → « Blégny »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4770 « AmblÈve » → « Amblève »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,4850 « PlombiÈres » → « Plombières »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,5080 « La BruyÈre » → « La Bruyère »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,5310 « EghezÉe » → « Eghezée »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,5537 « AnhÉe » → « Anhée »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,5540 « HastiÈre » → « Hastière »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,5555 « BiÈvre » → « Bièvre »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,6140 « Fontaine-L'evÊque » → « Fontaine-L'evêque »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,6200 « ChÂtelet » → « Châtelet »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,6567 « Merbes-Le-ChÂteau » → « Merbes-Le-Château »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,6840 « NeufchÂteau » → « Neufchâteau »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,6997 « ErezÉe » → « Erezée »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,7040 « QuÉvy » → « Quévy »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,7100 « La LouviÈre » → « La Louvière »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,7380 « QuiÉvrain » → « Quiévrain »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",casse_corrigee,7950 « ChiÈvres » → « Chièvres »
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",doublon,3220 Holsbeek
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",doublon,3220 Kortrijk-Dutsel
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",doublon,3220 Sint-Pieters-Rode
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",doublon,3221 Nieuwrode
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",doublon,8906 Elverdinge
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",plusieurs_codes_postaux,"2870,2890 Puurs-Sint-Amands : premier code retenu"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",plusieurs_codes_postaux,"3660,3670 Oudsbergen : premier code retenu"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",plusieurs_codes_postaux,"3900,3910 Pelt : premier code retenu"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",plusieurs_codes_postaux,"9750,9770 Kruisem : premier code retenu"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",plusieurs_codes_postaux,"9800,9850 Deinze : premier code retenu"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",plusieurs_codes_postaux,"9880,9910 Aalter : premier code retenu"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",plusieurs_codes_postaux,"9920,9930,9950 Lievegem : premier code retenu"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1000 Brussel : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1020 Laken : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1030 Schaarbeek : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1040 Etterbeek : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1050 Elsene : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1060 Sint-Gillis : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1070 Anderlecht : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1080 Sint-Jans-Molenbeek : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1081 Koekelberg : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1082 Sint-Agatha-Berchem : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1083 Ganshoren : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1090 Jette : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1120 Neder-Over-Heembeek : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1130 Haren : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1140 Evere : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1150 Sint-Pieters-Woluwe : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1160 Oudergem : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1170 Watermaal-Bosvoorde : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1180 Ukkel : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1190 Vorst : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1200 Sint-Lambrechts-Woluwe : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"
+"bpost, codes postaux 2015 (via spatie/belgian-cities-geocoded)",province_incoherente,"1210 Sint-Joost-Ten-Noode : province source « Vlaams-Brabant », code postal → geo:region:BE-BRU"

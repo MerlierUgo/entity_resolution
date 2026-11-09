@@ -1,0 +1,110 @@
+# Schéma du Manifest · v0.1
+#
+# Le Manifest est ce que le moteur a COMPRIS d'une question, indépendamment de sa formulation.
+# Ce fichier est lu par le code (build/manifest.py) : il est la source unique des valeurs permises.
+#
+# Sortie complète du moteur pour une question (exemple H-012) :
+#
+#   schema: "0.1"
+#   statut: resolved
+#   question: "Quelle marque filtre a carburant se vend le mieux ?"   # enveloppe : hors hash
+#   langue: fr
+#   modele: mecanova_v2
+#   manifest:                                                         # cœur : canonique, hashé
+#     intent: ranking
+#     champs:
+#       - {role: mesure,  ref: M05}
+#       - {role: filtre,  dimension: sous_famille, valeurs: ["piece:cat:vp-1-4-10-3"]}
+#       - {role: axe,     dimension: marque}
+#       - {role: periode, debut: "2026-01-01", fin: "2026-09-30"}
+#     tri: {mesure: M05, ordre: desc}
+#     limite: 1
+#   trace:                                                            # d'où vient chaque champ : hors hash
+#     - {terme: "se vend le mieux", donne: M05, etape: "regle R-AFF-05"}
+#   rendu: {sortie: kpi_card}                                         # déduit de l'intent : hors hash
+#
+# Une réponse ATTENDUE (human/attendus.yaml) ne contient que le statut et ce qu'on compare :
+# le cœur du Manifest si resolved, sinon les ambiguïtés, les termes inconnus ou le sujet refusé.
+
+version: "0.1"
+
+# ------------------------------------------------------------------------------------------------
+# Statuts d'une question et ce que chacun contient (une seule de ces clés, selon le statut)
+# ------------------------------------------------------------------------------------------------
+statuts:
+  resolved:     {contient: manifest,       note: "tous les termes sont résolus"}
+  ambiguous:    {contient: ambiguites,     note: "au moins un terme a plusieurs candidats : on demande"}
+  unknown:      {contient: inconnus,       note: "au moins un terme n'est pas reconnu : on ne devine pas"}
+  out_of_scope: {contient: hors_perimetre, note: "la question sort du périmètre : on refuse poliment"}
+
+# ambiguites : liste de {terme, candidats}
+#   candidats : identifiants du catalogue (y compris metier:mesure:Mxx), identifiants de mesure (M05),
+#               ou axes (axe:pays). Au moins deux.
+# inconnus : liste de {terme, raison}
+raisons_inconnu:
+  absent_du_catalogue: "aucune entité ne correspond (« durites »)"
+  index_negatif: "valeur connue comme absente (« Paris », « Michelin »)"
+  code_inexistant: "référence ou code client qui n'existe pas"
+  mesure_non_definie: "aucune mesure ne correspond (« productif »)"
+  periode_non_reconnue: "expression de période absente du glossaire (« depuis la rentrée »)"
+  attribut_non_modelise: "caractéristique absente du modèle (« LED »)"
+# hors_perimetre : {sujet} en texte libre (prévisions, conseil, organisation, actualité…)
+
+# ------------------------------------------------------------------------------------------------
+# Cœur du Manifest
+# ------------------------------------------------------------------------------------------------
+cles_manifest: [intent, champs, tri, limite]
+
+intents:
+  aggregate:  "une valeur, éventuellement découpée (« CA cumulé par pays »)"
+  breakdown:  "répartition par une ou plusieurs dimensions"
+  ranking:    "classement : top ou flop N"
+  timeseries: "évolution dans le temps"
+  compare:    "comparaison de périodes (N-1) ou de valeurs (Bosch ou Brembo)"
+  share:      "part du total"
+  list:       "liste d'entités répondant à une condition"
+  detail:     "détail d'une référence"
+
+# Chaque champ a un rôle ; les clés permises dépendent du rôle.
+roles:
+  mesure:      {cles: [ref],                         note: "ref = identifiant de mesures (M01…M26)"}
+  filtre:      {cles: [dimension, valeurs],          note: "valeurs = identifiants du catalogue, du type de la dimension"}
+  axe:         {cles: [dimension],                   note: "dimension du glossaire ou axe temporel (mois, trimestre…)"}
+  periode:     {cles: [debut, fin], ou: [photo],     note: "flux : {debut, fin} ; stock : {photo}"}
+  comparaison: {cles: [type, debut, fin],            note: "type : n_moins_1"}
+  seuil:       {cles: [mesure, operateur, valeur],   note: "filtre sur une mesure (« panier > 200 € »)"}
+
+types_comparaison: [n_moins_1]
+operateurs_seuil: [">", ">=", "<", "<="]
+ordres_tri: [asc, desc]
+# tri : {mesure, ordre}, la mesure doit figurer parmi les champs mesure
+# limite : entier ≥ 1
+
+# Contraintes générales
+#   - une seule période ; au plus une comparaison ;
+#   - une dimension n'apparaît qu'une fois en filtre (plusieurs valeurs dans la même liste) ;
+#   - au moins une mesure, sauf intent detail ;
+#   - une période, sauf intent detail.
+
+# Ce que chaque intent impose en plus
+selon_intent:
+  aggregate:  {interdit: [tri, limite]}
+  breakdown:  {requis: [axe]}
+  ranking:    {requis: [axe, tri, limite]}
+  timeseries: {requis: [axe_temporel]}
+  compare:    {requis_un_de: [comparaison, filtre_multi_valeurs]}
+  share:      {requis: [axe]}
+  list:       {requis: [axe]}
+  detail:     {}
+
+# Forme canonique : deux Manifest équivalents sont identiques au caractère près.
+#   - champs triés par rôle (mesure, filtre, axe, periode, comparaison, seuil) puis par contenu ;
+#   - valeurs des filtres triées ; dates en texte ISO ; clés vides omises ;
+#   - hash = SHA-256 du JSON canonique (clés triées, sans espaces).
+ordre_roles: [mesure, filtre, axe, periode, comparaison, seuil]
+
+# À trancher après les premiers tests
+a_trancher:
+  - "share : faut-il un champ « cible » (part du digital dans le CA) distinct des filtres ?"
+  - "compare de valeurs : filtre multi-valeurs + axe, ou champ dédié ?"
+  - "rendu : règles de déduction (limite 1 → kpi_card, axe temporel → line…)"

@@ -1,0 +1,232 @@
+﻿entity_id,alias,alias_norm,lang,alias_type,tier,source,licence
+geo:commune:BE-21004,Bxl,bxl,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+geo:pays:LU,Grand-Duché,grand duche,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+geo:pays:NL,Hollande,hollande,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:cat:filtre-habitacle,filtres à pollen,filtre pollen,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:site:entrepot-central,plateforme,plateforme,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:carrossier,carrosseries,carrosserie,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:centre-auto,centres auto,centre auto,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:concession,concessionnaires,concessionnaire,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:flotte-loueur,flottes,flotte,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:flotte-loueur,loueurs,loueur,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:garage-independant,garages,garage,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:garage-independant,garagistes,garagiste,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+mecanova:type_client:garage-independant,indépendants,independant,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:comptoir,Comptoir,comptoir,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:comptoir,au comptoir,comptoir,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:comptoir,magasin,magasin,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:comptoir,vente comptoir,vente comptoir,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-particulier,E-commerce particulier,e commerce particulier,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-particulier,site grand public,site grand public,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-particulier,site particulier,site particulier,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-particulier,web particulier,web particulier,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-pro,E-commerce pro,e commerce pro,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-pro,portail pro,portail pro,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-pro,web pro,web pro,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:e-commerce-pro,webshop pro,webshop pro,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:livraison-garage,livraison,livraison,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:livraison-garage,livraisons,livraison,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:livraison-garage,en livraison,livraison,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:livraison-garage,Livraison garage,livraison garage,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:livraison-garage,tournée,tournee,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:livraison-garage,tournées,tournee,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:canal:telephone-canal,Téléphone (canal),telephone canal,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:agence,En agence,agence,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:agence,physique,physique,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:agence,vente en agence,vente agence,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,Digital,digital,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,e-commerce,e commerce,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,ecommerce,ecommerce,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,internet,internet,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,en ligne,ligne,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,site web,site web,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:digital,web,web,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:telephone,appel,appel,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:telephone,appels,appel,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:telephone,par téléphone,par telephone,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:groupe_canal:telephone,Téléphone,telephone,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:mesure:M01,CA brut,ca brut,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M01,CA brut,ca brut,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M01,CA tarif,ca tarif,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M01,chiffre d'affaires brut,chiffre affaire brut,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M02,montant des remises,montant remise,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M02,Remises,remise,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M02,remises,remise,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M02,remises accordées,remise accordee,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M03,CA facturé,ca facture,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M03,CA net facturé,ca net facture,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M03,CA net facturé,ca net facture,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M03,facturation,facturation,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M03,facturé,facture,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M03,montant facturé,montant facture,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M04,avoirs,avoir,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M04,Montant des retours,montant retour,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M04,montant des retours,montant retour,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M04,retours en euros,retour euro,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,CA,ca,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,CA net,ca net,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,CA net,ca net,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,chiffre,chiffre,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,chiffre d'affaires,chiffre affaire,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,chiffre d'affaires net,chiffre affaire net,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,omzet,omzet,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,revenus,revenu,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,ventes,vente,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M05,ventes en euros,vente euro,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M06,consignes,consigne,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M06,Montant des consignes,montant consigne,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M06,montant des consignes,montant consigne,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M07,Quantité facturée,quantite facturee,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M07,quantité facturée,quantite facturee,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M07,unités facturées,unite facturee,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M08,nombre de retours,nombre retour,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M08,pièces retournées,piece retournee,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M08,Quantité retournée,quantite retournee,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M08,quantité retournée,quantite retournee,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M08,retours,retour,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,besoin de pièces,besoin piece,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,besoin de plus de pièces,besoin plu piece,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,combien vendu,combien vendu,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,pièces vendues,piece vendue,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,quantité,quantite,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,quantité vendue,quantite vendue,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,Quantité vendue nette,quantite vendue nette,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,unités vendues,unite vendue,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,vendus en quantité,vendu quantite,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,ventes en unités,vente unite,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,ventes en volume,vente volume,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,volume,volume,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M09,volumes,volume,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M10,commandes,commande,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M10,Nombre de commandes,nombre commande,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M10,nombre de commandes,nombre commande,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M11,lignes facturées,ligne facturee,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M11,nombre de lignes,nombre ligne,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M11,Nombre de lignes facturées,nombre ligne facturee,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M12,coût,cout,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M12,coût d'achat des ventes,cout achat vente,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M12,coût des ventes,cout vente,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M12,Coût des ventes nettes,cout vente nette,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M13,marge,marge,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M13,Marge brute,marge brute,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M13,marge brute,marge brute,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M13,marge en euros,marge euro,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M13,marge €,marge euro,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,marge %,marge pourcent,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,Marge % (taux de marque),marge pourcent tau marque,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,marge en pourcentage,marge pourcentage,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,% de marge,pourcent marge,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,rentabilité,rentabilite,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,rentable,rentable,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,rentables,rentable,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M14,taux de marque,tau marque,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M15,marge sur coût,marge sur cout,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M15,taux de marge,tau marge,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M15,Taux de marge (sur coût),tau marge sur cout,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M16,remise moyenne,remise moyenne,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M16,taux de remise,tau remise,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M16,Taux de remise moyen,tau remise moyen,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M16,taux de remise moyen,tau remise moyen,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M17,panier,panier,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M17,Panier moyen,panier moyen,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M17,panier moyen,panier moyen,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M17,ticket moyen,ticket moyen,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M17,valeur moyenne de commande,valeur moyenne commande,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M18,Clients actifs,client actif,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M18,clients actifs,client actif,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M18,clients qui achètent,client qui achetent,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M18,nombre de clients,nombre client,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M19,clients dormants,client dormant,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M19,Clients inactifs,client inactif,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M19,clients inactifs,client inactif,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M19,clients qui décrochent,client qui decrochent,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M19,inactifs,inactif,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M19,n'ont rien commandé depuis 90 jours,n ont rien commande depui 90 jour,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M20,Taux de retour,tau retour,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M20,taux de retour,tau retour,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M20,taux de retours,tau retour,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M21,taux de défaut,tau defaut,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M21,Taux de retour pour défaut,tau retour pour defaut,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M21,taux de retour pour défaut,tau retour pour defaut,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,dispo,dispo,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,disponibilité,disponibilite,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,taux de dispo,tau dispo,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,taux de disponibilité,tau disponibilite,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,taux de service,tau service,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,Taux de service immédiat,tau service immediat,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M22,taux de service immédiat,tau service immediat,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M23,pièces en stock,piece stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M23,Quantité en stock,quantite stock,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M23,quantité en stock,quantite stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M23,stock en quantité,stock quantite,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M24,stock,stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M24,stock en valeur,stock valeur,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M24,Valeur du stock,valeur stock,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M24,valeur du stock,valeur stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M24,valeur stock,valeur stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M25,couverture,couverture,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M25,Couverture de stock,couverture stock,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M25,couverture de stock,couverture stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M25,jours de stock,jour stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M26,articles en rupture,article rupture,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M26,manquants,manquant,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M26,Ruptures,rupture,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M26,ruptures,rupture,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M26,ruptures de stock,rupture stock,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M27,CA moyen par client,ca moyen par client,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M27,CA par client,ca par client,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M27,CA par client actif,ca par client actif,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M28,prix catalogue,pri catalogue,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M28,prix tarif,pri tarif,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M28,Prix tarif unitaire,pri tarif unitaire,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M28,prix unitaire,pri unitaire,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M29,Clients au référentiel,client referentiel,fr,libelle_canonique,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M29,clients au référentiel,client referentiel,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:mesure:M29,nombre de clients au référentiel,nombre client referentiel,fr,synonyme_mesure,3,Mesures (spec/mesures.yaml),CC0
+metier:motif_retour:coli-endommage,casse transport,casse transport,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:coli-endommage,colis abîmé,coli abime,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:coli-endommage,Colis endommagé,coli endommage,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:erreur-commande,commandé par erreur,commande par erreur,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:erreur-commande,erreur client,erreur client,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:erreur-commande,Erreur de commande,erreur commande,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:incompatibilite-vehicule,incompatibilité,incompatibilite,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:incompatibilite-vehicule,Incompatibilité véhicule,incompatibilite vehicule,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:incompatibilite-vehicule,mauvaise référence,mauvaise reference,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:incompatibilite-vehicule,ne correspond pas,ne correspond pas,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,défaut,defaut,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,défectueux,defectueu,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,défectueuse,defectueuse,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,garantie,garantie,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,Pièce défectueuse,piece defectueuse,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,pièces défectueuses,piece defectueuse,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:motif_retour:piece-defectueuse,pièce défectueuse,piece defectueuse,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:particulier,B2C,b2c,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:particulier,clients particuliers,client particulier,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:particulier,grand public,grand public,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:particulier,Particulier,particulier,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:particulier,particuliers,particulier,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,B2B,b2b,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,clients pro,client pro,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,clients professionnels,client professionnel,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,pro,pro,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,pros,pro,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,Professionnel,professionnel,fr,libelle_canonique,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+metier:segment:professionnel,professionnels,professionnel,fr,synonyme_metier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-1-11,mâchoires,machoire,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-1-13,flexibles,flexible,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-1-3,étriers,etrier,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-1-7,plaquettes,plaquette,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-1-8,disques,disque,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-1-9,tambours,tambour,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-11-3,tapis,tapi,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-14-1,alterno,alterno,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-14-5,bougies,bougie,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-14-6,démarreur,demarreur,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-19-13,bimasse,bimasse,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-19-2,kit embrayage,kit embrayage,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-21-4-2,balais,balai,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-21-4-2,essuie-glaces,essuie glace,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-6-5-1,bougies,bougie,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-8-2,cata,cata,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+piece:cat:vp-1-4-8-5,pots d'échappement,pot echappement,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0
+veh:marque:mercedes-benz,Merco,merco,fr,synonyme_atelier,3,Glossaire métier v2 (spec/glossaire.yaml),CC0

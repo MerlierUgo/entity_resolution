@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Bilan catalogue Mécanova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Mise en page : une fiche de contrôle d'atelier. Verdict d'abord, puis chaque poste contrôlé, puis le plan. */
+:root {
+  --bg: #f3f5f6; --surface: #ffffff; --sunken: #e8ecee;
+  --ink: #15202a; --ink-2: #48555f; --ink-3: #6a7782; --line: #d5dce0;
+  --accent: #1c5cab;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+  --good: #0b7a3e; --good-bg: #dcf1e3;
+  --warn: #8a5a00; --warn-bg: #fbedc9;
+  --crit: #b3292b; --crit-bg: #fadfde;
+  --display: "Barlow Semi Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12181d; --surface: #1a2228; --sunken: #232d34;
+  --ink: #eef2f4; --ink-2: #b7c2ca; --ink-3: #93a0aa; --line: #33404a;
+  --accent: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  --good: #7fdc9f; --good-bg: #17382a; --warn: #f3c969; --warn-bg: #3b2f12; --crit: #f5a3a1; --crit-bg: #43201f;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #12181d; --surface: #1a2228; --sunken: #232d34;
+  --ink: #eef2f4; --ink-2: #b7c2ca; --ink-3: #93a0aa; --line: #33404a;
+  --accent: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  --good: #7fdc9f; --good-bg: #17382a; --warn: #f3c969; --warn-bg: #3b2f12; --crit: #f5a3a1; --crit-bg: #43201f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--body); }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 36px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 52px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.12; }
+h1 { font-size: clamp(34px, 5.4vw, 54px); font-weight: 700; letter-spacing: -.005em; }
+h2 { font-size: clamp(25px, 3.2vw, 32px); font-weight: 600; }
+h3 { font-size: 19px; font-weight: 600; }
+p { margin: 0; }
+.mono, code { font-family: var(--mono); font-size: .88em; }
+code { background: var(--sunken); padding: .05em .3em; border-radius: 3px; overflow-wrap: anywhere; }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-3); }
+.eyebrow { font: 500 12px/1.3 var(--mono); letter-spacing: .05em; color: var(--ink-3); text-transform: uppercase; }
+.lede { font-size: 17px; max-width: 68ch; color: var(--ink-2); }
+.note { font-size: 13.5px; color: var(--ink-2); max-width: 78ch; }
+section { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; min-width: 0; }
+.head { display: grid; gap: 8px; }
+.head p { max-width: 72ch; color: var(--ink-2); }
+header.top { display: grid; gap: 14px; }
+
+/* Tableau de bord des postes */
+.board { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.post { display: grid; grid-template-columns: minmax(150px, 1.1fr) 112px minmax(0, 3fr); gap: 16px; align-items: baseline;
+  padding: 13px 18px; border-top: 1px solid var(--line); }
+.post:first-child { border-top: 0; }
+.post strong { font-family: var(--display); font-size: 18px; font-weight: 600; }
+.post div:last-child { color: var(--ink-2); font-size: 14px; min-width: 0; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--mono); padding: 5px 8px; border-radius: 3px; white-space: nowrap; width: fit-content; }
+.pill.ok { color: var(--good); background: var(--good-bg); }
+.pill.mid { color: var(--warn); background: var(--warn-bg); }
+.pill.no { color: var(--crit); background: var(--crit-bg); }
+.pill.ok::before { content: "✓"; }
+.pill.mid::before { content: "◐"; }
+.pill.no::before { content: "✕"; }
+
+/* Compteurs */
+.stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.stat { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+.stat b { font: 600 clamp(26px, 3vw, 34px)/1.05 var(--display); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--ink-2); }
+
+/* Grilles et panneaux */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.panel { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.panel > p { font-size: 14px; color: var(--ink-2); }
+
+/* Barres */
+.bars { display: grid; gap: 7px; }
+.bar { display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 62px; gap: 10px; align-items: center; font-size: 13.5px; padding: 1px 0; border-radius: 3px; }
+.bar:hover { background: var(--sunken); }
+.bar .track { height: 14px; display: flex; align-items: center; }
+.bar .fill { height: 14px; min-width: 3px; background: var(--s1); border-radius: 0 4px 4px 0; }
+.bar .val { text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.pair .track { height: 24px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; }
+.pair .fill { height: 10px; }
+.pair .fill.b { background: var(--s2); }
+.pair .val { line-height: 1.15; }
+
+/* Barre segmentée */
+.seg { display: flex; gap: 2px; height: 26px; }
+.seg i { display: block; height: 100%; min-width: 3px; }
+.seg i:first-child { border-radius: 4px 0 0 4px; }
+.seg i:last-child { border-radius: 0 4px 4px 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+/* Domaines */
+.domains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.domain { background: var(--surface); padding: 15px 16px; display: grid; gap: 5px; align-content: start; }
+.domain b { font: 600 24px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.domain p { font-size: 13.5px; color: var(--ink-2); }
+
+/* Tableaux */
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th { font: 500 11.5px/1.3 var(--mono); text-align: left; color: var(--ink-3); padding: 9px 12px; background: var(--sunken); white-space: nowrap; }
+td { padding: 8px 12px; border-top: 1px solid var(--line); vertical-align: top; }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.hot td { background: var(--crit-bg); }
+.ref { font: 500 12.5px var(--mono); white-space: nowrap; }
+
+/* Capacités */
+.caps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0; }
+.caps div { display: grid; grid-template-columns: 158px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.caps dt { font-weight: 600; }
+.caps dd { margin: 0; color: var(--ink-2); min-width: 0; }
+
+/* Points à arbitrer */
+.issues { display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.issue { display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 16px; padding: 13px 18px; border-top: 1px solid var(--line); }
+.issue:first-child { border-top: 0; }
+.issue .ref { padding-top: 2px; white-space: normal; }
+.issue h3 { font-size: 17px; margin-bottom: 3px; }
+.issue p { font-size: 14px; color: var(--ink-2); max-width: 78ch; }
+
+/* Plan */
+ol.plan { list-style: none; margin: 0; padding: 0; counter-reset: st; display: grid; }
+ol.plan li { counter-increment: st; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 15px 0; border-top: 1px solid var(--line); }
+ol.plan li::before { content: counter(st); font: 600 26px/1 var(--display); color: var(--accent); }
+ol.plan h3 { margin-bottom: 4px; }
+ol.plan p { max-width: 78ch; font-size: 14.5px; color: var(--ink-2); }
+.tag { font: 500 11.5px var(--mono); color: var(--ink-3); }
+.aside { background: var(--sunken); border-radius: 6px; padding: 15px 18px; display: grid; gap: 7px; font-size: 14px; color: var(--ink-2); }
+.aside h3 { color: var(--ink); }
+.aside ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+footer { font-size: 13px; color: var(--ink-3); display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 16px; max-width: 86ch; }
+
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg); padding: 6px 9px; border-radius: 4px; font: 400 12.5px/1.35 var(--body); max-width: 260px; }
+
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 860px) {
+  .two, .caps { grid-template-columns: minmax(0, 1fr); }
+  .domains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:last-child { grid-column: 1 / -1; }
+  .post { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  .post div:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .domains { grid-template-columns: minmax(0, 1fr); }
+  .caps div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .issue { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .bar { grid-template-columns: 92px minmax(0, 1fr) 52px; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+<header class="top">
+  <div class="eyebrow">Knowledge catalog v1.4 · relevé du 6 novembre 2026 · données au 30 septembre 2026</div>
+  <h1>Le catalogue est prêt. Le moteur reste à construire.</h1>
+  <p class="lede">Les référentiels, les alias et le banc d'essai tiennent la route. Une entity resolution solide demande maintenant trois choses : figer une vérité de test fiable, coder le moteur, et l'évaluer sur de vraies phrases.</p>
+</header>
+
+<div class="board" role="list" aria-label="État de chaque poste">
+  <div class="post" role="listitem"><strong>Catalogue</strong><span class="pill ok">Prêt</span><div>13 351 entités sur 28 types, chacune avec au moins un alias, une source et une licence.</div></div>
+  <div class="post" role="listitem"><strong>Banc de termes</strong><span class="pill ok">Prêt</span><div>10 085 cas sur 13 catégories, partition dev / test figée. Il teste des termes isolés, jamais une phrase.</div></div>
+  <div class="post" role="listitem"><strong>Spec métier</strong><span class="pill mid">Avancée</span><div>29 mesures, 24 dimensions et 56 règles écrites. Sur les 15 lacunes relevées, 8 restent ouvertes.</div></div>
+  <div class="post" role="listitem"><strong>Questions humaines</strong><span class="pill mid">À fiabiliser</span><div>39 manifests écrits sur 39, schéma valide. 0 validé, 1 seul auteur, 39 sur les 100 visées.</div></div>
+  <div class="post" role="listitem"><strong>Moteur</strong><span class="pill no">Absent</span><div>Aucun moteur dans <code>build/</code>, seulement trois résolveurs étalons. 49 règles sur 56 sont à coder.</div></div>
+  <div class="post" role="listitem"><strong>Évaluateur</strong><span class="pill no">Absent</span><div>Rien ne compare encore une sortie de moteur à <code>attendus.yaml</code>. L'empreinte de Manifest existe déjà pour le faire.</div></div>
+</div>
+
+<section id="catalogue">
+  <div class="head">
+    <h2>Ce que contient le catalogue</h2>
+    <p>Un seul index regroupe les référentiels ouverts, la couche Mécanova générée et le vocabulaire du glossaire.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>13 351</b><span>entités, 28 types</span></div>
+    <div class="stat"><b>36 088</b><span>alias, 32 428 formes normalisées</span></div>
+    <div class="stat"><b>31 827</b><span>relations, 19 prédicats</span></div>
+    <div class="stat"><b>22 743</b><span>termes négatifs, 21 808 formes uniques</span></div>
+    <div class="stat"><b>1 731</b><span>formes ambiguës, 740 entre types</span></div>
+  </div>
+  <div class="domains">
+    <div class="domain"><span class="eyebrow">Géographie</span><b>7 478</b><p>4 pays, 5 régions, 12 provinces, 12 cantons, 43 arrondissements, 816 communes, 3 804 villes, 2 782 localités postales.</p></div>
+    <div class="domain"><span class="eyebrow">Produit</span><b>3 131</b><p>2 520 articles, 252 catégories, 280 codes douaniers, 13 familles, 38 marques de pièces, 22 groupes industriels, 3 gammes, 3 qualités.</p></div>
+    <div class="domain"><span class="eyebrow">Client</span><b>1 416</b><p>1 400 clients (BE 937, FR 206, LU 136, NL 121), 11 formes juridiques, 5 types de client.</p></div>
+    <div class="domain"><span class="eyebrow">Véhicule</span><b>1 263</b><p>84 marques et 1 179 modèles, issus des immatriculations EEA 2025 en Italie.</p></div>
+    <div class="domain"><span class="eyebrow">Métier</span><b>43</b><p>29 mesures, 5 canaux, 3 groupes de canaux, 4 motifs de retour, 2 segments.</p></div>
+    <div class="domain"><span class="eyebrow">Organisation</span><b>20</b><p>9 agences, 1 entrepôt central, 10 commerciaux.</p></div>
+  </div>
+  <div class="two">
+    <div class="panel">
+      <h3>Origine des alias</h3>
+      <div class="seg" id="tiers" role="img" aria-label="Tier 1 : 13 461 alias, tier 2 : 6 992, tier 3 : 15 635"></div>
+      <div class="legend">
+        <span><i style="background:var(--s1)"></i>Tier 1, officiel : 13 461 (37 %)</span>
+        <span><i style="background:var(--s2)"></i>Tier 2, référence ouverte : 6 992 (19 %)</span>
+        <span><i style="background:var(--s3)"></i>Tier 3, généré ou curé : 15 635 (43 %)</span>
+      </div>
+      <p>Le moteur peut choisir ses tiers. Le tier 2 apporte du rappel et des collisions, à tester avec et sans.</p>
+      <h3>Alias avec une langue déclarée</h3>
+      <div class="bars" id="langs"></div>
+      <p>27 474 alias n'ont pas de langue : codes, références, noms propres et variantes GeoNames.</p>
+    </div>
+    <div class="panel">
+      <h3>Relations les plus présentes</h3>
+      <div class="bars" id="rels"></div>
+      <p>86 % des articles ont au moins un véhicule compatible (2 170 sur 2 520). Seules 45 des 252 catégories portent des articles : les autres servent à reconnaître le vocabulaire et à répondre « hors assortiment ».</p>
+    </div>
+  </div>
+</section>
+
+<section id="capacites">
+  <div class="head"><h2>Ce qu'il prend en compte</h2></div>
+  <dl class="caps">
+    <div><dt>Langues</dt><dd>Français, néerlandais, allemand, anglais, plus les variantes GeoNames.</dd></div>
+    <div><dt>Vocabulaire d'atelier</dt><dd>30 synonymes (« alterno », « cata », « bimasse ») et les corrections des traductions automatiques Shopify.</dd></div>
+    <div><dt>Normalisation</dt><dd>Casse, accents, ponctuation, mots vides, pluriels et symboles % et € (R-RES-02, codée).</dd></div>
+    <div><dt>Variantes de codes</dt><dd>Références avec ou sans tiret, code postal + nom, codes douaniers en deux formats.</dd></div>
+    <div><dt>Raisons sociales</dt><dd>Formes juridiques, anciennes formes, nom commercial, code client, ordre des mots.</dd></div>
+    <div><dt>Homonymes</dt><dd>Plusieurs candidats sont rendus, avec absorption localité → commune et ajout de l'agence (R-GEO-02, R-CTX-05).</dd></div>
+    <div><dt>Absences connues</dt><dd>Lieux hors périmètre, pays non servis, marques absentes (« Paris », « Michelin »).</dd></div>
+    <div><dt>Graphe</dt><dd>Hiérarchie géographique, modèle → marque, marque → groupe, article → catégorie, compatibilité, remplacements.</dd></div>
+    <div><dt>Traçabilité</dt><dd>Tier, source et licence par entité et par alias. Reconstruction déterministe.</dd></div>
+    <div><dt>Manifest</dt><dd>Schéma v0.1, validation contre le catalogue, forme canonique et empreinte SHA-256.</dd></div>
+  </dl>
+  <div class="two">
+    <div class="panel">
+      <h3>Taille des formes ambiguës</h3>
+      <div class="bars" id="amb"></div>
+      <p>Le cas le plus large compte 90 candidats. La paire la plus fréquente est commune + localité postale, avec 517 formes. 10 formes traversent deux domaines : Champion, Bayon, Tivoli, Vannes…</p>
+    </div>
+    <div class="panel">
+      <h3>Limites connues des données</h3>
+      <p>797 localités postales ne sont pas rattachées à une commune. Le découpage communal date de 2020 : les fusions flamandes de 2025 manquent. Les modèles viennent d'Italie, donc les modèles propres à d'autres marchés sont moins bien couverts. Le dépôt Statbel n'a pas de licence explicite, et les marques de pièces restent « à vérifier ».</p>
+    </div>
+  </div>
+</section>
+
+<section id="banc">
+  <div class="head">
+    <h2>Ce que mesure le banc d'essai</h2>
+    <p>Trois résolveurs simples servent d'étalons. Le moins risqué ne rattrape aucune faute, et le plus utile laisse encore passer 271 erreurs silencieuses.</p>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr><th>Résolveur</th><th class="r">Idéal</th><th class="r">Sûr</th><th class="r">Erreurs silencieuses</th></tr></thead>
+    <tbody>
+      <tr><td>B0 · exact seul</td><td class="r">66,0 %</td><td class="r">100 %</td><td class="r">0</td></tr>
+      <tr><td>B1 · exact + Jaro-Winkler sur tout l'index</td><td class="r">85,7 %</td><td class="r">86,8 %</td><td class="r">1 082 (10,7 %)</td></tr>
+      <tr><td>B2 · exact + Jaro-Winkler borné au type, jamais sur un code</td><td class="r">89,4 %</td><td class="r">92,1 %</td><td class="r">271 (2,7 %)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="scroll"><table>
+    <thead><tr><th>Catégorie (B2)</th><th class="r">Cas</th><th class="r">Idéal</th><th class="r">Sûr</th><th class="r">Silencieux</th></tr></thead>
+    <tbody id="cats"></tbody>
+  </table></div>
+  <p class="note"><strong>260 des 271 erreurs de B2 sont en C08.</strong> B2 n'utilise pas l'index négatif, et R-RES-07 reste à coder. Cet index rendra C08 trivial, car ces cas en sont tirés : le score prouvera sa présence, pas sa qualité. Les catégories C01 à C06, C11 et C12 servent de non-régression : leurs cas proviennent de l'index lui-même.</p>
+</section>
+
+<section id="questions">
+  <div class="head">
+    <h2>Ce que disent les 39 manifests cibles</h2>
+    <p>Tous passent le contrôle de schéma, avec 0 erreur et 0 avertissement. Les écrire a changé la cible : 20 écarts avec la proposition de départ, sur 14 questions, dont 12 changements de statut.</p>
+  </div>
+  <div class="two">
+    <div class="panel">
+      <h3>Statut attendu</h3>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Manifests écrits</span><span><i style="background:var(--s2)"></i>Proposition du CSV</span></div>
+      <div class="bars" id="status"></div>
+      <p>Les « ambiguous » passent de 12 à 2 : le moteur devra trancher là où on prévoyait de demander. Chaque décision a besoin d'une règle écrite, sinon elle contredit R-RES-05 (ne pas deviner).</p>
+    </div>
+    <div class="panel">
+      <h3>Intents des 28 questions résolues</h3>
+      <div class="bars" id="intents"></div>
+      <p>Le classement domine. Aucune question ne couvre <code>detail</code>, et M05 pèse 10 mesures sur 28.</p>
+    </div>
+  </div>
+  <div class="two">
+    <div class="panel">
+      <h3>Couverture de la spec par les questions</h3>
+      <div class="bars" id="cover"></div>
+      <p>Ni canal, ni commercial, ni région, ni gamme, ni qualité, ni marque de véhicule. Le persona P3 ne pose que 4 questions. Les 39 sont en français, alors que le catalogue couvre quatre langues.</p>
+    </div>
+    <div class="panel">
+      <h3>Test en phrase réelle</h3>
+      <div class="bars" id="sentence"></div>
+      <p>Recherche exacte de chaque suite de 1 à 6 mots des questions dans l'index, sans moteur. Le catalogue reconnaît bien les filtres (21 sur 25). Beaucoup de mesures viennent de règles, pas d'alias (« vendu » → M05). Ce test donne un ordre de grandeur et ne remplace pas un score moteur.</p>
+      <p><strong>58 candidats parasites</strong> apparaissent sur les 39 questions : « mon », « par », « moyen » et « ville » sont des lieux, « y » et « 3 » des modèles de véhicules. Repérer les mentions sera le premier vrai défi.</p>
+    </div>
+  </div>
+</section>
+
+<section id="arbitrages">
+  <div class="head">
+    <h2>À arbitrer dans <code>attendus.yaml</code></h2>
+    <p>Le contrôle valide la forme, pas le sens. Ces points ressortent de la relecture croisée avec le catalogue et la spec. Tant qu'ils restent ouverts, un score sur ces 39 questions ne sera pas fiable.</p>
+  </div>
+  <div class="issues">
+    <div class="issue"><div class="ref">H-001 · H-029</div><div><h3>« durites » a deux réponses</h3><p>H-001 attend <code>unknown</code>, H-029 attend les flexibles de frein. Le terme est absent de l'index, donc H-029 est inatteignable. Ajouter le synonyme casserait H-001.</p></div></div>
+    <div class="issue"><div class="ref">H-013 · H-017 · H-030</div><div><h3>Même formulation, intents différents</h3><p>« Le composant le plus vendu » donne <code>share</code> en H-017 et <code>ranking</code> en H-030. H-013 est aussi en <code>share</code> avec <code>limite: 1</code>, alors que H-011 et H-012 sont en <code>ranking</code>. Les empreintes ne pourront pas concorder.</p></div></div>
+    <div class="issue"><div class="ref">H-004</div><div><h3>Le manifest ne se calcule pas</h3><p>Il filtre le stock sur la ville du client, or <code>fact_stock</code> a pour grain article × site × fin de mois. Son commentaire le signale, et G12 pointe vers l'agence. Il retient aussi M23, alors que « stock » mène à M24 (H-002, H-018).</p></div></div>
+    <div class="issue"><div class="ref">H-005 · H-032 H-035 · H-036</div><div><h3>Mesures attendues sans chemin d'accès</h3><p>M27, M28 et M29 existent, mais aucun alias ni règle n'y conduit depuis « productif », « la moins chère » ou « nombre de concession ». En plus, « chère » tombe dans l'index négatif.</p></div></div>
+    <div class="issue"><div class="ref">H-025 · H-029</div><div><h3>Règle implicite : « vend » + ville → agence</h3><p>Les deux réponses en dépendent, sans règle ni code de lacune. Le commentaire de H-025 le dit, sa colonne <code>lacunes_spec</code> reste vide.</p></div></div>
+    <div class="issue"><div class="ref">H-020 · G15</div><div><h3>Covid : refus ou réponse ?</h3><p>H-020 attend <code>out_of_scope</code>, alors que G15 prépare un calendrier d'événements. La section <code>evenements</code> n'est lue par aucun script, et ses dates (2020-2021) tombent avant le début des données (2023).</p></div></div>
+    <div class="issue"><div class="ref">H-037</div><div><h3>Encore un brouillon, et le profil manque</h3><p>Le commentaire porte toujours « brouillon Claude ». La réponse dépend du persona P3, or rien dans <code>attendus.yaml</code> ne déclare le profil utilisé. Le même besoin se pose pour tout le contexte utilisateur.</p></div></div>
+    <div class="issue"><div class="ref">Divers</div><div><h3>Références à remettre à jour</h3><p>H-002 cite G15 pour « où », alors que G15 parle du covid. H-009 dit qu'aucune règle ne couvre les noms de mois, or <code>mois_nomme</code> existe. G07 propose M27 pour le montant de commande, désormais pris par le CA par client. <code>motif_retour</code> est déclaré deux fois dans le glossaire.</p></div></div>
+  </div>
+</section>
+
+<section id="lacunes">
+  <div class="head">
+    <h2>État des 15 lacunes</h2>
+    <p>Relecture lacune par lacune contre les YAML actuels : 8 ouvertes, 6 partielles, 1 assumée. 25 questions sur 39 portent au moins un code.</p>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr><th>Code</th><th>Sujet</th><th>Questions</th><th>État</th><th>Ce qu'il reste</th></tr></thead>
+    <tbody id="gaps"></tbody>
+  </table></div>
+</section>
+
+<section id="plan">
+  <div class="head">
+    <h2>Ce qu'il reste à faire</h2>
+    <p>L'ordre compte : arbitrer avant de coder évite de construire le moteur sur une cible qui bouge.</p>
+  </div>
+  <ol class="plan">
+    <li><div><h3>Fiabiliser la vérité terrain</h3><p>Trancher les 20 écarts et les points ci-dessus, puis remplir la colonne <code>validation</code>, aujourd'hui vide sur les 39 lignes.</p></div></li>
+    <li><div><h3>Rendre aux 39 questions leur vrai statut</h3><p>Elles sont encore en <code>test</code>, mais la spec a déjà appris d'elles : M27 à M29, R-CA-06 (H-013) et R-ART-05 (H-017). Il faut les passer en <code>dev</code>, comme le prévoit <code>LACUNES.md</code>, puis écrire un nouveau lot de test jamais vu.</p></div></li>
+    <li><div><h3>Fermer les lacunes de spec</h3><p>Priorité aux 8 ouvertes et aux règles implicites : « vend » + ville, hors périmètre élargi, stock → site, comparaison de pays, expressions sans filtre.</p></div></li>
+    <li><div><h3>Coder le moteur</h3><p>Repérage des mentions et terme le plus long (R-RES-06), exact, index négatif (R-RES-07), approché borné, mots de contexte (R-CTX-03), profil, périodes, puis assemblage du Manifest. Reste à faire : 19 règles de résolution, 2 prototypes à reprendre et 7 règles de Manifest.</p></div></li>
+    <li><div><h3>Construire l'évaluateur</h3><p>Comparer champ par champ, puis par empreinte canonique. Publier idéal, sûr et erreurs silencieuses par statut et par rôle (mesure, filtre, axe, période), pour voir où le moteur se trompe.</p></div></li>
+    <li><div><h3>Étendre le banc à ce qu'il ne teste pas</h3><p>Aucun cas sur 10 085 n'est une question. Ajouter des phrases générées avec plusieurs mentions, des textes sans entité (mots courants, faux positifs), des doubles fautes et des fautes phonétiques, le néerlandais et l'allemand. C08 a aussi besoin de lieux absents de <code>negatifs.csv</code> pour tester la parade pour de bon.</p></div></li>
+    <li><div><h3>Élargir les questions humaines</h3><p>Passer de 39 à 100 au moins, avec au moins un auteur qui ne connaît pas le catalogue. Viser les 13 dimensions sur 24 et les 15 mesures sur 29 encore absentes.</p></div></li>
+    <li><div><h3>Calibrer sur le dev</h3><p>Seuil 0,88 de R-RES-03, comparaison avec et sans tier 2, approché limité aux mots distinctifs pour les clients (G14, « garage » gonfle le score).</p></div></li>
+    <li><div><h3>Solder la dette de données</h3><p>Fichier bpost officiel pour les 797 localités, fichier Statbel officiel et fusions 2025, 350 articles sans compatibilité à expliquer, curation des marques à vérifier.</p></div></li>
+  </ol>
+  <div class="two">
+    <div class="aside">
+      <h3>Critères de sortie proposés</h3>
+      <ul>
+        <li>0 erreur silencieuse sur le test final, termes et phrases.</li>
+        <li>Au moins 99 % de « sûr » sur les 2 927 cas de test.</li>
+        <li>Au moins 90 % de manifests identiques sur le nouveau lot humain.</li>
+        <li>Au moins 100 questions, 2 auteurs, jamais vues avant l'évaluation.</li>
+        <li>0 règle de résolution ou de Manifest encore « à coder ».</li>
+      </ul>
+      <p>Ces seuils sont une proposition de départ, à ajuster.</p>
+    </div>
+    <div class="aside">
+      <h3>Hors entity resolution</h3>
+      <p>Les données de faits, l'oracle DuckDB, le semantic model et les templates DAX servent à vérifier les chiffres. Ils ne bloquent pas la résolution des termes. Seul l'assemblage du Manifest se joue ici.</p>
+      <h3>Documentation à resynchroniser</h3>
+      <p>Le README annonce 13 348 entités, 36 077 alias, 10 078 cas, 26 mesures et 14 lacunes. <code>check_global.md</code> date du 4 novembre : il indique encore 54 règles et des attendus à écrire, deux valeurs figées dans <code>check_global.py</code>.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Chiffres recalculés le 6 novembre 2026 depuis <code>catalog/</code>, <code>challenges/</code>, <code>reports/baseline.json</code>, <code>spec/</code> et <code>human/</code>.</p>
+  <p>Contrôles rejoués : <code>check_spec.py</code> OK, <code>human_questions.py check</code> 0 erreur, 70 tests réussis. <code>check_global.py</code> n'a pas été relancé. L'état des lacunes, les arbitrages et le test en phrase réelle viennent de cette analyse et ne figurent dans aucun rapport du dépôt.</p>
+</footer>
+</main>
+<div id="tip" hidden></div>
+
+<script>
+var fr = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " "); };
+function bars(id, rows, opts) {
+  opts = opts || {};
+  var max = opts.max || Math.max.apply(null, rows.map(function (r) { return r[1]; }));
+  document.getElementById(id).innerHTML = rows.map(function (r) {
+    var val = opts.fmt ? opts.fmt(r) : fr(r[1]);
+    return '<div class="bar" data-tip="' + r[0] + ' : ' + val + (r[2] ? " · " + r[2] : "") + '"><span>' + r[0] + '</span><span class="track"><span class="fill" style="width:' + (100 * r[1] / max).toFixed(2) + '%"></span></span><span class="val">' + val + '</span></div>';
+  }).join("");
+}
+document.getElementById("tiers").innerHTML = [["var(--s1)", 13461, "Tier 1, officiel"], ["var(--s2)", 6992, "Tier 2, référence ouverte"], ["var(--s3)", 15635, "Tier 3, généré ou curé"]].map(function (t) {
+  return '<i style="flex:' + t[1] + ' 1 0;background:' + t[0] + '" data-tip="' + t[2] + ' : ' + fr(t[1]) + ' alias"></i>';
+}).join("");
+bars("langs", [["Français", 6899], ["Néerlandais", 938], ["Anglais", 529], ["Allemand", 248]]);
+bars("rels", [["Attributs d'article", 10080, "catégorie, fabricant, gamme et qualité, 2 520 relations chacun"], ["Situé dans", 8884], ["Attributs de client", 5600, "forme juridique, agence, commercial et type, 1 400 relations chacun"], ["Compatible avec", 5385, "article vers modèle de véhicule"], ["Modèle de", 1179], ["Autres", 699, "8 prédicats"]]);
+bars("amb", [["2 candidats", 1158], ["3 candidats", 255], ["4 candidats", 110], ["5 candidats", 62], ["6 ou plus", 146]]);
+bars("intents", [["ranking", 12], ["aggregate", 7], ["share", 3], ["compare", 3], ["timeseries", 1], ["breakdown", 1], ["list", 1], ["detail", 0]]);
+bars("cover", [["Mesures", 48.3, "14 des 29 mesures utilisées", "14/29"], ["Dimensions", 45.8, "11 des 24 dimensions utilisées", "11/24"], ["Intents", 87.5, "7 des 8 intents utilisés", "7/8"]], { max: 100, fmt: function (r) { return r[3]; } });
+bars("sentence", [["Filtres trouvés", 84, "21 valeurs sur 25", "21/25"], ["Mesures trouvées", 50, "14 mesures sur 28", "14/28"], ["Questions complètes", 42.9, "12 questions résolues sur 28 ont toutes leurs valeurs", "12/28"]], { max: 100, fmt: function (r) { return r[3]; } });
+document.getElementById("status").innerHTML = [["resolved", 28, 16], ["ambiguous", 2, 12], ["unknown", 5, 7], ["out_of_scope", 4, 4]].map(function (r) {
+  return '<div class="bar pair" data-tip="' + r[0] + ' : ' + r[1] + ' dans les manifests, ' + r[2] + ' proposées dans le CSV"><span>' + r[0] + '</span><span class="track"><span class="fill" style="width:' + (r[1] / 28 * 100).toFixed(1) + '%"></span><span class="fill b" style="width:' + (r[2] / 28 * 100).toFixed(1) + '%"></span></span><span class="val">' + r[1] + '<br>' + r[2] + '</span></div>';
+}).join("");
+document.getElementById("cats").innerHTML = [
+  ["C07 · faute de frappe", 2738, "88,7", "94,5", "0,0"], ["C10 · client", 1149, "98,2", "98,4", "0,0"], ["C09 · code", 1097, "100", "100", "0,0"],
+  ["C06 · indice de type", 844, "100", "100", "0,0"], ["C12 · véhicule", 789, "100", "100", "0,0"], ["C05 · homonyme", 700, "100", "100", "0,0"],
+  ["C08 · hors périmètre proche", 594, "0,8", "0,8", "43,8", 1], ["C13 · abréviation", 500, "71,2", "91,8", "2,0", 1], ["C03 · variante GeoNames", 499, "100", "100", "0,0"],
+  ["C02 · traduction officielle", 485, "100", "100", "0,0"], ["C01 · libellé canonique", 416, "100", "100", "0,0"], ["C11 · marque", 176, "100", "100", "0,0"], ["C04 · terme métier", 98, "100", "100", "0,0"]
+].map(function (c) {
+  return '<tr' + (c[5] ? ' class="hot"' : '') + '><td>' + c[0] + '</td><td class="r">' + fr(c[1]) + '</td><td class="r">' + c[2] + ' %</td><td class="r">' + c[3] + ' %</td><td class="r">' + c[4] + ' %</td></tr>';
+}).join("");
+var S = { o: '<span class="pill no">Ouverte</span>', p: '<span class="pill mid">Partielle</span>', a: '<span class="pill ok">Assumée</span>' };
+document.getElementById("gaps").innerHTML = [
+  ["G01", "Synonyme « durites »", "H-001, H-029", "o", "Choisir entre synonyme et unknown, les deux réponses divergent"],
+  ["G02", "Technologie d'ampoule (LED)", "H-016", "a", "H-016 attend unknown, cohérent avec le modèle"],
+  ["G03", "« N derniers mois », « le dernier mois »", "H-007, H-021", "p", "Les mois nommés existent, ces deux expressions manquent"],
+  ["G04", "« Le plus vendu » : CA ou volume", "H-011", "o", "Écrire une règle explicite, les réponses retiennent M05"],
+  ["G05", "Axes flous : composant, pièce, remises", "H-017, H-026, H-030", "p", "« Composant » réglé (R-ART-05), « pièce » et remises restent"],
+  ["G06", "Mesures floues : productif, mieux, en positif…", "H-005, H-013, H-014, H-019, H-021", "p", "M27 et R-CA-06 ajoutés, il manque les chemins d'accès"],
+  ["G07", "Montant de commande, prix unitaire", "H-024, H-032", "p", "M28 et l'axe commande ajoutés, « gros panier » et « moins chère » sans chemin"],
+  ["G08", "Clients au référentiel", "H-035, H-036", "p", "M29 ajoutée, « nombre de concession » n'y mène pas"],
+  ["G09", "Seuil « 200e »", "H-023", "o", "Normaliser « e » après un nombre"],
+  ["G10", "« Tout pays confondu », « tous les pays »", "H-009, H-030", "o", "Déclarer ces termes, sans filtre ou comme axe"],
+  ["G11", "Hors périmètre non déclaré", "H-008, H-020, H-038, H-039", "o", "Ajouter organisation, causalité, conseil et actualité"],
+  ["G12", "Stock + ville", "H-004", "o", "Règle : une mesure de stock restreint aux sites"],
+  ["G13", "« Le Luxembourg » face à un pays", "H-036", "o", "Règle : comparaison avec un pays → pays"],
+  ["G14", "Fuzzy clients et préfixe « garage »", "H-027", "o", "Approché limité aux mots distinctifs"],
+  ["G15", "Calendrier d'événements", "H-020", "p", "Section ajoutée mais lue par aucun script, sans règle R-EVT-01"]
+].map(function (g) {
+  return '<tr><td class="ref">' + g[0] + '</td><td>' + g[1] + '</td><td class="mono">' + g[2] + '</td><td>' + S[g[3]] + '</td><td>' + g[4] + '</td></tr>';
+}).join("");
+var tip = document.getElementById("tip");
+document.addEventListener("mousemove", function (e) {
+  var t = e.target.closest ? e.target.closest("[data-tip]") : null;
+  if (!t) { tip.hidden = true; return; }
+  tip.textContent = t.getAttribute("data-tip"); tip.hidden = false;
+  tip.style.left = Math.min(e.clientX + 14, innerWidth - 276) + "px"; tip.style.top = (e.clientY + 14) + "px";
+});
+</script>
+</body>
+</html>

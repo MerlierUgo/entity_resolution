@@ -1,0 +1,6 @@
+﻿subject_id,predicate,object_id,source
+metier:canal:comptoir,groupe_de_canaux,metier:groupe_canal:agence,Glossaire métier v2 (spec/glossaire.yaml)
+metier:canal:e-commerce-particulier,groupe_de_canaux,metier:groupe_canal:digital,Glossaire métier v2 (spec/glossaire.yaml)
+metier:canal:e-commerce-pro,groupe_de_canaux,metier:groupe_canal:digital,Glossaire métier v2 (spec/glossaire.yaml)
+metier:canal:livraison-garage,groupe_de_canaux,metier:groupe_canal:agence,Glossaire métier v2 (spec/glossaire.yaml)
+metier:canal:telephone-canal,groupe_de_canaux,metier:groupe_canal:telephone,Glossaire métier v2 (spec/glossaire.yaml)
