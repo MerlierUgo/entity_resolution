@@ -165,6 +165,25 @@ td.mono { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
 td .arrow { color: var(--ink-3); }
 .why { display: grid; gap: 14px; }
 .why p { font-size: 14px; color: var(--ink-2); max-width: 80ch; }
+.dia { margin: 0; display: grid; gap: 10px; }
+.dia-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+.dia svg { display: block; width: 100%; min-width: 640px; height: auto; color: var(--ink); font-family: var(--body); }
+.dia figcaption { font-size: 13.5px; color: var(--ink-2); max-width: 80ch; }
+.dia .ar line, .dia .ar polyline { stroke: currentColor; stroke-width: 1.4; fill: none; marker-end: url(#fl); }
+.dia .arf { stroke: var(--ink-3); stroke-width: 1.4; stroke-dasharray: 4 3; marker-end: url(#flf); }
+.dia .lab text { font: 600 12px var(--mono); fill: var(--ink-3); }
+.dia text.t { font-size: 14px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+.dia text.s { font-size: 12.5px; fill: var(--ink-2); text-anchor: middle; }
+.dia .bx rect { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
+.dia .q rect { fill: var(--sunken); stroke: var(--ink-3); stroke-width: 1.4; }
+.dia .un rect { fill: var(--crit-bg); stroke: var(--crit); stroke-width: 1.4; }
+.dia .ok rect { fill: var(--good-bg); stroke: var(--good); stroke-width: 1.4; }
+.dia .am rect { fill: var(--warn-bg); stroke: var(--warn); stroke-width: 1.4; }
+.dia .fu rect { fill: none; stroke: var(--ink-3); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.dia .tr rect { fill: var(--bg); stroke: var(--line); stroke-width: 1.2; }
+.dia text.un-t { fill: var(--crit); } .dia text.ok-t { fill: var(--good); }
+.dia text.am-t { fill: var(--warn); } .dia text.fu-t { fill: var(--ink-2); }
+.dia .mono text { font: 12px var(--mono); fill: var(--ink); white-space: pre; }
 </style>
 
 <main class="page">
@@ -184,6 +203,138 @@ td .arrow { color: var(--ink-3); }
   <div class="post" role="listitem"><strong>4 · Extraction LLM</strong><span class="pill todo">À faire</span><div>Découpage en termes, JSON validé, température 0, cache.</div></div>
   <div class="post" role="listitem"><strong>5 · Examen</strong><span class="pill todo">À faire</span><div>Questions humaines de bout en bout, seulement à ta demande.</div></div>
 </div>
+
+<section id="schema">
+  <div class="head">
+    <h2>Comment le résolveur décide</h2>
+    <p>Chaque terme suit le même chemin, sans LLM ni hasard : le même terme avec le même indice donne toujours la même résolution. Le catalogue passe d'abord. L'index négatif ne répond que si le catalogue n'a rien trouvé. Les règles de la spec choisissent les candidats, et la trace explique chaque décision.</p>
+  </div>
+  <figure class="dia">
+    <div class="dia-wrap">
+    <svg viewBox="0 0 960 800" role="img" aria-label="Schéma du résolveur : normalisation, recherche dans le catalogue, index négatif si rien n'est trouvé, règles en deux passes, puis statut resolved, ambiguous ou unknown.">
+      <defs>
+        <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="currentColor" stroke-width="1.6"/></marker>
+        <marker id="flf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/></marker>
+      </defs>
+      <g class="ar">
+        <line x1="310" y1="76" x2="310" y2="100"/>
+        <line x1="440" y1="121" x2="558" y2="121"/>
+        <line x1="310" y1="142" x2="310" y2="166"/>
+        <line x1="310" y1="222" x2="310" y2="246"/>
+        <line x1="440" y1="267" x2="558" y2="267"/>
+        <line x1="310" y1="288" x2="310" y2="312"/>
+        <line x1="745" y1="295" x2="745" y2="320"/>
+        <line x1="690" y1="362" x2="690" y2="400"/>
+        <line x1="840" y1="362" x2="840" y2="400"/>
+        <line x1="310" y1="394" x2="310" y2="418"/>
+        <line x1="310" y1="460" x2="310" y2="484"/>
+        <line x1="310" y1="548" x2="310" y2="574"/>
+        <polyline points="180,439 120,439 120,599 148,599"/>
+        <line x1="225" y1="624" x2="225" y2="660"/>
+        <line x1="395" y1="624" x2="395" y2="660"/>
+      </g>
+      <line class="arf" x1="840" y1="456" x2="840" y2="490"/>
+      <g class="lab">
+        <text x="500" y="113" text-anchor="middle">oui</text>
+        <text x="318" y="160">non</text>
+        <text x="500" y="259" text-anchor="middle">non</text>
+        <text x="318" y="306">oui</text>
+        <text x="698" y="386">oui</text>
+        <text x="848" y="386">non</text>
+        <text x="128" y="430">non</text>
+        <text x="318" y="478">oui</text>
+        <text x="233" y="647">1</text>
+        <text x="403" y="647">2 ou plus</text>
+      </g>
+
+      <g class="bx"><rect x="150" y="20" width="320" height="56" rx="6"/></g>
+      <text class="t" x="310" y="43">1 · Normalisation</text>
+      <text class="s" x="310" y="64">« Liège » → liege (R-RES-02)</text>
+
+      <g class="q"><rect x="180" y="100" width="260" height="42" rx="21"/></g>
+      <text class="t" x="310" y="126">La forme est-elle vide ?</text>
+
+      <g class="bx"><rect x="150" y="166" width="320" height="56" rx="6"/></g>
+      <text class="t" x="310" y="189">2 · Recherche dans le catalogue</text>
+      <text class="s" x="310" y="210">alias exact ∪ alias aux mots triés</text>
+
+      <g class="q"><rect x="180" y="246" width="260" height="42" rx="21"/></g>
+      <text class="t" x="310" y="272">Au moins un candidat ?</text>
+
+      <g class="bx"><rect x="150" y="312" width="320" height="82" rx="6"/></g>
+      <text class="t" x="310" y="334">4 · Règles · passe 1 (sans indice)</text>
+      <text class="s" x="310" y="354">R-GEO-02 retire les localités absorbées</text>
+      <text class="s" x="310" y="370">R-CTX-05 ajoute l'agence de la ville</text>
+      <text class="s" x="310" y="386">R-ART-03 famille à catégorie unique</text>
+
+      <g class="q"><rect x="180" y="418" width="260" height="42" rx="21"/></g>
+      <text class="t" x="310" y="444">Un indice de type est fourni ?</text>
+
+      <g class="bx"><rect x="150" y="484" width="320" height="64" rx="6"/></g>
+      <text class="t" x="310" y="506">5 · Règles · passe 2 (avec indice)</text>
+      <text class="s" x="310" y="525">R-RES-09 garde les candidats du type demandé</text>
+      <text class="s" x="310" y="541">aucun du type demandé → indice ignoré</text>
+
+      <g class="bx"><rect x="150" y="574" width="320" height="50" rx="6"/></g>
+      <text class="t" x="310" y="596">6 · Statut</text>
+      <text class="s" x="310" y="615">selon le nombre de candidats</text>
+
+      <g class="ok"><rect x="150" y="660" width="150" height="50" rx="6"/></g>
+      <text class="t ok-t" x="225" y="682">resolved</text>
+      <text class="s" x="225" y="700">une seule entité</text>
+      <g class="am"><rect x="320" y="660" width="150" height="50" rx="6"/></g>
+      <text class="t am-t" x="395" y="682">ambiguous</text>
+      <text class="s" x="395" y="700">on demande de choisir</text>
+
+      <g class="un"><rect x="560" y="96" width="360" height="50" rx="6"/></g>
+      <text class="t un-t" x="740" y="117">unknown</text>
+      <text class="s" x="740" y="136">terme vide (« le », « ? »)</text>
+
+      <g class="bx"><rect x="560" y="239" width="360" height="56" rx="6"/></g>
+      <text class="t" x="740" y="262">3 · Index négatif (R-RES-07)</text>
+      <text class="s" x="740" y="283">consulté seulement si le catalogue n'a rien trouvé</text>
+
+      <g class="q"><rect x="610" y="320" width="270" height="42" rx="21"/></g>
+      <text class="t" x="745" y="346">Terme connu comme absent ?</text>
+
+      <g class="un"><rect x="560" y="400" width="175" height="64" rx="6"/></g>
+      <text class="t un-t" x="647" y="422">unknown</text>
+      <text class="s" x="647" y="440">« Paris : lieu</text>
+      <text class="s" x="647" y="456">hors périmètre »</text>
+
+      <g class="fu"><rect x="750" y="400" width="170" height="56" rx="6"/></g>
+      <text class="t fu-t" x="835" y="423">Jaro-Winkler borné</text>
+      <text class="s" x="835" y="443">étape 2 · à venir</text>
+
+      <g class="un"><rect x="750" y="490" width="170" height="50" rx="6"/></g>
+      <text class="t un-t" x="835" y="511">unknown</text>
+      <text class="s" x="835" y="530">« aucun alias »</text>
+
+      <g class="tr"><rect x="560" y="574" width="360" height="206" rx="6"/></g>
+      <text class="t" x="580" y="600" text-anchor="start" style="text-anchor:start">Trace · une ligne par bloc</text>
+      <text class="s" x="580" y="619" style="text-anchor:start">exemple : « Liège », indice « site »</text>
+      <g class="mono">
+        <text x="580" y="648">1  normalisation   liege</text>
+        <text x="580" y="667">2  exact           5 trouvés (décisif)</text>
+        <text x="580" y="686">4  R-GEO-02        − 2 localités</text>
+        <text x="580" y="705">4  R-CTX-05        + agence Liège</text>
+        <text x="580" y="724">5  R-RES-09        − commune, province,</text>
+        <text x="580" y="741">                     arrondissement</text>
+        <text x="580" y="764">6  statut          resolved · agence Liège</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Les blocs pleins sont codés dans <code>engine/resolveur.py · ResolveurExact.resoudre()</code>. Le bloc en pointillé est l'étape 2 : aujourd'hui, un terme absent du catalogue et de l'index négatif va directement à « unknown · aucun alias ».</figcaption>
+  </figure>
+
+  <div class="why">
+    <p><strong>1 · Normalisation.</strong> Le terme passe par <code>normalize()</code>, la fonction qui a aussi construit les alias du catalogue : minuscules, accents et ponctuation retirés, mots vides (« de », « la », « l », « a »…) supprimés, pluriel simple réduit. S'il ne reste rien (« le », « ? »), la réponse est « inconnu » tout de suite. C'est aussi là que naissent deux causes d'échec décrites plus bas : la ponctuation coupe « S.R.L » en « s r », et « St » reste « st ».</p>
+    <p><strong>2 · Recherche dans le catalogue.</strong> Le moteur cherche la forme normalisée parmi les 36 088 alias, puis la même forme aux mots triés (« garage dupont » trouve « dupont garage »), et garde l'union des deux. Un nom ramène toutes ses entités : « Liège » en donne cinq. Aucune correspondance approchée à cette étape, ni sur les noms ni sur les codes.</p>
+    <p><strong>3 · Index négatif.</strong> Il n'est consulté que si le catalogue n'a rien trouvé, pour qu'un terme du catalogue ne soit jamais bloqué à tort (« Éco » est résolu même si un terme négatif lui ressemble). Un terme connu comme absent (Paris, Allemagne, Michelin) reçoit « inconnu » avec la raison. Cet ordre protégera aussi du fuzzy : « Dinan » sera arrêté ici avant d'être rapproché de « Dinant ».</p>
+    <p><strong>4 et 5 · Règles en deux passes.</strong> Les règles viennent de <code>build/rules.py</code>, sans copie. La première passe ignore l'indice : elle retire les localités absorbées par leur commune, ajoute l'agence de la ville et ramène une famille à sa catégorie unique. La seconde applique l'indice de type (R-RES-09) et ne garde que les candidats de ce type. Si aucun candidat n'est du type demandé, l'indice est ignoré et noté dans la trace, au lieu de tout vider.</p>
+    <p><strong>6 · Statut.</strong> Un candidat donne « resolved », plusieurs donnent « ambiguous » : le moteur demande de choisir au lieu de deviner, c'est ce qui garantit 0 erreur silencieuse. La trace garde chaque étape ; l'étape qui a trouvé les candidats (alias exact, mots triés, index négatif, rien trouvé) est celle du graphique « Étape qui a décidé » plus bas.</p>
+  </div>
+</section>
 
 <section id="resultats">
   <div class="head">
