@@ -7,7 +7,7 @@
 >
 > Ces règles s'appliquent partout : génération des données, mesures DAX, oracle, résolution des termes par l'agent. Chaque règle a un identifiant stable, à citer dans le code et dans les tests.
 
-**État d'implémentation** : 56 règles · 6 codées · 2 prototypées · 48 à coder
+**État d'implémentation** : 56 règles · 7 codées · 1 prototypées · 48 à coder
 
 ## Chiffre d'affaires et montants
 
@@ -219,9 +219,9 @@ Tous les calculs de dates partent de `data_as_of` = **2026-09-30**. L'horloge du
 
 *codée · resolution* · `build/common.py · normalize()`
 
-**R-RES-03 · Correspondance approchée.** Seuil initial 0,88, à calibrer sur le golden set. Jamais sur un code. Jamais pour un terme de moins de 4 caractères. Si les deux meilleurs candidats sont à moins de 0,03 d'écart : ambiguous.
+**R-RES-03 · Correspondance approchée.** Seuil initial 0,88, à calibrer sur le golden set. Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités. Seuils calibrés par type de nom (SGR) : `spec/seuils_fuzzy.yaml`, généré par `engine/calibration.py`.
 
-*prototypée · resolution* · `build/baseline.py (B2)`
+*codée · resolution* · `engine/approche.py`, `engine/resolveur.py · ResolveurApproche`, `engine/calibration.py`
 
 **R-RES-04 · Valeur absente.** Un terme qui ressemble à une valeur plausible mais absente des données (« Allemagne », « Suède ») renvoie **unknown**. L'agent n'approche jamais un pays ou une ville inexistants vers un autre.
 

@@ -282,11 +282,11 @@ sections:
         tests: ["spec/check_spec.py", "challenges/cases.csv"]
       - id: "R-RES-03"
         titre: "Correspondance approchée"
-        texte: "Seuil initial 0,88, à calibrer sur le golden set. Jamais sur un code. Jamais pour un terme de moins de 4 caractères. Si les deux meilleurs candidats sont à moins de 0,03 d'écart : ambiguous."
+        texte: "Seuil initial 0,88, à calibrer sur le golden set. Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités. Seuils calibrés par type de nom (SGR) : `spec/seuils_fuzzy.yaml`, généré par `engine/calibration.py`."
         composant: "resolution"
-        statut: "prototypee"
-        implementation: ["build/baseline.py (B2)"]
-        tests: ["reports/baseline.md"]
+        statut: "codee"
+        implementation: ["engine/approche.py", "engine/resolveur.py · ResolveurApproche", "engine/calibration.py"]
+        tests: ["tests/test_engine_fuzzy.py", "challenges/cases.csv"]
       - id: "R-RES-04"
         titre: "Valeur absente"
         texte: "Un terme qui ressemble à une valeur plausible mais absente des données (« Allemagne », « Suède ») renvoie **unknown**. L'agent n'approche jamais un pays ou une ville inexistants vers un autre."

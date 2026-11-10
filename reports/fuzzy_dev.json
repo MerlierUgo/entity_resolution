@@ -1,0 +1,4155 @@
+{
+ "n_cas_eval": 2133,
+ "configurations": {
+  "A": "étape 1 seule (exact)",
+  "B": "SeuilFixe(0.88, 0.03)",
+  "C": "SeuilsCalibres (SGR, r* = 0.05, δ = 0.05)"
+ },
+ "seuils": {
+  "methode": "SGR (Geifman et El-Yaniv, 2017), un seuil par type",
+  "cible_risque": 0.05,
+  "delta": 0.05,
+  "ecart": 0.03,
+  "perte": "dangereuse",
+  "donnees": "challenges/cases.csv, partition dev, part calib (70 %, hash SHA-256 du case_id), 5025 cas",
+  "absents_simules": false,
+  "empreinte_catalogue": "9af7156dd14d5dbc",
+  "types": {
+   "canal": {
+    "fuzzy": "desactive",
+    "n_cas": 2,
+    "n_retenables": 2,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "2 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "categorie_piece": {
+    "fuzzy": "desactive",
+    "n_cas": 102,
+    "n_retenables": 95,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "95 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "client": {
+    "fuzzy": "desactive",
+    "n_cas": 101,
+    "n_retenables": 0,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "0 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "commune": {
+    "fuzzy": "desactive",
+    "n_cas": 147,
+    "n_retenables": 132,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
+   },
+   "famille_mecanova": {
+    "fuzzy": "desactive",
+    "n_cas": 2,
+    "n_retenables": 2,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "2 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "gamme": {
+    "fuzzy": "desactive",
+    "n_cas": 3,
+    "n_retenables": 3,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "3 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "groupe_industriel": {
+    "fuzzy": "desactive",
+    "n_cas": 1,
+    "n_retenables": 1,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "localite_postale": {
+    "fuzzy": "desactive",
+    "n_cas": 216,
+    "n_retenables": 155,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
+   },
+   "marque_piece": {
+    "fuzzy": "desactive",
+    "n_cas": 5,
+    "n_retenables": 4,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "4 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "marque_vehicule": {
+    "fuzzy": "desactive",
+    "n_cas": 3,
+    "n_retenables": 3,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "3 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "mesure": {
+    "fuzzy": "desactive",
+    "n_cas": 12,
+    "n_retenables": 12,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "12 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "mixte": {
+    "fuzzy": "desactive",
+    "n_cas": 149,
+    "n_retenables": 127,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
+   },
+   "modele_vehicule": {
+    "fuzzy": "desactive",
+    "n_cas": 92,
+    "n_retenables": 76,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "76 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "motif_retour": {
+    "fuzzy": "desactive",
+    "n_cas": 1,
+    "n_retenables": 1,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "pays": {
+    "fuzzy": "desactive",
+    "n_cas": 5,
+    "n_retenables": 5,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "5 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "province": {
+    "fuzzy": "desactive",
+    "n_cas": 1,
+    "n_retenables": 1,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "qualite": {
+    "fuzzy": "desactive",
+    "n_cas": 1,
+    "n_retenables": 1,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "segment": {
+    "fuzzy": "desactive",
+    "n_cas": 2,
+    "n_retenables": 2,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "2 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "site": {
+    "fuzzy": "desactive",
+    "n_cas": 1,
+    "n_retenables": 1,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "type_client": {
+    "fuzzy": "desactive",
+    "n_cas": 1,
+    "n_retenables": 1,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "ville": {
+    "fuzzy": "actif",
+    "seuil": 0.859649,
+    "ecart": 0.03,
+    "borne": 0.014942,
+    "n_cas": 865,
+    "n_retenables": 618,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "n_retenus": 617,
+    "risque_empirique": 0.003241
+   }
+  }
+ },
+ "resultats": {
+  "A": {
+   "C01_libelle_canonique": {
+    "n": 83,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 83
+    }
+   },
+   "C02_traduction_officielle": {
+    "n": 120,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 120
+    }
+   },
+   "C03_variante_geonames": {
+    "n": 105,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 105
+    }
+   },
+   "C04_terme_metier": {
+    "n": 20,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 20
+    }
+   },
+   "C05_homonyme": {
+    "n": 148,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 148
+    }
+   },
+   "C06_indice_de_type": {
+    "n": 196,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 196
+    }
+   },
+   "C07_faute_de_frappe": {
+    "n": 554,
+    "ideal": 0.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 554
+    }
+   },
+   "C08_hors_perimetre_proche": {
+    "n": 136,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 136
+    }
+   },
+   "C09_code": {
+    "n": 237,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 237
+    }
+   },
+   "C10_client": {
+    "n": 237,
+    "ideal": 83.12,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 40,
+     "correct": 197
+    }
+   },
+   "C11_marque": {
+    "n": 40,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 40
+    }
+   },
+   "C12_vehicule": {
+    "n": 167,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 167
+    }
+   },
+   "C13_abreviation": {
+    "n": 90,
+    "ideal": 0.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 90
+    }
+   },
+   "TOTAL": {
+    "n": 2133,
+    "ideal": 67.93,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 684,
+     "correct": 1449
+    }
+   }
+  },
+  "B": {
+   "C01_libelle_canonique": {
+    "n": 83,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 83
+    }
+   },
+   "C02_traduction_officielle": {
+    "n": 120,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 120
+    }
+   },
+   "C03_variante_geonames": {
+    "n": 105,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 105
+    }
+   },
+   "C04_terme_metier": {
+    "n": 20,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 20
+    }
+   },
+   "C05_homonyme": {
+    "n": 148,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 148
+    }
+   },
+   "C06_indice_de_type": {
+    "n": 196,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 196
+    }
+   },
+   "C07_faute_de_frappe": {
+    "n": 554,
+    "ideal": 84.48,
+    "sur": 95.67,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 53,
+     "correct": 468,
+     "incorrect": 23,
+     "partiel": 9,
+     "trop_confiant": 1
+    }
+   },
+   "C08_hors_perimetre_proche": {
+    "n": 136,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 136
+    }
+   },
+   "C09_code": {
+    "n": 237,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 237
+    }
+   },
+   "C10_client": {
+    "n": 237,
+    "ideal": 83.12,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 40,
+     "correct": 197
+    }
+   },
+   "C11_marque": {
+    "n": 40,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 40
+    }
+   },
+   "C12_vehicule": {
+    "n": 167,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 167
+    }
+   },
+   "C13_abreviation": {
+    "n": 90,
+    "ideal": 0.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 90
+    }
+   },
+   "TOTAL": {
+    "n": 2133,
+    "ideal": 89.87,
+    "sur": 98.87,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 183,
+     "correct": 1917,
+     "incorrect": 23,
+     "partiel": 9,
+     "trop_confiant": 1
+    }
+   }
+  },
+  "C": {
+   "C01_libelle_canonique": {
+    "n": 83,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 83
+    }
+   },
+   "C02_traduction_officielle": {
+    "n": 120,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 120
+    }
+   },
+   "C03_variante_geonames": {
+    "n": 105,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 105
+    }
+   },
+   "C04_terme_metier": {
+    "n": 20,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 20
+    }
+   },
+   "C05_homonyme": {
+    "n": 148,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 148
+    }
+   },
+   "C06_indice_de_type": {
+    "n": 196,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 196
+    }
+   },
+   "C07_faute_de_frappe": {
+    "n": 554,
+    "ideal": 44.22,
+    "sur": 98.92,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 299,
+     "correct": 245,
+     "incorrect": 6,
+     "partiel": 4
+    }
+   },
+   "C08_hors_perimetre_proche": {
+    "n": 136,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 136
+    }
+   },
+   "C09_code": {
+    "n": 237,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 237
+    }
+   },
+   "C10_client": {
+    "n": 237,
+    "ideal": 83.12,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 40,
+     "correct": 197
+    }
+   },
+   "C11_marque": {
+    "n": 40,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 40
+    }
+   },
+   "C12_vehicule": {
+    "n": 167,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "correct": 167
+    }
+   },
+   "C13_abreviation": {
+    "n": 90,
+    "ideal": 0.0,
+    "sur": 100.0,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 90
+    }
+   },
+   "TOTAL": {
+    "n": 2133,
+    "ideal": 79.42,
+    "sur": 99.72,
+    "silencieux": 0.0,
+    "detail": {
+     "acceptable": 429,
+     "correct": 1694,
+     "incorrect": 6,
+     "partiel": 4
+    }
+   }
+  }
+ },
+ "robustesse": {
+  "B": {
+   "n": 139,
+   "silencieux": 47,
+   "exemples": [
+    {
+     "texte": "Arbusigny",
+     "ids": [
+      "geo:ville:FR-3029477"
+     ]
+    },
+    {
+     "texte": "Beauvoisin",
+     "ids": [
+      "geo:ville:FR-3033962"
+     ]
+    },
+    {
+     "texte": "Bizanet",
+     "ids": [
+      "geo:localite:BE-7783-bizet"
+     ]
+    },
+    {
+     "texte": "Breteil",
+     "ids": [
+      "geo:ville:FR-3030276"
+     ]
+    },
+    {
+     "texte": "Chalon-sur-Saône",
+     "ids": [
+      "geo:ville:FR-3027487"
+     ]
+    },
+    {
+     "texte": "Charpont",
+     "ids": [
+      "geo:ville:FR-3026553"
+     ]
+    },
+    {
+     "texte": "Coubron",
+     "ids": [
+      "geo:ville:FR-3022770"
+     ]
+    },
+    {
+     "texte": "Dettingen",
+     "ids": [
+      "geo:ville:FR-3019338"
+     ]
+    }
+   ]
+  },
+  "C": {
+   "n": 139,
+   "silencieux": 34,
+   "exemples": [
+    {
+     "texte": "Arbusigny",
+     "ids": [
+      "geo:ville:FR-3029477"
+     ]
+    },
+    {
+     "texte": "Beauvoisin",
+     "ids": [
+      "geo:ville:FR-3033962"
+     ]
+    },
+    {
+     "texte": "Breteil",
+     "ids": [
+      "geo:ville:FR-3030276"
+     ]
+    },
+    {
+     "texte": "Chalon-sur-Saône",
+     "ids": [
+      "geo:ville:FR-3027487"
+     ]
+    },
+    {
+     "texte": "Charpont",
+     "ids": [
+      "geo:ville:FR-3026553"
+     ]
+    },
+    {
+     "texte": "Coubron",
+     "ids": [
+      "geo:ville:FR-3022770"
+     ]
+    },
+    {
+     "texte": "Dettingen",
+     "ids": [
+      "geo:ville:FR-3019338"
+     ]
+    },
+    {
+     "texte": "Emmerich",
+     "ids": [
+      "geo:ville:FR-3020236"
+     ]
+    }
+   ]
+  }
+ },
+ "courbes": {
+  "ville": {
+   "n_cas": 342,
+   "calibration": {
+    "fuzzy": "actif",
+    "seuil": 0.859649,
+    "ecart": 0.03,
+    "borne": 0.014942,
+    "n_cas": 865,
+    "n_retenables": 618,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "n_retenus": 617,
+    "risque_empirique": 0.003241
+   },
+   "dangereuse": {
+    "points": [
+     {
+      "seuil": 0.9909,
+      "couverture": 0.0029,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.99,
+      "couverture": 0.0058,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9895,
+      "couverture": 0.0088,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9889,
+      "couverture": 0.0146,
+      "risque": 0.0,
+      "retenus": 5,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.0175,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9875,
+      "couverture": 0.0409,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9867,
+      "couverture": 0.0526,
+      "risque": 0.0,
+      "retenus": 18,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.986,
+      "couverture": 0.0556,
+      "risque": 0.0,
+      "retenus": 19,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.0673,
+      "risque": 0.0,
+      "retenus": 23,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.0906,
+      "risque": 0.0,
+      "retenus": 31,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.0936,
+      "risque": 0.0,
+      "retenus": 32,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.1316,
+      "risque": 0.0,
+      "retenus": 45,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9824,
+      "couverture": 0.1345,
+      "risque": 0.0,
+      "retenus": 46,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9822,
+      "couverture": 0.1374,
+      "risque": 0.0,
+      "retenus": 47,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9821,
+      "couverture": 0.1433,
+      "risque": 0.0,
+      "retenus": 49,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.1813,
+      "risque": 0.0,
+      "retenus": 62,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.981,
+      "couverture": 0.1842,
+      "risque": 0.0,
+      "retenus": 63,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9806,
+      "couverture": 0.1871,
+      "risque": 0.0,
+      "retenus": 64,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.193,
+      "risque": 0.0,
+      "retenus": 66,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.231,
+      "risque": 0.0,
+      "retenus": 79,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9795,
+      "couverture": 0.2339,
+      "risque": 0.0,
+      "retenus": 80,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.2398,
+      "risque": 0.0,
+      "retenus": 82,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.2456,
+      "risque": 0.0,
+      "retenus": 84,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.2982,
+      "risque": 0.0,
+      "retenus": 102,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9769,
+      "couverture": 0.3012,
+      "risque": 0.0,
+      "retenus": 103,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9767,
+      "couverture": 0.3129,
+      "risque": 0.0,
+      "retenus": 107,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9758,
+      "couverture": 0.3187,
+      "risque": 0.0,
+      "retenus": 109,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9757,
+      "couverture": 0.3216,
+      "risque": 0.0,
+      "retenus": 110,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.3772,
+      "risque": 0.0,
+      "retenus": 129,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9741,
+      "couverture": 0.3918,
+      "risque": 0.0,
+      "retenus": 134,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9733,
+      "couverture": 0.3977,
+      "risque": 0.0,
+      "retenus": 136,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9727,
+      "couverture": 0.4006,
+      "risque": 0.0,
+      "retenus": 137,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.4532,
+      "risque": 0.0,
+      "retenus": 155,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9708,
+      "couverture": 0.4649,
+      "risque": 0.0,
+      "retenus": 159,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9704,
+      "couverture": 0.4912,
+      "risque": 0.0,
+      "retenus": 168,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9703,
+      "couverture": 0.4942,
+      "risque": 0.0,
+      "retenus": 169,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.97,
+      "couverture": 0.4971,
+      "risque": 0.0,
+      "retenus": 170,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9692,
+      "couverture": 0.5,
+      "risque": 0.0,
+      "retenus": 171,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5439,
+      "risque": 0.0,
+      "retenus": 186,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5468,
+      "risque": 0.0,
+      "retenus": 187,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.5556,
+      "risque": 0.0,
+      "retenus": 190,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9625,
+      "couverture": 0.5702,
+      "risque": 0.0,
+      "retenus": 195,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.5789,
+      "risque": 0.0,
+      "retenus": 198,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5819,
+      "risque": 0.0,
+      "retenus": 199,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5848,
+      "risque": 0.0,
+      "retenus": 200,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.5936,
+      "risque": 0.0,
+      "retenus": 203,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9593,
+      "couverture": 0.5965,
+      "risque": 0.0,
+      "retenus": 204,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.959,
+      "couverture": 0.5994,
+      "risque": 0.0,
+      "retenus": 205,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9583,
+      "couverture": 0.6023,
+      "risque": 0.0,
+      "retenus": 206,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9578,
+      "couverture": 0.6082,
+      "risque": 0.0,
+      "retenus": 208,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9571,
+      "couverture": 0.6111,
+      "risque": 0.0,
+      "retenus": 209,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.6316,
+      "risque": 0.0,
+      "retenus": 216,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9538,
+      "couverture": 0.6374,
+      "risque": 0.0,
+      "retenus": 218,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6433,
+      "risque": 0.0,
+      "retenus": 220,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6491,
+      "risque": 0.0,
+      "retenus": 222,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9481,
+      "couverture": 0.652,
+      "risque": 0.0,
+      "retenus": 223,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9464,
+      "couverture": 0.655,
+      "risque": 0.0,
+      "retenus": 224,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9449,
+      "couverture": 0.6579,
+      "risque": 0.0,
+      "retenus": 225,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.6667,
+      "risque": 0.0,
+      "retenus": 228,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9417,
+      "couverture": 0.6725,
+      "risque": 0.0,
+      "retenus": 230,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9396,
+      "couverture": 0.6754,
+      "risque": 0.0,
+      "retenus": 231,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9381,
+      "couverture": 0.6784,
+      "risque": 0.0,
+      "retenus": 232,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9375,
+      "couverture": 0.6813,
+      "risque": 0.0,
+      "retenus": 233,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.6988,
+      "risque": 0.0,
+      "retenus": 239,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.7018,
+      "risque": 0.0,
+      "retenus": 240,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9301,
+      "couverture": 0.7047,
+      "risque": 0.0,
+      "retenus": 241,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9265,
+      "couverture": 0.7076,
+      "risque": 0.0,
+      "retenus": 242,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.925,
+      "couverture": 0.7105,
+      "risque": 0.0,
+      "retenus": 243,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9238,
+      "couverture": 0.7164,
+      "risque": 0.0,
+      "retenus": 245,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7222,
+      "risque": 0.0,
+      "retenus": 247,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9196,
+      "couverture": 0.7251,
+      "risque": 0.0,
+      "retenus": 248,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9134,
+      "couverture": 0.7281,
+      "risque": 0.0,
+      "retenus": 249,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.911,
+      "couverture": 0.731,
+      "risque": 0.0,
+      "retenus": 250,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9,
+      "couverture": 0.7368,
+      "risque": 0.0,
+      "retenus": 252,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.8958,
+      "couverture": 0.7398,
+      "risque": 0.0,
+      "retenus": 253,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.8844,
+      "couverture": 0.7427,
+      "risque": 0.0,
+      "retenus": 254,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.8821,
+      "couverture": 0.7456,
+      "risque": 0.0,
+      "retenus": 255,
+      "pertes": 0
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.7456,
+     "risque": 0.0,
+     "retenus": 255,
+     "pertes": 0
+    },
+    "c": {
+     "seuil": 0.859649,
+     "couverture": 0.7456,
+     "risque": 0.0,
+     "retenus": 255,
+     "pertes": 0
+    }
+   },
+   "non_sure": {
+    "points": [
+     {
+      "seuil": 0.9909,
+      "couverture": 0.0029,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.99,
+      "couverture": 0.0058,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9895,
+      "couverture": 0.0088,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9889,
+      "couverture": 0.0146,
+      "risque": 0.0,
+      "retenus": 5,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.0175,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9875,
+      "couverture": 0.0409,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9867,
+      "couverture": 0.0526,
+      "risque": 0.0,
+      "retenus": 18,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.986,
+      "couverture": 0.0556,
+      "risque": 0.0,
+      "retenus": 19,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.0673,
+      "risque": 0.0,
+      "retenus": 23,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.0906,
+      "risque": 0.0,
+      "retenus": 31,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.0936,
+      "risque": 0.0,
+      "retenus": 32,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.1316,
+      "risque": 0.0222,
+      "retenus": 45,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9824,
+      "couverture": 0.1345,
+      "risque": 0.0217,
+      "retenus": 46,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9822,
+      "couverture": 0.1374,
+      "risque": 0.0213,
+      "retenus": 47,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9821,
+      "couverture": 0.1433,
+      "risque": 0.0204,
+      "retenus": 49,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.1813,
+      "risque": 0.0161,
+      "retenus": 62,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.981,
+      "couverture": 0.1842,
+      "risque": 0.0159,
+      "retenus": 63,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9806,
+      "couverture": 0.1871,
+      "risque": 0.0156,
+      "retenus": 64,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.193,
+      "risque": 0.0152,
+      "retenus": 66,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.231,
+      "risque": 0.0127,
+      "retenus": 79,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9795,
+      "couverture": 0.2339,
+      "risque": 0.0125,
+      "retenus": 80,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.2398,
+      "risque": 0.0122,
+      "retenus": 82,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.2456,
+      "risque": 0.0119,
+      "retenus": 84,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.2982,
+      "risque": 0.0098,
+      "retenus": 102,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9769,
+      "couverture": 0.3012,
+      "risque": 0.0097,
+      "retenus": 103,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9767,
+      "couverture": 0.3129,
+      "risque": 0.0093,
+      "retenus": 107,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9758,
+      "couverture": 0.3187,
+      "risque": 0.0092,
+      "retenus": 109,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9757,
+      "couverture": 0.3216,
+      "risque": 0.0091,
+      "retenus": 110,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.3772,
+      "risque": 0.0155,
+      "retenus": 129,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9741,
+      "couverture": 0.3918,
+      "risque": 0.0149,
+      "retenus": 134,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9733,
+      "couverture": 0.3977,
+      "risque": 0.0147,
+      "retenus": 136,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9727,
+      "couverture": 0.4006,
+      "risque": 0.0146,
+      "retenus": 137,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.4532,
+      "risque": 0.0129,
+      "retenus": 155,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9708,
+      "couverture": 0.4649,
+      "risque": 0.0126,
+      "retenus": 159,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9704,
+      "couverture": 0.4912,
+      "risque": 0.0119,
+      "retenus": 168,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9703,
+      "couverture": 0.4942,
+      "risque": 0.0118,
+      "retenus": 169,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.97,
+      "couverture": 0.4971,
+      "risque": 0.0118,
+      "retenus": 170,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9692,
+      "couverture": 0.5,
+      "risque": 0.0117,
+      "retenus": 171,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5439,
+      "risque": 0.0108,
+      "retenus": 186,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5468,
+      "risque": 0.0107,
+      "retenus": 187,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.5556,
+      "risque": 0.0105,
+      "retenus": 190,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9625,
+      "couverture": 0.5702,
+      "risque": 0.0103,
+      "retenus": 195,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.5789,
+      "risque": 0.0101,
+      "retenus": 198,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5819,
+      "risque": 0.0101,
+      "retenus": 199,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5848,
+      "risque": 0.01,
+      "retenus": 200,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.5936,
+      "risque": 0.0099,
+      "retenus": 203,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9593,
+      "couverture": 0.5965,
+      "risque": 0.0098,
+      "retenus": 204,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.959,
+      "couverture": 0.5994,
+      "risque": 0.0098,
+      "retenus": 205,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9583,
+      "couverture": 0.6023,
+      "risque": 0.0097,
+      "retenus": 206,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9578,
+      "couverture": 0.6082,
+      "risque": 0.0096,
+      "retenus": 208,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9571,
+      "couverture": 0.6111,
+      "risque": 0.0096,
+      "retenus": 209,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.6316,
+      "risque": 0.0093,
+      "retenus": 216,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9538,
+      "couverture": 0.6374,
+      "risque": 0.0092,
+      "retenus": 218,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6433,
+      "risque": 0.0091,
+      "retenus": 220,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6491,
+      "risque": 0.009,
+      "retenus": 222,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9481,
+      "couverture": 0.652,
+      "risque": 0.009,
+      "retenus": 223,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9464,
+      "couverture": 0.655,
+      "risque": 0.0089,
+      "retenus": 224,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9449,
+      "couverture": 0.6579,
+      "risque": 0.0089,
+      "retenus": 225,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.6667,
+      "risque": 0.0132,
+      "retenus": 228,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9417,
+      "couverture": 0.6725,
+      "risque": 0.013,
+      "retenus": 230,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9396,
+      "couverture": 0.6754,
+      "risque": 0.013,
+      "retenus": 231,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9381,
+      "couverture": 0.6784,
+      "risque": 0.0129,
+      "retenus": 232,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9375,
+      "couverture": 0.6813,
+      "risque": 0.0129,
+      "retenus": 233,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.6988,
+      "risque": 0.0167,
+      "retenus": 239,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.7018,
+      "risque": 0.0167,
+      "retenus": 240,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9301,
+      "couverture": 0.7047,
+      "risque": 0.0166,
+      "retenus": 241,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9265,
+      "couverture": 0.7076,
+      "risque": 0.0165,
+      "retenus": 242,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.925,
+      "couverture": 0.7105,
+      "risque": 0.0165,
+      "retenus": 243,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9238,
+      "couverture": 0.7164,
+      "risque": 0.0204,
+      "retenus": 245,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7222,
+      "risque": 0.0202,
+      "retenus": 247,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.9196,
+      "couverture": 0.7251,
+      "risque": 0.0202,
+      "retenus": 248,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.9134,
+      "couverture": 0.7281,
+      "risque": 0.0201,
+      "retenus": 249,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.911,
+      "couverture": 0.731,
+      "risque": 0.02,
+      "retenus": 250,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.9,
+      "couverture": 0.7368,
+      "risque": 0.0198,
+      "retenus": 252,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.8958,
+      "couverture": 0.7398,
+      "risque": 0.0198,
+      "retenus": 253,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.8844,
+      "couverture": 0.7427,
+      "risque": 0.0236,
+      "retenus": 254,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.8821,
+      "couverture": 0.7456,
+      "risque": 0.0235,
+      "retenus": 255,
+      "pertes": 6
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.7456,
+     "risque": 0.0235,
+     "retenus": 255,
+     "pertes": 6
+    },
+    "c": {
+     "seuil": 0.859649,
+     "couverture": 0.7456,
+     "risque": 0.0235,
+     "retenus": 255,
+     "pertes": 6
+    }
+   }
+  },
+  "localite_postale": {
+   "n_cas": 92,
+   "calibration": {
+    "fuzzy": "desactive",
+    "n_cas": 216,
+    "n_retenables": 155,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
+   },
+   "dangereuse": {
+    "points": [
+     {
+      "seuil": 0.9931,
+      "couverture": 0.0109,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9905,
+      "couverture": 0.0217,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9895,
+      "couverture": 0.0326,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9889,
+      "couverture": 0.0435,
+      "risque": 0.0,
+      "retenus": 4,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.0652,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9854,
+      "couverture": 0.0761,
+      "risque": 0.0,
+      "retenus": 7,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.087,
+      "risque": 0.0,
+      "retenus": 8,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9844,
+      "couverture": 0.0978,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.1304,
+      "risque": 0.0,
+      "retenus": 12,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.163,
+      "risque": 0.0,
+      "retenus": 15,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.2174,
+      "risque": 0.0,
+      "retenus": 20,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.2283,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.2391,
+      "risque": 0.0,
+      "retenus": 22,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.3261,
+      "risque": 0.0,
+      "retenus": 30,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9769,
+      "couverture": 0.337,
+      "risque": 0.0,
+      "retenus": 31,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.3913,
+      "risque": 0.0,
+      "retenus": 36,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.4239,
+      "risque": 0.0,
+      "retenus": 39,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9704,
+      "couverture": 0.4457,
+      "risque": 0.0,
+      "retenus": 41,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9673,
+      "couverture": 0.4565,
+      "risque": 0.0,
+      "retenus": 42,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.4891,
+      "risque": 0.0,
+      "retenus": 45,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.5,
+      "risque": 0.0,
+      "retenus": 46,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.5109,
+      "risque": 0.0,
+      "retenus": 47,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5217,
+      "risque": 0.0,
+      "retenus": 48,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.5435,
+      "risque": 0.0,
+      "retenus": 50,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9515,
+      "couverture": 0.5543,
+      "risque": 0.0,
+      "retenus": 51,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.5978,
+      "risque": 0.0,
+      "retenus": 55,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6087,
+      "risque": 0.0,
+      "retenus": 56,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.947,
+      "couverture": 0.6196,
+      "risque": 0.0,
+      "retenus": 57,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9467,
+      "couverture": 0.6304,
+      "risque": 0.0,
+      "retenus": 58,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9455,
+      "couverture": 0.6413,
+      "risque": 0.0,
+      "retenus": 59,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.6522,
+      "risque": 0.0,
+      "retenus": 60,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9417,
+      "couverture": 0.663,
+      "risque": 0.0,
+      "retenus": 61,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.6848,
+      "risque": 0.0,
+      "retenus": 63,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9278,
+      "couverture": 0.6957,
+      "risque": 0.0,
+      "retenus": 64,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9238,
+      "couverture": 0.7065,
+      "risque": 0.0,
+      "retenus": 65,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7174,
+      "risque": 0.0,
+      "retenus": 66,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.919,
+      "couverture": 0.7283,
+      "risque": 0.0,
+      "retenus": 67,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9143,
+      "couverture": 0.7391,
+      "risque": 0.0,
+      "retenus": 68,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9074,
+      "couverture": 0.75,
+      "risque": 0.0,
+      "retenus": 69,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9042,
+      "couverture": 0.7609,
+      "risque": 0.0,
+      "retenus": 70,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9013,
+      "couverture": 0.7717,
+      "risque": 0.0,
+      "retenus": 71,
+      "pertes": 0
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.7717,
+     "risque": 0.0,
+     "retenus": 71,
+     "pertes": 0
+    },
+    "c": null
+   },
+   "non_sure": {
+    "points": [
+     {
+      "seuil": 0.9931,
+      "couverture": 0.0109,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9905,
+      "couverture": 0.0217,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9895,
+      "couverture": 0.0326,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9889,
+      "couverture": 0.0435,
+      "risque": 0.0,
+      "retenus": 4,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.0652,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9854,
+      "couverture": 0.0761,
+      "risque": 0.0,
+      "retenus": 7,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.087,
+      "risque": 0.0,
+      "retenus": 8,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9844,
+      "couverture": 0.0978,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.1304,
+      "risque": 0.0,
+      "retenus": 12,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.163,
+      "risque": 0.0,
+      "retenus": 15,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.2174,
+      "risque": 0.0,
+      "retenus": 20,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.2283,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.2391,
+      "risque": 0.0,
+      "retenus": 22,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.3261,
+      "risque": 0.0,
+      "retenus": 30,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9769,
+      "couverture": 0.337,
+      "risque": 0.0,
+      "retenus": 31,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.3913,
+      "risque": 0.0,
+      "retenus": 36,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.4239,
+      "risque": 0.0,
+      "retenus": 39,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9704,
+      "couverture": 0.4457,
+      "risque": 0.0,
+      "retenus": 41,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9673,
+      "couverture": 0.4565,
+      "risque": 0.0,
+      "retenus": 42,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.4891,
+      "risque": 0.0222,
+      "retenus": 45,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.5,
+      "risque": 0.0217,
+      "retenus": 46,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.5109,
+      "risque": 0.0213,
+      "retenus": 47,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5217,
+      "risque": 0.0417,
+      "retenus": 48,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.5435,
+      "risque": 0.04,
+      "retenus": 50,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9515,
+      "couverture": 0.5543,
+      "risque": 0.0392,
+      "retenus": 51,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.5978,
+      "risque": 0.0727,
+      "retenus": 55,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6087,
+      "risque": 0.0714,
+      "retenus": 56,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.947,
+      "couverture": 0.6196,
+      "risque": 0.0702,
+      "retenus": 57,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9467,
+      "couverture": 0.6304,
+      "risque": 0.069,
+      "retenus": 58,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9455,
+      "couverture": 0.6413,
+      "risque": 0.0678,
+      "retenus": 59,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.6522,
+      "risque": 0.0833,
+      "retenus": 60,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.9417,
+      "couverture": 0.663,
+      "risque": 0.082,
+      "retenus": 61,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.6848,
+      "risque": 0.0952,
+      "retenus": 63,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.9278,
+      "couverture": 0.6957,
+      "risque": 0.0938,
+      "retenus": 64,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.9238,
+      "couverture": 0.7065,
+      "risque": 0.0923,
+      "retenus": 65,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7174,
+      "risque": 0.0909,
+      "retenus": 66,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.919,
+      "couverture": 0.7283,
+      "risque": 0.0896,
+      "retenus": 67,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.9143,
+      "couverture": 0.7391,
+      "risque": 0.0882,
+      "retenus": 68,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.9074,
+      "couverture": 0.75,
+      "risque": 0.087,
+      "retenus": 69,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.9042,
+      "couverture": 0.7609,
+      "risque": 0.0857,
+      "retenus": 70,
+      "pertes": 6
+     },
+     {
+      "seuil": 0.9013,
+      "couverture": 0.7717,
+      "risque": 0.0845,
+      "retenus": 71,
+      "pertes": 6
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.7717,
+     "risque": 0.0845,
+     "retenus": 71,
+     "pertes": 6
+    },
+    "c": null
+   }
+  },
+  "commune": {
+   "n_cas": 57,
+   "calibration": {
+    "fuzzy": "desactive",
+    "n_cas": 147,
+    "n_retenables": 132,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
+   },
+   "dangereuse": {
+    "points": [
+     {
+      "seuil": 0.9846,
+      "couverture": 0.0175,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.0351,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.0702,
+      "risque": 0.0,
+      "retenus": 4,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9806,
+      "couverture": 0.0877,
+      "risque": 0.0,
+      "retenus": 5,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.1404,
+      "risque": 0.0,
+      "retenus": 8,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.1579,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.2456,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9767,
+      "couverture": 0.2632,
+      "risque": 0.0,
+      "retenus": 15,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.2807,
+      "risque": 0.0,
+      "retenus": 16,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9733,
+      "couverture": 0.2982,
+      "risque": 0.0,
+      "retenus": 17,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.3333,
+      "risque": 0.0,
+      "retenus": 19,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9708,
+      "couverture": 0.3509,
+      "risque": 0.0,
+      "retenus": 20,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9704,
+      "couverture": 0.3684,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.4211,
+      "risque": 0.0,
+      "retenus": 24,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.4386,
+      "risque": 0.0,
+      "retenus": 25,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.4561,
+      "risque": 0.0,
+      "retenus": 26,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.4737,
+      "risque": 0.0,
+      "retenus": 27,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.5614,
+      "risque": 0.0,
+      "retenus": 32,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9528,
+      "couverture": 0.5789,
+      "risque": 0.0,
+      "retenus": 33,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.614,
+      "risque": 0.0286,
+      "retenus": 35,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6316,
+      "risque": 0.0278,
+      "retenus": 36,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9487,
+      "couverture": 0.6491,
+      "risque": 0.027,
+      "retenus": 37,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.6667,
+      "risque": 0.0263,
+      "retenus": 38,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9417,
+      "couverture": 0.6842,
+      "risque": 0.0256,
+      "retenus": 39,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.7193,
+      "risque": 0.0244,
+      "retenus": 41,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9237,
+      "couverture": 0.7368,
+      "risque": 0.0238,
+      "retenus": 42,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7895,
+      "risque": 0.0222,
+      "retenus": 45,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9175,
+      "couverture": 0.807,
+      "risque": 0.0217,
+      "retenus": 46,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9067,
+      "couverture": 0.8246,
+      "risque": 0.0213,
+      "retenus": 47,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.8788,
+      "couverture": 0.8421,
+      "risque": 0.0208,
+      "retenus": 48,
+      "pertes": 1
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.8246,
+     "risque": 0.0213,
+     "retenus": 47,
+     "pertes": 1
+    },
+    "c": null
+   },
+   "non_sure": {
+    "points": [
+     {
+      "seuil": 0.9846,
+      "couverture": 0.0175,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.0351,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.0702,
+      "risque": 0.0,
+      "retenus": 4,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9806,
+      "couverture": 0.0877,
+      "risque": 0.0,
+      "retenus": 5,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.1404,
+      "risque": 0.0,
+      "retenus": 8,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.1579,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.2456,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9767,
+      "couverture": 0.2632,
+      "risque": 0.0,
+      "retenus": 15,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.2807,
+      "risque": 0.0,
+      "retenus": 16,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9733,
+      "couverture": 0.2982,
+      "risque": 0.0,
+      "retenus": 17,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.3333,
+      "risque": 0.0526,
+      "retenus": 19,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9708,
+      "couverture": 0.3509,
+      "risque": 0.05,
+      "retenus": 20,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9704,
+      "couverture": 0.3684,
+      "risque": 0.0476,
+      "retenus": 21,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.4211,
+      "risque": 0.0417,
+      "retenus": 24,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.4386,
+      "risque": 0.04,
+      "retenus": 25,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.4561,
+      "risque": 0.0385,
+      "retenus": 26,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.4737,
+      "risque": 0.037,
+      "retenus": 27,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.5614,
+      "risque": 0.0312,
+      "retenus": 32,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9528,
+      "couverture": 0.5789,
+      "risque": 0.0303,
+      "retenus": 33,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.614,
+      "risque": 0.0571,
+      "retenus": 35,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.6316,
+      "risque": 0.0556,
+      "retenus": 36,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9487,
+      "couverture": 0.6491,
+      "risque": 0.0541,
+      "retenus": 37,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.6667,
+      "risque": 0.0526,
+      "retenus": 38,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9417,
+      "couverture": 0.6842,
+      "risque": 0.0513,
+      "retenus": 39,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.7193,
+      "risque": 0.0732,
+      "retenus": 41,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9237,
+      "couverture": 0.7368,
+      "risque": 0.0714,
+      "retenus": 42,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7895,
+      "risque": 0.0667,
+      "retenus": 45,
+      "pertes": 3
+     },
+     {
+      "seuil": 0.9175,
+      "couverture": 0.807,
+      "risque": 0.087,
+      "retenus": 46,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9067,
+      "couverture": 0.8246,
+      "risque": 0.1064,
+      "retenus": 47,
+      "pertes": 5
+     },
+     {
+      "seuil": 0.8788,
+      "couverture": 0.8421,
+      "risque": 0.125,
+      "retenus": 48,
+      "pertes": 6
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.8246,
+     "risque": 0.1064,
+     "retenus": 47,
+     "pertes": 5
+    },
+    "c": null
+   }
+  },
+  "categorie_piece": {
+   "n_cas": 49,
+   "calibration": {
+    "fuzzy": "desactive",
+    "n_cas": 102,
+    "n_retenables": 95,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "95 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "dangereuse": {
+    "points": [
+     {
+      "seuil": 0.9947,
+      "couverture": 0.0204,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9923,
+      "couverture": 0.0408,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.992,
+      "couverture": 0.0612,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9905,
+      "couverture": 0.0816,
+      "risque": 0.0,
+      "retenus": 4,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9889,
+      "couverture": 0.1224,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.1429,
+      "risque": 0.0,
+      "retenus": 7,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9867,
+      "couverture": 0.1837,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.986,
+      "couverture": 0.2041,
+      "risque": 0.0,
+      "retenus": 10,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.2245,
+      "risque": 0.0,
+      "retenus": 11,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9854,
+      "couverture": 0.2449,
+      "risque": 0.0,
+      "retenus": 12,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.2653,
+      "risque": 0.0,
+      "retenus": 13,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.2857,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.3265,
+      "risque": 0.0,
+      "retenus": 16,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9821,
+      "couverture": 0.3469,
+      "risque": 0.0,
+      "retenus": 17,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.3673,
+      "risque": 0.0,
+      "retenus": 18,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.4082,
+      "risque": 0.0,
+      "retenus": 20,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9797,
+      "couverture": 0.4286,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9795,
+      "couverture": 0.449,
+      "risque": 0.0,
+      "retenus": 22,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.4694,
+      "risque": 0.0,
+      "retenus": 23,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9787,
+      "couverture": 0.4898,
+      "risque": 0.0,
+      "retenus": 24,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9786,
+      "couverture": 0.5102,
+      "risque": 0.0,
+      "retenus": 25,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.5306,
+      "risque": 0.0,
+      "retenus": 26,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.551,
+      "risque": 0.0,
+      "retenus": 27,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.5714,
+      "risque": 0.0,
+      "retenus": 28,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5918,
+      "risque": 0.0,
+      "retenus": 29,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.6122,
+      "risque": 0.0,
+      "retenus": 30,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.6327,
+      "risque": 0.0,
+      "retenus": 31,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.6531,
+      "risque": 0.0,
+      "retenus": 32,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9561,
+      "couverture": 0.6735,
+      "risque": 0.0,
+      "retenus": 33,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.6939,
+      "risque": 0.0,
+      "retenus": 34,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.955,
+      "couverture": 0.7143,
+      "risque": 0.0,
+      "retenus": 35,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9549,
+      "couverture": 0.7347,
+      "risque": 0.0,
+      "retenus": 36,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9528,
+      "couverture": 0.7551,
+      "risque": 0.0,
+      "retenus": 37,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9507,
+      "couverture": 0.7959,
+      "risque": 0.0,
+      "retenus": 39,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9483,
+      "couverture": 0.8163,
+      "risque": 0.0,
+      "retenus": 40,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9448,
+      "couverture": 0.8367,
+      "risque": 0.0,
+      "retenus": 41,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9441,
+      "couverture": 0.8571,
+      "risque": 0.0,
+      "retenus": 42,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9425,
+      "couverture": 0.8776,
+      "risque": 0.0,
+      "retenus": 43,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9372,
+      "couverture": 0.898,
+      "risque": 0.0,
+      "retenus": 44,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9346,
+      "couverture": 0.9184,
+      "risque": 0.0,
+      "retenus": 45,
+      "pertes": 0
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.9184,
+     "risque": 0.0,
+     "retenus": 45,
+     "pertes": 0
+    },
+    "c": null
+   },
+   "non_sure": {
+    "points": [
+     {
+      "seuil": 0.9947,
+      "couverture": 0.0204,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9923,
+      "couverture": 0.0408,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.992,
+      "couverture": 0.0612,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9905,
+      "couverture": 0.0816,
+      "risque": 0.0,
+      "retenus": 4,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9889,
+      "couverture": 0.1224,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.1429,
+      "risque": 0.0,
+      "retenus": 7,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9867,
+      "couverture": 0.1837,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.986,
+      "couverture": 0.2041,
+      "risque": 0.0,
+      "retenus": 10,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.2245,
+      "risque": 0.0,
+      "retenus": 11,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9854,
+      "couverture": 0.2449,
+      "risque": 0.0,
+      "retenus": 12,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.2653,
+      "risque": 0.0,
+      "retenus": 13,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.2857,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.3265,
+      "risque": 0.0,
+      "retenus": 16,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9821,
+      "couverture": 0.3469,
+      "risque": 0.0,
+      "retenus": 17,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9818,
+      "couverture": 0.3673,
+      "risque": 0.0,
+      "retenus": 18,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.4082,
+      "risque": 0.0,
+      "retenus": 20,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9797,
+      "couverture": 0.4286,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9795,
+      "couverture": 0.449,
+      "risque": 0.0,
+      "retenus": 22,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.4694,
+      "risque": 0.0,
+      "retenus": 23,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9787,
+      "couverture": 0.4898,
+      "risque": 0.0,
+      "retenus": 24,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9786,
+      "couverture": 0.5102,
+      "risque": 0.0,
+      "retenus": 25,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9784,
+      "couverture": 0.5306,
+      "risque": 0.0,
+      "retenus": 26,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.551,
+      "risque": 0.0,
+      "retenus": 27,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.5714,
+      "risque": 0.0,
+      "retenus": 28,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5918,
+      "risque": 0.0,
+      "retenus": 29,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.6122,
+      "risque": 0.0,
+      "retenus": 30,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9636,
+      "couverture": 0.6327,
+      "risque": 0.0,
+      "retenus": 31,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.6531,
+      "risque": 0.0,
+      "retenus": 32,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9561,
+      "couverture": 0.6735,
+      "risque": 0.0,
+      "retenus": 33,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.6939,
+      "risque": 0.0,
+      "retenus": 34,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.955,
+      "couverture": 0.7143,
+      "risque": 0.0,
+      "retenus": 35,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9549,
+      "couverture": 0.7347,
+      "risque": 0.0,
+      "retenus": 36,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9528,
+      "couverture": 0.7551,
+      "risque": 0.0,
+      "retenus": 37,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9507,
+      "couverture": 0.7959,
+      "risque": 0.0,
+      "retenus": 39,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9483,
+      "couverture": 0.8163,
+      "risque": 0.0,
+      "retenus": 40,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9448,
+      "couverture": 0.8367,
+      "risque": 0.0,
+      "retenus": 41,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9441,
+      "couverture": 0.8571,
+      "risque": 0.0,
+      "retenus": 42,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9425,
+      "couverture": 0.8776,
+      "risque": 0.0233,
+      "retenus": 43,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9372,
+      "couverture": 0.898,
+      "risque": 0.0227,
+      "retenus": 44,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9346,
+      "couverture": 0.9184,
+      "risque": 0.0222,
+      "retenus": 45,
+      "pertes": 1
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.9184,
+     "risque": 0.0222,
+     "retenus": 45,
+     "pertes": 1
+    },
+    "c": null
+   }
+  },
+  "mixte": {
+   "n_cas": 41,
+   "calibration": {
+    "fuzzy": "desactive",
+    "n_cas": 149,
+    "n_retenables": 127,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
+   },
+   "dangereuse": {
+    "points": [
+     {
+      "seuil": 0.9889,
+      "couverture": 0.0244,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.0488,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.0732,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.1463,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.1707,
+      "risque": 0.0,
+      "retenus": 7,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.2195,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.3415,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9741,
+      "couverture": 0.3659,
+      "risque": 0.0,
+      "retenus": 15,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.439,
+      "risque": 0.0,
+      "retenus": 18,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9708,
+      "couverture": 0.4634,
+      "risque": 0.0,
+      "retenus": 19,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5122,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.5366,
+      "risque": 0.0,
+      "retenus": 22,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9618,
+      "couverture": 0.5854,
+      "risque": 0.0,
+      "retenus": 24,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.6341,
+      "risque": 0.0,
+      "retenus": 26,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.6585,
+      "risque": 0.0,
+      "retenus": 27,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.7073,
+      "risque": 0.0,
+      "retenus": 29,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9515,
+      "couverture": 0.7317,
+      "risque": 0.0,
+      "retenus": 30,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9513,
+      "couverture": 0.7561,
+      "risque": 0.0,
+      "retenus": 31,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.7805,
+      "risque": 0.0,
+      "retenus": 32,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.8293,
+      "risque": 0.0,
+      "retenus": 34,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9143,
+      "couverture": 0.878,
+      "risque": 0.0,
+      "retenus": 36,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9074,
+      "couverture": 0.9024,
+      "risque": 0.0,
+      "retenus": 37,
+      "pertes": 0
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.9024,
+     "risque": 0.0,
+     "retenus": 37,
+     "pertes": 0
+    },
+    "c": null
+   },
+   "non_sure": {
+    "points": [
+     {
+      "seuil": 0.9889,
+      "couverture": 0.0244,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.0488,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.0732,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.1463,
+      "risque": 0.0,
+      "retenus": 6,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.1707,
+      "risque": 0.0,
+      "retenus": 7,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9778,
+      "couverture": 0.2195,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.975,
+      "couverture": 0.3415,
+      "risque": 0.0714,
+      "retenus": 14,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9741,
+      "couverture": 0.3659,
+      "risque": 0.0667,
+      "retenus": 15,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9714,
+      "couverture": 0.439,
+      "risque": 0.0556,
+      "retenus": 18,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9708,
+      "couverture": 0.4634,
+      "risque": 0.0526,
+      "retenus": 19,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5122,
+      "risque": 0.0476,
+      "retenus": 21,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9619,
+      "couverture": 0.5366,
+      "risque": 0.0455,
+      "retenus": 22,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9618,
+      "couverture": 0.5854,
+      "risque": 0.0417,
+      "retenus": 24,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.6341,
+      "risque": 0.0385,
+      "retenus": 26,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.6585,
+      "risque": 0.037,
+      "retenus": 27,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.7073,
+      "risque": 0.0345,
+      "retenus": 29,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9515,
+      "couverture": 0.7317,
+      "risque": 0.0333,
+      "retenus": 30,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9513,
+      "couverture": 0.7561,
+      "risque": 0.0323,
+      "retenus": 31,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.7805,
+      "risque": 0.0312,
+      "retenus": 32,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9429,
+      "couverture": 0.8293,
+      "risque": 0.0588,
+      "retenus": 34,
+      "pertes": 2
+     },
+     {
+      "seuil": 0.9143,
+      "couverture": 0.878,
+      "risque": 0.1111,
+      "retenus": 36,
+      "pertes": 4
+     },
+     {
+      "seuil": 0.9074,
+      "couverture": 0.9024,
+      "risque": 0.1351,
+      "retenus": 37,
+      "pertes": 5
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.9024,
+     "risque": 0.1351,
+     "retenus": 37,
+     "pertes": 5
+    },
+    "c": null
+   }
+  },
+  "modele_vehicule": {
+   "n_cas": 38,
+   "calibration": {
+    "fuzzy": "desactive",
+    "n_cas": 92,
+    "n_retenables": 76,
+    "empreinte_catalogue": "9af7156dd14d5dbc",
+    "raison": "76 cas retenables, il en faut au moins 97 pour r* = 0.05"
+   },
+   "dangereuse": {
+    "points": [
+     {
+      "seuil": 0.9931,
+      "couverture": 0.0263,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9923,
+      "couverture": 0.0526,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.0789,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9867,
+      "couverture": 0.2368,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9863,
+      "couverture": 0.2632,
+      "risque": 0.0,
+      "retenus": 10,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.3158,
+      "risque": 0.0,
+      "retenus": 12,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.3684,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.4211,
+      "risque": 0.0,
+      "retenus": 16,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9806,
+      "couverture": 0.4474,
+      "risque": 0.0,
+      "retenus": 17,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.4737,
+      "risque": 0.0,
+      "retenus": 18,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.5,
+      "risque": 0.0,
+      "retenus": 19,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9771,
+      "couverture": 0.5263,
+      "risque": 0.0,
+      "retenus": 20,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5526,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5789,
+      "risque": 0.0,
+      "retenus": 22,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.6053,
+      "risque": 0.0,
+      "retenus": 23,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9583,
+      "couverture": 0.6316,
+      "risque": 0.0,
+      "retenus": 24,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.6579,
+      "risque": 0.0,
+      "retenus": 25,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9515,
+      "couverture": 0.6842,
+      "risque": 0.0,
+      "retenus": 26,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.7105,
+      "risque": 0.0,
+      "retenus": 27,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.7368,
+      "risque": 0.0,
+      "retenus": 28,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7632,
+      "risque": 0.0,
+      "retenus": 29,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9155,
+      "couverture": 0.7895,
+      "risque": 0.0,
+      "retenus": 30,
+      "pertes": 0
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.7895,
+     "risque": 0.0,
+     "retenus": 30,
+     "pertes": 0
+    },
+    "c": null
+   },
+   "non_sure": {
+    "points": [
+     {
+      "seuil": 0.9931,
+      "couverture": 0.0263,
+      "risque": 0.0,
+      "retenus": 1,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9923,
+      "couverture": 0.0526,
+      "risque": 0.0,
+      "retenus": 2,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9882,
+      "couverture": 0.0789,
+      "risque": 0.0,
+      "retenus": 3,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9867,
+      "couverture": 0.2368,
+      "risque": 0.0,
+      "retenus": 9,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9863,
+      "couverture": 0.2632,
+      "risque": 0.0,
+      "retenus": 10,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9857,
+      "couverture": 0.3158,
+      "risque": 0.0,
+      "retenus": 12,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9846,
+      "couverture": 0.3684,
+      "risque": 0.0,
+      "retenus": 14,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9833,
+      "couverture": 0.4211,
+      "risque": 0.0,
+      "retenus": 16,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9806,
+      "couverture": 0.4474,
+      "risque": 0.0,
+      "retenus": 17,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.98,
+      "couverture": 0.4737,
+      "risque": 0.0,
+      "retenus": 18,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9788,
+      "couverture": 0.5,
+      "risque": 0.0,
+      "retenus": 19,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9771,
+      "couverture": 0.5263,
+      "risque": 0.0,
+      "retenus": 20,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9667,
+      "couverture": 0.5526,
+      "risque": 0.0,
+      "retenus": 21,
+      "pertes": 0
+     },
+     {
+      "seuil": 0.9611,
+      "couverture": 0.5789,
+      "risque": 0.0455,
+      "retenus": 22,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.96,
+      "couverture": 0.6053,
+      "risque": 0.0435,
+      "retenus": 23,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9583,
+      "couverture": 0.6316,
+      "risque": 0.0417,
+      "retenus": 24,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9556,
+      "couverture": 0.6579,
+      "risque": 0.04,
+      "retenus": 25,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9515,
+      "couverture": 0.6842,
+      "risque": 0.0385,
+      "retenus": 26,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.95,
+      "couverture": 0.7105,
+      "risque": 0.037,
+      "retenus": 27,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9333,
+      "couverture": 0.7368,
+      "risque": 0.0357,
+      "retenus": 28,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9222,
+      "couverture": 0.7632,
+      "risque": 0.0345,
+      "retenus": 29,
+      "pertes": 1
+     },
+     {
+      "seuil": 0.9155,
+      "couverture": 0.7895,
+      "risque": 0.0333,
+      "retenus": 30,
+      "pertes": 1
+     }
+    ],
+    "b": {
+     "seuil": 0.88,
+     "couverture": 0.7895,
+     "risque": 0.0333,
+     "retenus": 30,
+     "pertes": 1
+    },
+    "c": null
+   }
+  }
+ }
+}

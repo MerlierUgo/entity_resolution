@@ -9,6 +9,7 @@ elles sont importées, jamais réimplémentées.
 """
 from __future__ import annotations
 
+import hashlib
 import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -23,6 +24,20 @@ from common import CAT, console_utf8, normalize, read_csv  # noqa: E402, F401  (
 from rules import Rules  # noqa: E402
 
 TIERS = frozenset({"1", "2", "3"})
+# Types d'alias qui sont des codes : jamais comparés par correspondance approchée (R-RES-03).
+ALIAS_CODES = frozenset({"code", "code_client", "code_format_point", "code_iso2", "code_iso3",
+                         "code_postal_et_nom", "reference_fabricant", "reference_mecanova",
+                         "reference_sans_tiret"})
+FICHIERS = ("entities.csv", "aliases.csv", "relations.csv", "negatifs.csv")
+
+
+def empreinte(dossier: Path = CAT, tiers=TIERS) -> str:
+    """Empreinte du catalogue chargé : SHA-256 des fichiers lus par le moteur et des tiers retenus."""
+    h = hashlib.sha256()
+    for f in FICHIERS:
+        h.update(f.encode() + b"\0" + (dossier / f).read_bytes() + b"\0")
+    h.update(",".join(sorted(tiers)).encode())
+    return h.hexdigest()[:16]
 
 
 def cle_triee(norm: str) -> str:
@@ -40,6 +55,8 @@ class Catalogue:
     negatifs: dict[str, tuple[str, str]]  # terme_norm → (terme, ressemble_a)
     regles: Rules
     tiers: frozenset[str] = field(default=TIERS)
+    noms: dict[str, frozenset[str]] = field(default_factory=dict)  # noms comparables (hors codes) → entités
+    empreinte: str = ""
 
     @classmethod
     def charger(cls, dossier: Path = CAT, tiers=TIERS) -> "Catalogue":
@@ -52,7 +69,7 @@ class Catalogue:
         etype = {e["entity_id"]: e["entity_type"] for e in ents}
         label = {e["entity_id"]: e["label"] for e in ents}
 
-        idx = defaultdict(set)
+        idx, noms = defaultdict(set), defaultdict(set)
         for a in read_csv(dossier / "aliases.csv"):
             if a["tier"] not in tiers or not a["alias_norm"]:
                 continue
@@ -60,6 +77,8 @@ class Catalogue:
                 raise ValueError(f"aliases.csv : l'alias « {a['alias']} » renvoie à l'entité inconnue "
                                  f"{a['entity_id']} ; reconstruire le catalogue (build/build_merge.py).")
             idx[a["alias_norm"]].add(a["entity_id"])
+            if a["alias_type"] not in ALIAS_CODES:
+                noms[a["alias_norm"]].add(a["entity_id"])
         trie = defaultdict(set)
         for k, v in idx.items():
             trie[cle_triee(k)] |= v
@@ -72,7 +91,9 @@ class Catalogue:
         return cls(etype=etype, label=label,
                    index={k: frozenset(v) for k, v in idx.items()},
                    index_trie={k: frozenset(v) for k, v in trie.items()},
-                   negatifs=neg, regles=Rules(dossier), tiers=tiers)
+                   negatifs=neg, regles=Rules(dossier), tiers=tiers,
+                   noms={k: frozenset(v) for k, v in noms.items()},
+                   empreinte=empreinte(dossier, tiers))
 
     @staticmethod
     def normaliser(texte: str) -> str:
