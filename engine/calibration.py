@@ -141,7 +141,9 @@ def perte(cas: dict, statut: str, ids, mode: str = "dangereuse") -> int:
 
 def collecter(cat: Catalogue, cas: list[dict], ecart: float = ECART, absents: bool = False,
               resolveur: ResolveurApproche | None = None, mode: str = "dangereuse") -> list[dict]:
-    """Un point par cas qui atteint l'étape approchée : κ, type, retenable (garde-fous), perte."""
+    """Un point par cas qui atteint l'étape approchée : κ, type, retenable (garde-fous), perte.
+    On passe chauqe cas dans le moteur et note le jaro winkler score
+    """
     r = resolveur or ResolveurApproche(cat, SeuilFixe(1e-9, ecart))
     out = []
     for c in cas:
@@ -158,6 +160,7 @@ def collecter(cat: Catalogue, cas: list[dict], ecart: float = ECART, absents: bo
 
 
 def calibrer(points: list[dict], cible: float, delta: float, ecart: float, empreinte: str) -> dict:
+    """Selection d'un seuil par type avec SGR ou desactive fuzzy"""
     par_type = defaultdict(list)
     for p in points:
         par_type[p["type"]].append(p)

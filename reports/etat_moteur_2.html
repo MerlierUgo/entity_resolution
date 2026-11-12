@@ -1,0 +1,969 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>État du moteur Mécanova</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Mise en page : la fiche de contrôle d'atelier du bilan catalogue, appliquée au moteur. Verdict, mesures, problèmes, plan. */
+:root {
+  --bg: #f3f5f6; --surface: #ffffff; --sunken: #e8ecee;
+  --ink: #15202a; --ink-2: #48555f; --ink-3: #6a7782; --line: #d5dce0; --base: #b9c3ca;
+  --accent: #1c5cab;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --good: #0b7a3e; --good-bg: #dcf1e3; --good-fill: #0ca30c;
+  --warn: #8a5a00; --warn-bg: #fbedc9;
+  --crit: #b3292b; --crit-bg: #fadfde; --crit-fill: #d03b3b;
+  --display: "Barlow Semi Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12181d; --surface: #1a2228; --sunken: #232d34;
+  --ink: #eef2f4; --ink-2: #b7c2ca; --ink-3: #93a0aa; --line: #33404a; --base: #46535d;
+  --accent: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --good: #7fdc9f; --good-bg: #17382a; --good-fill: #0ca30c;
+  --warn: #f3c969; --warn-bg: #3b2f12;
+  --crit: #f5a3a1; --crit-bg: #43201f; --crit-fill: #e66767;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #12181d; --surface: #1a2228; --sunken: #232d34;
+  --ink: #eef2f4; --ink-2: #b7c2ca; --ink-3: #93a0aa; --line: #33404a; --base: #46535d;
+  --accent: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --good: #7fdc9f; --good-bg: #17382a; --good-fill: #0ca30c;
+  --warn: #f3c969; --warn-bg: #3b2f12;
+  --crit: #f5a3a1; --crit-bg: #43201f; --crit-fill: #e66767;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--body); }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 36px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 52px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.12; }
+h1 { font-size: clamp(34px, 5.4vw, 54px); font-weight: 700; }
+h2 { font-size: clamp(26px, 3.2vw, 34px); font-weight: 600; }
+h3 { font-size: 19px; font-weight: 600; }
+p { margin: 0; }
+code { font-family: var(--mono); font-size: .86em; background: var(--sunken); padding: .05em .3em; border-radius: 3px; overflow-wrap: anywhere; }
+.eyebrow { font: 500 12px/1.3 var(--mono); letter-spacing: .05em; color: var(--ink-3); text-transform: uppercase; }
+.lede { font-size: 17px; max-width: 70ch; color: var(--ink-2); }
+section { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; min-width: 0; }
+.head { display: grid; gap: 8px; }
+.head p { max-width: 74ch; color: var(--ink-2); }
+header.top { display: grid; gap: 14px; }
+
+.board { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.post { display: grid; grid-template-columns: minmax(170px, 1.2fr) 118px minmax(0, 3fr); gap: 16px; align-items: baseline; padding: 12px 18px; border-top: 1px solid var(--line); }
+.post:first-child { border-top: 0; }
+.post strong { font-family: var(--display); font-size: 18px; font-weight: 600; }
+.post div:last-child { color: var(--ink-2); font-size: 14px; min-width: 0; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--mono); padding: 5px 8px; border-radius: 3px; white-space: nowrap; width: fit-content; }
+.pill.ok { color: var(--good); background: var(--good-bg); }
+.pill.mid { color: var(--warn); background: var(--warn-bg); }
+.pill.no { color: var(--crit); background: var(--crit-bg); }
+.pill.todo { color: var(--ink-2); background: var(--sunken); }
+.pill.ok::before { content: "✓"; }
+.pill.mid::before { content: "◐"; }
+.pill.no::before { content: "✕"; }
+.pill.todo::before { content: "○"; }
+
+.stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.stat { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+.stat b { font: 600 clamp(26px, 3vw, 36px)/1.05 var(--display); }
+.stat b.good { color: var(--good); }
+.stat span { font-size: 13px; color: var(--ink-2); }
+
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.panel { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.panel > p, .cap { font-size: 13.5px; color: var(--ink-2); max-width: 78ch; }
+
+/* Barres simples (une valeur par ligne, un axe par graphique) */
+.bars { display: grid; gap: 6px; }
+.bar { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) 70px; gap: 10px; align-items: center; font-size: 13.5px; padding: 2px 0; border-radius: 3px; }
+.bar:hover, .row:hover { background: var(--sunken); }
+.bar .track { height: 16px; display: flex; align-items: center; border-left: 1px solid var(--base); }
+.bar .fill { height: 14px; min-width: 2px; background: var(--s1); border-radius: 0 4px 4px 0; }
+.bar .fill.muted { background: var(--base); }
+.bar .fill.crit { background: var(--crit-fill); }
+.bar .val { text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.bar.me .lab { font-weight: 600; }
+.bar .lab small { display: block; font-size: 11.5px; color: var(--ink-3); line-height: 1.2; }
+.axis { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) 70px; gap: 10px; font: 400 11px var(--mono); color: var(--ink-3); }
+.axis div:nth-child(2) { display: flex; justify-content: space-between; }
+
+/* Barres empilées par catégorie */
+.rows { display: grid; gap: 4px; }
+.row { display: grid; grid-template-columns: minmax(150px, 210px) minmax(0, 1fr) 52px; gap: 10px; align-items: center; font-size: 13px; padding: 2px 0; border-radius: 3px; }
+.row .lab b { font: 500 12px var(--mono); color: var(--ink-3); margin-right: 6px; }
+.row .val { text-align: right; font: 400 12px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.seg { display: flex; gap: 2px; height: 16px; }
+.seg i { display: block; height: 100%; min-width: 2px; }
+.seg i:first-child { border-radius: 4px 0 0 4px; }
+.seg i:last-child { border-radius: 0 4px 4px 0; }
+.seg i:only-child { border-radius: 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th { font: 500 11.5px/1.3 var(--mono); text-align: left; color: var(--ink-3); padding: 9px 12px; background: var(--sunken); white-space: nowrap; }
+td { padding: 7px 12px; border-top: 1px solid var(--line); vertical-align: top; }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.r.z { color: var(--good); }
+td.r.bad { color: var(--crit); font-weight: 600; }
+tr.tot td { font-weight: 600; background: var(--sunken); }
+details summary { cursor: pointer; font-size: 14px; color: var(--accent); width: fit-content; }
+details[open] summary { margin-bottom: 10px; }
+
+.done { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0; }
+.done div { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.done dt { font-weight: 600; }
+.done dd { margin: 0; color: var(--ink-2); min-width: 0; }
+
+.issues { display: grid; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.issue { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 16px; padding: 14px 18px; border-top: 1px solid var(--line); }
+.issue:first-child { border-top: 0; }
+.issue h3 { font-size: 17px; margin-bottom: 4px; }
+.issue p { font-size: 14px; color: var(--ink-2); max-width: 80ch; }
+.issue p + p { margin-top: 6px; }
+
+ol.plan { list-style: none; margin: 0; padding: 0; counter-reset: st; display: grid; }
+ol.plan li { counter-increment: st; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 15px 0; border-top: 1px solid var(--line); }
+ol.plan li::before { content: counter(st); font: 600 26px/1 var(--display); color: var(--accent); }
+ol.plan h3 { margin-bottom: 4px; }
+ol.plan p { max-width: 80ch; font-size: 14.5px; color: var(--ink-2); }
+.tag { font: 500 11.5px var(--mono); color: var(--ink-3); }
+.aside { background: var(--sunken); border-radius: 6px; padding: 15px 18px; display: grid; gap: 7px; font-size: 14px; color: var(--ink-2); }
+.aside h3 { color: var(--ink); }
+footer { font-size: 13px; color: var(--ink-3); display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 16px; max-width: 90ch; }
+
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg); padding: 6px 9px; border-radius: 4px; font: 400 12.5px/1.4 var(--body); max-width: 280px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 860px) {
+  .two, .done { grid-template-columns: minmax(0, 1fr); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:last-child { grid-column: 1 / -1; }
+  .post { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  .post div:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .bar, .axis { grid-template-columns: 104px minmax(0, 1fr) 56px; }
+  .row { grid-template-columns: 112px minmax(0, 1fr) 44px; }
+  .row .lab span { display: none; }
+  .done div, .issue { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+}
+</style>
+<style>
+.cause .fill { background: var(--s4); }
+.cause .lab b { font: 500 12px var(--mono); color: var(--ink-3); margin-right: 6px; }
+td.mono { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+td .arrow { color: var(--ink-3); }
+.why { display: grid; gap: 14px; }
+.why p { font-size: 14px; color: var(--ink-2); max-width: 80ch; }
+.dia { margin: 0; display: grid; gap: 10px; }
+.dia-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+.dia svg { display: block; width: 100%; min-width: 640px; height: auto; color: var(--ink); font-family: var(--body); }
+.dia figcaption { font-size: 13.5px; color: var(--ink-2); max-width: 80ch; }
+.dia .ar line, .dia .ar polyline { stroke: currentColor; stroke-width: 1.4; fill: none; marker-end: url(#fl); }
+.dia .arf { stroke: var(--ink-3); stroke-width: 1.4; stroke-dasharray: 4 3; marker-end: url(#flf); }
+.dia .lab text { font: 600 12px var(--mono); fill: var(--ink-3); }
+.dia text.t { font-size: 14px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+.dia text.s { font-size: 12.5px; fill: var(--ink-2); text-anchor: middle; }
+.dia .bx rect { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
+.dia .q rect { fill: var(--sunken); stroke: var(--ink-3); stroke-width: 1.4; }
+.dia .un rect { fill: var(--crit-bg); stroke: var(--crit); stroke-width: 1.4; }
+.dia .ok rect { fill: var(--good-bg); stroke: var(--good); stroke-width: 1.4; }
+.dia .am rect { fill: var(--warn-bg); stroke: var(--warn); stroke-width: 1.4; }
+.dia .fu rect { fill: none; stroke: var(--ink-3); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.dia .tr rect { fill: var(--bg); stroke: var(--line); stroke-width: 1.2; }
+.dia text.un-t { fill: var(--crit); } .dia text.ok-t { fill: var(--good); }
+.dia text.am-t { fill: var(--warn); } .dia text.fu-t { fill: var(--ink-2); }
+.dia .mono text { font: 12px var(--mono); fill: var(--ink); white-space: pre; }
+.configs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.configs div { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 14px; color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+.configs strong { color: var(--ink); }
+.k { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 4px; font: 600 14px var(--mono); color: var(--ink); }
+.kA { background: var(--base); } .kB { background: var(--s2); } .kC { background: var(--s1); }
+.configs .kB, .configs .kC { color: #fff; }
+.bar .fill.cA { background: var(--base); } .bar .fill.cB { background: var(--s2); } .bar .fill.cC { background: var(--s1); }
+.legend i.dot { border-radius: 50%; background: var(--ink-2); }
+.legend i.ring { border-radius: 50%; background: none; border: 2px solid var(--ink); width: 12px; height: 12px; }
+.facets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 22px; }
+.facet { margin: 0; display: grid; gap: 4px; min-width: 0; }
+.facet figcaption { display: grid; gap: 1px; font-size: 13.5px; }
+.facet figcaption span { font: 400 12px var(--mono); color: var(--ink-3); }
+.facet svg { width: 100%; height: auto; display: block; overflow: visible; font-family: var(--mono); }
+.facet .grid { stroke: var(--line); stroke-width: 1; }
+.facet .base { stroke: var(--base); stroke-width: 1; }
+.facet .cible { stroke: var(--ink-3); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.facet .tick { font-size: 10.5px; fill: var(--ink-3); }
+.facet .tick.lbl { fill: var(--ink-2); font-weight: 600; }
+.facet .ligne { fill: none; stroke-width: 2; stroke-linejoin: round; }
+.facet .pt { stroke: var(--surface); stroke-width: 2; }
+.facet .anneau { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.facet .cross { stroke: var(--ink-3); stroke-width: 1; }
+.etapes { margin: 0; padding-left: 22px; display: grid; gap: 6px; font-size: 14px; color: var(--ink-2); max-width: 82ch; }
+.etapes b { color: var(--ink); }
+.legend i.tk { width: 2px; height: 14px; border-radius: 0; background: var(--ink); }
+.sg svg { min-width: 760px; }
+.sgx text { font-family: var(--mono); }
+.sgx .ax { font: 11.5px var(--body); fill: var(--ink-3); }
+.sgx .lb { font-size: 12px; fill: var(--ink-2); font-family: var(--body); }
+.sgx .vl { font: 12.5px var(--body); font-variant-numeric: tabular-nums; fill: var(--ink); }
+.sgx .st { font: 600 12.5px var(--body); }
+.sgx .ok-t { fill: var(--good); } .sgx .ko-t { fill: var(--crit); } .sgx .mu { fill: var(--ink-3); }
+.sgx .iv { fill: var(--line); }
+.sgx .ok { fill: var(--good-bg); stroke: var(--good); stroke-width: 1.2; }
+.sgx .ko { fill: var(--crit-bg); stroke: var(--crit); stroke-width: 1.2; }
+.sgx .ne { fill: none; stroke: var(--ink-3); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.sgx .tk { stroke: var(--ink); stroke-width: 2; }
+.avenir { border: 1px dashed var(--base); border-radius: 6px; padding: 14px 16px; display: grid; gap: 8px; background: var(--surface); }
+.avenir p { font-size: 14px; color: var(--ink-2); max-width: 82ch; }
+@media (max-width: 860px) { .configs, .facets { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<main class="page">
+
+<header class="top">
+  <div class="eyebrow">Moteur d'entity resolution · relevé du 10 novembre 2026 · banc d'essai, partition dev</div>
+  <h1>Étape 2 : l'approché borné fait passer les réponses attendues de 68 % à 90 %, toujours sans erreur silencieuse.</h1>
+  <p class="lede">L'étape 1 n'utilise que la normalisation et les alias du catalogue : elle ne se trompe jamais mais répond « inconnu » dès que le terme n'existe pas tel quel. L'étape 2 ajoute un Jaro-Winkler borné, avec un seuil injectable : fixe à 0,88, ou calibré type par type par SGR. Sur la part de dev réservée à l'évaluation, le seuil fixe donne 89,9 % de réponses attendues, le seuil calibré 79,4 %, et aucune des deux configurations ne crée d'erreur silencieuse.</p>
+</header>
+
+<div class="board" role="list" aria-label="État de chaque étape">
+  <div class="post" role="listitem"><strong>Catalogue</strong><span class="pill ok">Prêt</span><div>13 351 entités, 36 088 alias, 22 743 termes négatifs. Contrôle complet : « OK · tout est à jour et cohérent ».</div></div>
+  <div class="post" role="listitem"><strong>1 · Résolveur exact</strong><span class="pill ok">Livré</span><div><code>engine/</code> : normalisation, alias exact et mots triés, index négatif, règles de la spec, trace par terme.</div></div>
+  <div class="post" role="listitem"><strong>Évaluation dev</strong><span class="pill ok">Livrée</span><div><code>python -m engine.evaluation</code> par catégorie ; <code>python -m engine.comparaison</code> compare A, B, C sur la part eval de dev.</div></div>
+  <div class="post" role="listitem"><strong>2 · Jaro-Winkler borné</strong><span class="pill ok">Livré</span><div><code>engine/approche.py</code> : politique <code>SeuilFixe</code> ou <code>SeuilsCalibres</code>, calibration SGR dans <code>engine/calibration.py</code>, garde-fous codes et mots courts.</div></div>
+  <div class="post" role="listitem"><strong>3 · Contexte et Manifest</strong><span class="pill todo">À faire</span><div>Prépositions, profil, rôles, période par défaut, assemblage. Test : les 34 questions de <code>spec/questions.yaml</code>.</div></div>
+  <div class="post" role="listitem"><strong>4 · Extraction LLM</strong><span class="pill todo">À faire</span><div>Découpage en termes, JSON validé, température 0, cache.</div></div>
+  <div class="post" role="listitem"><strong>5 · Examen</strong><span class="pill todo">À faire</span><div>Questions humaines de bout en bout, seulement à ta demande.</div></div>
+</div>
+
+<section id="schema">
+  <div class="head">
+    <h2>Comment le résolveur décide</h2>
+    <p>Chaque terme suit le même chemin, sans LLM ni hasard : le même terme avec le même indice donne toujours la même résolution. Le catalogue passe d'abord. L'index négatif ne répond que si le catalogue n'a rien trouvé. Les règles de la spec choisissent les candidats, et la trace explique chaque décision.</p>
+  </div>
+  <figure class="dia">
+    <div class="dia-wrap">
+    <svg viewBox="0 0 960 800" role="img" aria-label="Schéma du résolveur : normalisation, recherche dans le catalogue, index négatif si rien n'est trouvé, règles en deux passes, puis statut resolved, ambiguous ou unknown.">
+      <defs>
+        <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="currentColor" stroke-width="1.6"/></marker>
+        <marker id="flf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/></marker>
+      </defs>
+      <g class="ar">
+        <line x1="310" y1="76" x2="310" y2="100"/>
+        <line x1="440" y1="121" x2="558" y2="121"/>
+        <line x1="310" y1="142" x2="310" y2="166"/>
+        <line x1="310" y1="222" x2="310" y2="246"/>
+        <line x1="440" y1="267" x2="558" y2="267"/>
+        <line x1="310" y1="288" x2="310" y2="312"/>
+        <line x1="745" y1="295" x2="745" y2="320"/>
+        <line x1="690" y1="362" x2="690" y2="400"/>
+        <line x1="840" y1="362" x2="840" y2="400"/>
+        <line x1="310" y1="394" x2="310" y2="418"/>
+        <line x1="310" y1="460" x2="310" y2="484"/>
+        <line x1="310" y1="548" x2="310" y2="574"/>
+        <polyline points="180,439 120,439 120,599 148,599"/>
+        <line x1="225" y1="624" x2="225" y2="660"/>
+        <line x1="395" y1="624" x2="395" y2="660"/>
+      </g>
+      <g class="ar"><line x1="840" y1="456" x2="840" y2="490"/><polyline points="920,428 945,428 945,305 490,305 490,353 472,353"/></g>
+      <g class="lab">
+        <text x="500" y="113" text-anchor="middle">oui</text>
+        <text x="318" y="160">non</text>
+        <text x="500" y="259" text-anchor="middle">non</text>
+        <text x="318" y="306">oui</text>
+        <text x="698" y="386">oui</text>
+        <text x="848" y="386">non</text>
+        <text x="128" y="430">non</text>
+        <text x="318" y="478">oui</text>
+        <text x="500" y="322">noms retenus</text>
+        <text x="848" y="478">sinon</text>
+        <text x="233" y="647">1</text>
+        <text x="403" y="647">2 ou plus</text>
+      </g>
+
+      <g class="bx"><rect x="150" y="20" width="320" height="56" rx="6"/></g>
+      <text class="t" x="310" y="43">1 · Normalisation</text>
+      <text class="s" x="310" y="64">« Liège » → liege (R-RES-02)</text>
+
+      <g class="q"><rect x="180" y="100" width="260" height="42" rx="21"/></g>
+      <text class="t" x="310" y="126">La forme est-elle vide ?</text>
+
+      <g class="bx"><rect x="150" y="166" width="320" height="56" rx="6"/></g>
+      <text class="t" x="310" y="189">2 · Recherche dans le catalogue</text>
+      <text class="s" x="310" y="210">alias exact ∪ alias aux mots triés</text>
+
+      <g class="q"><rect x="180" y="246" width="260" height="42" rx="21"/></g>
+      <text class="t" x="310" y="272">Au moins un candidat ?</text>
+
+      <g class="bx"><rect x="150" y="312" width="320" height="82" rx="6"/></g>
+      <text class="t" x="310" y="334">4 · Règles · passe 1 (sans indice)</text>
+      <text class="s" x="310" y="354">R-GEO-02 retire les localités absorbées</text>
+      <text class="s" x="310" y="370">R-CTX-05 ajoute l'agence de la ville</text>
+      <text class="s" x="310" y="386">R-ART-03 famille à catégorie unique</text>
+
+      <g class="q"><rect x="180" y="418" width="260" height="42" rx="21"/></g>
+      <text class="t" x="310" y="444">Un indice de type est fourni ?</text>
+
+      <g class="bx"><rect x="150" y="484" width="320" height="64" rx="6"/></g>
+      <text class="t" x="310" y="506">5 · Règles · passe 2 (avec indice)</text>
+      <text class="s" x="310" y="525">R-RES-09 garde les candidats du type demandé</text>
+      <text class="s" x="310" y="541">aucun du type demandé → indice ignoré</text>
+
+      <g class="bx"><rect x="150" y="574" width="320" height="50" rx="6"/></g>
+      <text class="t" x="310" y="596">6 · Statut</text>
+      <text class="s" x="310" y="615">selon le nombre de candidats</text>
+
+      <g class="ok"><rect x="150" y="660" width="150" height="50" rx="6"/></g>
+      <text class="t ok-t" x="225" y="682">resolved</text>
+      <text class="s" x="225" y="700">une seule entité</text>
+      <g class="am"><rect x="320" y="660" width="150" height="50" rx="6"/></g>
+      <text class="t am-t" x="395" y="682">ambiguous</text>
+      <text class="s" x="395" y="700">on demande de choisir</text>
+
+      <g class="un"><rect x="560" y="96" width="360" height="50" rx="6"/></g>
+      <text class="t un-t" x="740" y="117">unknown</text>
+      <text class="s" x="740" y="136">terme vide (« le », « ? »)</text>
+
+      <g class="bx"><rect x="560" y="239" width="360" height="56" rx="6"/></g>
+      <text class="t" x="740" y="262">3 · Index négatif (R-RES-07)</text>
+      <text class="s" x="740" y="283">consulté seulement si le catalogue n'a rien trouvé</text>
+
+      <g class="q"><rect x="610" y="320" width="270" height="42" rx="21"/></g>
+      <text class="t" x="745" y="346">Terme connu comme absent ?</text>
+
+      <g class="un"><rect x="560" y="400" width="175" height="64" rx="6"/></g>
+      <text class="t un-t" x="647" y="422">unknown</text>
+      <text class="s" x="647" y="440">« Paris : lieu</text>
+      <text class="s" x="647" y="456">hors périmètre »</text>
+
+      <g class="bx"><rect x="750" y="400" width="170" height="56" rx="6"/></g>
+      <text class="t" x="835" y="423">Jaro-Winkler borné</text>
+      <text class="s" x="835" y="443">étape 2 · R-RES-03</text>
+
+      <g class="un"><rect x="750" y="490" width="170" height="50" rx="6"/></g>
+      <text class="t un-t" x="835" y="511">unknown</text>
+      <text class="s" x="835" y="530">sous le seuil, garde-fou</text>
+
+      <g class="tr"><rect x="560" y="574" width="360" height="206" rx="6"/></g>
+      <text class="t" x="580" y="600" text-anchor="start" style="text-anchor:start">Trace · une ligne par bloc</text>
+      <text class="s" x="580" y="619" style="text-anchor:start">exemple : « Liège », indice « site »</text>
+      <g class="mono">
+        <text x="580" y="648">1  normalisation   liege</text>
+        <text x="580" y="667">2  exact           5 trouvés (décisif)</text>
+        <text x="580" y="686">4  R-GEO-02        − 2 localités</text>
+        <text x="580" y="705">4  R-CTX-05        + agence Liège</text>
+        <text x="580" y="724">5  R-RES-09        − commune, province,</text>
+        <text x="580" y="741">                     arrondissement</text>
+        <text x="580" y="764">6  statut          resolved · agence Liège</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Étape 1 : <code>engine/resolveur.py · ResolveurExact.resoudre()</code>. Étape 2 : <code>ResolveurApproche.approcher()</code>. Un nom retenu par Jaro-Winkler repasse par les règles 4 et 5, comme un alias exact.</figcaption>
+  </figure>
+
+  <div class="why">
+    <p><strong>1 · Normalisation.</strong> Le terme passe par <code>normalize()</code>, la fonction qui a aussi construit les alias du catalogue : minuscules, accents et ponctuation retirés, mots vides (« de », « la », « l », « a »…) supprimés, pluriel simple réduit. S'il ne reste rien (« le », « ? »), la réponse est « inconnu » tout de suite. C'est aussi là que naissent deux causes d'échec décrites plus bas : la ponctuation coupe « S.R.L » en « s r », et « St » reste « st ».</p>
+    <p><strong>2 · Recherche dans le catalogue.</strong> Le moteur cherche la forme normalisée parmi les 36 088 alias, puis la même forme aux mots triés (« garage dupont » trouve « dupont garage »), et garde l'union des deux. Un nom ramène toutes ses entités : « Liège » en donne cinq. Aucune correspondance approchée à cette étape, ni sur les noms ni sur les codes.</p>
+    <p><strong>3 · Index négatif.</strong> Il n'est consulté que si le catalogue n'a rien trouvé, pour qu'un terme du catalogue ne soit jamais bloqué à tort (« Éco » est résolu même si un terme négatif lui ressemble). Un terme connu comme absent (Paris, Allemagne, Michelin) reçoit « inconnu » avec la raison. Cet ordre protège aussi de l'approché : « Aalen » s'arrête ici au lieu d'être rapproché d'« Aarlen » (0,956).</p>
+    <p><strong>3 bis · Jaro-Winkler borné (étape 2).</strong> Seulement si rien n'a été trouvé. Le meilleur nom du catalogue donne le score ; s'il atteint le seuil de son type, tous les noms à moins de 0,03 sont retenus avec toutes leurs entités et repassent par les règles. Jamais sur un code, ni sur un terme ou un mot de moins de 4 lettres. Le détail est dans la section « Étape 2 » plus bas.</p>
+    <p><strong>4 et 5 · Règles en deux passes.</strong> Les règles viennent de <code>build/rules.py</code>, sans copie. La première passe ignore l'indice : elle retire les localités absorbées par leur commune, ajoute l'agence de la ville et ramène une famille à sa catégorie unique. La seconde applique l'indice de type (R-RES-09) et ne garde que les candidats de ce type. Si aucun candidat n'est du type demandé, l'indice est ignoré et noté dans la trace, au lieu de tout vider.</p>
+    <p><strong>6 · Statut.</strong> Un candidat donne « resolved », plusieurs donnent « ambiguous » : le moteur demande de choisir au lieu de deviner, c'est ce qui garantit 0 erreur silencieuse. La trace garde chaque étape ; l'étape qui a trouvé les candidats (alias exact, mots triés, index négatif, rien trouvé) est celle du graphique « Étape qui a décidé » plus bas.</p>
+  </div>
+</section>
+
+<section id="resultats">
+  <div class="head">
+    <h2>Résultats de l'étape 1 (exact seul), tout dev</h2>
+    <p>7 158 cas, ceux qui servent à régler le moteur. La partition test (2 927 cas) n'a pas été ouverte.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>7 158</b><span>cas évalués, 13 catégories</span></div>
+    <div class="stat"><b>66,1 %</b><span>idéal : 4 734 réponses exactement attendues</span></div>
+    <div class="stat"><b class="good">100 %</b><span>sûr : idéal, ou « inconnu » accepté par le cas</span></div>
+    <div class="stat"><b class="good">0</b><span>erreur silencieuse : aucune entité fausse</span></div>
+    <div class="stat"><b>104</b><span>tests, dont 34 pour le moteur</span></div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Qualité de la réponse, par catégorie</h3>
+      <div class="legend">
+        <span><i style="background:var(--s1)"></i>Réponse attendue</span>
+        <span><i style="background:var(--base)"></i>« Inconnu » prudent, accepté</span>
+      </div>
+      <div class="rows" id="catQual"></div>
+    </div>
+    <div class="panel">
+      <h3>Étape qui a décidé, par catégorie</h3>
+      <div class="legend">
+        <span><i style="background:var(--s1)"></i>Alias exact</span>
+        <span><i style="background:var(--s2)"></i>Mots triés</span>
+        <span><i style="background:var(--s3)"></i>Index négatif</span>
+        <span><i style="background:var(--s4)"></i>Rien trouvé</span>
+      </div>
+      <div class="rows" id="catEtape"></div>
+    </div>
+  </div>
+  <div class="why">
+    <p>Dix catégories sur treize sont à 100 % : libellés, traductions officielles, variantes GeoNames, termes métier, homonymes, indices de type, lieux hors périmètre, codes, marques et véhicules. Pour les homonymes, le moteur rend bien tous les candidats, par exemple les 4 de « Liège » (commune, arrondissement, province et agence).</p>
+    <p>Deux résultats « rien trouvé » sont des succès. Les 330 codes inconnus de C09 sont des références voisines qui n'existent pas : « inconnu » est la réponse attendue, jamais le code le plus proche. Les 436 lieux de C08 (Aalen, Achern…) sont arrêtés par l'index négatif, qui dit pourquoi ils sont inconnus.</p>
+  </div>
+  <details>
+    <summary>Voir le tableau des valeurs</summary>
+    <div class="scroll">
+      <table id="catTable">
+        <thead><tr><th>Catégorie</th><th class="r">Cas</th><th class="r">Idéal</th><th class="r">Inconnu prudent</th><th class="r">Alias exact</th><th class="r">Mots triés</th><th class="r">Index négatif</th><th class="r">Rien trouvé</th><th class="r">Erreurs silencieuses</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<section id="pourquoi">
+  <div class="head">
+    <h2>Pourquoi 2 424 cas n'ont pas la réponse attendue</h2>
+    <p>Tous sont des « inconnu » : le terme saisi, une fois normalisé, n'est égal à aucun alias du catalogue. Le moteur ne se trompe pas, il ne trouve pas. Ces cas viennent de trois catégories et de six causes.</p>
+  </div>
+  <div class="bars" id="causes"></div>
+  <div class="axis" aria-hidden="true"><div></div><div><span>0</span><span>1 000</span><span>2 000 cas</span></div><div></div></div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Cause</th><th>Saisi</th><th>Après normalisation</th><th>Alias du catalogue</th><th>Ce qui manque</th></tr></thead>
+      <tbody>
+        <tr><td>Faute de frappe <span class="tag">C07</span></td><td class="mono">500 HYBRuD</td><td class="mono">500 hybrud</td><td class="mono">500 hybrid</td><td>Une correspondance approchée : une lettre diffère, l'égalité stricte échoue.</td></tr>
+        <tr><td>Faute de frappe <span class="tag">C07</span></td><td class="mono">économqiue</td><td class="mono">economqiue</td><td class="mono">economique</td><td>Idem, deux lettres inversées.</td></tr>
+        <tr><td>Abréviation St, Ste <span class="tag">C13</span></td><td class="mono">Woluwe-St-Lambert</td><td class="mono">woluwe st lambert</td><td class="mono">woluwe saint lambert</td><td>« st » n'est pas développé en saint, sint ou sainte.</td></tr>
+        <tr><td>Abréviation s/ <span class="tag">C13</span></td><td class="mono">Ailly-s/-Noye</td><td class="mono">ailly s noye</td><td class="mono">ailly sur noye</td><td>« s/ » n'est pas développé en « sur ».</td></tr>
+        <tr><td>Abréviation Mt <span class="tag">C13</span></td><td class="mono">Mt-Gauthier</td><td class="mono">mt gauthier</td><td class="mono">mont gauthier</td><td>« mt » n'est pas développé en « mont ».</td></tr>
+        <tr><td>Forme juridique à points <span class="tag">C10</span></td><td class="mono">Anderlecht Lease S.R.L</td><td class="mono">anderlecht lease s r</td><td class="mono">anderlecht lease srl</td><td>La normalisation coupe « S.R.L » en lettres isolées, puis retire « l », qui est un mot vide.</td></tr>
+        <tr><td>Forme juridique sans points <span class="tag">C10</span></td><td class="mono">Transports Langlois SARL</td><td class="mono">transport langloi sarl</td><td class="mono">transport langloi s r</td><td>Le cas inverse : le catalogue n'a que « S.à r.l. », normalisé en « s r ».</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="why">
+    <p>Les fautes de frappe sont attendues : l'étape 1 ne fait que de l'égalité stricte, c'est le rôle de l'étape 2. 1 765 de ces cas attendent une seule entité, 167 plusieurs (la faute rend le terme proche de deux noms). Sept fautes tombent par hasard sur un vrai lieu hors périmètre et sont arrêtées par l'index négatif.</p>
+    <p>Les abréviations et les formes juridiques sont un autre problème : elles ne demandent pas de correspondance approchée. Une règle de développement des abréviations et une forme juridique compactée (« S.R.L » → « srl ») les résoudraient par l'exact, sans aucun risque de confusion. Un fuzzy risquerait au contraire de se tromper : « St.-Niklaas » est aussi proche d’une ville française que de Sint-Niklaas.</p>
+  </div>
+</section>
+
+<section id="etape2">
+  <div class="head">
+    <h2>Étape 2 : Jaro-Winkler borné, trois configurations comparées</h2>
+    <p>L'approché ne s'applique que si l'alias exact, les mots triés et l'index négatif n'ont rien donné. La comparaison porte sur la part « eval » de dev : 2 133 cas, soit 30 % de dev choisis par hash du <code>case_id</code>, jamais vus par la calibration. La partition test n'a pas été ouverte.</p>
+  </div>
+  <div class="configs">
+    <div><b class="k kA">A</b><span><strong>Étape 1 seule.</strong> Alias exact, mots triés, index négatif : aucune correspondance approchée.</span></div>
+    <div><b class="k kB">B</b><span><strong>SeuilFixe(0,88 ; 0,03).</strong> La valeur initiale de R&#8209;RES&#8209;03, la même pour tous les types de nom.</span></div>
+    <div><b class="k kC">C</b><span><strong>SeuilsCalibres.</strong> Un seuil par type, calculé par SGR sur la part calib : r* = 5 %, δ = 5 %, perte « dangereuse ».</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>89,9 %</b><span>idéal avec B, contre 67,9 % pour A</span></div>
+    <div class="stat"><b>79,4 %</b><span>idéal avec C : un seul type sur 21 est approché</span></div>
+    <div class="stat"><b class="good">0</b><span>erreur silencieuse pour A, B et C</span></div>
+    <div class="stat"><b>99,7 %</b><span>sûr avec C, contre 98,9 % pour B</span></div>
+    <div class="stat"><b>88,6 %</b><span>idéal de B sur tout dev (7 158 cas), 0 erreur silencieuse</span></div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Réponse attendue (idéal), part eval</h3>
+      <div class="legend"><span><i class="kA"></i>A · exact seul</span><span><i class="kB"></i>B · seuil fixe 0,88</span><span><i class="kC"></i>C · seuils calibrés</span></div>
+      <div class="bars" id="fzIdeal"></div>
+      <div class="axis" aria-hidden="true"><div></div><div><span>0 %</span><span>50 %</span><span>100 %</span></div><div></div></div>
+    </div>
+    <div class="panel">
+      <h3>Réponse sûre, part eval</h3>
+      <div class="legend"><span><i class="kA"></i>A · exact seul</span><span><i class="kB"></i>B · seuil fixe 0,88</span><span><i class="kC"></i>C · seuils calibrés</span></div>
+      <div class="bars" id="fzSur"></div>
+      <div class="axis" aria-hidden="true"><div></div><div><span>0 %</span><span>50 %</span><span>100 %</span></div><div></div></div>
+    </div>
+  </div>
+  <div class="why">
+    <p>Les dix catégories que l'exact résolvait déjà restent à 100 % : l'approché n'intervient jamais quand un alias existe. Le gain de B vient tout entier des fautes de frappe (C07 : de 0 à 84,5 %). Les clients (C10) et les abréviations (C13) ne bougent pas. Les formes juridiques à points et « St », « Ste », « s/ » relèvent de la normalisation, et le garde-fou ci-dessous les écarte exprès.</p>
+    <p>C est plus prudent que B. Il ne garde l'approché que pour les villes, au seuil 0,860, et répond « inconnu » aux autres types. Il perd 40 points d'idéal sur C07 et gagne 3 points de réponses sûres : moins de questions inutiles à l'utilisateur, plus de réponses « je ne sais pas ».</p>
+  </div>
+  <details>
+    <summary>Voir le tableau par catégorie</summary>
+    <div class="scroll">
+      <table id="fzTable">
+        <thead><tr><th>Catégorie</th><th class="r">Cas</th><th class="r">A idéal</th><th class="r">A sûr</th><th class="r">B idéal</th><th class="r">B sûr</th><th class="r">C idéal</th><th class="r">C sûr</th><th class="r">Silencieux A · B · C</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+
+  <div class="panel">
+    <h3>Courbe risque-couverture par type, part eval</h3>
+    <p>Pour chaque seuil θ, la couverture est la part des cas du type qui reçoivent une réponse approchée, et le risque la part de pertes parmi ces réponses. Le point plein marque θ = 0,88 (configuration B), l'anneau le seuil calibré (configuration C), et le pointillé la cible r* = 5 %. Deux pertes sont tracées. « Dangereuse », celle de la calibration, compte une réponse qui affirme à tort : entité fausse, trop confiant, ou ambiguous sans la bonne entité. « Non sûre » est la notation du banc : elle compte en plus un ambiguous qui contient la bonne entité, quand le cas n'accepte que « inconnu ».</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Perte dangereuse</span><span><i style="background:var(--s2)"></i>Perte non sûre</span><span><i class="dot"></i>θ = 0,88 (B)</span><span><i class="ring"></i>seuil calibré (C)</span></div>
+    <div class="facets" id="fzCourbes"></div>
+    <p class="cap">Les courbes s'arrêtent avant 100 % de couverture : un cas refusé par un garde-fou ne reçoit jamais de réponse approchée, quel que soit le seuil. Survolez une courbe pour lire le seuil, la couverture et le risque.</p>
+  </div>
+  <div class="why">
+    <p><strong>À 0,88, le risque dangereux est nul pour cinq types sur six</strong> sur la part eval. Il ne vaut 2,1 % qu'en commune, soit une perte sur 47 réponses. Le seuil 0,88 n'est donc pas mauvais. Ce qui manque, c'est assez de cas pour le prouver : SGR ne retient un seuil que si la borne supérieure du risque, à 95 % de confiance, passe sous r*. Avec δ = 5 % réparti sur les essais de la dichotomie, il faut au moins 97 cas retenables par type, même sans aucune erreur.</p>
+    <p><strong>Pourquoi seule la ville passe.</strong> Catégories de pièce (95 cas retenables), modèles de véhicule (76) et 14 petits types n'ont pas assez de cas. Les localités ont 2 pertes trop confiantes, à 0,90 et 0,93. Les communes (132 cas) et les noms mixtes (127) n'ont aucune perte, mais la dichotomie de SGR commence par la moitié des cas aux meilleurs scores (70 communes avec les ex æquo, voir le schéma ci-dessous). Ces cas ne suffisent pas pour la borne, alors l'algorithme monte le seuil, retire encore des cas, et ne revient jamais à la couverture complète, qui aurait passé (borne 3,8 % pour les communes). La dichotomie suppose que le risque baisse quand le seuil monte ; avec si peu d'erreurs, c'est la taille de l'échantillon qui décide. Avec r* = 2 %, même la ville est désactivée ; avec la perte « non sûre » et r* = 5 %, la ville passe au seuil 0,973, avec 318 cas retenus sur 865.</p>
+  </div>
+  <div class="panel" id="dichotomie">
+    <h3>Comment SGR choisit un seuil : la dichotomie</h3>
+    <p>SGR (Geifman et El-Yaniv, 2017, algorithme 1) cherche, pour chaque type, le seuil θ le plus bas dont on peut garantir le risque. Il ne regarde jamais toutes les valeurs : il coupe l'intervalle en deux à chaque essai, comme on cherche un mot dans un dictionnaire.</p>
+    <ol class="etapes">
+      <li><b>Trier.</b> Les m cas retenables du type (ceux qui passent les garde-fous) sont triés par score κ, du plus bas au plus haut. Un seuil θ revient à garder les cas de κ ≥ θ.</li>
+      <li><b>Fixer le nombre d'essais.</b> k = ⌈log₂ m⌉ essais, et le δ de 5 % est partagé entre eux : chaque essai a droit à δ/k. Pour la commune, m = 132, k = 8 et δ/k = 0,625 %.</li>
+      <li><b>Essayer le milieu.</b> On prend le cas du milieu de l'intervalle restant et son κ comme seuil, on compte les pertes parmi les cas retenus, et on calcule la borne binomiale exacte du risque au niveau δ/k.</li>
+      <li><b>Couper.</b> Si la borne est sous r* = 5 %, le seuil est garanti : on le garde et on cherche plus bas, dans la moitié de gauche, pour couvrir plus de cas. Sinon on cherche plus haut, dans la moitié de droite. Après k essais, on rend le plus bas seuil garanti, ou « désactivé » si aucun ne l'a été.</li>
+    </ol>
+    <div class="legend"><span><i style="background:var(--good-bg);border:1px solid var(--good)"></i>cas retenus, borne sous r* : garanti</span><span><i style="background:var(--crit-bg);border:1px solid var(--crit)"></i>cas retenus, borne au-dessus de r*</span><span><i style="background:var(--line)"></i>intervalle encore cherché</span><span><i class="tk"></i>seuil essayé</span></div>
+    <figure class="dia sg">
+      <div class="dia-wrap" id="sgVille"></div>
+      <figcaption><b>Ville, part calib : la dichotomie marche.</b> Dès le premier essai, la moitié haute (311 cas, 1 perte) passe avec une borne de 2,4 %. Chaque essai suivant descend et ajoute des cas, la borne baisse, et l'algorithme finit au seuil 0,860 avec 617 cas sur 618.</figcaption>
+    </figure>
+    <figure class="dia sg">
+      <div class="dia-wrap" id="sgCommune"></div>
+      <figcaption><b>Commune, part calib : la dichotomie part dans le mauvais sens.</b> Aucune perte sur les 132 cas. Le premier essai garde la moitié haute, 70 cas avec les ex æquo : la borne vaut 7,0 %, au-dessus de 5 %. L'algorithme conclut que le seuil est trop bas et monte. Chaque essai retire alors la moitié des cas qui restent, la borne grimpe jusqu'à 99 %, et la couverture complète, qui passait à 3,8 %, n'est jamais essayée. Les noms mixtes suivent exactement le même chemin (127 cas, 0 perte, premier essai à 73 cas, borne 6,6 %).</figcaption>
+    </figure>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Pourquoi : sans erreur, seule la taille compte</h3>
+      <p>La borne n'est pas le risque observé. C'est la plus grande valeur du vrai risque encore compatible avec ce qu'on a vu, au niveau de confiance 1 − δ/k. Avec zéro perte sur n cas, elle vaut environ 5/n au niveau δ/8 : 7,0 % pour 70 cas, 3,8 % pour 132. Il faut au moins 99 cas sans aucune perte pour passer sous 5 %.</p>
+      <p>La dichotomie suppose que si un seuil échoue, tout seuil plus bas échoue aussi. C'est vrai quand l'échec vient des erreurs, car les scores bas en portent davantage. C'est faux ici : l'échec vient du manque de cas, et descendre le seuil en ajoute. En montant, l'algorithme fait l'inverse de ce qu'il faudrait.</p>
+    </div>
+    <div class="panel">
+      <h3>Borne du risque avec zéro perte, au niveau δ/8</h3>
+      <figure class="facet" id="sgBorne"></figure>
+      <p class="cap">Survolez la courbe pour lire la borne selon le nombre de cas retenus.</p>
+    </div>
+  </div>
+
+  <div class="avenir">
+    <h3>Prochaine comparaison : la grille fixe</h3>
+    <p>La variante grille fixe essaie tous les seuils d'une liste fixée d'avance (par exemple de 0,85 à 0,99 au pas de 0,01, soit 15 seuils) au lieu de couper en deux. Le δ est partagé entre les 15 seuils (δ/15 au lieu de δ/8, donc des bornes un peu plus larges), et on garde le plus bas seuil garanti. Elle ne suppose plus que le risque baisse quand le seuil monte : la couverture complète est toujours essayée. Pour la commune, la couverture complète donnerait une borne de 4,2 % à δ/15, sous r*. Les résultats des deux méthodes seront tracés sur le même axe que les schémas ci-dessus.</p>
+  </div>
+
+  <details>
+    <summary>Voir les seuils calibrés par type (spec/seuils_fuzzy.yaml)</summary>
+    <div class="scroll">
+      <table id="fzSeuils">
+        <thead><tr><th>Type de nom</th><th class="r">Cas calib</th><th class="r">Retenables</th><th>État</th><th class="r">Seuil</th><th class="r">Borne</th><th>Raison</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Garde-fous, avant tout seuil</h3>
+      <p><strong>Jamais sur un code.</strong> Les alias de type code (références, codes clients, codes douaniers, codes postaux) ne sont pas comparés. Les mots qui contiennent un chiffre doivent être identiques : « 500 HYBRuD » ne se compare qu'aux noms qui contiennent « 500 », et MN-AMO-70514 reste inconnu.</p>
+      <p><strong>Jamais sur un mot de moins de 4 lettres.</strong> Le nom retenu doit avoir le même nombre de mots et les mêmes mots courts que le terme. Sans ce garde-fou, B faisait 4 erreurs silencieuses sur dev : « St.-Jan » devenait « T Jan », « Ste-Cécile » devenait « Steil », « St-Louis-lès-Bitche » devenait « St Louis ». Il coûte 7 points d'idéal sur C07 (90,2 % → 83,1 % sur tout dev) et toutes les abréviations de C13, qui reviennent à la normalisation.</p>
+      <p><strong>Par nom, pas par entité.</strong> Tous les noms à moins de 0,03 du meilleur sont retenus avec toutes leurs entités, puis les règles de la spec tranchent : « Alije » donne 2 villes, et le moteur demande de choisir.</p>
+    </div>
+    <div class="panel">
+      <h3>Robustesse : si l'index négatif ne connaissait pas le lieu</h3>
+      <div class="bars" id="fzRobuste"></div>
+      <div class="axis" aria-hidden="true"><div></div><div><span>0</span><span>70</span><span>139</span></div><div></div></div>
+      <p>Les 139 lieux hors périmètre de la part eval, passés à l'approché comme si l'index négatif les ignorait. Un vrai lieu absent obtient souvent plus de 0,95 face à un lieu du catalogue : « Arbusigny », « Beauvoisin », « Bizanet » deviendraient des villes ou des localités du catalogue. Aucun seuil ne les sépare d'une faute de frappe. La sécurité géographique repose donc sur l'index négatif, pas sur le seuil : un lieu réel absent de GeoNames passerait.</p>
+    </div>
+  </div>
+</section>
+
+<section id="acquis">
+  <div class="head"><h2>Ce qui a été fait</h2></div>
+  <dl class="done">
+    <div><dt>Chargement du catalogue</dt><dd><code>engine/catalogue.py</code> : index exact, index des mots triés, index négatif, choix des tiers. La normalisation et les règles sont importées de <code>build/</code>, jamais recopiées.</dd></div>
+    <div><dt>Résolveur exact</dt><dd><code>engine/resolveur.py</code> : statut resolved, ambiguous ou unknown, identifiants triés, jamais de « candidat le plus probable » (R-RES-05).</dd></div>
+    <div><dt>Trace par terme</dt><dd>Forme normalisée, étape décisive, entités ajoutées ou retirées avec leur règle (R-GEO-02, R-CTX-05, R-ART-03, R-RES-09).</dd></div>
+    <div><dt>Index négatif</dt><dd>R-RES-07 passe de « à coder » à « codée ». Le catalogue l'emporte toujours : la gamme Éco reste résolue.</dd></div>
+    <div><dt>Évaluation</dt><dd><code>engine/evaluation.py</code> : même notation que <code>build/baseline.py</code>, rapport par catégorie, partition test protégée.</dd></div>
+    <div><dt>Tests</dt><dd>34 tests : Liège à 4 candidats, collisions Champion, Seres, Tivoli, « en ligne », « appel », codes voisins, index négatif, déterminisme, et zéro erreur silencieuse sur tout dev.</dd></div>
+    <div><dt>Jaro-Winkler borné</dt><dd><code>engine/approche.py</code>, <code>ResolveurApproche</code> : par nom, pas par entité ; écart 0,03 ; politique de seuil injectable (<code>SeuilFixe</code>, <code>SeuilsCalibres</code>). R-RES-03 passe à « codée ».</dd></div>
+    <div><dt>Calibration SGR</dt><dd><code>engine/calibration.py</code> : borne binomiale exacte, dichotomie de Geifman et El-Yaniv, r* et δ en paramètres ; écrit <code>spec/seuils_fuzzy.yaml</code> avec l'empreinte du catalogue, refusée si elle change.</dd></div>
+    <div><dt>Découpe de dev</dt><dd>70 % calib, 30 % eval, par hash SHA-256 du <code>case_id</code> : stable d'une exécution à l'autre. <code>engine/comparaison.py</code> mesure A, B, C sur la part eval.</dd></div>
+    <div><dt>Tests de l'étape 2</dt><dd>20 tests : codes, mots courts, index négatif avant l'approché, écart, seuils par type, empreinte, découpe, borne et SGR, et zéro erreur silencieuse de B sur tout dev. 124 tests au total.</dd></div>
+    <div><dt>Encodage Windows</dt><dd>7 lectures ou écritures de fichiers passent en <code>encoding="utf-8"</code>. La console et les sous-processus sont forcés en UTF-8 : <code>rebuild_spec.py</code> ne plante plus.</dd></div>
+    <div><dt>Rapport de référence</dt><dd><code>reports/baseline.md</code> était enregistré en cp1252 (« r&#xFFFD;f&#xFFFD;rence ») ; il est maintenant en UTF-8.</dd></div>
+  </dl>
+</section>
+
+<section id="problemes">
+  <div class="head">
+    <h2>Problèmes relevés</h2>
+    <p>Aucun ne crée d'erreur dans le moteur livré. Ils expliquent des réponses manquantes ou demandent une décision.</p>
+  </div>
+  <div class="issues">
+    <div class="issue">
+      <span class="pill mid">À décider</span>
+      <div>
+        <h3>La normalisation casse les formes juridiques à points</h3>
+        <p>« S.R.L » devient « s r », « s.a. » devient « s », « B.V. » devient « b v » : chaque point coupe le sigle, et les lettres « l » et « a » sont retirées comme mots vides. Le catalogue indexe « SRL », « SA », « BV » d'un côté et « S.à r.l. » (« s r ») de l'autre, d'où 139 clients non trouvés.</p>
+        <p>Deux corrections possibles : compacter les sigles dans <code>normalize()</code>, ce qui modifie R-RES-02 et donc tout le catalogue, ou ajouter les variantes à points dans les alias de clients. La première est plus générale, la seconde plus sûre.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À décider</span>
+      <div>
+        <h3>Les abréviations de toponymes ne sont pas développées</h3>
+        <p>« St », « Ste », « St. », « s/ », « Mt » : 353 cas. Le catalogue en indexe quelques-unes comme alias (160 alias de type abréviation), mais pas de façon systématique. Une règle de développement avant la recherche exacte est plus fiable qu'un fuzzy pour ces cas. L'étape 2 ne les rattrape pas, exprès : son garde-fou refuse « St » face à « Saint », parce que sans lui elle faisait 4 erreurs silencieuses.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À décider</span>
+      <div>
+        <h3>Cible, confiance et perte de la calibration</h3>
+        <p>Avec r* = 5 %, δ = 5 % et la perte « dangereuse », SGR n'active que la ville. Il faut 97 cas par type pour garantir 5 % même sans erreur, et la dichotomie de l'article écarte les communes et les noms mixtes alors qu'ils n'ont aucune perte. Trois leviers : la cible et δ, la perte (« non sûre » est plus stricte), ou une variante de SGR qui teste chaque seuil d'une grille fixe au lieu de la dichotomie.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À surveiller</span>
+      <div>
+        <h3>La sécurité géographique repose sur l'index négatif</h3>
+        <p>Si l'index négatif ignorait les 139 lieux hors périmètre de la part eval, B ferait 47 erreurs silencieuses et C 34. Un vrai lieu absent obtient souvent plus de 0,95 face à un lieu du catalogue. Tout lieu réel absent de GeoNames est donc un risque.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À surveiller</span>
+      <div>
+        <h3>Charger seulement le tier 1 crée des erreurs</h3>
+        <p>Avec les seuls alias officiels, l'idéal tombe de 66,1 % à 34,5 % et 30 erreurs silencieuses apparaissent, plus 63 réponses trop confiantes. Un homonyme indexé seulement en tier 2 ou 3 disparaît, et un terme ambigu devient résolu. Exemple : « Batteries » donne la catégorie au lieu de la famille, dont l'alias est en tier 3. Le moteur charge donc les trois tiers.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À arbitrer</span>
+      <div>
+        <h3>« Dinan » est déjà un alias de Dinant</h3>
+        <p>CLAUDE.md cite Dinan / Dinant comme piège de lieu hors périmètre. En fait « Dinan » est une variante GeoNames (tier 2) de la commune de Dinant, absente de l'index négatif : le moteur répond Dinant, ce qui suit le catalogue. Variante voulue ou erreur de source ?</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill mid">À arbitrer</span>
+      <div>
+        <h3>15 lacunes de spec venues des questions humaines</h3>
+        <p>Synonymes manquants (G01), périodes non déclarées (G03), axes flous (G05), mesures absentes (G06 à G08), fuzzy sur les noms de clients (G14)… Elles concernent surtout les étapes 2 et 3. Ajouter à la spec du vocabulaire tiré d'une question de test oblige à passer cette question en dev.</p>
+      </div>
+    </div>
+    <div class="issue">
+      <span class="pill todo">Mineur</span>
+      <div>
+        <h3>Fichiers compilés suivis par git</h3>
+        <p><code>build/__pycache__/*.pyc</code> est dans le dépôt et apparaît modifié à chaque exécution. Un <code>.gitignore</code> réglerait le problème. Rien n'est encore committé.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Effet du chargement par tier</h3>
+      <div class="bars" id="tiers"></div>
+      <div class="axis" aria-hidden="true"><div></div><div><span>0 %</span><span>50 %</span><span>100 %</span></div><div></div></div>
+    </div>
+    <div class="panel">
+      <h3>Règles de la spec, état d'implémentation</h3>
+      <div class="legend">
+        <span><i style="background:var(--good-fill)"></i>Codée</span>
+        <span><i style="background:var(--s4)"></i>Prototypée</span>
+        <span><i style="background:var(--base)"></i>À coder</span>
+      </div>
+      <div class="rows" id="regles"></div>
+      <p>7 règles codées sur 56. Les 18 règles de calcul attendent l'étape Power BI ; les 18 règles de résolution restantes se répartissent entre les étapes 2 et 3.</p>
+    </div>
+  </div>
+</section>
+
+<section id="suite">
+  <div class="head">
+    <h2>Reste à faire</h2>
+    <p>Dans l'ordre. Chaque brique n'est gardée que si elle augmente les réponses idéales sur dev sans créer d'erreur silencieuse.</p>
+  </div>
+  <ol class="plan">
+    <li><div><h3>Formes juridiques à points</h3><p>Choisir entre compacter les sigles dans la normalisation et ajouter des alias. Concerne 139 cas clients aujourd'hui sans réponse, résolubles par l'exact.</p><span class="tag">décision · R-RES-02, C10</span></div></li>
+    <li><div><h3>Développer les abréviations avant la recherche exacte</h3><p>« St », « Ste », « St. » vers Saint, Sainte, Sint selon la langue du lieu ; « s/ » vers sur ; « Mt » vers Mont. Concerne 353 cas, résolubles par l'exact, que le garde-fou de l'approché laisse en « inconnu ».</p><span class="tag">normalisation · C13</span></div></li>
+    <li><div><h3>Choisir r*, δ et la perte, puis recalibrer</h3><p>Avec les réglages actuels, C ne garde l'approché que pour la ville. Décider du risque acceptable par réponse approchée, et s'il faut une variante de SGR sur grille fixe pour les types sans aucune perte. Puis <code>python -m engine.calibration --cible … --delta …</code> et <code>python -m engine.comparaison</code>.</p><span class="tag">étape 2 · R-RES-03</span></div></li>
+    <li><div><h3>Mots distinctifs pour les raisons sociales</h3><p>Ignorer « garage », « auto », « carrosserie » dans le score des noms de clients, pour que le préfixe commun ne gonfle pas la ressemblance.</p><span class="tag">étape 2 · G14</span></div></li>
+    <li><div><h3>Contexte et assemblage du Manifest</h3><p>Prépositions et mots de contexte, profil « mon agence », rôles filtre / axe / mesure, période par défaut, puis validation par <code>build/manifest.py</code>. Test : les 34 questions de référence.</p><span class="tag">étape 3 · R-CTX-02, R-CTX-03, R-TPS-02, R-RES-06, R-RES-08</span></div></li>
+    <li><div><h3>Extraction LLM, puis examen</h3><p>Découpage des questions en termes, puis passage des questions humaines de bout en bout, à ta demande.</p><span class="tag">étapes 4 et 5</span></div></li>
+    <li><div><h3>Ménage du dépôt</h3><p>Ajouter un <code>.gitignore</code> pour les caches Python, trancher le cas « Dinan », puis committer les étapes 1 et 2 si tu le souhaites.</p><span class="tag">maintenance</span></div></li>
+  </ol>
+  <div class="aside">
+    <h3>Reproduire ces chiffres</h3>
+    <p><code>python -m engine.evaluation</code> pour l'étape 1 (<code>--fuzzy fixe</code> ou <code>--fuzzy calibre</code> pour l'étape 2), <code>python -m engine.calibration</code> pour les seuils, <code>python -m engine.comparaison</code> pour A, B, C, <code>python -m pytest -q tests</code> pour les tests, <code>python build/rebuild_spec.py</code> pour le contrôle complet. Le détail de chaque cas non idéal, avec sa trace, est dans <code>reports/moteur_dev.json</code>.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Banc d'essai : <code>challenges/cases.csv</code>, partition dev de <code>challenges/split.csv</code>. Aucune donnée de l'examen (<code>human/attendus.yaml</code>, réponses attendues des questions humaines) n'a servi à concevoir ou mesurer le moteur.</p>
+  <p>Idéal : la réponse attendue exactement. Sûr : idéal, ou réponse prudente prévue par le cas. Erreur silencieuse : une entité résolue qui n'est pas la bonne.</p>
+</footer>
+</main>
+<div id="tip" hidden></div>
+
+<script>
+const fr = (x, d = 1) => x.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const nb = x => x.toLocaleString("fr-FR");
+const tip = document.getElementById("tip");
+function hover(el, html) {
+  el.tabIndex = 0;
+  const show = e => { tip.innerHTML = html; tip.hidden = false; move(e); };
+  const move = e => {
+    const r = el.getBoundingClientRect();
+    const x = e && e.clientX ? e.clientX : r.left + 20, y = e && e.clientY ? e.clientY : r.top;
+    tip.style.left = Math.max(8, Math.min(x + 14, innerWidth - tip.offsetWidth - 8)) + "px";
+    tip.style.top = Math.max(8, y - tip.offsetHeight - 10) + "px";
+  };
+  el.addEventListener("mouseenter", show); el.addEventListener("mousemove", move);
+  el.addEventListener("focus", show);
+  el.addEventListener("mouseleave", () => tip.hidden = true); el.addEventListener("blur", () => tip.hidden = true);
+}
+function bars(id, rows, max, txt, cls, info) {
+  const box = document.getElementById(id);
+  rows.forEach(r => {
+    const el = document.createElement("div");
+    el.className = "bar" + (r.me ? " me" : "") + (r.cls ? " " + r.cls : "");
+    el.innerHTML = `<div class="lab">${r.lab}<small>${r.sub}</small></div><div class="track"><div class="fill ${cls(r)}" style="width:${r.v / max * 100}%"></div></div><div class="val">${txt(r.v)}</div>`;
+    hover(el, info(r)); box.appendChild(el);
+  });
+}
+function stack(id, rows, parts, end, info) {
+  const box = document.getElementById(id);
+  rows.forEach(r => {
+    const el = document.createElement("div"); el.className = "row";
+    const segs = parts(r).filter(p => p[0] > 0).map(p => `<i style="flex:${p[0]} 0 0;background:var(${p[1]})"></i>`).join("");
+    el.innerHTML = `<div class="lab"><b>${r.code}</b><span>${r.lab}</span></div><div class="seg">${segs}</div><div class="val">${end(r)}</div>`;
+    hover(el, info(r)); box.appendChild(el);
+  });
+}
+
+// code, libellé, cas, idéal, inconnu prudent, alias exact, mots triés, index négatif, rien trouvé
+const CAT = [
+  ["C01","libellé canonique",299,299,0,299,0,0,0],
+  ["C02","traduction officielle",345,345,0,345,0,0,0],
+  ["C03","variante GeoNames",349,349,0,349,0,0,0],
+  ["C04","terme métier",63,63,0,63,0,0,0],
+  ["C05","homonyme",491,491,0,489,2,0,0],
+  ["C06","indice de type",598,598,0,598,0,0,0],
+  ["C07","faute de frappe",1932,0,1932,0,0,7,1925],
+  ["C08","hors périmètre proche",436,436,0,0,0,436,0],
+  ["C09","code",791,791,0,461,0,0,330],
+  ["C10","client",822,683,139,489,194,0,139],
+  ["C11","marque",127,127,0,127,0,0,0],
+  ["C12","véhicule",551,551,0,548,3,0,0],
+  ["C13","abréviation",354,1,353,1,0,0,353],
+].map(c => ({ code: c[0], lab: c[1], n: c[2], ideal: c[3], prud: c[4], ex: c[5], tri: c[6], neg: c[7], rien: c[8] }));
+const pct = (a, n) => fr(a / n * 100);
+stack("catQual", CAT, r => [[r.ideal, "--s1"], [r.prud, "--base"]], r => pct(r.ideal, r.n) + "%",
+  r => `<b>${r.code} · ${r.lab}</b> · ${nb(r.n)} cas<br>Réponse attendue ${nb(r.ideal)} (${pct(r.ideal, r.n)} %)<br>Inconnu prudent ${nb(r.prud)}<br>Erreur silencieuse 0`);
+stack("catEtape", CAT, r => [[r.ex, "--s1"], [r.tri, "--s2"], [r.neg, "--s3"], [r.rien, "--s4"]], r => nb(r.n),
+  r => `<b>${r.code} · ${r.lab}</b><br>Alias exact ${nb(r.ex)} · mots triés ${nb(r.tri)}<br>Index négatif ${nb(r.neg)} · rien trouvé ${nb(r.rien)}`);
+
+const tb = document.querySelector("#catTable tbody"); const T = { n: 0, ideal: 0, prud: 0, ex: 0, tri: 0, neg: 0, rien: 0 };
+CAT.forEach(r => {
+  Object.keys(T).forEach(k => T[k] += r[k]);
+  tb.insertAdjacentHTML("beforeend", `<tr><td>${r.code} · ${r.lab}</td><td class="r">${nb(r.n)}</td><td class="r">${pct(r.ideal, r.n)} %</td><td class="r">${nb(r.prud)}</td><td class="r">${nb(r.ex)}</td><td class="r">${nb(r.tri)}</td><td class="r">${nb(r.neg)}</td><td class="r">${nb(r.rien)}</td><td class="r z">0</td></tr>`);
+});
+tb.insertAdjacentHTML("beforeend", `<tr class="tot"><td>Total dev</td><td class="r">${nb(T.n)}</td><td class="r">${pct(T.ideal, T.n)} %</td><td class="r">${nb(T.prud)}</td><td class="r">${nb(T.ex)}</td><td class="r">${nb(T.tri)}</td><td class="r">${nb(T.neg)}</td><td class="r">${nb(T.rien)}</td><td class="r z">0</td></tr>`);
+
+const CAUSES = [
+  { lab: "Faute de frappe", sub: "C07 · étape 2, approchée", v: 1932 },
+  { lab: "Abréviation St, Ste", sub: "C13 · développement", v: 221 },
+  { lab: "Abréviation s/ (sur)", sub: "C13 · développement", v: 127 },
+  { lab: "Forme juridique à points", sub: "C10 · normalisation", v: 119 },
+  { lab: "Forme juridique sans points", sub: "C10 · normalisation", v: 20 },
+  { lab: "Abréviation Mt (mont)", sub: "C13 · développement", v: 5 },
+].map(r => ({ ...r, cls: "cause" }));
+bars("causes", CAUSES, 2000, v => nb(v), () => "", r => `<b>${r.lab}</b><br>${nb(r.v)} cas (${fr(r.v / 2424 * 100)} % des non idéaux)<br>Réponse actuelle : inconnu`);
+
+bars("tiers", [
+  { lab: "Idéal · tiers 1, 2, 3", sub: "configuration du moteur", v: 66.1, me: true, info: "4 734 cas sur 7 158" },
+  { lab: "Idéal · tier 1 seul", sub: "alias officiels", v: 34.5, info: "2 469 cas sur 7 158" },
+  { lab: "Sûr · tiers 1, 2, 3", sub: "configuration du moteur", v: 100.0, me: true, info: "Aucune erreur silencieuse" },
+  { lab: "Sûr · tier 1 seul", sub: "alias officiels", v: 68.6, info: "30 erreurs silencieuses, 63 trop confiantes, 2 153 incorrectes" },
+], 100, v => fr(v) + " %", r => r.me ? "" : "muted", r => `<b>${r.lab}</b><br>${fr(r.v)} %<br>${r.info}`);
+
+stack("regles", [
+  { code: "", lab: "Résolution", c: 7, p: 1, a: 18 },
+  { code: "", lab: "Manifest", c: 0, p: 0, a: 7 },
+  { code: "", lab: "Calcul", c: 0, p: 0, a: 18 },
+  { code: "", lab: "Affichage", c: 0, p: 0, a: 5 },
+].map(r => ({ ...r, n: r.c + r.p + r.a })), r => [[r.c, "--good-fill"], [r.p, "--s4"], [r.a, "--base"]], r => nb(r.n),
+  r => `<b>${r.lab}</b> · ${r.n} règles<br>Codées ${r.c} · prototypées ${r.p} · à coder ${r.a}`);
+document.querySelectorAll("#regles .lab span").forEach(s => s.style.display = "inline");
+const FZ = {"cible":0.05,"resultats":{"A":{"C01_libelle_canonique":{"n":83,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C02_traduction_officielle":{"n":120,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C03_variante_geonames":{"n":105,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C04_terme_metier":{"n":20,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C05_homonyme":{"n":148,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C06_indice_de_type":{"n":196,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C07_faute_de_frappe":{"n":554,"ideal":0.0,"sur":100.0,"silencieux":0.0},"C08_hors_perimetre_proche":{"n":136,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C09_code":{"n":237,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C10_client":{"n":237,"ideal":83.12,"sur":100.0,"silencieux":0.0},"C11_marque":{"n":40,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C12_vehicule":{"n":167,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C13_abreviation":{"n":90,"ideal":0.0,"sur":100.0,"silencieux":0.0},"TOTAL":{"n":2133,"ideal":67.93,"sur":100.0,"silencieux":0.0}},"B":{"C01_libelle_canonique":{"n":83,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C02_traduction_officielle":{"n":120,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C03_variante_geonames":{"n":105,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C04_terme_metier":{"n":20,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C05_homonyme":{"n":148,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C06_indice_de_type":{"n":196,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C07_faute_de_frappe":{"n":554,"ideal":84.48,"sur":95.67,"silencieux":0.0},"C08_hors_perimetre_proche":{"n":136,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C09_code":{"n":237,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C10_client":{"n":237,"ideal":83.12,"sur":100.0,"silencieux":0.0},"C11_marque":{"n":40,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C12_vehicule":{"n":167,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C13_abreviation":{"n":90,"ideal":0.0,"sur":100.0,"silencieux":0.0},"TOTAL":{"n":2133,"ideal":89.87,"sur":98.87,"silencieux":0.0}},"C":{"C01_libelle_canonique":{"n":83,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C02_traduction_officielle":{"n":120,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C03_variante_geonames":{"n":105,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C04_terme_metier":{"n":20,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C05_homonyme":{"n":148,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C06_indice_de_type":{"n":196,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C07_faute_de_frappe":{"n":554,"ideal":44.22,"sur":98.92,"silencieux":0.0},"C08_hors_perimetre_proche":{"n":136,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C09_code":{"n":237,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C10_client":{"n":237,"ideal":83.12,"sur":100.0,"silencieux":0.0},"C11_marque":{"n":40,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C12_vehicule":{"n":167,"ideal":100.0,"sur":100.0,"silencieux":0.0},"C13_abreviation":{"n":90,"ideal":0.0,"sur":100.0,"silencieux":0.0},"TOTAL":{"n":2133,"ideal":79.42,"sur":99.72,"silencieux":0.0}}},"robustesse":{"B":{"n":139,"silencieux":47,"exemples":[{"texte":"Arbusigny","ids":["geo:ville:FR-3029477"]},{"texte":"Beauvoisin","ids":["geo:ville:FR-3033962"]},{"texte":"Bizanet","ids":["geo:localite:BE-7783-bizet"]},{"texte":"Breteil","ids":["geo:ville:FR-3030276"]},{"texte":"Chalon-sur-Saône","ids":["geo:ville:FR-3027487"]},{"texte":"Charpont","ids":["geo:ville:FR-3026553"]},{"texte":"Coubron","ids":["geo:ville:FR-3022770"]},{"texte":"Dettingen","ids":["geo:ville:FR-3019338"]}]},"C":{"n":139,"silencieux":34,"exemples":[{"texte":"Arbusigny","ids":["geo:ville:FR-3029477"]},{"texte":"Beauvoisin","ids":["geo:ville:FR-3033962"]},{"texte":"Breteil","ids":["geo:ville:FR-3030276"]},{"texte":"Chalon-sur-Saône","ids":["geo:ville:FR-3027487"]},{"texte":"Charpont","ids":["geo:ville:FR-3026553"]},{"texte":"Coubron","ids":["geo:ville:FR-3022770"]},{"texte":"Dettingen","ids":["geo:ville:FR-3019338"]},{"texte":"Emmerich","ids":["geo:ville:FR-3020236"]}]}},"types":{"canal":{"fuzzy":"desactive","n_cas":2,"n_retenables":2,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"2 cas retenables, il en faut au moins 97 pour r* = 0.05"},"categorie_piece":{"fuzzy":"desactive","n_cas":102,"n_retenables":95,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"95 cas retenables, il en faut au moins 97 pour r* = 0.05"},"client":{"fuzzy":"desactive","n_cas":101,"n_retenables":0,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"0 cas retenables, il en faut au moins 97 pour r* = 0.05"},"commune":{"fuzzy":"desactive","n_cas":147,"n_retenables":132,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"},"famille_mecanova":{"fuzzy":"desactive","n_cas":2,"n_retenables":2,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"2 cas retenables, il en faut au moins 97 pour r* = 0.05"},"gamme":{"fuzzy":"desactive","n_cas":3,"n_retenables":3,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"3 cas retenables, il en faut au moins 97 pour r* = 0.05"},"groupe_industriel":{"fuzzy":"desactive","n_cas":1,"n_retenables":1,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"1 cas retenables, il en faut au moins 97 pour r* = 0.05"},"localite_postale":{"fuzzy":"desactive","n_cas":216,"n_retenables":155,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"},"marque_piece":{"fuzzy":"desactive","n_cas":5,"n_retenables":4,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"4 cas retenables, il en faut au moins 97 pour r* = 0.05"},"marque_vehicule":{"fuzzy":"desactive","n_cas":3,"n_retenables":3,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"3 cas retenables, il en faut au moins 97 pour r* = 0.05"},"mesure":{"fuzzy":"desactive","n_cas":12,"n_retenables":12,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"12 cas retenables, il en faut au moins 97 pour r* = 0.05"},"mixte":{"fuzzy":"desactive","n_cas":149,"n_retenables":127,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"},"modele_vehicule":{"fuzzy":"desactive","n_cas":92,"n_retenables":76,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"76 cas retenables, il en faut au moins 97 pour r* = 0.05"},"motif_retour":{"fuzzy":"desactive","n_cas":1,"n_retenables":1,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"1 cas retenables, il en faut au moins 97 pour r* = 0.05"},"pays":{"fuzzy":"desactive","n_cas":5,"n_retenables":5,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"5 cas retenables, il en faut au moins 97 pour r* = 0.05"},"province":{"fuzzy":"desactive","n_cas":1,"n_retenables":1,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"1 cas retenables, il en faut au moins 97 pour r* = 0.05"},"qualite":{"fuzzy":"desactive","n_cas":1,"n_retenables":1,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"1 cas retenables, il en faut au moins 97 pour r* = 0.05"},"segment":{"fuzzy":"desactive","n_cas":2,"n_retenables":2,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"2 cas retenables, il en faut au moins 97 pour r* = 0.05"},"site":{"fuzzy":"desactive","n_cas":1,"n_retenables":1,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"1 cas retenables, il en faut au moins 97 pour r* = 0.05"},"type_client":{"fuzzy":"desactive","n_cas":1,"n_retenables":1,"seuil":null,"borne":null,"n_retenus":null,"risque_empirique":null,"raison":"1 cas retenables, il en faut au moins 97 pour r* = 0.05"},"ville":{"fuzzy":"actif","n_cas":865,"n_retenables":618,"seuil":0.859649,"borne":0.014942,"n_retenus":617,"risque_empirique":0.003241,"raison":null}},"courbes":{"ville":{"n_cas":342,"calibration":{"fuzzy":"actif","seuil":0.859649},"dangereuse":{"points":[[0.9909,0.0029,0.0,1,0],[0.99,0.0058,0.0,2,0],[0.9895,0.0088,0.0,3,0],[0.9889,0.0146,0.0,5,0],[0.9882,0.0175,0.0,6,0],[0.9875,0.0409,0.0,14,0],[0.9867,0.0526,0.0,18,0],[0.986,0.0556,0.0,19,0],[0.9857,0.0673,0.0,23,0],[0.9846,0.0906,0.0,31,0],[0.9833,0.0936,0.0,32,0],[0.9833,0.1316,0.0,45,0],[0.9824,0.1345,0.0,46,0],[0.9822,0.1374,0.0,47,0],[0.9821,0.1433,0.0,49,0],[0.9818,0.1813,0.0,62,0],[0.981,0.1842,0.0,63,0],[0.9806,0.1871,0.0,64,0],[0.98,0.193,0.0,66,0],[0.98,0.231,0.0,79,0],[0.9795,0.2339,0.0,80,0],[0.9788,0.2398,0.0,82,0],[0.9784,0.2456,0.0,84,0],[0.9778,0.2982,0.0,102,0],[0.9769,0.3012,0.0,103,0],[0.9767,0.3129,0.0,107,0],[0.9758,0.3187,0.0,109,0],[0.9757,0.3216,0.0,110,0],[0.975,0.3772,0.0,129,0],[0.9741,0.3918,0.0,134,0],[0.9733,0.3977,0.0,136,0],[0.9727,0.4006,0.0,137,0],[0.9714,0.4532,0.0,155,0],[0.9708,0.4649,0.0,159,0],[0.9704,0.4912,0.0,168,0],[0.9703,0.4942,0.0,169,0],[0.97,0.4971,0.0,170,0],[0.9692,0.5,0.0,171,0],[0.9667,0.5439,0.0,186,0],[0.9667,0.5468,0.0,187,0],[0.9636,0.5556,0.0,190,0],[0.9625,0.5702,0.0,195,0],[0.9619,0.5789,0.0,198,0],[0.9611,0.5819,0.0,199,0],[0.9611,0.5848,0.0,200,0],[0.96,0.5936,0.0,203,0],[0.9593,0.5965,0.0,204,0],[0.959,0.5994,0.0,205,0],[0.9583,0.6023,0.0,206,0],[0.9578,0.6082,0.0,208,0],[0.9571,0.6111,0.0,209,0],[0.9556,0.6316,0.0,216,0],[0.9538,0.6374,0.0,218,0],[0.95,0.6433,0.0,220,0],[0.95,0.6491,0.0,222,0],[0.9481,0.652,0.0,223,0],[0.9464,0.655,0.0,224,0],[0.9449,0.6579,0.0,225,0],[0.9429,0.6667,0.0,228,0],[0.9417,0.6725,0.0,230,0],[0.9396,0.6754,0.0,231,0],[0.9381,0.6784,0.0,232,0],[0.9375,0.6813,0.0,233,0],[0.9333,0.6988,0.0,239,0],[0.9333,0.7018,0.0,240,0],[0.9301,0.7047,0.0,241,0],[0.9265,0.7076,0.0,242,0],[0.925,0.7105,0.0,243,0],[0.9238,0.7164,0.0,245,0],[0.9222,0.7222,0.0,247,0],[0.9196,0.7251,0.0,248,0],[0.9134,0.7281,0.0,249,0],[0.911,0.731,0.0,250,0],[0.9,0.7368,0.0,252,0],[0.8958,0.7398,0.0,253,0],[0.8844,0.7427,0.0,254,0],[0.8821,0.7456,0.0,255,0]],"b":{"seuil":0.88,"couverture":0.7456,"risque":0.0,"retenus":255,"pertes":0},"c":{"seuil":0.859649,"couverture":0.7456,"risque":0.0,"retenus":255,"pertes":0}},"non_sure":{"points":[[0.9909,0.0029,0.0,1,0],[0.99,0.0058,0.0,2,0],[0.9895,0.0088,0.0,3,0],[0.9889,0.0146,0.0,5,0],[0.9882,0.0175,0.0,6,0],[0.9875,0.0409,0.0,14,0],[0.9867,0.0526,0.0,18,0],[0.986,0.0556,0.0,19,0],[0.9857,0.0673,0.0,23,0],[0.9846,0.0906,0.0,31,0],[0.9833,0.0936,0.0,32,0],[0.9833,0.1316,0.0222,45,1],[0.9824,0.1345,0.0217,46,1],[0.9822,0.1374,0.0213,47,1],[0.9821,0.1433,0.0204,49,1],[0.9818,0.1813,0.0161,62,1],[0.981,0.1842,0.0159,63,1],[0.9806,0.1871,0.0156,64,1],[0.98,0.193,0.0152,66,1],[0.98,0.231,0.0127,79,1],[0.9795,0.2339,0.0125,80,1],[0.9788,0.2398,0.0122,82,1],[0.9784,0.2456,0.0119,84,1],[0.9778,0.2982,0.0098,102,1],[0.9769,0.3012,0.0097,103,1],[0.9767,0.3129,0.0093,107,1],[0.9758,0.3187,0.0092,109,1],[0.9757,0.3216,0.0091,110,1],[0.975,0.3772,0.0155,129,2],[0.9741,0.3918,0.0149,134,2],[0.9733,0.3977,0.0147,136,2],[0.9727,0.4006,0.0146,137,2],[0.9714,0.4532,0.0129,155,2],[0.9708,0.4649,0.0126,159,2],[0.9704,0.4912,0.0119,168,2],[0.9703,0.4942,0.0118,169,2],[0.97,0.4971,0.0118,170,2],[0.9692,0.5,0.0117,171,2],[0.9667,0.5439,0.0108,186,2],[0.9667,0.5468,0.0107,187,2],[0.9636,0.5556,0.0105,190,2],[0.9625,0.5702,0.0103,195,2],[0.9619,0.5789,0.0101,198,2],[0.9611,0.5819,0.0101,199,2],[0.9611,0.5848,0.01,200,2],[0.96,0.5936,0.0099,203,2],[0.9593,0.5965,0.0098,204,2],[0.959,0.5994,0.0098,205,2],[0.9583,0.6023,0.0097,206,2],[0.9578,0.6082,0.0096,208,2],[0.9571,0.6111,0.0096,209,2],[0.9556,0.6316,0.0093,216,2],[0.9538,0.6374,0.0092,218,2],[0.95,0.6433,0.0091,220,2],[0.95,0.6491,0.009,222,2],[0.9481,0.652,0.009,223,2],[0.9464,0.655,0.0089,224,2],[0.9449,0.6579,0.0089,225,2],[0.9429,0.6667,0.0132,228,3],[0.9417,0.6725,0.013,230,3],[0.9396,0.6754,0.013,231,3],[0.9381,0.6784,0.0129,232,3],[0.9375,0.6813,0.0129,233,3],[0.9333,0.6988,0.0167,239,4],[0.9333,0.7018,0.0167,240,4],[0.9301,0.7047,0.0166,241,4],[0.9265,0.7076,0.0165,242,4],[0.925,0.7105,0.0165,243,4],[0.9238,0.7164,0.0204,245,5],[0.9222,0.7222,0.0202,247,5],[0.9196,0.7251,0.0202,248,5],[0.9134,0.7281,0.0201,249,5],[0.911,0.731,0.02,250,5],[0.9,0.7368,0.0198,252,5],[0.8958,0.7398,0.0198,253,5],[0.8844,0.7427,0.0236,254,6],[0.8821,0.7456,0.0235,255,6]],"b":{"seuil":0.88,"couverture":0.7456,"risque":0.0235,"retenus":255,"pertes":6},"c":{"seuil":0.859649,"couverture":0.7456,"risque":0.0235,"retenus":255,"pertes":6}}},"localite_postale":{"n_cas":92,"calibration":{"fuzzy":"desactive","seuil":null},"dangereuse":{"points":[[0.9931,0.0109,0.0,1,0],[0.9905,0.0217,0.0,2,0],[0.9895,0.0326,0.0,3,0],[0.9889,0.0435,0.0,4,0],[0.9857,0.0652,0.0,6,0],[0.9854,0.0761,0.0,7,0],[0.9846,0.087,0.0,8,0],[0.9844,0.0978,0.0,9,0],[0.9833,0.1304,0.0,12,0],[0.9818,0.163,0.0,15,0],[0.98,0.2174,0.0,20,0],[0.9788,0.2283,0.0,21,0],[0.9784,0.2391,0.0,22,0],[0.9778,0.3261,0.0,30,0],[0.9769,0.337,0.0,31,0],[0.975,0.3913,0.0,36,0],[0.9714,0.4239,0.0,39,0],[0.9704,0.4457,0.0,41,0],[0.9673,0.4565,0.0,42,0],[0.9667,0.4891,0.0,45,0],[0.9636,0.5,0.0,46,0],[0.9619,0.5109,0.0,47,0],[0.9611,0.5217,0.0,48,0],[0.9556,0.5435,0.0,50,0],[0.9515,0.5543,0.0,51,0],[0.95,0.5978,0.0,55,0],[0.95,0.6087,0.0,56,0],[0.947,0.6196,0.0,57,0],[0.9467,0.6304,0.0,58,0],[0.9455,0.6413,0.0,59,0],[0.9429,0.6522,0.0,60,0],[0.9417,0.663,0.0,61,0],[0.9333,0.6848,0.0,63,0],[0.9278,0.6957,0.0,64,0],[0.9238,0.7065,0.0,65,0],[0.9222,0.7174,0.0,66,0],[0.919,0.7283,0.0,67,0],[0.9143,0.7391,0.0,68,0],[0.9074,0.75,0.0,69,0],[0.9042,0.7609,0.0,70,0],[0.9013,0.7717,0.0,71,0]],"b":{"seuil":0.88,"couverture":0.7717,"risque":0.0,"retenus":71,"pertes":0},"c":null},"non_sure":{"points":[[0.9931,0.0109,0.0,1,0],[0.9905,0.0217,0.0,2,0],[0.9895,0.0326,0.0,3,0],[0.9889,0.0435,0.0,4,0],[0.9857,0.0652,0.0,6,0],[0.9854,0.0761,0.0,7,0],[0.9846,0.087,0.0,8,0],[0.9844,0.0978,0.0,9,0],[0.9833,0.1304,0.0,12,0],[0.9818,0.163,0.0,15,0],[0.98,0.2174,0.0,20,0],[0.9788,0.2283,0.0,21,0],[0.9784,0.2391,0.0,22,0],[0.9778,0.3261,0.0,30,0],[0.9769,0.337,0.0,31,0],[0.975,0.3913,0.0,36,0],[0.9714,0.4239,0.0,39,0],[0.9704,0.4457,0.0,41,0],[0.9673,0.4565,0.0,42,0],[0.9667,0.4891,0.0222,45,1],[0.9636,0.5,0.0217,46,1],[0.9619,0.5109,0.0213,47,1],[0.9611,0.5217,0.0417,48,2],[0.9556,0.5435,0.04,50,2],[0.9515,0.5543,0.0392,51,2],[0.95,0.5978,0.0727,55,4],[0.95,0.6087,0.0714,56,4],[0.947,0.6196,0.0702,57,4],[0.9467,0.6304,0.069,58,4],[0.9455,0.6413,0.0678,59,4],[0.9429,0.6522,0.0833,60,5],[0.9417,0.663,0.082,61,5],[0.9333,0.6848,0.0952,63,6],[0.9278,0.6957,0.0938,64,6],[0.9238,0.7065,0.0923,65,6],[0.9222,0.7174,0.0909,66,6],[0.919,0.7283,0.0896,67,6],[0.9143,0.7391,0.0882,68,6],[0.9074,0.75,0.087,69,6],[0.9042,0.7609,0.0857,70,6],[0.9013,0.7717,0.0845,71,6]],"b":{"seuil":0.88,"couverture":0.7717,"risque":0.0845,"retenus":71,"pertes":6},"c":null}},"commune":{"n_cas":57,"calibration":{"fuzzy":"desactive","seuil":null},"dangereuse":{"points":[[0.9846,0.0175,0.0,1,0],[0.9833,0.0351,0.0,2,0],[0.9818,0.0702,0.0,4,0],[0.9806,0.0877,0.0,5,0],[0.98,0.1404,0.0,8,0],[0.9784,0.1579,0.0,9,0],[0.9778,0.2456,0.0,14,0],[0.9767,0.2632,0.0,15,0],[0.975,0.2807,0.0,16,0],[0.9733,0.2982,0.0,17,0],[0.9714,0.3333,0.0,19,0],[0.9708,0.3509,0.0,20,0],[0.9704,0.3684,0.0,21,0],[0.9667,0.4211,0.0,24,0],[0.9636,0.4386,0.0,25,0],[0.9619,0.4561,0.0,26,0],[0.9611,0.4737,0.0,27,0],[0.9556,0.5614,0.0,32,0],[0.9528,0.5789,0.0,33,0],[0.95,0.614,0.0286,35,1],[0.95,0.6316,0.0278,36,1],[0.9487,0.6491,0.027,37,1],[0.9429,0.6667,0.0263,38,1],[0.9417,0.6842,0.0256,39,1],[0.9333,0.7193,0.0244,41,1],[0.9237,0.7368,0.0238,42,1],[0.9222,0.7895,0.0222,45,1],[0.9175,0.807,0.0217,46,1],[0.9067,0.8246,0.0213,47,1],[0.8788,0.8421,0.0208,48,1]],"b":{"seuil":0.88,"couverture":0.8246,"risque":0.0213,"retenus":47,"pertes":1},"c":null},"non_sure":{"points":[[0.9846,0.0175,0.0,1,0],[0.9833,0.0351,0.0,2,0],[0.9818,0.0702,0.0,4,0],[0.9806,0.0877,0.0,5,0],[0.98,0.1404,0.0,8,0],[0.9784,0.1579,0.0,9,0],[0.9778,0.2456,0.0,14,0],[0.9767,0.2632,0.0,15,0],[0.975,0.2807,0.0,16,0],[0.9733,0.2982,0.0,17,0],[0.9714,0.3333,0.0526,19,1],[0.9708,0.3509,0.05,20,1],[0.9704,0.3684,0.0476,21,1],[0.9667,0.4211,0.0417,24,1],[0.9636,0.4386,0.04,25,1],[0.9619,0.4561,0.0385,26,1],[0.9611,0.4737,0.037,27,1],[0.9556,0.5614,0.0312,32,1],[0.9528,0.5789,0.0303,33,1],[0.95,0.614,0.0571,35,2],[0.95,0.6316,0.0556,36,2],[0.9487,0.6491,0.0541,37,2],[0.9429,0.6667,0.0526,38,2],[0.9417,0.6842,0.0513,39,2],[0.9333,0.7193,0.0732,41,3],[0.9237,0.7368,0.0714,42,3],[0.9222,0.7895,0.0667,45,3],[0.9175,0.807,0.087,46,4],[0.9067,0.8246,0.1064,47,5],[0.8788,0.8421,0.125,48,6]],"b":{"seuil":0.88,"couverture":0.8246,"risque":0.1064,"retenus":47,"pertes":5},"c":null}},"categorie_piece":{"n_cas":49,"calibration":{"fuzzy":"desactive","seuil":null},"dangereuse":{"points":[[0.9947,0.0204,0.0,1,0],[0.9923,0.0408,0.0,2,0],[0.992,0.0612,0.0,3,0],[0.9905,0.0816,0.0,4,0],[0.9889,0.1224,0.0,6,0],[0.9882,0.1429,0.0,7,0],[0.9867,0.1837,0.0,9,0],[0.986,0.2041,0.0,10,0],[0.9857,0.2245,0.0,11,0],[0.9854,0.2449,0.0,12,0],[0.9846,0.2653,0.0,13,0],[0.9833,0.2857,0.0,14,0],[0.9833,0.3265,0.0,16,0],[0.9821,0.3469,0.0,17,0],[0.9818,0.3673,0.0,18,0],[0.98,0.4082,0.0,20,0],[0.9797,0.4286,0.0,21,0],[0.9795,0.449,0.0,22,0],[0.9788,0.4694,0.0,23,0],[0.9787,0.4898,0.0,24,0],[0.9786,0.5102,0.0,25,0],[0.9784,0.5306,0.0,26,0],[0.9778,0.551,0.0,27,0],[0.9714,0.5714,0.0,28,0],[0.9667,0.5918,0.0,29,0],[0.9667,0.6122,0.0,30,0],[0.9636,0.6327,0.0,31,0],[0.96,0.6531,0.0,32,0],[0.9561,0.6735,0.0,33,0],[0.9556,0.6939,0.0,34,0],[0.955,0.7143,0.0,35,0],[0.9549,0.7347,0.0,36,0],[0.9528,0.7551,0.0,37,0],[0.9507,0.7959,0.0,39,0],[0.9483,0.8163,0.0,40,0],[0.9448,0.8367,0.0,41,0],[0.9441,0.8571,0.0,42,0],[0.9425,0.8776,0.0,43,0],[0.9372,0.898,0.0,44,0],[0.9346,0.9184,0.0,45,0]],"b":{"seuil":0.88,"couverture":0.9184,"risque":0.0,"retenus":45,"pertes":0},"c":null},"non_sure":{"points":[[0.9947,0.0204,0.0,1,0],[0.9923,0.0408,0.0,2,0],[0.992,0.0612,0.0,3,0],[0.9905,0.0816,0.0,4,0],[0.9889,0.1224,0.0,6,0],[0.9882,0.1429,0.0,7,0],[0.9867,0.1837,0.0,9,0],[0.986,0.2041,0.0,10,0],[0.9857,0.2245,0.0,11,0],[0.9854,0.2449,0.0,12,0],[0.9846,0.2653,0.0,13,0],[0.9833,0.2857,0.0,14,0],[0.9833,0.3265,0.0,16,0],[0.9821,0.3469,0.0,17,0],[0.9818,0.3673,0.0,18,0],[0.98,0.4082,0.0,20,0],[0.9797,0.4286,0.0,21,0],[0.9795,0.449,0.0,22,0],[0.9788,0.4694,0.0,23,0],[0.9787,0.4898,0.0,24,0],[0.9786,0.5102,0.0,25,0],[0.9784,0.5306,0.0,26,0],[0.9778,0.551,0.0,27,0],[0.9714,0.5714,0.0,28,0],[0.9667,0.5918,0.0,29,0],[0.9667,0.6122,0.0,30,0],[0.9636,0.6327,0.0,31,0],[0.96,0.6531,0.0,32,0],[0.9561,0.6735,0.0,33,0],[0.9556,0.6939,0.0,34,0],[0.955,0.7143,0.0,35,0],[0.9549,0.7347,0.0,36,0],[0.9528,0.7551,0.0,37,0],[0.9507,0.7959,0.0,39,0],[0.9483,0.8163,0.0,40,0],[0.9448,0.8367,0.0,41,0],[0.9441,0.8571,0.0,42,0],[0.9425,0.8776,0.0233,43,1],[0.9372,0.898,0.0227,44,1],[0.9346,0.9184,0.0222,45,1]],"b":{"seuil":0.88,"couverture":0.9184,"risque":0.0222,"retenus":45,"pertes":1},"c":null}},"mixte":{"n_cas":41,"calibration":{"fuzzy":"desactive","seuil":null},"dangereuse":{"points":[[0.9889,0.0244,0.0,1,0],[0.9882,0.0488,0.0,2,0],[0.9846,0.0732,0.0,3,0],[0.9833,0.1463,0.0,6,0],[0.98,0.1707,0.0,7,0],[0.9778,0.2195,0.0,9,0],[0.975,0.3415,0.0,14,0],[0.9741,0.3659,0.0,15,0],[0.9714,0.439,0.0,18,0],[0.9708,0.4634,0.0,19,0],[0.9667,0.5122,0.0,21,0],[0.9619,0.5366,0.0,22,0],[0.9618,0.5854,0.0,24,0],[0.9611,0.6341,0.0,26,0],[0.96,0.6585,0.0,27,0],[0.9556,0.7073,0.0,29,0],[0.9515,0.7317,0.0,30,0],[0.9513,0.7561,0.0,31,0],[0.95,0.7805,0.0,32,0],[0.9429,0.8293,0.0,34,0],[0.9143,0.878,0.0,36,0],[0.9074,0.9024,0.0,37,0]],"b":{"seuil":0.88,"couverture":0.9024,"risque":0.0,"retenus":37,"pertes":0},"c":null},"non_sure":{"points":[[0.9889,0.0244,0.0,1,0],[0.9882,0.0488,0.0,2,0],[0.9846,0.0732,0.0,3,0],[0.9833,0.1463,0.0,6,0],[0.98,0.1707,0.0,7,0],[0.9778,0.2195,0.0,9,0],[0.975,0.3415,0.0714,14,1],[0.9741,0.3659,0.0667,15,1],[0.9714,0.439,0.0556,18,1],[0.9708,0.4634,0.0526,19,1],[0.9667,0.5122,0.0476,21,1],[0.9619,0.5366,0.0455,22,1],[0.9618,0.5854,0.0417,24,1],[0.9611,0.6341,0.0385,26,1],[0.96,0.6585,0.037,27,1],[0.9556,0.7073,0.0345,29,1],[0.9515,0.7317,0.0333,30,1],[0.9513,0.7561,0.0323,31,1],[0.95,0.7805,0.0312,32,1],[0.9429,0.8293,0.0588,34,2],[0.9143,0.878,0.1111,36,4],[0.9074,0.9024,0.1351,37,5]],"b":{"seuil":0.88,"couverture":0.9024,"risque":0.1351,"retenus":37,"pertes":5},"c":null}},"modele_vehicule":{"n_cas":38,"calibration":{"fuzzy":"desactive","seuil":null},"dangereuse":{"points":[[0.9931,0.0263,0.0,1,0],[0.9923,0.0526,0.0,2,0],[0.9882,0.0789,0.0,3,0],[0.9867,0.2368,0.0,9,0],[0.9863,0.2632,0.0,10,0],[0.9857,0.3158,0.0,12,0],[0.9846,0.3684,0.0,14,0],[0.9833,0.4211,0.0,16,0],[0.9806,0.4474,0.0,17,0],[0.98,0.4737,0.0,18,0],[0.9788,0.5,0.0,19,0],[0.9771,0.5263,0.0,20,0],[0.9667,0.5526,0.0,21,0],[0.9611,0.5789,0.0,22,0],[0.96,0.6053,0.0,23,0],[0.9583,0.6316,0.0,24,0],[0.9556,0.6579,0.0,25,0],[0.9515,0.6842,0.0,26,0],[0.95,0.7105,0.0,27,0],[0.9333,0.7368,0.0,28,0],[0.9222,0.7632,0.0,29,0],[0.9155,0.7895,0.0,30,0]],"b":{"seuil":0.88,"couverture":0.7895,"risque":0.0,"retenus":30,"pertes":0},"c":null},"non_sure":{"points":[[0.9931,0.0263,0.0,1,0],[0.9923,0.0526,0.0,2,0],[0.9882,0.0789,0.0,3,0],[0.9867,0.2368,0.0,9,0],[0.9863,0.2632,0.0,10,0],[0.9857,0.3158,0.0,12,0],[0.9846,0.3684,0.0,14,0],[0.9833,0.4211,0.0,16,0],[0.9806,0.4474,0.0,17,0],[0.98,0.4737,0.0,18,0],[0.9788,0.5,0.0,19,0],[0.9771,0.5263,0.0,20,0],[0.9667,0.5526,0.0,21,0],[0.9611,0.5789,0.0455,22,1],[0.96,0.6053,0.0435,23,1],[0.9583,0.6316,0.0417,24,1],[0.9556,0.6579,0.04,25,1],[0.9515,0.6842,0.0385,26,1],[0.95,0.7105,0.037,27,1],[0.9333,0.7368,0.0357,28,1],[0.9222,0.7632,0.0345,29,1],[0.9155,0.7895,0.0333,30,1]],"b":{"seuil":0.88,"couverture":0.7895,"risque":0.0333,"retenus":30,"pertes":1},"c":null}}}};
+
+// ── Étape 2 : données de reports/fuzzy_dev.json (python -m engine.comparaison)
+const CATS2 = [["C07_faute_de_frappe", "C07 · faute de frappe"], ["C10_client", "C10 · client"],
+  ["C13_abreviation", "C13 · abréviation"], ["TOTAL", "Total part eval"]];
+const CFG = [["A", "cA", "exact seul"], ["B", "cB", "seuil fixe 0,88"], ["C", "cC", "seuils calibrés"]];
+["ideal", "sur"].forEach(m => {
+  const rows = [];
+  CATS2.forEach(([k, lab]) => CFG.forEach(([c, cls, nom], i) => {
+    const v = FZ.resultats[c][k];
+    rows.push({ lab: i ? "" : lab, sub: `${c} · ${nom}`, v: v[m], cls: "", fc: cls, me: k === "TOTAL",
+      info: `<b>${lab}</b> · ${c} (${nom})<br>Idéal ${fr(v.ideal)} % · sûr ${fr(v.sur)} %<br>Erreurs silencieuses ${fr(v.silencieux)} % · ${nb(v.n)} cas` });
+  }));
+  bars(m === "ideal" ? "fzIdeal" : "fzSur", rows, 100, v => fr(v) + " %", r => r.fc, r => r.info);
+});
+const tb2 = document.querySelector("#fzTable tbody");
+Object.keys(FZ.resultats.A).forEach(k => {
+  const [a, b, c] = ["A", "B", "C"].map(x => FZ.resultats[x][k]);
+  const sil = [a, b, c].map(v => v.silencieux).every(x => x === 0) ? `<td class="r z">0 · 0 · 0</td>`
+    : `<td class="r bad">${[a, b, c].map(v => fr(v.silencieux)).join(" · ")}</td>`;
+  tb2.insertAdjacentHTML("beforeend", `<tr${k === "TOTAL" ? ' class="tot"' : ""}><td>${k === "TOTAL" ? "Total part eval" : k.replace("_", " · ").replaceAll("_", " ")}</td><td class="r">${nb(a.n)}</td>`
+    + [a, b, c].map(v => `<td class="r">${fr(v.ideal)} %</td><td class="r">${fr(v.sur)} %</td>`).join("") + sil + "</tr>");
+});
+bars("fzRobuste", [
+  { lab: "A · exact seul", sub: "pas d'approché", v: 0, fc: "cA" },
+  { lab: "B · seuil fixe 0,88", sub: "erreurs silencieuses", v: FZ.robustesse.B.silencieux, fc: "crit" },
+  { lab: "C · seuils calibrés", sub: "erreurs silencieuses", v: FZ.robustesse.C.silencieux, fc: "crit" },
+], FZ.robustesse.B.n, v => nb(v), r => r.fc,
+  r => `<b>${r.lab}</b><br>${nb(r.v)} erreurs silencieuses sur ${nb(FZ.robustesse.B.n)} lieux hors périmètre<br>${r.v ? "Exemples : " + FZ.robustesse[r.lab[0]].exemples.slice(0, 3).map(e => e.texte).join(", ") : "L'exact ne rapproche rien."}`);
+
+const NOMS = { ville: "Ville", localite_postale: "Localité postale", commune: "Commune", categorie_piece: "Catégorie de pièce",
+  mixte: "Noms de plusieurs types", modele_vehicule: "Modèle de véhicule", client: "Client", mesure: "Mesure", pays: "Pays" };
+const NS = "http://www.w3.org/2000/svg";
+const YMAX = Math.max(0.15, Math.ceil(Math.max(...Object.values(FZ.courbes).flatMap(c => c.non_sure.points.map(p => p[2]))) * 20) / 20);
+function el(tag, at, parent) { const e = document.createElementNS(NS, tag); Object.entries(at).forEach(([k, v]) => e.setAttribute(k, v)); parent && parent.appendChild(e); return e; }
+Object.entries(FZ.courbes).forEach(([t, c]) => {
+  const W = 320, H = 210, L = 42, R = 12, T = 12, B = 30, X = v => L + v * (W - L - R), Y = v => T + (1 - v / YMAX) * (H - T - B);
+  const cal = c.calibration, actif = cal.fuzzy === "actif";
+  const fig = document.createElement("figure"); fig.className = "facet";
+  fig.innerHTML = `<figcaption><b>${NOMS[t] || t}</b><span>${nb(c.n_cas)} cas eval · C : ${actif ? "seuil " + fr(cal.seuil, 3) : "désactivé"}</span></figcaption>`;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Risque-couverture, ${NOMS[t] || t} : à 0,88, couverture ${fr(c.dangereuse.b.couverture * 100)} %, risque dangereux ${fr(c.dangereuse.b.risque * 100)} %, risque non sûr ${fr(c.non_sure.b.risque * 100)} %.` });
+  for (let g = 0; g <= YMAX + 1e-9; g += 0.05) {
+    el("line", { x1: L, x2: W - R, y1: Y(g), y2: Y(g), class: "grid" }, svg);
+    el("text", { x: L - 6, y: Y(g) + 4, class: "tick", "text-anchor": "end" }, svg).textContent = fr(g * 100, 0) + " %";
+  }
+  [0, 0.5, 1].forEach(v => el("text", { x: X(v), y: H - 10, class: "tick", "text-anchor": v ? (v === 1 ? "end" : "middle") : "start" }, svg).textContent = fr(v * 100, 0) + " %");
+  el("line", { x1: L, x2: W - R, y1: Y(0), y2: Y(0), class: "base" }, svg);
+  el("line", { x1: L, x2: W - R, y1: Y(FZ.cible), y2: Y(FZ.cible), class: "cible" }, svg);
+  el("text", { x: W - R, y: Y(FZ.cible) - 5, class: "tick", "text-anchor": "end" }, svg).textContent = "r* " + fr(FZ.cible * 100, 0) + " %";
+  const series = [["non_sure", "--s2"], ["dangereuse", "--s1"]];
+  series.forEach(([m, col]) => el("polyline", { points: c[m].points.map(p => `${X(p[1])},${Y(p[2])}`).join(" "), class: "ligne", style: `stroke:var(${col})` }, svg));
+  series.forEach(([m, col]) => {
+    el("circle", { cx: X(c[m].b.couverture), cy: Y(c[m].b.risque), r: 4.5, class: "pt", style: `fill:var(${col})` }, svg);
+    if (c[m].c) el("circle", { cx: X(c[m].c.couverture), cy: Y(c[m].c.risque), r: 8, class: "anneau" }, svg);
+  });
+  const lb = c.dangereuse.b, haut = Math.max(c.dangereuse.b.risque, c.non_sure.b.risque);
+  el("text", { x: X(lb.couverture) - 10, y: Y(haut) - 12, class: "tick lbl", "text-anchor": "end" }, svg).textContent = "θ 0,88";
+  const vx = el("line", { y1: T, y2: H - B, class: "cross", visibility: "hidden" }, svg);
+  const zone = el("rect", { x: L, y: T, width: W - L - R, height: H - T - B, fill: "transparent" }, svg);
+  zone.tabIndex = 0;
+  const lire = cov => series.map(([m]) => { const P = c[m].points; let q = P[0]; P.forEach(p => { if (p[1] <= cov + 1e-9) q = p; }); return q; });
+  const montrer = (cov, ex, ey) => {
+    const [ns, dg] = lire(cov);
+    vx.setAttribute("x1", X(dg[1])); vx.setAttribute("x2", X(dg[1])); vx.setAttribute("visibility", "visible");
+    tip.innerHTML = `<b>${NOMS[t] || t}</b> · seuil ${fr(dg[0], 3)}<br>Couverture ${fr(dg[1] * 100)} % (${nb(dg[3])} réponses)<br>Risque dangereux ${fr(dg[2] * 100)} % (${dg[4]})<br>Risque non sûr ${fr(ns[2] * 100)} % (${ns[4]})`;
+    tip.hidden = false;
+    tip.style.left = Math.max(8, Math.min(ex + 14, innerWidth - tip.offsetWidth - 8)) + "px";
+    tip.style.top = Math.max(8, ey - tip.offsetHeight - 10) + "px";
+  };
+  zone.addEventListener("pointermove", e => {
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * W;
+    montrer(Math.max(0, Math.min(1, (x - L) / (W - L - R))), e.clientX, e.clientY);
+  });
+  zone.addEventListener("focus", () => { const r = svg.getBoundingClientRect(); montrer(c.dangereuse.b.couverture, r.left + r.width / 2, r.top + 20); });
+  const cacher = () => { tip.hidden = true; vx.setAttribute("visibility", "hidden"); };
+  zone.addEventListener("pointerleave", cacher); zone.addEventListener("blur", cacher);
+  fig.appendChild(svg);
+  document.getElementById("fzCourbes").appendChild(fig);
+});
+const tb3 = document.querySelector("#fzSeuils tbody");
+Object.entries(FZ.types).sort((a, b) => b[1].n_cas - a[1].n_cas).forEach(([t, v]) => {
+  const ok = v.fuzzy === "actif";
+  tb3.insertAdjacentHTML("beforeend", `<tr><td>${NOMS[t] || t}</td><td class="r">${nb(v.n_cas)}</td><td class="r">${nb(v.n_retenables)}</td><td><span class="pill ${ok ? "ok" : "todo"}">${ok ? "actif" : "désactivé"}</span></td><td class="r">${ok ? fr(v.seuil, 4) : "·"}</td><td class="r">${ok ? fr(v.borne * 100, 2) + " %" : "·"}</td><td>${ok ? `${nb(v.n_retenus)} réponses, risque observé ${fr(v.risque_empirique * 100, 2)} %` : v.raison}</td></tr>`);
+});
+
+const SGR = {"ville":{"m":618,"K":10,"delta_essai":0.005,"pertes":2,"kmin":0.8583,"kmax":0.992,"borne_tout":0.0149,"essais":[{"i":1,"zmin":0,"zmax":617,"z":309,"seuil":0.9733,"n":311,"err":1,"borne":0.0236,"ok":true},{"i":2,"zmin":0,"zmax":309,"z":155,"seuil":0.9611,"n":467,"err":2,"borne":0.0197,"ok":true},{"i":3,"zmin":0,"zmax":155,"z":78,"seuil":0.9485,"n":540,"err":2,"borne":0.0171,"ok":true},{"i":4,"zmin":0,"zmax":78,"z":39,"seuil":0.9333,"n":583,"err":2,"borne":0.0158,"ok":true},{"i":5,"zmin":0,"zmax":39,"z":20,"seuil":0.9175,"n":598,"err":2,"borne":0.0154,"ok":true},{"i":6,"zmin":0,"zmax":20,"z":10,"seuil":0.9022,"n":608,"err":2,"borne":0.0152,"ok":true},{"i":7,"zmin":0,"zmax":10,"z":5,"seuil":0.89,"n":613,"err":2,"borne":0.015,"ok":true},{"i":8,"zmin":0,"zmax":5,"z":3,"seuil":0.8844,"n":615,"err":2,"borne":0.015,"ok":true},{"i":9,"zmin":0,"zmax":3,"z":2,"seuil":0.8821,"n":616,"err":2,"borne":0.015,"ok":true},{"i":10,"zmin":0,"zmax":2,"z":1,"seuil":0.8596,"n":617,"err":2,"borne":0.0149,"ok":true}]},"commune":{"m":132,"K":8,"delta_essai":0.00625,"pertes":0,"kmin":0.8643,"kmax":0.9926,"borne_tout":0.0377,"essais":[{"i":1,"zmin":0,"zmax":131,"z":66,"seuil":0.9714,"n":70,"err":0,"borne":0.0699,"ok":false},{"i":2,"zmin":66,"zmax":131,"z":99,"seuil":0.98,"n":36,"err":0,"borne":0.1315,"ok":false},{"i":3,"zmin":99,"zmax":131,"z":115,"seuil":0.9833,"n":21,"err":0,"borne":0.2147,"ok":false},{"i":4,"zmin":115,"zmax":131,"z":123,"seuil":0.9857,"n":9,"err":0,"borne":0.431,"ok":false},{"i":5,"zmin":123,"zmax":131,"z":127,"seuil":0.9875,"n":5,"err":0,"borne":0.6376,"ok":false},{"i":6,"zmin":127,"zmax":131,"z":129,"seuil":0.9889,"n":3,"err":0,"borne":0.8158,"ok":false},{"i":7,"zmin":129,"zmax":131,"z":130,"seuil":0.99,"n":2,"err":0,"borne":0.9209,"ok":false},{"i":8,"zmin":130,"zmax":131,"z":131,"seuil":0.9926,"n":1,"err":0,"borne":0.9938,"ok":false}]},"courbe":[[20,0.2241],[21,0.2147],[22,0.206],[23,0.198],[24,0.1906],[25,0.1837],[26,0.1773],[27,0.1714],[28,0.1658],[29,0.1605],[30,0.1556],[31,0.151],[32,0.1467],[33,0.1426],[34,0.1387],[35,0.135],[36,0.1315],[37,0.1282],[38,0.125],[39,0.122],[40,0.1192],[41,0.1164],[42,0.1138],[43,0.1113],[44,0.1089],[45,0.1067],[46,0.1045],[47,0.1024],[48,0.1003],[49,0.0984],[50,0.0965],[51,0.0947],[52,0.093],[53,0.0913],[54,0.0897],[55,0.0881],[56,0.0866],[57,0.0852],[58,0.0838],[59,0.0824],[60,0.0811],[61,0.0798],[62,0.0786],[63,0.0774],[64,0.0762],[65,0.0751],[66,0.074],[67,0.073],[68,0.0719],[69,0.0709],[70,0.0699],[71,0.069],[72,0.0681],[73,0.0672],[74,0.0663],[75,0.0654],[76,0.0646],[77,0.0638],[78,0.063],[79,0.0622],[80,0.0615],[81,0.0607],[82,0.06],[83,0.0593],[84,0.0586],[85,0.058],[86,0.0573],[87,0.0567],[88,0.056],[89,0.0554],[90,0.0548],[91,0.0542],[92,0.0537],[93,0.0531],[94,0.0526],[95,0.052],[96,0.0515],[97,0.051],[98,0.0505],[99,0.05],[100,0.0495],[101,0.049],[102,0.0485],[103,0.0481],[104,0.0476],[105,0.0472],[106,0.0468],[107,0.0463],[108,0.0459],[109,0.0455],[110,0.0451],[111,0.0447],[112,0.0443],[113,0.0439],[114,0.0435],[115,0.0432],[116,0.0428],[117,0.0425],[118,0.0421],[119,0.0418],[120,0.0414],[121,0.0411],[122,0.0407],[123,0.0404],[124,0.0401],[125,0.0398],[126,0.0395],[127,0.0392],[128,0.0389],[129,0.0386],[130,0.0383],[131,0.038],[132,0.0377],[133,0.0374],[134,0.0372],[135,0.0369],[136,0.0366],[137,0.0364],[138,0.0361],[139,0.0359],[140,0.0356]]};
+
+// ── Dichotomie SGR : trace réelle sur la part calib (engine.calibration.sgr, rejouée essai par essai)
+function traceSgr(id, t, nom) {
+  const d = SGR[t], m = d.m, ess = d.essais, jamais = !ess.some(e => e.ok);
+  const W = 880, X0 = 92, X1 = 470, RH = 26, TOP = 40, n = ess.length + (jamais ? 1 : 0), H = TOP + n * RH + 10;
+  const X = r => X0 + r / (m - 1) * (X1 - X0);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
+    "aria-label": `Dichotomie SGR, ${nom} : ${ess.length} essais sur ${m} cas, ` + (jamais
+      ? `aucun seuil garanti, la couverture complète (borne ${fr(d.borne_tout * 100)} %) n'est jamais essayée.`
+      : `seuil final ${fr(ess.filter(e => e.ok).at(-1).seuil, 3)}.`) });
+  const g = el("g", { class: "sgx" }, svg);
+  el("text", { x: X0, y: 14, class: "ax", "text-anchor": "start" }, g).textContent = `κ ${fr(d.kmin, 3)}, le plus bas`;
+  el("text", { x: X1, y: 14, class: "ax", "text-anchor": "end" }, g).textContent = `le plus haut, κ ${fr(d.kmax, 3)}`;
+  el("text", { x: (X0 + X1) / 2, y: 30, class: "ax", "text-anchor": "middle" }, g).textContent = `${nb(m)} cas triés par score →`;
+  el("text", { x: 488, y: 30, class: "ax" }, g).textContent = `seuil essayé · cas retenus · borne (δ/${d.K} = ${fr(d.delta_essai * 100, 3)} %)`;
+  ess.forEach((e, i) => {
+    const y = TOP + i * RH + RH / 2;
+    el("text", { x: 0, y: y + 4, class: "lb" }, g).textContent = `Essai ${e.i}`;
+    el("rect", { x: X(e.zmin), y: y - 2, width: Math.max(2, X(e.zmax) - X(e.zmin)), height: 4, rx: 2, class: "iv" }, g);
+    el("rect", { x: X(e.z), y: y - 7, width: Math.max(3, X1 - X(e.z)), height: 14, rx: 3, class: e.ok ? "ok" : "ko" }, g);
+    el("line", { x1: X(e.z), x2: X(e.z), y1: y - 10, y2: y + 10, class: "tk" }, g);
+    el("text", { x: 488, y: y + 4, class: "vl" }, g).textContent =
+      `θ ${fr(e.seuil, 4)} · ${nb(e.n)} cas, ${e.err} perte${e.err > 1 ? "s" : ""} · borne ${fr(e.borne * 100)} %`;
+    el("text", { x: 800, y: y + 4, class: e.ok ? "st ok-t" : "st ko-t" }, g).textContent = e.ok ? "✓ on descend" : "✗ on monte";
+  });
+  if (jamais) {
+    const y = TOP + ess.length * RH + RH / 2;
+    el("text", { x: 0, y: y + 4, class: "lb mu" }, g).textContent = "Jamais";
+    el("rect", { x: X0, y: y - 7, width: X1 - X0, height: 14, rx: 3, class: "ne" }, g);
+    el("text", { x: 488, y: y + 4, class: "vl mu" }, g).textContent =
+      `tous les cas · ${nb(m)} cas, ${d.pertes} perte · borne ${fr(d.borne_tout * 100)} %`;
+    el("text", { x: 800, y: y + 4, class: "st mu" }, g).textContent = "non essayé";
+  }
+  document.getElementById(id).appendChild(svg);
+}
+traceSgr("sgVille", "ville", "ville");
+traceSgr("sgCommune", "commune", "commune");
+
+(() => {
+  const P = SGR.courbe, W = 420, H = 230, L = 42, R = 14, T = 14, B = 32, NX0 = 40, NX1 = 140, YM = 0.15;
+  const X = v => L + (v - NX0) / (NX1 - NX0) * (W - L - R), Y = v => T + (1 - v / YM) * (H - T - B);
+  const fig = document.getElementById("sgBorne");
+  fig.innerHTML = `<figcaption><b>Zéro perte sur n cas</b><span>borne binomiale exacte, δ/8 = 0,625 %</span></figcaption>`;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Avec zéro perte, la borne vaut 7,0 % pour 70 cas et 3,8 % pour 132 ; elle passe sous 5 % à partir de 99 cas." });
+  for (let v = 0; v <= YM + 1e-9; v += 0.05) {
+    el("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: "grid" }, svg);
+    el("text", { x: L - 6, y: Y(v) + 4, class: "tick", "text-anchor": "end" }, svg).textContent = fr(v * 100, 0) + " %";
+  }
+  [40, 70, 100, 140].forEach(v => el("text", { x: X(v), y: H - 12, class: "tick", "text-anchor": v === 40 ? "start" : v === 140 ? "end" : "middle" }, svg).textContent = v);
+  el("text", { x: (L + W - R) / 2, y: H - 1, class: "tick", "text-anchor": "middle" }, svg).textContent = "cas retenus (n)";
+  el("line", { x1: L, x2: W - R, y1: Y(0), y2: Y(0), class: "base" }, svg);
+  el("line", { x1: L, x2: W - R, y1: Y(0.05), y2: Y(0.05), class: "cible" }, svg);
+  el("text", { x: L + 4, y: Y(0.05) - 6, class: "tick", "text-anchor": "start" }, svg).textContent = "r* 5 %";
+  const pts = P.filter(p => p[0] >= NX0);  // n < 40 : borne au-dessus de 15 %
+  el("polyline", { points: pts.map(p => `${X(p[0])},${Y(p[1])}`).join(" "), class: "ligne", style: "stroke:var(--s1)" }, svg);
+  el("line", { x1: X(99), x2: X(99), y1: Y(0.05), y2: Y(0), class: "cross" }, svg);
+  el("text", { x: X(99), y: Y(0) - 6, class: "tick", "text-anchor": "end" }, svg).textContent = "99 cas ";
+  [[70, 0.0699, "70 cas : 7,0 % · 1er essai", "start", "--crit-fill", -10], [132, 0.0377, "132 cas (tous) : 3,8 %", "start", "--good-fill", 18]].forEach(([n, b, t, a, c, dy]) => {
+    el("circle", { cx: X(n), cy: Y(b), r: 4.5, class: "pt", style: `fill:var(${c})` }, svg);
+    el("text", { x: n === 132 ? X(102) : X(n) + 8, y: Y(b) + dy, class: "tick lbl", "text-anchor": a }, svg).textContent = t;
+  });
+  const vx = el("line", { y1: T, y2: H - B, class: "cross", visibility: "hidden" }, svg);
+  const zone = el("rect", { x: L, y: T, width: W - L - R, height: H - T - B, fill: "transparent" }, svg);
+  zone.tabIndex = 0;
+  const montrer = (nv, ex, ey) => {
+    const p = pts.reduce((a, q) => Math.abs(q[0] - nv) < Math.abs(a[0] - nv) ? q : a);
+    vx.setAttribute("x1", X(p[0])); vx.setAttribute("x2", X(p[0])); vx.setAttribute("visibility", "visible");
+    tip.innerHTML = `<b>${p[0]} cas, 0 perte</b><br>Borne ${fr(p[1] * 100)} % · ${p[1] < 0.05 ? "sous r*, garanti" : "au-dessus de r*"}`;
+    tip.hidden = false;
+    tip.style.left = Math.max(8, Math.min(ex + 14, innerWidth - tip.offsetWidth - 8)) + "px";
+    tip.style.top = Math.max(8, ey - tip.offsetHeight - 10) + "px";
+  };
+  zone.addEventListener("pointermove", e => {
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * W;
+    montrer(NX0 + Math.max(0, Math.min(1, (x - L) / (W - L - R))) * (NX1 - NX0), e.clientX, e.clientY);
+  });
+  zone.addEventListener("focus", () => { const r = svg.getBoundingClientRect(); montrer(70, r.left + r.width / 2, r.top + 20); });
+  const cacher = () => { tip.hidden = true; vx.setAttribute("visibility", "hidden"); };
+  zone.addEventListener("pointerleave", cacher); zone.addEventListener("blur", cacher);
+  fig.appendChild(svg);
+})();
+</script>
+
+</body></html>
