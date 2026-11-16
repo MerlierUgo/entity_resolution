@@ -1,0 +1,19 @@
+﻿terme;entite_visee;entity_id;commentaire
+filtre à gazole;Filtres à carburant;piece:cat:vp-1-4-10-3;observé dans l'échantillon réel (« filtre a gazoile »)
+filtre gasoil;Filtres à carburant;piece:cat:vp-1-4-10-3;variante belge courante
+courroie de distri;Courroies crantées;piece:cat:vp-1-4-6-7;abréviation d'atelier
+pot catalytique;Convertisseurs catalytiques;piece:cat:vp-1-4-8-2;« cata » et « catalyseur » sont connus, pas « pot catalytique »
+durite de frein;Flexibles de frein;piece:cat:vp-1-4-1-13;"terme courant ; déjà constaté absent pendant l'écriture des attendus"
+rétro;Rétroviseurs de voiture;piece:cat:vp-1-4-11-1;abréviation courante
+clim;Régulation de la climatisation;piece:cat:vp-1-4-3;abréviation courante
+filtre clim;Filtres d'habitacle;mecanova:cat:filtre-habitacle;« filtre à pollen » et « filtre habitacle » sont connus
+cardan;Arbres de transmission;piece:cat:vp-1-4-19-19;"terme d'atelier ; seul « soufflet de cardan » est connu"
+triangle;Bras de contrôle;piece:cat:vp-1-4-17-3;"triangle de suspension ; mot très ambigu"
+bougie de préchauffe;Bougies de préchauffage;piece:cat:vp-1-4-6-5-1;variante courante
+maître cylindre;Maîtres-cylindres de frein;piece:cat:vp-1-4-1-6;sans précision : frein ou embrayage, donc ambigu en vrai
+huile de boîte;Liquide de transmission;piece:cat:vp-1-4-19-6;terme d'atelier
+5w30;Huile moteur;mecanova:cat:huile-moteur;viscosité citée à la place du produit
+injecteur;Injecteurs de carburant;piece:cat:vp-1-4-10-4;singulier seul, sans « de carburant »
+schokdemper;Amortisseurs de chocs;piece:cat:vp-1-4-17-5;néerlandais
+remblok;Plaquettes de frein;piece:cat:vp-1-4-1-7;néerlandais, singulier (« remblokken » est connu)
+ruitenwisser;Balais d'essuie-glace;piece:cat:vp-1-4-21-4-2;néerlandais

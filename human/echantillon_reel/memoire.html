@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saisie de mémoire</title>
+<style>
+:root{--bg:#F7F8F9;--card:#fff;--ink:#15212B;--mute:#5A6A77;--line:#D5DDE3;--acc:#0D7A69;--warn:#B5502C}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:640px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}.mute{color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:16px}
+button{font:inherit;border-radius:8px;border:1px solid var(--line);background:#fff;padding:10px 16px;cursor:pointer}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff}button:disabled{opacity:.45;cursor:default}
+input,select,textarea{font:inherit;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+input#saisie{font-size:22px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.bar{height:8px;background:#E5EAEE;border-radius:4px;overflow:hidden;margin-top:8px}.bar>div{height:100%;background:var(--acc);width:0}
+.big{font-size:40px;font-weight:700}
+ol{padding-left:20px}li{margin:4px 0}.hidden{display:none}.warn{color:var(--warn)}
+</style></head><body><main>
+<h1>Saisie de mémoire</h1>
+<div class="mute">Échantillon réel · mode mémoire : le nom s'affiche 2 secondes puis disparaît</div>
+
+<section id="intro" class="card">
+<ol>
+<li>Chaque nom s'affiche <b>2 secondes</b>, puis disparaît.</li>
+<li>Tape vite ce que tu as retenu, <b>sans corriger</b>, puis <b>Entrée</b>.</li>
+<li>Écris-le comme tu le retiens, abrégé si c'est ce que tu ferais naturellement. Rien retenu : « Pas retenu ».</li>
+<li>Tu peux t'arrêter et reprendre plus tard : la progression est gardée dans ce navigateur.</li>
+<li>À la fin : 20 à 30 termes hors catalogue de mémoire, puis export du CSV.</li>
+</ol>
+
+<div class="row"><label class="mute">Clavier utilisé</label>
+<select id="appareil" style="width:auto"><option>ordinateur</option><option>telephone</option></select></div>
+<div class="row"><button id="go" class="pri">Commencer / reprendre</button></div>
+
+</section>
+
+<section id="dictee" class="card hidden">
+<div class="row" style="justify-content:space-between;margin:0"><span class="big" id="num">1</span><span class="mute" id="prog"></span></div>
+<div class="bar"><div id="barre"></div></div>
+<p id="etat" style="font-size:26px;font-weight:600;min-height:40px"></p>
+<input id="saisie" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="tape ici, puis Entrée">
+<div class="row"><button id="valider" class="pri">Valider (Entrée)</button><button id="pascompris">Pas retenu</button><button id="pause">Pause</button></div>
+</section>
+
+<section id="fin" class="card hidden">
+<b>Termes hors catalogue, de mémoire</b>
+<p class="mute">Sans regarder le catalogue : villes, marques, pièces, clients auxquels un commercial penserait. Un par ligne, tapés vite.</p>
+<textarea id="libres" rows="10" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+<div class="row"><button id="export" class="pri">Télécharger le CSV</button><button id="copier">Copier le CSV</button><button id="raz">Tout effacer</button></div>
+<p class="mute" id="msg"></p>
+</section>
+</main>
+<script>
+const LISTE = [["M-01", "BENTLEY"], ["M-02", "Verviers"], ["M-03", "Skoda Vermeulen"], ["M-04", "Transport van Mil"], ["M-05", "Crépy-en-Valois"], ["M-06", "DR F35"], ["M-07", "Comines"], ["M-08", "BYD"], ["M-09", "Clignotant – Philips Standard"], ["M-10", "AUDI Q8 55 E-TRON"], ["M-11", "Carrosserie Kayl"], ["M-12", "Tilloy-lez-Cambrai"], ["M-13", "Auto Lambert"], ["M-14", "Sint-Lambrechts-Herk"], ["M-15", "VOLVO EX30 CROSS COUNTRY"], ["M-16", "BMW I4 EDRIVE35"], ["M-17", "SUZUKI SX4, SUZUKI SX4, S-C"], ["M-18", "MASERATI"], ["M-19", "Filtre à air – Mécanova Select Éco"], ["M-20", "AUDI Q7 60 TFSI E"], ["M-21", "Coût des ventes nettes"], ["M-22", "RENAULT MEGANE III BERLINA"], ["M-23", "Garage Perkins & Zonen"], ["M-24", "Autobedrijf de Wit"], ["M-25", "EVO"], ["M-26", "Quantité en stock"], ["M-27", "Catalyseur – Walker Standard"], ["M-28", "Garage Pascal Frères"], ["M-29", "PORSCHE CAYENNE"], ["M-30", "Garage Rossi & Fils"], ["M-31", "Carrosserie Georges"], ["M-32", "MAZDA"], ["M-33", "Tongelre"], ["M-34", "Looberghe"], ["M-35", "Bobine d'allumage – Champion Premium"], ["M-36", "Couverture de stock"], ["M-37", "LAND ROVER"], ["M-38", "Balai d'essuie-glace – Mécanova Select Standard"], ["M-39", "Auto Materne"], ["M-40", "DACIA BIGSTER"], ["M-41", "Dilsen-Stokkem"], ["M-42", "Moyen"], ["M-43", "Ninove"], ["M-44", "Moulbaix"], ["M-45", "Chaînes à neige"], ["M-46", "Batterie – Exide Premium"], ["M-47", "Haubourdin"], ["M-48", "MERCEDES-BENZ E 220 D 4MATIC"], ["M-49", "MERCEDES-BENZ CLE 220D"], ["M-50", "Carrosserie Quévy"], ["M-51", "Vaulx"], ["M-52", "CUPRA LEON E-HYBRID200"], ["M-53", "BMW 840I"], ["M-54", "Chaumont-Gistoux"], ["M-55", "Filtre à huile – Purflux Premium"], ["M-56", "Catalyseur – Walker Premium"], ["M-57", "Garage van Wassenaar"], ["M-58", "Hoogstraten"], ["M-59", "Balai d'essuie-glace – Valeo Éco"], ["M-60", "Broekhem"], ["M-61", "Knecht"], ["M-62", "Batterie – Bosch Éco"], ["M-63", "Tapis de sol – Mécanova Select Premium"], ["M-64", "Bobine d'allumage – Denso Premium"], ["M-65", "Péruwelz"], ["M-66", "MERCEDES-BENZ C 300 DE 4MATIC"], ["M-67", "Nederename"], ["M-68", "Bougie d'allumage – Valeo Premium"], ["M-69", "Quantité facturée"], ["M-70", "Quantité vendue nette"], ["M-71", "Henrion Citroen Olne"], ["M-72", "Nieuw-Lotbroek"], ["M-73", "Centre auto"], ["M-74", "Centre Auto Hannut"], ["M-75", "Mann+Hummel"], ["M-76", "Bougie de préchauffage – Champion Éco"], ["M-77", "Bougie d'allumage – Denso Éco"], ["M-78", "Kit chaîne de distribution – febi bilstein Standard"], ["M-79", "Bougie de préchauffage – Mécanova Select Premium"], ["M-80", "Berchem-Sainte-Agathe"]];
+const CLE = "memoire_saisie_v1";
+let st = {i:0, res:{}, libres:""};
+try { const s = localStorage.getItem(CLE); if (s) st = JSON.parse(s); } catch(e) {}
+const save = () => { try { localStorage.setItem(CLE, JSON.stringify(st)); } catch(e) {} };
+const $ = id => document.getElementById(id);
+let t0 = 0;
+function afficher(){
+  if (st.i >= LISTE.length) { $("dictee").classList.add("hidden"); $("fin").classList.remove("hidden"); $("libres").value = st.libres || ""; return; }
+  const [ordre, nom] = LISTE[st.i];
+  $("num").textContent = ordre; $("prog").textContent = `${st.i} / ${LISTE.length} faits`;
+  $("barre").style.width = (100*st.i/LISTE.length) + "%";
+  $("saisie").value = ""; $("saisie").disabled = true; $("etat").textContent = nom;
+  setTimeout(() => { $("etat").textContent = ""; $("saisie").disabled = false; $("saisie").focus(); t0 = performance.now(); }, 2000);
+}
+function enregistrer(val){
+  const [ordre] = LISTE[st.i];
+  st.res[ordre] = {saisie: val, ms: Math.round(performance.now() - t0), appareil: $("appareil").value};
+  st.i++; save(); afficher();
+}
+$("go").onclick = () => { $("intro").classList.add("hidden"); $("dictee").classList.remove("hidden"); afficher(); };
+$("valider").onclick = () => enregistrer($("saisie").value);
+$("saisie").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); enregistrer($("saisie").value); } });
+$("pascompris").onclick = () => enregistrer("?");
+$("pause").onclick = () => { $("dictee").classList.add("hidden"); $("intro").classList.remove("hidden"); };
+$("libres").addEventListener("input", () => { st.libres = $("libres").value; save(); });
+
+function csv(){
+  const q = s => '"' + String(s).replace(/"/g,'""') + '"';
+  const l = ["ordre;saisie;duree_ms;appareil"];
+  for (const [ordre] of LISTE) { const r = st.res[ordre]; if (r) l.push([ordre, q(r.saisie), r.ms, r.appareil].join(";")); }
+  (st.libres||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean).forEach((s,k) => l.push([`LM-${String(k+1).padStart(2,"0")}`, q(s), "", "libre"].join(";")));
+  return "﻿" + l.join("\r\n") + "\r\n";
+}
+$("export").onclick = () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv()], {type:"text/csv;charset=utf-8"}));
+  a.download = "saisies_memoire.csv"; a.click(); $("msg").textContent = "Fichier saisies_memoire.csv téléchargé.";
+};
+$("copier").onclick = async () => { try { await navigator.clipboard.writeText(csv()); $("msg").textContent = "CSV copié : colle-le dans un fichier saisies_memoire.csv."; } catch(e) { $("msg").textContent = "Copie impossible : utilise Télécharger."; } };
+$("raz").onclick = () => { if (confirm("Effacer toutes les saisies ?")) { st = {i:0,res:{},libres:""}; save(); location.reload(); } };
+if (st.i > 0) $("go").textContent = `Reprendre (${st.i} / ${LISTE.length})`;
+</script></body></html>

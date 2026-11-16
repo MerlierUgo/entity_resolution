@@ -1,0 +1,235 @@
+﻿ordre;nom_a_dicter;famille;entity_type;entity_id
+1;Zoersel;geographie;commune;geo:commune:BE-11055
+2;JAECOO;marques;marque_vehicule;veh:marque:jaecoo
+3;AUDI RS 3 LIMOUSINE;vehicules;modele_vehicule;veh:modele:audi-rs-3-limousine
+4;CA brut;vocabulaire_metier;mesure;metier:mesure:M01
+5;Huile de boîte de vitesses – Liqui Moly Premium;pieces;article;mecanova:article:MN-LTR-84716
+6;Mussy-La-Ville;geographie;localite_postale;geo:localite:BE-6750-mussy-ville
+7;TOYOTA;marques;marque_vehicule;veh:marque:toyota
+8;Bothey;geographie;localite_postale;geo:localite:BE-5032-bothey
+9;Filtre à huile – Knecht Standard;pieces;article;mecanova:article:MN-FHU-98735
+10;MG3 HYBRID+;vehicules;modele_vehicule;veh:modele:mg-mg3-hybrid
+11;BMW X4 XDRIVE20I;vehicules;modele_vehicule;veh:modele:bmw-x4-xdrive20i
+12;AUDI;marques;marque_vehicule;veh:marque:audi
+13;AUDI A6 AV E-TRON PERFORMANCE;vehicules;modele_vehicule;veh:modele:audi-a6-av-e-tron-performance
+14;Genappe;geographie;commune;geo:commune:BE-25031
+15;Chaource;geographie;ville;geo:ville:FR-3026804
+16;Peer;geographie;commune;geo:commune:BE-72030
+17;BP;marques;groupe_industriel;organisation:bp
+18;Montataire;geographie;ville;geo:ville:FR-2993004
+19;Agence Arlon;vocabulaire_metier;site;mecanova:site:agence-arlon
+20;Amortisseur arrière – Sachs Standard;pieces;article;mecanova:article:MN-AMO-24465
+21;Mâchoires de frein – ATE Standard;pieces;article;mecanova:article:MN-MCH-50673
+22;BYD TANG EV;vehicules;modele_vehicule;veh:modele:byd-tang-ev
+23;ALPINE A110;vehicules;modele_vehicule;veh:modele:alpine-a110
+24;Carrosseriebedrijf Van den Bosch;clients;client;mecanova:client:CL-767197
+25;Saint-Gilles;geographie;commune;geo:commune:BE-21013
+26;Marly;geographie;ville;geo:ville:FR-2995656
+27;Ets Schmitz – Dacia;clients;client;mecanova:client:CL-160183
+28;Varta;marques;marque_piece;piece:marque:varta
+29;Kit d'embrayage – LuK Premium;pieces;article;mecanova:article:MN-KEM-19275
+30;Bourgeois Skoda Châtelet;clients;client;mecanova:client:CL-160171
+31;Rousset Logistics;clients;client;mecanova:client:CL-663893
+32;Denain;geographie;ville;geo:ville:FR-3021605
+33;Tervuren;geographie;commune;geo:commune:BE-24104
+34;La Madeleine;geographie;ville;geo:ville:FR-3008379
+35;Liquide de frein – Mécanova Select Éco;pieces;article;mecanova:article:MN-LFR-64879
+36;SHINERAY;marques;marque_vehicule;veh:marque:shineray
+37;Chigny-les-Roses;geographie;ville;geo:ville:FR-3025160
+38;Homécourt;geographie;ville;geo:ville:FR-3013195
+39;Carrosserie Hoarau;clients;client;mecanova:client:CL-807509
+40;Volant moteur – Mécanova Select Éco;pieces;article;mecanova:article:MN-VOL-77664
+41;Renault Jansen;clients;client;mecanova:client:CL-418471
+42;Ets Wauthier – Skoda;clients;client;mecanova:client:CL-159863
+43;Étrier de frein avant droit – TRW Standard;pieces;article;mecanova:article:MN-ETR-49177
+44;Amiens;geographie;ville;geo:ville:FR-3037854
+45;Méru;geographie;ville;geo:ville:FR-2994306
+46;Garage indépendant;vocabulaire_metier;type_client;mecanova:type_client:garage-independant
+47;AUDI A6 SB E-TRON QUATTRO;vehicules;modele_vehicule;veh:modele:audi-a6-sb-e-tron-quattro
+48;Transports Piron;clients;client;mecanova:client:CL-371155
+49;Wommelgem;geographie;commune;geo:commune:BE-11052
+50;KIA CEED;vehicules;modele_vehicule;veh:modele:kia-ceed
+51;INA;marques;marque_piece;piece:marque:ina
+52;Sophie Lambert;vocabulaire_metier;commercial;mecanova:commercial:sophie-lambert
+53;Filtre à huile – Mécanova Select Éco;pieces;article;mecanova:article:MN-FHU-36584
+54;BMW M340D XDRIVE;vehicules;modele_vehicule;veh:modele:bmw-m340d-xdrive
+55;Monroe;marques;marque_piece;piece:marque:monroe
+56;Sedan;geographie;ville;geo:ville:FR-2975349
+57;Quantité retournée;vocabulaire_metier;mesure;metier:mesure:M08
+58;BMW 220D;vehicules;modele_vehicule;veh:modele:bmw-220d
+59;Freyming-Merlebach;geographie;ville;geo:ville:FR-3017059
+60;Batterie – Varta Standard;pieces;article;mecanova:article:MN-BAT-50236
+61;Vaudes;geographie;ville;geo:ville:FR-2970527
+62;JEEP;marques;marque_vehicule;veh:marque:jeep
+63;Herpen;geographie;ville;geo:ville:NL-2754339
+64;Amortisseur avant – Lemförder Standard;pieces;article;mecanova:article:MN-AMO-68524
+65;Rongy;geographie;localite_postale;geo:localite:BE-7623-rongy
+66;OPEL ADAM;vehicules;modele_vehicule;veh:modele:opel-adam
+67;Bougie d'allumage – Valeo Standard;pieces;article;mecanova:article:MN-BGA-34647
+68;Oreye;geographie;localite_postale;geo:localite:BE-4360-oreye
+69;Garage Lefèbvre;clients;client;mecanova:client:CL-531202
+70;Kester;geographie;localite_postale;geo:localite:BE-1755-kester
+71;EVO SPAZIO;vehicules;modele_vehicule;veh:modele:evo-spazio
+72;Liquide de refroidissement – TotalEnergies Éco;pieces;article;mecanova:article:MN-LRF-82231
+73;Garage Charlier Frères;clients;client;mecanova:client:CL-328765
+74;Zandhoven;geographie;commune;geo:commune:BE-11054
+75;Noël Automobiles;clients;client;mecanova:client:CL-466476
+76;Kermt;geographie;localite_postale;geo:localite:BE-3510-kermt
+77;Ampoule – Hella Éco;pieces;article;mecanova:article:MN-AMP-55263
+78;Kevin Dubois;vocabulaire_metier;commercial;mecanova:commercial:kevin-duboi
+79;Venlo;geographie;ville;geo:ville:NL-2745641
+80;LOTUS EMIRA;vehicules;modele_vehicule;veh:modele:lotus-emira
+81;Jacquet Carrosserie;clients;client;mecanova:client:CL-490944
+82;VOLVO S90;vehicules;modele_vehicule;veh:modele:volvo-s90
+83;PORSCHE;marques;marque_vehicule;veh:marque:porsche
+84;Filtre à air – Purflux Standard;pieces;article;mecanova:article:MN-FAI-33251
+85;Rancennes;geographie;ville;geo:ville:FR-2984472
+86;Aigneville Auto Center;clients;client;mecanova:client:CL-789773
+87;MASERATI GRANTURISMO TROFEO;vehicules;modele_vehicule;veh:modele:maserati-granturismo-trofeo
+88;Exide Technologies;marques;groupe_industriel;organisation:exide-technologie
+89;Eschbach;geographie;ville;geo:ville:FR-3019816
+90;Autobedrijf Pauwels;clients;client;mecanova:client:CL-469703
+91;FIAT;marques;marque_vehicule;veh:marque:fiat
+92;Pompe à eau – Behr Premium;pieces;article;mecanova:article:MN-PEA-82014
+93;Made;geographie;ville;geo:ville:NL-2751272
+94;Carrosserie Evrard;clients;client;mecanova:client:CL-244533
+95;MAXUS;marques;marque_vehicule;veh:marque:maxus
+96;Garage Raymond Frères;clients;client;mecanova:client:CL-957673
+97;PORSCHE 911 CARRERA 4S;vehicules;modele_vehicule;veh:modele:porsche-911-carrera-4s
+98;Kit de distribution – INA Standard;pieces;article;mecanova:article:MN-KDI-42020
+99;Amortisseur avant – Monroe Éco;pieces;article;mecanova:article:MN-AMO-90906
+100;GENESIS GV60, GENESIS GV60;vehicules;modele_vehicule;veh:modele:genesis-gv60-genesis-gv60
+101;Filtre à air – Bosch Standard;pieces;article;mecanova:article:MN-FAI-25193
+102;Walker;marques;marque_piece;piece:marque:walker
+103;Garage Giselmeyer & Zonen;clients;client;mecanova:client:CL-635755
+104;Garage de la Gare;clients;client;mecanova:client:CL-378073
+105;Lumileds;marques;groupe_industriel;organisation:lumiled
+106;Filtre à particules – Mécanova Select Standard;pieces;article;mecanova:article:MN-FAP-41609
+107;AUDI SQ6 SUV E-TRON;vehicules;modele_vehicule;veh:modele:audi-sq6-suv-e-tron
+108;Phare – Osram Premium;pieces;article;mecanova:article:MN-PHA-53423
+109;Lesve;geographie;localite_postale;geo:localite:BE-5170-lesve
+110;Agence Lille;vocabulaire_metier;site;mecanova:site:agence-lille
+111;MINI COUNTRYMAN E;vehicules;modele_vehicule;veh:modele:mini-countryman-e
+112;Garage Jacquet Frères;clients;client;mecanova:client:CL-926899
+113;Étrier de frein avant droit – Brembo Standard;pieces;article;mecanova:article:MN-ETR-97982
+114;Spiere;geographie;localite_postale;geo:localite:BE-8587-spiere
+115;MERCEDES-BENZ EQS 450+;vehicules;modele_vehicule;veh:modele:mercedes-benz-eqs-450
+116;Roosbeek;geographie;localite_postale;geo:localite:BE-3370-roosbeek
+117;Profondeville;geographie;commune;geo:commune:BE-92101
+118;Liquide de frein – Mécanova Select Premium;pieces;article;mecanova:article:MN-LFR-35181
+119;Garage du Centre;clients;client;mecanova:client:CL-314058
+120;Moussey;geographie;ville;geo:ville:FR-2991373
+121;Batterie – Exide Éco;pieces;article;mecanova:article:MN-BAT-68481
+122;Lunéville;geographie;ville;geo:ville:FR-2997110
+123;Carrossier;vocabulaire_metier;type_client;mecanova:type_client:carrossier
+124;Kruibeke;geographie;commune;geo:commune:BE-46013
+125;Hazebrouck;geographie;ville;geo:ville:FR-3013619
+126;Mercedes-Benz Servais;clients;client;mecanova:client:CL-238004
+127;Toul;geographie;ville;geo:ville:FR-2972350
+128;Ampoules;pieces;categorie_piece;piece:cat:vp-1-4-12-4
+129;La Bresse;geographie;ville;geo:ville:FR-3010815
+130;Garage Jacobs;clients;client;mecanova:client:CL-372306
+131;Batterie – Mécanova Select Standard;pieces;article;mecanova:article:MN-BAT-55131
+132;Raismes;geographie;ville;geo:ville:FR-2984537
+133;Panier moyen;vocabulaire_metier;mesure;metier:mesure:M17
+134;Garage Thirion Frères;clients;client;mecanova:client:CL-310811
+135;Carrosserie Ellezelles;clients;client;mecanova:client:CL-813889
+136;Remises;vocabulaire_metier;mesure;metier:mesure:M02
+137;JAGUAR;marques;marque_vehicule;veh:marque:jaguar
+138;Chauny;geographie;ville;geo:ville:FR-3025860
+139;Kortijs;geographie;localite_postale;geo:localite:BE-3890-kortij
+140;Lisogne;geographie;localite_postale;geo:localite:BE-5501-lisogne
+141;FERRARI 296 GTS;vehicules;modele_vehicule;veh:modele:ferrari-296-gts
+142;Centre Auto Welkenraedt;clients;client;mecanova:client:CL-831098
+143;Sand;geographie;ville;geo:ville:FR-2976231
+144;AUDI Q5 270KW TFSI E;vehicules;modele_vehicule;veh:modele:audi-q5-270kw-tfsi-e
+145;Dayco;marques;marque_piece;piece:marque:dayco
+146;MERCEDES-BENZ AMG GLC 63S E PERFORMANCE;vehicules;modele_vehicule;veh:modele:mercedes-benz-amg-glc-63s-e-performance
+147;MERCEDES-BENZ EQE 350+;vehicules;modele_vehicule;veh:modele:mercedes-benz-eqe-350
+148;LOTUS EMIRA V6 MANUAL SPORT CHASSIS;vehicules;modele_vehicule;veh:modele:lotus-emira-v6-manual-sport-chassis
+149;Alternateur – Mécanova Select Premium;pieces;article;mecanova:article:MN-ALT-25134
+150;Rotule – Mécanova Select Standard;pieces;article;mecanova:article:MN-ROT-21736
+151;Amortisseur arrière – Lemförder Standard;pieces;article;mecanova:article:MN-AMO-11916
+152;Vermand;geographie;ville;geo:ville:FR-2969868
+153;Faches-Thumesnil;geographie;ville;geo:ville:FR-3019153
+154;Boussu;geographie;commune;geo:commune:BE-53014
+155;Huile moteur;pieces;categorie_piece;mecanova:cat:huile-moteur
+156;Andel;geographie;ville;geo:ville:NL-2750453
+157;Esneux;geographie;commune;geo:commune:BE-62032
+158;OPEL CROSSLAND;vehicules;modele_vehicule;veh:modele:opel-crossland
+159;OMODA5;vehicules;modele_vehicule;veh:modele:omoda-omoda5
+160;Filtre à huile – Bosch Éco;pieces;article;mecanova:article:MN-FHU-44012
+161;Gerpinnes;geographie;commune;geo:commune:BE-52025
+162;MERCEDES-BENZ GLB 250 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-glb-250-4matic
+163;BMW X6 XDRIVE40D M SPORT;vehicules;modele_vehicule;veh:modele:bmw-x6-xdrive40d-m-sport
+164;Démarreur – NGK Standard;pieces;article;mecanova:article:MN-DEM-76032
+165;Alternateur – Valeo Éco;pieces;article;mecanova:article:MN-ALT-75645
+166;BMW X2 SDRIVE20D;vehicules;modele_vehicule;veh:modele:bmw-x2-sdrive20d
+167;Étrier de frein avant droit – Ferodo Standard;pieces;article;mecanova:article:MN-ETR-37582
+168;Gouvy;geographie;localite_postale;geo:localite:BE-6670-gouvy
+169;Auto Thibault;clients;client;mecanova:client:CL-731768
+170;Bourlers;geographie;localite_postale;geo:localite:BE-6464-bourler
+171;Filtre à huile – Mann-Filter Éco;pieces;article;mecanova:article:MN-FHU-76067
+172;Schaeffler;marques;groupe_industriel;organisation:schaeffler
+173;Auto Chevalier;clients;client;mecanova:client:CL-245326
+174;Tielt;geographie;commune;geo:commune:BE-37015
+175;Melle;geographie;commune;geo:commune:BE-44040
+176;Transports Carlier;clients;client;mecanova:client:CL-465865
+177;Nombre de commandes;vocabulaire_metier;mesure;metier:mesure:M10
+178;Longuenesse;geographie;ville;geo:ville:FR-2997670
+179;Vase d'expansion – Behr Premium;pieces;article;mecanova:article:MN-VEX-14230
+180;CA net facturé;vocabulaire_metier;mesure;metier:mesure:M03
+181;Bougie d'allumage – Denso Standard;pieces;article;mecanova:article:MN-BGA-85674
+182;Garage Pirson;clients;client;mecanova:client:CL-706576
+183;Chaînes à neige – Mécanova Select Éco;pieces;article;mecanova:article:MN-CHN-59620
+184;Nadia El Amrani;vocabulaire_metier;commercial;mecanova:commercial:nadia-el-amrani
+185;Pieter Claes;vocabulaire_metier;commercial;mecanova:commercial:pieter-clae
+186;MAZDA HURTAN -GRAND ALBAYCIN;vehicules;modele_vehicule;veh:modele:mazda-hurtan-grand-albaycin
+187;Tambour de frein – Textar Premium;pieces;article;mecanova:article:MN-TBF-74408
+188;Mâchoires de frein – Ferodo Standard;pieces;article;mecanova:article:MN-MCH-79091
+189;BMW M3 CS;vehicules;modele_vehicule;veh:modele:bmw-m3-cs
+190;Seny;geographie;localite_postale;geo:localite:BE-4557-seny
+191;Waremme;geographie;commune;geo:commune:BE-64074
+192;Dacia Bonnevoie-Sud;clients;client;mecanova:client:CL-452771
+193;Charmes;geographie;ville;geo:ville:FR-3026587
+194;DR 6.0 H;vehicules;modele_vehicule;veh:modele:dr-6-0-h
+195;Baillamont;geographie;localite_postale;geo:localite:BE-5555-baillamont
+196;Marty Fleet Services;clients;client;mecanova:client:CL-196699
+197;Brunssum;geographie;ville;geo:ville:NL-2758174
+198;Dison;geographie;commune;geo:commune:BE-63020
+199;MASERATI GRANCABRIO TROFEO;vehicules;modele_vehicule;veh:modele:maserati-grancabrio-trofeo
+200;MAHINDRA;marques;marque_vehicule;veh:marque:mahindra
+201;Exide;marques;marque_piece;piece:marque:exide
+202;Batterie – Mécanova Select Éco;pieces;article;mecanova:article:MN-BAT-88998
+203;Garage Leleux Frères;clients;client;mecanova:client:CL-134149
+204;AUDI S5 SPORTBACK;vehicules;modele_vehicule;veh:modele:audi-s5-sportback
+205;Edegem;geographie;commune;geo:commune:BE-11013
+206;Laurent Carrosserie;clients;client;mecanova:client:CL-787606
+207;LAND ROVER DEFENDER;vehicules;modele_vehicule;veh:modele:land-rover-defender
+208;MERCEDES-BENZ GLE 450 D 4MATIC COUPE;vehicules;modele_vehicule;veh:modele:mercedes-benz-gle-450-d-4matic-coupe
+209;Mercedes-Benz Dehon;clients;client;mecanova:client:CL-432715
+210;KYB Corporation;marques;groupe_industriel;organisation:kyb-corporation
+211;Plaquettes de frein arrière – TRW Standard;pieces;article;mecanova:article:MN-PLQ-32199
+212;Anzin;geographie;ville;geo:ville:FR-3037397
+213;Flexible de frein – Textar Premium;pieces;article;mecanova:article:MN-FLX-20723
+214;Hopel;geographie;ville;geo:ville:NL-2753615
+215;Bougie d'allumage – Champion Éco;pieces;article;mecanova:article:MN-BGA-28062
+216;Vasseur Ford Gonderange;clients;client;mecanova:client:CL-576031
+217;Balai d'essuie-glace – Bosch Standard;pieces;article;mecanova:article:MN-BES-96950
+218;VOLKSWAGEN T CROSS;vehicules;modele_vehicule;veh:modele:volkswagen-t-cross
+219;DALLARA;marques;marque_vehicule;veh:marque:dallara
+220;Ampoule – Osram Standard;pieces;article;mecanova:article:MN-AMP-95271
+221;Liquide de refroidissement – Castrol Premium;pieces;article;mecanova:article:MN-LRF-60719
+222;Reims;geographie;ville;geo:ville:FR-2984114
+223;Silencieux – Mécanova Select Éco;pieces;article;mecanova:article:MN-SIL-51949
+224;DS4;vehicules;modele_vehicule;veh:modele:ds-ds4
+225;FERRARI;marques;marque_vehicule;veh:marque:ferrari
+226;Halen;geographie;localite_postale;geo:localite:BE-3545-halen
+227;Grave;geographie;ville;geo:ville:NL-2755358
+228;Thomas Renard;vocabulaire_metier;commercial;mecanova:commercial:thoma-renard
+229;Verdun;geographie;ville;geo:ville:FR-2969958
+230;DONGFENG;marques;marque_vehicule;veh:marque:dongfeng
+231;Theux Lease;clients;client;mecanova:client:CL-601844
+232;Theux;geographie;commune;geo:commune:BE-63076
+233;PEUGEOT;marques;marque_vehicule;veh:marque:peugeot
+234;MERCEDES-BENZ EQS 580 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-eqs-580-4matic

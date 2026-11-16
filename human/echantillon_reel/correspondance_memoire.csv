@@ -1,0 +1,81 @@
+﻿ordre;nom_affiche;famille;entity_type;entity_id
+M-01;BENTLEY;marques;marque_vehicule;veh:marque:bentley
+M-02;Verviers;geographie;commune;geo:commune:BE-63079
+M-03;Skoda Vermeulen;clients;client;mecanova:client:CL-479777
+M-04;Transport van Mil;clients;client;mecanova:client:CL-210106
+M-05;Crépy-en-Valois;geographie;ville;geo:ville:FR-3022569
+M-06;DR F35;vehicules;modele_vehicule;veh:modele:dr-f35
+M-07;Comines;geographie;ville;geo:ville:FR-3024102
+M-08;BYD;marques;marque_vehicule;veh:marque:byd
+M-09;Clignotant – Philips Standard;pieces;article;mecanova:article:MN-CLI-91386
+M-10;AUDI Q8 55 E-TRON;vehicules;modele_vehicule;veh:modele:audi-q8-55-e-tron
+M-11;Carrosserie Kayl;clients;client;mecanova:client:CL-699662
+M-12;Tilloy-lez-Cambrai;geographie;ville;geo:ville:FR-2972577
+M-13;Auto Lambert;clients;client;mecanova:client:CL-442361
+M-14;Sint-Lambrechts-Herk;geographie;localite_postale;geo:localite:BE-3500-sint-lambrecht-herk
+M-15;VOLVO EX30 CROSS COUNTRY;vehicules;modele_vehicule;veh:modele:volvo-ex30-cross-country
+M-16;BMW I4 EDRIVE35;vehicules;modele_vehicule;veh:modele:bmw-i4-edrive35
+M-17;SUZUKI SX4, SUZUKI SX4, S-C;vehicules;modele_vehicule;veh:modele:suzuki-sx4-suzuki-sx4-s-c
+M-18;MASERATI;marques;marque_vehicule;veh:marque:maserati
+M-19;Filtre à air – Mécanova Select Éco;pieces;article;mecanova:article:MN-FAI-23280
+M-20;AUDI Q7 60 TFSI E;vehicules;modele_vehicule;veh:modele:audi-q7-60-tfsi-e
+M-21;Coût des ventes nettes;vocabulaire_metier;mesure;metier:mesure:M12
+M-22;RENAULT MEGANE III BERLINA;vehicules;modele_vehicule;veh:modele:renault-megane-iii-berlina
+M-23;Garage Perkins & Zonen;clients;client;mecanova:client:CL-593036
+M-24;Autobedrijf de Wit;clients;client;mecanova:client:CL-439903
+M-25;EVO;marques;marque_vehicule;veh:marque:evo
+M-26;Quantité en stock;vocabulaire_metier;mesure;metier:mesure:M23
+M-27;Catalyseur – Walker Standard;pieces;article;mecanova:article:MN-CAT-99250
+M-28;Garage Pascal Frères;clients;client;mecanova:client:CL-830306
+M-29;PORSCHE CAYENNE;vehicules;modele_vehicule;veh:modele:porsche-cayenne
+M-30;Garage Rossi & Fils;clients;client;mecanova:client:CL-349212
+M-31;Carrosserie Georges;clients;client;mecanova:client:CL-724273
+M-32;MAZDA;marques;marque_vehicule;veh:marque:mazda
+M-33;Tongelre;geographie;ville;geo:ville:NL-2746215
+M-34;Looberghe;geographie;ville;geo:ville:FR-2997622
+M-35;Bobine d'allumage – Champion Premium;pieces;article;mecanova:article:MN-BOB-11231
+M-36;Couverture de stock;vocabulaire_metier;mesure;metier:mesure:M25
+M-37;LAND ROVER;marques;marque_vehicule;veh:marque:land-rover
+M-38;Balai d'essuie-glace – Mécanova Select Standard;pieces;article;mecanova:article:MN-BES-78981
+M-39;Auto Materne;clients;client;mecanova:client:CL-495184
+M-40;DACIA BIGSTER;vehicules;modele_vehicule;veh:modele:dacia-bigster
+M-41;Dilsen-Stokkem;geographie;commune;geo:commune:BE-72041
+M-42;Moyen;geographie;ville;geo:ville:FR-2991275
+M-43;Ninove;geographie;commune;geo:commune:BE-41048
+M-44;Moulbaix;geographie;localite_postale;geo:localite:BE-7812-moulbai
+M-45;Chaînes à neige;pieces;categorie_piece;mecanova:cat:chaine-neige
+M-46;Batterie – Exide Premium;pieces;article;mecanova:article:MN-BAT-66325
+M-47;Haubourdin;geographie;ville;geo:ville:FR-3013862
+M-48;MERCEDES-BENZ E 220 D 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-e-220-d-4matic
+M-49;MERCEDES-BENZ CLE 220D;vehicules;modele_vehicule;veh:modele:mercedes-benz-cle-220d
+M-50;Carrosserie Quévy;clients;client;mecanova:client:CL-263647
+M-51;Vaulx;geographie;localite_postale;geo:localite:BE-7536-vaul
+M-52;CUPRA LEON E-HYBRID200;vehicules;modele_vehicule;veh:modele:cupra-leon-e-hybrid200
+M-53;BMW 840I;vehicules;modele_vehicule;veh:modele:bmw-840i
+M-54;Chaumont-Gistoux;geographie;commune;geo:commune:BE-25018
+M-55;Filtre à huile – Purflux Premium;pieces;article;mecanova:article:MN-FHU-51066
+M-56;Catalyseur – Walker Premium;pieces;article;mecanova:article:MN-CAT-18345
+M-57;Garage van Wassenaar;clients;client;mecanova:client:CL-240156
+M-58;Hoogstraten;geographie;commune;geo:commune:BE-13014
+M-59;Balai d'essuie-glace – Valeo Éco;pieces;article;mecanova:article:MN-BES-34873
+M-60;Broekhem;geographie;ville;geo:ville:NL-2758275
+M-61;Knecht;marques;marque_piece;piece:marque:knecht
+M-62;Batterie – Bosch Éco;pieces;article;mecanova:article:MN-BAT-91228
+M-63;Tapis de sol – Mécanova Select Premium;pieces;article;mecanova:article:MN-TAP-62261
+M-64;Bobine d'allumage – Denso Premium;pieces;article;mecanova:article:MN-BOB-43771
+M-65;Péruwelz;geographie;commune;geo:commune:BE-57064
+M-66;MERCEDES-BENZ C 300 DE 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-c-300-de-4matic
+M-67;Nederename;geographie;localite_postale;geo:localite:BE-9700-nederename
+M-68;Bougie d'allumage – Valeo Premium;pieces;article;mecanova:article:MN-BGA-85462
+M-69;Quantité facturée;vocabulaire_metier;mesure;metier:mesure:M07
+M-70;Quantité vendue nette;vocabulaire_metier;mesure;metier:mesure:M09
+M-71;Henrion Citroen Olne;clients;client;mecanova:client:CL-780138
+M-72;Nieuw-Lotbroek;geographie;ville;geo:ville:NL-2750157
+M-73;Centre auto;vocabulaire_metier;type_client;mecanova:type_client:centre-auto
+M-74;Centre Auto Hannut;clients;client;mecanova:client:CL-620720
+M-75;Mann+Hummel;marques;groupe_industriel;organisation:mann-hummel
+M-76;Bougie de préchauffage – Champion Éco;pieces;article;mecanova:article:MN-BGP-61509
+M-77;Bougie d'allumage – Denso Éco;pieces;article;mecanova:article:MN-BGA-80001
+M-78;Kit chaîne de distribution – febi bilstein Standard;pieces;article;mecanova:article:MN-CHD-64160
+M-79;Bougie de préchauffage – Mécanova Select Premium;pieces;article;mecanova:article:MN-BGP-36593
+M-80;Berchem-Sainte-Agathe;geographie;commune;geo:commune:BE-21003

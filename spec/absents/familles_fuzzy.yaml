@@ -1,0 +1,16 @@
+# Familles d'entités pour le fuzzy et sa calibration (regroupement validé dans calibration-v1).
+# Lu par : le générateur (build/), la calibration et le moteur (clé de famille du seuil).
+# Un type qui n'apparaît dans aucune famille n'a jamais de correspondance approchée.
+version: "1.0"
+source: notes/calibration-v1.md § 3.3
+familles:
+  geographie: [ville, localite_postale, commune, arrondissement, canton, province, region, pays]
+  pieces: [categorie_piece, article, famille_mecanova, gamme, qualite]
+  vehicules: [modele_vehicule]
+  clients: [client]
+  marques: [marque_piece, marque_vehicule, groupe_industriel]
+  vocabulaire_metier: [mesure, site, commercial, canal, groupe_canal, segment, type_client, motif_retour, forme_juridique]
+  douane: [code_douanier]          # libellés seulement : jamais de fuzzy sur le code lui-même (R-RES-03)
+mixte: >
+  Un nom dont les entités appartiennent à plusieurs familles (ex. « Champion » : marque et localité)
+  n'a pas de seuil unique : fuzzy désactivé pour ce nom.

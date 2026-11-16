@@ -1,0 +1,337 @@
+﻿ordre;mode;nom_cible;famille;entity_type;entity_id;saisie_brute;saisie;correction;duree_ms
+1;oreille;Zoersel;geographie;commune;geo:commune:BE-11055;?;?;;4794
+2;oreille;JAECOO;marques;marque_vehicule;veh:marque:jaecoo;jayco;jayco;;3111
+3;oreille;AUDI RS 3 LIMOUSINE;vehicules;modele_vehicule;veh:modele:audi-rs-3-limousine;audi rs3 limousine;audi rs3 limousine;;4314
+4;oreille;CA brut;vocabulaire_metier;mesure;metier:mesure:M01;canada brut;canada brut;;4179
+5;oreille;Huile de boîte de vitesses – Liqui Moly Premium;pieces;article;mecanova:article:MN-LTR-84716;huile de boite de vitesse euliquide premium;huile de boite de vitesse liquide premium;« eu » collé retiré (euliquide → liquide);14000
+6;oreille;Mussy-La-Ville;geographie;localite_postale;geo:localite:BE-6750-mussy-ville;ville;ville;;2390
+7;oreille;TOYOTA;marques;marque_vehicule;veh:marque:toyota;tyoota;tyoota;;7211
+8;oreille;Bothey;geographie;localite_postale;geo:localite:BE-5032-bothey;boté;boté;;2271
+9;oreille;Filtre à huile – Knecht Standard;pieces;article;mecanova:article:MN-FHU-98735;filtre à huile euknec standard;filtre à huile knec standard;« eu » collé retiré (euknec → knec);6553
+10;oreille;MG3 HYBRID+;vehicules;modele_vehicule;veh:modele:mg-mg3-hybrid;mg trois hybrid plus;mg trois hybrid plus;;4784
+11;oreille;BMW X4 XDRIVE20I;vehicules;modele_vehicule;veh:modele:bmw-x4-xdrive20i;?;?;;10600
+12;oreille;AUDI;marques;marque_vehicule;veh:marque:audi;;;;12679
+13;oreille;AUDI A6 AV E-TRON PERFORMANCE;vehicules;modele_vehicule;veh:modele:audi-a6-av-e-tron-performance;audi a6 ev etron performance;audi a6 ev etron performance;;8012
+14;oreille;Genappe;geographie;commune;geo:commune:BE-25031;?;?;;3058
+15;oreille;Chaource;geographie;ville;geo:ville:FR-3026804;chaours;chaours;;2377
+16;oreille;Peer;geographie;commune;geo:commune:BE-72030;pire;pire;;1691
+17;oreille;BP;marques;groupe_industriel;organisation:bp;bp;bp;;4092
+18;oreille;Montataire;geographie;ville;geo:ville:FR-2993004;montatère;montatère;;4518
+19;oreille;Agence Arlon;vocabulaire_metier;site;mecanova:site:agence-arlon;agence arlant;agence arlant;;3373
+20;oreille;Amortisseur arrière – Sachs Standard;pieces;article;mecanova:article:MN-AMO-24465;amortisseur arriere eusaxe standard;amortisseur arriere saxe standard;« eu » collé retiré (eusaxe → saxe);6401
+21;oreille;Mâchoires de frein – ATE Standard;pieces;article;mecanova:article:MN-MCH-50673;machoire de frein eat standard;machoire de frein at standard;« e » collé retiré (eat → at);7052
+22;oreille;BYD TANG EV;vehicules;modele_vehicule;veh:modele:byd-tang-ev;by dtang ev;by dtang ev;;5765
+23;oreille;ALPINE A110;vehicules;modele_vehicule;veh:modele:alpine-a110;alpine a110;alpine a110;;3804
+24;oreille;Carrosseriebedrijf Van den Bosch;clients;client;mecanova:client:CL-767197;carossrie bodrige vanderbosh;carossrie bodrige vanderbosh;;10911
+25;oreille;Saint-Gilles;geographie;commune;geo:commune:BE-21013;?;?;;691
+26;oreille;Marly;geographie;ville;geo:ville:FR-2995656;;;;962
+27;oreille;Ets Schmitz – Dacia;clients;client;mecanova:client:CL-160183;etablissement shcmis dacia;etablissement shcmis dacia;;10563
+28;oreille;Varta;marques;marque_piece;piece:marque:varta;?;?;;412
+29;oreille;Kit d'embrayage – LuK Premium;pieces;article;mecanova:article:MN-KEM-19275;kit d'embrayage luca premium;kit d'embrayage luca premium;;37623
+30;oreille;Bourgeois Skoda Châtelet;clients;client;mecanova:client:CL-160171;skoda chatelet;skoda chatelet;;5284
+31;oreille;Rousset Logistics;clients;client;mecanova:client:CL-663893;roussel logistic;roussel logistic;;4903
+32;oreille;Denain;geographie;ville;geo:ville:FR-3021605;denin;denin;;5445
+33;oreille;Tervuren;geographie;commune;geo:commune:BE-24104;tervurant;tervurant;;3138
+34;oreille;La Madeleine;geographie;ville;geo:ville:FR-3008379;la amdeleine;la amdeleine;;2046
+35;oreille;Liquide de frein – Mécanova Select Éco;pieces;article;mecanova:article:MN-LFR-64879;liquide de frein mecanova select eco;liquide de frein mecanova select eco;;11360
+36;oreille;SHINERAY;marques;marque_vehicule;veh:marque:shineray;?;?;;13344
+37;oreille;Chigny-les-Roses;geographie;ville;geo:ville:FR-3025160;chini les roses;chini les roses;;3337
+38;oreille;Homécourt;geographie;ville;geo:ville:FR-3013195;omecourt;omecourt;;3495
+39;oreille;Carrosserie Hoarau;clients;client;mecanova:client:CL-807509;carroserie oaro;carroserie oaro;;2556
+40;oreille;Volant moteur – Mécanova Select Éco;pieces;article;mecanova:article:MN-VOL-77664;volant moteur mecanova select eco;volant moteur mecanova select eco;;4888
+41;oreille;Renault Jansen;clients;client;mecanova:client:CL-418471;renault gen scene;renault gen scene;;30488
+42;oreille;Ets Wauthier – Skoda;clients;client;mecanova:client:CL-159863;equippement routier skoda;equippement routier skoda;;6605
+43;oreille;Étrier de frein avant droit – TRW Standard;pieces;article;mecanova:article:MN-ETR-49177;etrier de frein avant droit standar;etrier de frein avant droit standar;;9732
+44;oreille;Amiens;geographie;ville;geo:ville:FR-3037854;amiens;amiens;;1389
+45;oreille;Méru;geographie;ville;geo:ville:FR-2994306;meru;meru;;1408
+46;oreille;Garage indépendant;vocabulaire_metier;type_client;mecanova:type_client:garage-independant;garage indépendant;garage indépendant;;3082
+47;oreille;AUDI A6 SB E-TRON QUATTRO;vehicules;modele_vehicule;veh:modele:audi-a6-sb-e-tron-quattro;audi a6 sb equatro;audi a6 sb equatro;;6239
+48;oreille;Transports Piron;clients;client;mecanova:client:CL-371155;transport piron;transport piron;;3119
+49;oreille;Wommelgem;geographie;commune;geo:commune:BE-11052;?;?;;443
+50;oreille;KIA CEED;vehicules;modele_vehicule;veh:modele:kia-ceed;kia sid;kia sid;;4542
+51;oreille;INA;marques;marque_piece;piece:marque:ina;ina;ina;;1065
+52;oreille;Sophie Lambert;vocabulaire_metier;commercial;mecanova:commercial:sophie-lambert;sophie lambert;sophie lambert;;4129
+53;oreille;Filtre à huile – Mécanova Select Éco;pieces;article;mecanova:article:MN-FHU-36584;filtre à huile mecanova select eco;filtre à huile mecanova select eco;;6510
+54;oreille;BMW M340D XDRIVE;vehicules;modele_vehicule;veh:modele:bmw-m340d-xdrive;bmw m3 240 xdrive;bmw m3 240 xdrive;;12298
+55;oreille;Monroe;marques;marque_piece;piece:marque:monroe;?;?;;1375
+56;oreille;Sedan;geographie;ville;geo:ville:FR-2975349;sedan;sedan;;1433
+57;oreille;Quantité retournée;vocabulaire_metier;mesure;metier:mesure:M08;quantitée retournée;quantitée retournée;;3921
+58;oreille;BMW 220D;vehicules;modele_vehicule;veh:modele:bmw-220d;bmw 220d;bmw 220d;;5346
+59;oreille;Freyming-Merlebach;geographie;ville;geo:ville:FR-3017059;fremin de merleback;fremin de merleback;;4592
+60;oreille;Batterie – Varta Standard;pieces;article;mecanova:article:MN-BAT-50236;batterie evar standar;batterie var standar;« e » collé retiré (evar → var);5252
+61;oreille;Vaudes;geographie;ville;geo:ville:FR-2970527;vaude;vaude;;1262
+62;oreille;JEEP;marques;marque_vehicule;veh:marque:jeep;jeep;jeep;;1216
+63;oreille;Herpen;geographie;ville;geo:ville:NL-2754339;?;?;;392
+64;oreille;Amortisseur avant – Lemförder Standard;pieces;article;mecanova:article:MN-AMO-68524;amortisseur avant standard;amortisseur avant standard;;5656
+65;oreille;Rongy;geographie;localite_postale;geo:localite:BE-7623-rongy;rangie;rangie;;2699
+66;oreille;OPEL ADAM;vehicules;modele_vehicule;veh:modele:opel-adam;opel adam;opel adam;;1319
+67;oreille;Bougie d'allumage – Valeo Standard;pieces;article;mecanova:article:MN-BGA-34647;bougie d'allumage valeo standard;bougie d'allumage valeo standard;;5944
+68;oreille;Oreye;geographie;localite_postale;geo:localite:BE-4360-oreye;oreille;oreille;;1679
+69;oreille;Garage Lefèbvre;clients;client;mecanova:client:CL-531202;garage lefevre;garage lefevre;;3712
+70;oreille;Kester;geographie;localite_postale;geo:localite:BE-1755-kester;?;?;;433
+71;oreille;EVO SPAZIO;vehicules;modele_vehicule;veh:modele:evo-spazio;?;?;;308
+72;oreille;Liquide de refroidissement – TotalEnergies Éco;pieces;article;mecanova:article:MN-LRF-82231;liquide de refroidissement total energie eco;liquide de refroidissement total energie eco;;4778
+73;oreille;Garage Charlier Frères;clients;client;mecanova:client:CL-328765;garage charlie et frere;garage charlie et frere;;4556
+74;oreille;Zandhoven;geographie;commune;geo:commune:BE-11054;?;?;;3806
+75;oreille;Noël Automobiles;clients;client;mecanova:client:CL-466476;noel automobile;noel automobile;;1568
+76;oreille;Kermt;geographie;localite_postale;geo:localite:BE-3510-kermt;?;?;;530
+77;oreille;Ampoule – Hella Éco;pieces;article;mecanova:article:MN-AMP-55263;ampoule en la eco;ampoule en la eco;;7494
+78;oreille;Kevin Dubois;vocabulaire_metier;commercial;mecanova:commercial:kevin-duboi;kevin du bois;kevin du bois;;3556
+79;oreille;Venlo;geographie;ville;geo:ville:NL-2745641;?;?;;2996
+80;oreille;LOTUS EMIRA;vehicules;modele_vehicule;veh:modele:lotus-emira;lotus emirat;lotus emirat;;2182
+81;oreille;Jacquet Carrosserie;clients;client;mecanova:client:CL-490944;jacket carrosserie;jacket carrosserie;;3158
+82;oreille;VOLVO S90;vehicules;modele_vehicule;veh:modele:volvo-s90;vovlo s90;vovlo s90;;2286
+83;oreille;PORSCHE;marques;marque_vehicule;veh:marque:porsche;porsche;porsche;;1587
+84;oreille;Filtre à air – Purflux Standard;pieces;article;mecanova:article:MN-FAI-33251;filtre à air hyper flui standard;filtre à air hyper flui standard;;5685
+85;oreille;Rancennes;geographie;ville;geo:ville:FR-2984472;?;?;;1055
+86;oreille;Aigneville Auto Center;clients;client;mecanova:client:CL-789773;annyville auto center;annyville auto center;;5497
+87;oreille;MASERATI GRANTURISMO TROFEO;vehicules;modele_vehicule;veh:modele:maserati-granturismo-trofeo;maserati granturismo tropheo;maserati granturismo tropheo;;24145
+88;oreille;Exide Technologies;marques;groupe_industriel;organisation:exide-technologie;?;?;;28634
+89;oreille;Eschbach;geographie;ville;geo:ville:FR-3019816;?;?;;835
+90;oreille;Autobedrijf Pauwels;clients;client;mecanova:client:CL-469703;?;?;;27196
+91;oreille;FIAT;marques;marque_vehicule;veh:marque:fiat;?;?;;595
+92;oreille;Pompe à eau – Behr Premium;pieces;article;mecanova:article:MN-PEA-82014;euder premium;der premium;« eu » collé retiré (euder → der);6989
+93;oreille;Made;geographie;ville;geo:ville:NL-2751272;med;med;;1818
+94;oreille;Carrosserie Evrard;clients;client;mecanova:client:CL-244533;carrosserie evrar;carrosserie evrar;;4188
+95;oreille;MAXUS;marques;marque_vehicule;veh:marque:maxus;maxus;maxus;;2997
+96;oreille;Garage Raymond Frères;clients;client;mecanova:client:CL-957673;?;?;;964
+97;oreille;PORSCHE 911 CARRERA 4S;vehicules;modele_vehicule;veh:modele:porsche-911-carrera-4s;?;?;;3503
+98;oreille;Kit de distribution – INA Standard;pieces;article;mecanova:article:MN-KDI-42020;kit de distribution;kit de distribution;;10390
+99;oreille;Amortisseur avant – Monroe Éco;pieces;article;mecanova:article:MN-AMO-90906;?;?;;3792727
+100;oreille;GENESIS GV60, GENESIS GV60;vehicules;modele_vehicule;veh:modele:genesis-gv60-genesis-gv60;genesis gv60;genesis gv60;;4256
+101;oreille;Filtre à air – Bosch Standard;pieces;article;mecanova:article:MN-FAI-25193;filtre à air bosh standard;filtre à air bosh standard;;6506
+102;oreille;Walker;marques;marque_piece;piece:marque:walker;walter;walter;;4781
+103;oreille;Garage Giselmeyer & Zonen;clients;client;mecanova:client:CL-635755;garage giselle meillet gisonant;garage giselle meillet gisonant;;10340
+104;oreille;Garage de la Gare;clients;client;mecanova:client:CL-378073;de la agre;de la agre;;1868
+105;oreille;Lumileds;marques;groupe_industriel;organisation:lumiled;lumiled;lumiled;;1455
+106;oreille;Filtre à particules – Mécanova Select Standard;pieces;article;mecanova:article:MN-FAP-41609;filtre à particul mecanova select standard;filtre à particul mecanova select standard;;6939
+107;oreille;AUDI SQ6 SUV E-TRON;vehicules;modele_vehicule;veh:modele:audi-sq6-suv-e-tron;audi sq6 ev etron;audi sq6 ev etron;;8651
+108;oreille;Phare – Osram Premium;pieces;article;mecanova:article:MN-PHA-53423;phare euos premium;phare os premium;« eu » collé retiré (euos → os);5424
+109;oreille;Lesve;geographie;localite_postale;geo:localite:BE-5170-lesve;lève;lève;;1733
+110;oreille;Agence Lille;vocabulaire_metier;site;mecanova:site:agence-lille;agance lille;agance lille;;1869
+111;oreille;MINI COUNTRYMAN E;vehicules;modele_vehicule;veh:modele:mini-countryman-e;mini countryman e;mini countryman e;;3363
+112;oreille;Garage Jacquet Frères;clients;client;mecanova:client:CL-926899;garage jack et frere;garage jack et frere;;2932
+113;oreille;Étrier de frein avant droit – Brembo Standard;pieces;article;mecanova:article:MN-ETR-97982;etrier de frein avant droit de brambo standard;etrier de frein avant droit de brambo standard;;9565
+114;oreille;Spiere;geographie;localite_postale;geo:localite:BE-8587-spiere;speer;speer;;1894
+115;oreille;MERCEDES-BENZ EQS 450+;vehicules;modele_vehicule;veh:modele:mercedes-benz-eqs-450;mercedez benz eqs 450+;mercedez benz eqs 450+;;6177
+116;oreille;Roosbeek;geographie;localite_postale;geo:localite:BE-3370-roosbeek;rosbic;rosbic;;2256
+117;oreille;Profondeville;geographie;commune;geo:commune:BE-92101;profonde ville;profonde ville;;2054
+118;oreille;Liquide de frein – Mécanova Select Premium;pieces;article;mecanova:article:MN-LFR-35181;lequide de frein mecanoca select premium;lequide de frein mecanoca select premium;;4852
+119;oreille;Garage du Centre;clients;client;mecanova:client:CL-314058;garage du centre;garage du centre;;3440
+120;oreille;Moussey;geographie;ville;geo:ville:FR-2991373;mousset;mousset;;223
+121;oreille;Batterie – Exide Éco;pieces;article;mecanova:article:MN-BAT-68481;batterie exceco;batterie exceco;;7004
+122;oreille;Lunéville;geographie;ville;geo:ville:FR-2997110;lunet ville;lunet ville;;1700
+123;oreille;Carrossier;vocabulaire_metier;type_client;mecanova:type_client:carrossier;carossiet;carossiet;;2228
+124;oreille;Kruibeke;geographie;commune;geo:commune:BE-46013;?;?;;5137
+125;oreille;Hazebrouck;geographie;ville;geo:ville:FR-3013619;?;?;;737
+126;oreille;Mercedes-Benz Servais;clients;client;mecanova:client:CL-238004;mercedez benz servet;mercedez benz servet;;5619
+127;oreille;Toul;geographie;ville;geo:ville:FR-2972350;tool;tool;;2243
+128;oreille;Ampoules;pieces;categorie_piece;piece:cat:vp-1-4-12-4;ampoule;ampoule;;1097
+129;oreille;La Bresse;geographie;ville;geo:ville:FR-3010815;?;?;;17973
+130;oreille;Garage Jacobs;clients;client;mecanova:client:CL-372306;jacobs;jacobs;;2272
+131;oreille;Batterie – Mécanova Select Standard;pieces;article;mecanova:article:MN-BAT-55131;batterie e mecanova select standard;batterie mecanova select standard;« e » isolé retiré;6693
+132;oreille;Raismes;geographie;ville;geo:ville:FR-2984537;?;?;;376
+133;oreille;Panier moyen;vocabulaire_metier;mesure;metier:mesure:M17;panier moyen;panier moyen;;3287
+134;oreille;Garage Thirion Frères;clients;client;mecanova:client:CL-310811;garage tierion frere;garage tierion frere;;5145
+135;oreille;Carrosserie Ellezelles;clients;client;mecanova:client:CL-813889;?;?;;7389
+136;oreille;Remises;vocabulaire_metier;mesure;metier:mesure:M02;remise;remise;;1331
+137;oreille;JAGUAR;marques;marque_vehicule;veh:marque:jaguar;jaguar;jaguar;;1390
+138;oreille;Chauny;geographie;ville;geo:ville:FR-3025860;?;?;;358
+139;oreille;Kortijs;geographie;localite_postale;geo:localite:BE-3890-kortij;?;?;;1745
+140;oreille;Lisogne;geographie;localite_postale;geo:localite:BE-5501-lisogne;lisogne;lisogne;;1086
+141;oreille;FERRARI 296 GTS;vehicules;modele_vehicule;veh:modele:ferrari-296-gts;ferrarie 296 gts;ferrarie 296 gts;;4858
+142;oreille;Centre Auto Welkenraedt;clients;client;mecanova:client:CL-831098;?;?;;7237
+143;oreille;Sand;geographie;ville;geo:ville:FR-2976231;?;?;;193
+144;oreille;AUDI Q5 270KW TFSI E;vehicules;modele_vehicule;veh:modele:audi-q5-270kw-tfsi-e;audi q5 270kw tfsie;audi q5 270kw tfsie;;4676
+145;oreille;Dayco;marques;marque_piece;piece:marque:dayco;daco;daco;;1864
+146;oreille;MERCEDES-BENZ AMG GLC 63S E PERFORMANCE;vehicules;modele_vehicule;veh:modele:mercedes-benz-amg-glc-63s-e-performance;mercedez bens amg 63 se performance;mercedez bens amg 63 se performance;;6918
+147;oreille;MERCEDES-BENZ EQE 350+;vehicules;modele_vehicule;veh:modele:mercedes-benz-eqe-350;mercedez benz eq 350+;mercedez benz eq 350+;;5690
+148;oreille;LOTUS EMIRA V6 MANUAL SPORT CHASSIS;vehicules;modele_vehicule;veh:modele:lotus-emira-v6-manual-sport-chassis;lotus emirat manual sport chassie;lotus emirat manual sport chassie;;10130
+149;oreille;Alternateur – Mécanova Select Premium;pieces;article;mecanova:article:MN-ALT-25134;?;?;;13145
+150;oreille;Rotule – Mécanova Select Standard;pieces;article;mecanova:article:MN-ROT-21736;rotule mecanova select standard;rotule mecanova select standard;;4367
+151;oreille;Amortisseur arrière – Lemförder Standard;pieces;article;mecanova:article:MN-AMO-11916;amortisseur arriere standard;amortisseur arriere standard;;5717
+152;oreille;Vermand;geographie;ville;geo:ville:FR-2969868;?;?;;893
+153;oreille;Faches-Thumesnil;geographie;ville;geo:ville:FR-3019153;?;?;;2806
+154;oreille;Boussu;geographie;commune;geo:commune:BE-53014;boussu;boussu;;581
+155;oreille;Huile moteur;pieces;categorie_piece;mecanova:cat:huile-moteur;huile moteur;huile moteur;;1302
+156;oreille;Andel;geographie;ville;geo:ville:NL-2750453;?;?;;3198
+157;oreille;Esneux;geographie;commune;geo:commune:BE-62032;?;?;;1314
+158;oreille;OPEL CROSSLAND;vehicules;modele_vehicule;veh:modele:opel-crossland;opel crossland;opel crossland;;3258
+159;oreille;OMODA5;vehicules;modele_vehicule;veh:modele:omoda-omoda5;?;?;;1568
+160;oreille;Filtre à huile – Bosch Éco;pieces;article;mecanova:article:MN-FHU-44012;filtre à huile bosh eco;filtre à huile bosh eco;;4080
+161;oreille;Gerpinnes;geographie;commune;geo:commune:BE-52025;?;?;;5792
+162;oreille;MERCEDES-BENZ GLB 250 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-glb-250-4matic;mersedez benz glb 250 4matic;mersedez benz glb 250 4matic;;11272
+163;oreille;BMW X6 XDRIVE40D M SPORT;vehicules;modele_vehicule;veh:modele:bmw-x6-xdrive40d-m-sport;bmw x6m40 sport;bmw x6m40 sport;;7498
+164;oreille;Démarreur – NGK Standard;pieces;article;mecanova:article:MN-DEM-76032;semareur mgk standard;semareur mgk standard;;3920
+165;oreille;Alternateur – Valeo Éco;pieces;article;mecanova:article:MN-ALT-75645;alternateur valeo eco;alternateur valeo eco;;4279
+166;oreille;BMW X2 SDRIVE20D;vehicules;modele_vehicule;veh:modele:bmw-x2-sdrive20d;bmw x2 20d;bmw x2 20d;;7510
+167;oreille;Étrier de frein avant droit – Ferodo Standard;pieces;article;mecanova:article:MN-ETR-37582;etrier de frein avant droit fereo standard;etrier de frein avant droit fereo standard;;7350
+168;oreille;Gouvy;geographie;localite_postale;geo:localite:BE-6670-gouvy;?;?;;939
+169;oreille;Auto Thibault;clients;client;mecanova:client:CL-731768;auto tibo;auto tibo;;2059
+170;oreille;Bourlers;geographie;localite_postale;geo:localite:BE-6464-bourler;?;?;;374
+171;oreille;Filtre à huile – Mann-Filter Éco;pieces;article;mecanova:article:MN-FHU-76067;filtre à huile manfilter eco;filtre à huile manfilter eco;;5407
+172;oreille;Schaeffler;marques;groupe_industriel;organisation:schaeffler;chat et flaire;chat et flaire;;2279
+173;oreille;Auto Chevalier;clients;client;mecanova:client:CL-245326;auto chevalier;auto chevalier;;1511
+174;oreille;Tielt;geographie;commune;geo:commune:BE-37015;?;?;;1964
+175;oreille;Melle;geographie;commune;geo:commune:BE-44040;?;?;;3442
+176;oreille;Transports Carlier;clients;client;mecanova:client:CL-465865;transport cartlier;transport cartlier;;5661
+177;oreille;Nombre de commandes;vocabulaire_metier;mesure;metier:mesure:M10;nombre de commandes;nombre de commandes;;2758
+178;oreille;Longuenesse;geographie;ville;geo:ville:FR-2997670;longoness;longoness;;1218
+179;oreille;Vase d'expansion – Behr Premium;pieces;article;mecanova:article:MN-VEX-14230;vase d'expention euder premium;vase d'expention der premium;« eu » collé retiré (euder → der);6446
+180;oreille;CA net facturé;vocabulaire_metier;mesure;metier:mesure:M03;?;?;;115050
+181;oreille;Bougie d'allumage – Denso Standard;pieces;article;mecanova:article:MN-BGA-85674;allumage standard;allumage standard;;5132
+182;oreille;Garage Pirson;clients;client;mecanova:client:CL-706576;garage perssant;garage perssant;;2918
+183;oreille;Chaînes à neige – Mécanova Select Éco;pieces;article;mecanova:article:MN-CHN-59620;chaine à neigne mecanova select eco;chaine à neigne mecanova select eco;;3067
+184;oreille;Nadia El Amrani;vocabulaire_metier;commercial;mecanova:commercial:nadia-el-amrani;nadia elarhami;nadia elarhami;;6757
+185;oreille;Pieter Claes;vocabulaire_metier;commercial;mecanova:commercial:pieter-clae;petter class;petter class;;2854
+186;oreille;MAZDA HURTAN -GRAND ALBAYCIN;vehicules;modele_vehicule;veh:modele:mazda-hurtan-grand-albaycin;mazda urtang grand;mazda urtang grand;;4626
+187;oreille;Tambour de frein – Textar Premium;pieces;article;mecanova:article:MN-TBF-74408;tambour de frein etextar premium;tambour de frein textar premium;« e » collé retiré (etextar → textar);7112
+188;oreille;Mâchoires de frein – Ferodo Standard;pieces;article;mecanova:article:MN-MCH-79091;machoire de frein ferodo standard;machoire de frein ferodo standard;;5367
+189;oreille;BMW M3 CS;vehicules;modele_vehicule;veh:modele:bmw-m3-cs;bmw m3 cs;bmw m3 cs;;4926
+190;oreille;Seny;geographie;localite_postale;geo:localite:BE-4557-seny;sunny;sunny;;1535
+191;oreille;Waremme;geographie;commune;geo:commune:BE-64074;warem;warem;;2722
+192;oreille;Dacia Bonnevoie-Sud;clients;client;mecanova:client:CL-452771;dacia bonne voie sud;dacia bonne voie sud;;2479
+193;oreille;Charmes;geographie;ville;geo:ville:FR-3026587;charme;charme;;266
+194;oreille;DR 6.0 H;vehicules;modele_vehicule;veh:modele:dr-6-0-h;docteur 6.0h;docteur 6.0h;;3763
+195;oreille;Baillamont;geographie;localite_postale;geo:localite:BE-5555-baillamont;?;?;;896
+196;oreille;Marty Fleet Services;clients;client;mecanova:client:CL-196699;marty fleet service;marty fleet service;;5130
+197;oreille;Brunssum;geographie;ville;geo:ville:NL-2758174;bransom;bransom;;2203
+198;oreille;Dison;geographie;commune;geo:commune:BE-63020;dison;dison;;672
+199;oreille;MASERATI GRANCABRIO TROFEO;vehicules;modele_vehicule;veh:modele:maserati-grancabrio-trofeo;maserati grand cabrio tropheo;maserati grand cabrio tropheo;;6030
+200;oreille;MAHINDRA;marques;marque_vehicule;veh:marque:mahindra;?;?;;1007
+201;oreille;Exide;marques;marque_piece;piece:marque:exide;?;?;;2958
+202;oreille;Batterie – Mécanova Select Éco;pieces;article;mecanova:article:MN-BAT-88998;batterie mecanova select eco;batterie mecanova select eco;;2827
+203;oreille;Garage Leleux Frères;clients;client;mecanova:client:CL-134149;garage le lefreere;garage le lefreere;;7247
+204;oreille;AUDI S5 SPORTBACK;vehicules;modele_vehicule;veh:modele:audi-s5-sportback;audi s5 sport back;audi s5 sport back;;3669
+205;oreille;Edegem;geographie;commune;geo:commune:BE-11013;?;?;;10122
+206;oreille;Laurent Carrosserie;clients;client;mecanova:client:CL-787606;?;?;;12202
+207;oreille;LAND ROVER DEFENDER;vehicules;modele_vehicule;veh:modele:land-rover-defender;land rover de vendé;land rover de vendé;;5973
+208;oreille;MERCEDES-BENZ GLE 450 D 4MATIC COUPE;vehicules;modele_vehicule;veh:modele:mercedes-benz-gle-450-d-4matic-coupe;?;?;;311
+209;oreille;Mercedes-Benz Dehon;clients;client;mecanova:client:CL-432715;?;?;;2917
+210;oreille;KYB Corporation;marques;groupe_industriel;organisation:kyb-corporation;kyb corporation;kyb corporation;;6704
+211;oreille;Plaquettes de frein arrière – TRW Standard;pieces;article;mecanova:article:MN-PLQ-32199;plaquette de frein arriere etr standard;plaquette de frein arriere tr standard;« e » collé retiré (etr → tr);8225
+212;oreille;Anzin;geographie;ville;geo:ville:FR-3037397;?;?;;159
+213;oreille;Flexible de frein – Textar Premium;pieces;article;mecanova:article:MN-FLX-20723;flexib de frein premuiù;flexib de frein premuiù;;5345
+214;oreille;Hopel;geographie;ville;geo:ville:NL-2753615;opel;opel;;1279
+215;oreille;Bougie d'allumage – Champion Éco;pieces;article;mecanova:article:MN-BGA-28062;bougie d'allumage champion eco;bougie d'allumage champion eco;;4587
+216;oreille;Vasseur Ford Gonderange;clients;client;mecanova:client:CL-576031;?;?;;1469
+217;oreille;Balai d'essuie-glace – Bosch Standard;pieces;article;mecanova:article:MN-BES-96950;aled essuie glasse bosh standard;aled essuie glasse bosh standard;;6002
+218;oreille;VOLKSWAGEN T CROSS;vehicules;modele_vehicule;veh:modele:volkswagen-t-cross;volswagen t cross;volswagen t cross;;5731
+219;oreille;DALLARA;marques;marque_vehicule;veh:marque:dallara;dalarah;dalarah;;2714
+220;oreille;Ampoule – Osram Standard;pieces;article;mecanova:article:MN-AMP-95271;ampoule aesra standar;ampoule aesra standar;;5953
+221;oreille;Liquide de refroidissement – Castrol Premium;pieces;article;mecanova:article:MN-LRF-60719;liquide de refroidissement castrol premium;liquide de refroidissement castrol premium;;11551
+222;oreille;Reims;geographie;ville;geo:ville:FR-2984114;?;?;;517
+223;oreille;Silencieux – Mécanova Select Éco;pieces;article;mecanova:article:MN-SIL-51949;silencieux mecanova select eco;silencieux mecanova select eco;;6519
+224;oreille;DS4;vehicules;modele_vehicule;veh:modele:ds-ds4;ds4;ds4;;1372
+225;oreille;FERRARI;marques;marque_vehicule;veh:marque:ferrari;ferrari;ferrari;;1328
+226;oreille;Halen;geographie;localite_postale;geo:localite:BE-3545-halen;allen;allen;;1169
+227;oreille;Grave;geographie;ville;geo:ville:NL-2755358;grave;grave;;1240
+228;oreille;Thomas Renard;vocabulaire_metier;commercial;mecanova:commercial:thoma-renard;toma renard;toma renard;;2171
+229;oreille;Verdun;geographie;ville;geo:ville:FR-2969958;verdin;verdin;;1106
+230;oreille;DONGFENG;marques;marque_vehicule;veh:marque:dongfeng;?;?;;813
+231;oreille;Theux Lease;clients;client;mecanova:client:CL-601844;?;?;;2457
+232;oreille;Theux;geographie;commune;geo:commune:BE-63076;?;?;;714
+233;oreille;PEUGEOT;marques;marque_vehicule;veh:marque:peugeot;peugeot;peugeot;;1875
+234;oreille;MERCEDES-BENZ EQS 580 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-eqs-580-4matic;?;?;;745
+L-01;libre_oreille;;;;;lille;lille;;
+L-02;libre_oreille;;;;;amiens;amiens;;
+L-03;libre_oreille;;;;;citroen;citroen;;
+L-04;libre_oreille;;;;;porshe;porshe;;
+L-05;libre_oreille;;;;;volant moteur;volant moteur;;
+L-06;libre_oreille;;;;;filtre a gazoile;filtre a gazoile;;
+M-01;memoire;BENTLEY;marques;marque_vehicule;veh:marque:bentley;bentley;bentley;;2656
+M-02;memoire;Verviers;geographie;commune;geo:commune:BE-63079;vier;vier;;764
+M-03;memoire;Skoda Vermeulen;clients;client;mecanova:client:CL-479777;skoda;skoda;;2557
+M-04;memoire;Transport van Mil;clients;client;mecanova:client:CL-210106;transport van mil;transport van mil;;3542
+M-05;memoire;Crépy-en-Valois;geographie;ville;geo:ville:FR-3022569;répys en valois;répys en valois;;2719
+M-06;memoire;DR F35;vehicules;modele_vehicule;veh:modele:dr-f35;dr f35;dr f35;;2455
+M-07;memoire;Comines;geographie;ville;geo:ville:FR-3024102;ines;ines;;734
+M-08;memoire;BYD;marques;marque_vehicule;veh:marque:byd;byd;byd;;1382
+M-09;memoire;Clignotant – Philips Standard;pieces;article;mecanova:article:MN-CLI-91386;clignotant;clignotant;;4103
+M-10;memoire;AUDI Q8 55 E-TRON;vehicules;modele_vehicule;veh:modele:audi-q8-55-e-tron;audi q8 55 etron;audi q8 55 etron;;6042
+M-11;memoire;Carrosserie Kayl;clients;client;mecanova:client:CL-699662;carrosserie kayl;carrosserie kayl;;3755
+M-12;memoire;Tilloy-lez-Cambrai;geographie;ville;geo:ville:FR-2972577;tilloy les cambraius;tilloy les cambraius;;4151
+M-13;memoire;Auto Lambert;clients;client;mecanova:client:CL-442361;auto lambert;auto lambert;;2702
+M-14;memoire;Sint-Lambrechts-Herk;geographie;localite_postale;geo:localite:BE-3500-sint-lambrecht-herk;sint lambretsz;sint lambretsz;;5348
+M-15;memoire;VOLVO EX30 CROSS COUNTRY;vehicules;modele_vehicule;veh:modele:volvo-ex30-cross-country;volvo ex30 cross country;volvo ex30 cross country;;6416
+M-16;memoire;BMW I4 EDRIVE35;vehicules;modele_vehicule;veh:modele:bmw-i4-edrive35;bmw i4 edrive;bmw i4 edrive;;5174
+M-17;memoire;SUZUKI SX4, SUZUKI SX4, S-C;vehicules;modele_vehicule;veh:modele:suzuki-sx4-suzuki-sx4-s-c;suzuki sc4;suzuki sc4;;4414
+M-18;memoire;MASERATI;marques;marque_vehicule;veh:marque:maserati;maserati;maserati;;2863
+M-19;memoire;Filtre à air – Mécanova Select Éco;pieces;article;mecanova:article:MN-FAI-23280;filtre a air mecanova select eco;filtre a air mecanova select eco;;6783
+M-20;memoire;AUDI Q7 60 TFSI E;vehicules;modele_vehicule;veh:modele:audi-q7-60-tfsi-e;audi q7 60 tsfi;audi q7 60 tsfi;;6601
+M-21;memoire;Coût des ventes nettes;vocabulaire_metier;mesure;metier:mesure:M12;cout de vente nette;cout de vente nette;;4289
+M-22;memoire;RENAULT MEGANE III BERLINA;vehicules;modele_vehicule;veh:modele:renault-megane-iii-berlina;renault megane III berlina;renault megane III berlina;;9860
+M-23;memoire;Garage Perkins & Zonen;clients;client;mecanova:client:CL-593036;garage perkin & zonen;garage perkin & zonen;;8885
+M-24;memoire;Autobedrijf de Wit;clients;client;mecanova:client:CL-439903;autobertridj et kit;autobertridj et kit;;6080
+M-25;memoire;EVO;marques;marque_vehicule;veh:marque:evo;evo;evo;;1199
+M-26;memoire;Quantité en stock;vocabulaire_metier;mesure;metier:mesure:M23;quantitée en stock;quantitée en stock;;3284
+M-27;memoire;Catalyseur – Walker Standard;pieces;article;mecanova:article:MN-CAT-99250;catalyser walker standard;catalyser walker standard;;7565
+M-28;memoire;Garage Pascal Frères;clients;client;mecanova:client:CL-830306;garage pascal frére;garage pascal frére;;4634
+M-29;memoire;PORSCHE CAYENNE;vehicules;modele_vehicule;veh:modele:porsche-cayenne;porshe cayenne;porshe cayenne;;3399
+M-30;memoire;Garage Rossi & Fils;clients;client;mecanova:client:CL-349212;garage rossi & fils;garage rossi & fils;;9664
+M-31;memoire;Carrosserie Georges;clients;client;mecanova:client:CL-724273;carrosserie george;carrosserie george;;4837
+M-32;memoire;MAZDA;marques;marque_vehicule;veh:marque:mazda;mazda;mazda;;1441
+M-33;memoire;Tongelre;geographie;ville;geo:ville:NL-2746215;tonglere;tonglere;;2927
+M-34;memoire;Looberghe;geographie;ville;geo:ville:FR-2997622;loobergh;loobergh;;2543
+M-35;memoire;Bobine d'allumage – Champion Premium;pieces;article;mecanova:article:MN-BOB-11231;bobine d'allumage champion premiumù;bobine d'allumage champion premiumù;;7078
+M-36;memoire;Couverture de stock;vocabulaire_metier;mesure;metier:mesure:M25;couvertur de stock;couvertur de stock;;4292
+M-37;memoire;LAND ROVER;marques;marque_vehicule;veh:marque:land-rover;land rover;land rover;;1581
+M-38;memoire;Balai d'essuie-glace – Mécanova Select Standard;pieces;article;mecanova:article:MN-BES-78981;balaie d'essuie glace mecanova select standatd;balaie d'essuie glace mecanova select standatd;;9968
+M-39;memoire;Auto Materne;clients;client;mecanova:client:CL-495184;auto materne;auto materne;;2423
+M-40;memoire;DACIA BIGSTER;vehicules;modele_vehicule;veh:modele:dacia-bigster;dacia bigster;dacia bigster;;3670
+M-41;memoire;Dilsen-Stokkem;geographie;commune;geo:commune:BE-72041;dilsen stocken;dilsen stocken;;4101
+M-42;memoire;Moyen;geographie;ville;geo:ville:FR-2991275;moyen;moyen;;1202
+M-43;memoire;Ninove;geographie;commune;geo:commune:BE-41048;ninove;ninove;;1750
+M-44;memoire;Moulbaix;geographie;localite_postale;geo:localite:BE-7812-moulbai;moulbaix;moulbaix;;2118
+M-45;memoire;Chaînes à neige;pieces;categorie_piece;mecanova:cat:chaine-neige;chaines à neige;chaines à neige;;2498
+M-46;memoire;Batterie – Exide Premium;pieces;article;mecanova:article:MN-BAT-66325;batterie exide premium;batterie exide premium;;4189
+M-47;memoire;Haubourdin;geographie;ville;geo:ville:FR-3013862;haubourdin;haubourdin;;2104
+M-48;memoire;MERCEDES-BENZ E 220 D 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-e-220-d-4matic;mercedes bens e 220;mercedes bens e 220;;4968
+M-49;memoire;MERCEDES-BENZ CLE 220D;vehicules;modele_vehicule;veh:modele:mercedes-benz-cle-220d;mercedes benz e 220d;mercedes benz e 220d;;6843
+M-50;memoire;Carrosserie Quévy;clients;client;mecanova:client:CL-263647;carroserie quévy;carroserie quévy;;3412
+M-51;memoire;Vaulx;geographie;localite_postale;geo:localite:BE-7536-vaul;vaulx;vaulx;;1532
+M-52;memoire;CUPRA LEON E-HYBRID200;vehicules;modele_vehicule;veh:modele:cupra-leon-e-hybrid200;cupra leon e hybrid200;cupra leon e hybrid200;;5810
+M-53;memoire;BMW 840I;vehicules;modele_vehicule;veh:modele:bmw-840i;bmw 840i;bmw 840i;;4843
+M-54;memoire;Chaumont-Gistoux;geographie;commune;geo:commune:BE-25018;chaumont gistrou;chaumont gistrou;;3194
+M-55;memoire;Filtre à huile – Purflux Premium;pieces;article;mecanova:article:MN-FHU-51066;filtre à huile purflux premium;filtre à huile purflux premium;;6538
+M-56;memoire;Catalyseur – Walker Premium;pieces;article;mecanova:article:MN-CAT-18345;catalyser walker premium;catalyser walker premium;;5394
+M-57;memoire;Garage van Wassenaar;clients;client;mecanova:client:CL-240156;garage van wassenaar;garage van wassenaar;;7941
+M-58;memoire;Hoogstraten;geographie;commune;geo:commune:BE-13014;hoogstarten;hoogstarten;;2703
+M-59;memoire;Balai d'essuie-glace – Valeo Éco;pieces;article;mecanova:article:MN-BES-34873;balai d'essuie glace valeo;balai d'essuie glace valeo;;4771
+M-60;memoire;Broekhem;geographie;ville;geo:ville:NL-2758275;broehkem;broehkem;;3642
+M-61;memoire;Knecht;marques;marque_piece;piece:marque:knecht;knech;knech;;2832
+M-62;memoire;Batterie – Bosch Éco;pieces;article;mecanova:article:MN-BAT-91228;batterie bosh eco;batterie bosh eco;;4123
+M-63;memoire;Tapis de sol – Mécanova Select Premium;pieces;article;mecanova:article:MN-TAP-62261;tapis de sol mecanova selet premium;tapis de sol mecanova selet premium;;7906
+M-64;memoire;Bobine d'allumage – Denso Premium;pieces;article;mecanova:article:MN-BOB-43771;bobine d'allumage benso premium;bobine d'allumage benso premium;;7486
+M-65;memoire;Péruwelz;geographie;commune;geo:commune:BE-57064;perumwls;perumwls;;3618
+M-66;memoire;MERCEDES-BENZ C 300 DE 4MATIC;vehicules;modele_vehicule;veh:modele:mercedes-benz-c-300-de-4matic;mercedez bens c 300 4matic;mercedez bens c 300 4matic;;6735
+M-67;memoire;Nederename;geographie;localite_postale;geo:localite:BE-9700-nederename;nedername;nedername;;4054
+M-68;memoire;Bougie d'allumage – Valeo Premium;pieces;article;mecanova:article:MN-BGA-85462;bougie d'allumage valeo prmeium;bougie d'allumage valeo prmeium;;4754
+M-69;memoire;Quantité facturée;vocabulaire_metier;mesure;metier:mesure:M07;quantité facturé;quantité facturé;;5167
+M-70;memoire;Quantité vendue nette;vocabulaire_metier;mesure;metier:mesure:M09;quantité vendu nette;quantité vendu nette;;3694
+M-71;memoire;Henrion Citroen Olne;clients;client;mecanova:client:CL-780138;henrion citrone olne;henrion citrone olne;;4783
+M-72;memoire;Nieuw-Lotbroek;geographie;ville;geo:ville:NL-2750157;?;?;;5502
+M-73;memoire;Centre auto;vocabulaire_metier;type_client;mecanova:type_client:centre-auto;centre auto;centre auto;;2119
+M-74;memoire;Centre Auto Hannut;clients;client;mecanova:client:CL-620720;centre auto hannut;centre auto hannut;;3419
+M-75;memoire;Mann+Hummel;marques;groupe_industriel;organisation:mann-hummel;mann + hummel;mann + hummel;;3844
+M-76;memoire;Bougie de préchauffage – Champion Éco;pieces;article;mecanova:article:MN-BGP-61509;bougie de prechauffage champion;bougie de prechauffage champion;;5669
+M-77;memoire;Bougie d'allumage – Denso Éco;pieces;article;mecanova:article:MN-BGA-80001;"bougie d""allumage denso eco";"bougie d""allumage denso eco";;5098
+M-78;memoire;Kit chaîne de distribution – febi bilstein Standard;pieces;article;mecanova:article:MN-CHD-64160;?;?;;1593
+M-79;memoire;Bougie de préchauffage – Mécanova Select Premium;pieces;article;mecanova:article:MN-BGP-36593;bougie de prechauffage mecanova select eco;bougie de prechauffage mecanova select eco;;10996
+M-80;memoire;Berchem-Sainte-Agathe;geographie;commune;geo:commune:BE-21003;?;?;;1282
+LM-01;libre_memoire;;;;;lyon;lyon;;
+LM-02;libre_memoire;;;;;courbevois;courbevois;;
+LM-03;libre_memoire;;;;;kia;kia;;
+LM-04;libre_memoire;;;;;byd seal;byd seal;;
+LM-05;libre_memoire;;;;;volant moteur;volant moteur;;
+LM-06;libre_memoire;;;;;double ambrayage;double ambrayage;;
+LM-07;libre_memoire;;;;;boite 6 vitesses;boite 6 vitesses;;
+LM-08;libre_memoire;;;;;hybridation;hybridation;;
+LM-09;libre_memoire;;;;;tabelau de brod;tabelau de brod;;
+LM-10;libre_memoire;;;;;tete haute;tete haute;;
+LM-11;libre_memoire;;;;;airbag;airbag;;
+LM-12;libre_memoire;;;;;ceinture de sécurité;ceinture de sécurité;;
+LM-13;libre_memoire;;;;;choc pietons;choc pietons;;
+LM-14;libre_memoire;;;;;clignotants;clignotants;;
+LM-15;libre_memoire;;;;;loa;loa;;
+LM-16;libre_memoire;;;;;loaction longue durée;loaction longue durée;;

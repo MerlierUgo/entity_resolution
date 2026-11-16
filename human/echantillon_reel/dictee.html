@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dictée de saisie</title>
+<style>
+:root{--bg:#F7F8F9;--card:#fff;--ink:#15212B;--mute:#5A6A77;--line:#D5DDE3;--acc:#0D7A69;--warn:#B5502C}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:640px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}.mute{color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:16px}
+button{font:inherit;border-radius:8px;border:1px solid var(--line);background:#fff;padding:10px 16px;cursor:pointer}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff}button:disabled{opacity:.45;cursor:default}
+input,select,textarea{font:inherit;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+input#saisie{font-size:22px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.bar{height:8px;background:#E5EAEE;border-radius:4px;overflow:hidden;margin-top:8px}.bar>div{height:100%;background:var(--acc);width:0}
+.big{font-size:40px;font-weight:700}
+ol{padding-left:20px}li{margin:4px 0}.hidden{display:none}.warn{color:var(--warn)}
+</style></head><body><main>
+<h1>Dictée de saisie</h1>
+<div class="mute">Échantillon réel pour le modèle de saisie · les noms ne s'affichent jamais</div>
+
+<section id="intro" class="card">
+<ol>
+<li>Chaque nom est <b>lu une seule fois</b> à voix haute. Il n'est jamais affiché.</li>
+<li>Tape vite ce que tu as entendu, <b>sans corriger</b>, puis <b>Entrée</b>.</li>
+<li>Si tu ne sais pas l'écrire, écris ce que tu entends. Si tu n'as rien compris : bouton « Pas compris ».</li>
+<li>Tu peux t'arrêter et reprendre plus tard : la progression est gardée dans ce navigateur.</li>
+<li>À la fin : 20 à 30 termes hors catalogue de mémoire, puis export du CSV.</li>
+</ol>
+<label class="mute">Voix</label><select id="voix"></select>
+<div class="row"><label class="mute">Clavier utilisé</label>
+<select id="appareil" style="width:auto"><option>ordinateur</option><option>telephone</option></select></div>
+<div class="row"><button id="test">Tester la voix</button><button id="go" class="pri">Commencer / reprendre</button></div>
+<p id="novoice" class="warn hidden">Aucune voix française trouvée : ouvre la page dans Edge ou Chrome (Edge a les meilleures voix françaises).</p>
+</section>
+
+<section id="dictee" class="card hidden">
+<div class="row" style="justify-content:space-between;margin:0"><span class="big" id="num">1</span><span class="mute" id="prog"></span></div>
+<div class="bar"><div id="barre"></div></div>
+<p class="mute" id="etat">Écoute…</p>
+<input id="saisie" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="tape ici, puis Entrée">
+<div class="row"><button id="valider" class="pri">Valider (Entrée)</button><button id="pascompris">Pas compris</button><button id="pause">Pause</button></div>
+</section>
+
+<section id="fin" class="card hidden">
+<b>Termes hors catalogue, de mémoire</b>
+<p class="mute">Sans regarder le catalogue : villes, marques, pièces, clients auxquels un commercial penserait. Un par ligne, tapés vite.</p>
+<textarea id="libres" rows="10" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+<div class="row"><button id="export" class="pri">Télécharger le CSV</button><button id="copier">Copier le CSV</button><button id="raz">Tout effacer</button></div>
+<p class="mute" id="msg"></p>
+</section>
+</main>
+<script>
+const LISTE = [[1, "Zoersel"], [2, "JAECOO"], [3, "AUDI RS 3 LIMOUSINE"], [4, "CA brut"], [5, "Huile de boîte de vitesses – Liqui Moly Premium"], [6, "Mussy-La-Ville"], [7, "TOYOTA"], [8, "Bothey"], [9, "Filtre à huile – Knecht Standard"], [10, "MG3 HYBRID+"], [11, "BMW X4 XDRIVE20I"], [12, "AUDI"], [13, "AUDI A6 AV E-TRON PERFORMANCE"], [14, "Genappe"], [15, "Chaource"], [16, "Peer"], [17, "BP"], [18, "Montataire"], [19, "Agence Arlon"], [20, "Amortisseur arrière – Sachs Standard"], [21, "Mâchoires de frein – ATE Standard"], [22, "BYD TANG EV"], [23, "ALPINE A110"], [24, "Carrosseriebedrijf Van den Bosch"], [25, "Saint-Gilles"], [26, "Marly"], [27, "Ets Schmitz – Dacia"], [28, "Varta"], [29, "Kit d'embrayage – LuK Premium"], [30, "Bourgeois Skoda Châtelet"], [31, "Rousset Logistics"], [32, "Denain"], [33, "Tervuren"], [34, "La Madeleine"], [35, "Liquide de frein – Mécanova Select Éco"], [36, "SHINERAY"], [37, "Chigny-les-Roses"], [38, "Homécourt"], [39, "Carrosserie Hoarau"], [40, "Volant moteur – Mécanova Select Éco"], [41, "Renault Jansen"], [42, "Ets Wauthier – Skoda"], [43, "Étrier de frein avant droit – TRW Standard"], [44, "Amiens"], [45, "Méru"], [46, "Garage indépendant"], [47, "AUDI A6 SB E-TRON QUATTRO"], [48, "Transports Piron"], [49, "Wommelgem"], [50, "KIA CEED"], [51, "INA"], [52, "Sophie Lambert"], [53, "Filtre à huile – Mécanova Select Éco"], [54, "BMW M340D XDRIVE"], [55, "Monroe"], [56, "Sedan"], [57, "Quantité retournée"], [58, "BMW 220D"], [59, "Freyming-Merlebach"], [60, "Batterie – Varta Standard"], [61, "Vaudes"], [62, "JEEP"], [63, "Herpen"], [64, "Amortisseur avant – Lemförder Standard"], [65, "Rongy"], [66, "OPEL ADAM"], [67, "Bougie d'allumage – Valeo Standard"], [68, "Oreye"], [69, "Garage Lefèbvre"], [70, "Kester"], [71, "EVO SPAZIO"], [72, "Liquide de refroidissement – TotalEnergies Éco"], [73, "Garage Charlier Frères"], [74, "Zandhoven"], [75, "Noël Automobiles"], [76, "Kermt"], [77, "Ampoule – Hella Éco"], [78, "Kevin Dubois"], [79, "Venlo"], [80, "LOTUS EMIRA"], [81, "Jacquet Carrosserie"], [82, "VOLVO S90"], [83, "PORSCHE"], [84, "Filtre à air – Purflux Standard"], [85, "Rancennes"], [86, "Aigneville Auto Center"], [87, "MASERATI GRANTURISMO TROFEO"], [88, "Exide Technologies"], [89, "Eschbach"], [90, "Autobedrijf Pauwels"], [91, "FIAT"], [92, "Pompe à eau – Behr Premium"], [93, "Made"], [94, "Carrosserie Evrard"], [95, "MAXUS"], [96, "Garage Raymond Frères"], [97, "PORSCHE 911 CARRERA 4S"], [98, "Kit de distribution – INA Standard"], [99, "Amortisseur avant – Monroe Éco"], [100, "GENESIS GV60, GENESIS GV60"], [101, "Filtre à air – Bosch Standard"], [102, "Walker"], [103, "Garage Giselmeyer & Zonen"], [104, "Garage de la Gare"], [105, "Lumileds"], [106, "Filtre à particules – Mécanova Select Standard"], [107, "AUDI SQ6 SUV E-TRON"], [108, "Phare – Osram Premium"], [109, "Lesve"], [110, "Agence Lille"], [111, "MINI COUNTRYMAN E"], [112, "Garage Jacquet Frères"], [113, "Étrier de frein avant droit – Brembo Standard"], [114, "Spiere"], [115, "MERCEDES-BENZ EQS 450+"], [116, "Roosbeek"], [117, "Profondeville"], [118, "Liquide de frein – Mécanova Select Premium"], [119, "Garage du Centre"], [120, "Moussey"], [121, "Batterie – Exide Éco"], [122, "Lunéville"], [123, "Carrossier"], [124, "Kruibeke"], [125, "Hazebrouck"], [126, "Mercedes-Benz Servais"], [127, "Toul"], [128, "Ampoules"], [129, "La Bresse"], [130, "Garage Jacobs"], [131, "Batterie – Mécanova Select Standard"], [132, "Raismes"], [133, "Panier moyen"], [134, "Garage Thirion Frères"], [135, "Carrosserie Ellezelles"], [136, "Remises"], [137, "JAGUAR"], [138, "Chauny"], [139, "Kortijs"], [140, "Lisogne"], [141, "FERRARI 296 GTS"], [142, "Centre Auto Welkenraedt"], [143, "Sand"], [144, "AUDI Q5 270KW TFSI E"], [145, "Dayco"], [146, "MERCEDES-BENZ AMG GLC 63S E PERFORMANCE"], [147, "MERCEDES-BENZ EQE 350+"], [148, "LOTUS EMIRA V6 MANUAL SPORT CHASSIS"], [149, "Alternateur – Mécanova Select Premium"], [150, "Rotule – Mécanova Select Standard"], [151, "Amortisseur arrière – Lemförder Standard"], [152, "Vermand"], [153, "Faches-Thumesnil"], [154, "Boussu"], [155, "Huile moteur"], [156, "Andel"], [157, "Esneux"], [158, "OPEL CROSSLAND"], [159, "OMODA5"], [160, "Filtre à huile – Bosch Éco"], [161, "Gerpinnes"], [162, "MERCEDES-BENZ GLB 250 4MATIC"], [163, "BMW X6 XDRIVE40D M SPORT"], [164, "Démarreur – NGK Standard"], [165, "Alternateur – Valeo Éco"], [166, "BMW X2 SDRIVE20D"], [167, "Étrier de frein avant droit – Ferodo Standard"], [168, "Gouvy"], [169, "Auto Thibault"], [170, "Bourlers"], [171, "Filtre à huile – Mann-Filter Éco"], [172, "Schaeffler"], [173, "Auto Chevalier"], [174, "Tielt"], [175, "Melle"], [176, "Transports Carlier"], [177, "Nombre de commandes"], [178, "Longuenesse"], [179, "Vase d'expansion – Behr Premium"], [180, "CA net facturé"], [181, "Bougie d'allumage – Denso Standard"], [182, "Garage Pirson"], [183, "Chaînes à neige – Mécanova Select Éco"], [184, "Nadia El Amrani"], [185, "Pieter Claes"], [186, "MAZDA HURTAN -GRAND ALBAYCIN"], [187, "Tambour de frein – Textar Premium"], [188, "Mâchoires de frein – Ferodo Standard"], [189, "BMW M3 CS"], [190, "Seny"], [191, "Waremme"], [192, "Dacia Bonnevoie-Sud"], [193, "Charmes"], [194, "DR 6.0 H"], [195, "Baillamont"], [196, "Marty Fleet Services"], [197, "Brunssum"], [198, "Dison"], [199, "MASERATI GRANCABRIO TROFEO"], [200, "MAHINDRA"], [201, "Exide"], [202, "Batterie – Mécanova Select Éco"], [203, "Garage Leleux Frères"], [204, "AUDI S5 SPORTBACK"], [205, "Edegem"], [206, "Laurent Carrosserie"], [207, "LAND ROVER DEFENDER"], [208, "MERCEDES-BENZ GLE 450 D 4MATIC COUPE"], [209, "Mercedes-Benz Dehon"], [210, "KYB Corporation"], [211, "Plaquettes de frein arrière – TRW Standard"], [212, "Anzin"], [213, "Flexible de frein – Textar Premium"], [214, "Hopel"], [215, "Bougie d'allumage – Champion Éco"], [216, "Vasseur Ford Gonderange"], [217, "Balai d'essuie-glace – Bosch Standard"], [218, "VOLKSWAGEN T CROSS"], [219, "DALLARA"], [220, "Ampoule – Osram Standard"], [221, "Liquide de refroidissement – Castrol Premium"], [222, "Reims"], [223, "Silencieux – Mécanova Select Éco"], [224, "DS4"], [225, "FERRARI"], [226, "Halen"], [227, "Grave"], [228, "Thomas Renard"], [229, "Verdun"], [230, "DONGFENG"], [231, "Theux Lease"], [232, "Theux"], [233, "PEUGEOT"], [234, "MERCEDES-BENZ EQS 580 4MATIC"]];
+const CLE = "dictee_saisie_v1";
+let st = {i:0, res:{}, libres:""};
+try { const s = localStorage.getItem(CLE); if (s) st = JSON.parse(s); } catch(e) {}
+const save = () => { try { localStorage.setItem(CLE, JSON.stringify(st)); } catch(e) {} };
+const $ = id => document.getElementById(id);
+let voix = [], t0 = 0;
+
+function chargerVoix(){
+  voix = speechSynthesis.getVoices().filter(v => v.lang.toLowerCase().startsWith("fr"));
+  voix.sort((a,b) => (b.name.includes("Natural")|b.name.includes("Online")) - (a.name.includes("Natural")|a.name.includes("Online")));
+  $("voix").innerHTML = voix.map((v,k)=>`<option value="${k}">${v.name} (${v.lang})</option>`).join("");
+  $("novoice").classList.toggle("hidden", voix.length > 0);
+}
+speechSynthesis.onvoiceschanged = chargerVoix; chargerVoix();
+
+function dire(txt, fin){
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  const v = voix[+$("voix").value]; if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "fr-FR";
+  u.rate = 1.0; u.onend = fin || null; speechSynthesis.speak(u);
+}
+$("test").onclick = () => dire("Liège, Bosch, amortisseur arrière");
+
+function afficher(){
+  if (st.i >= LISTE.length) { $("dictee").classList.add("hidden"); $("fin").classList.remove("hidden"); $("libres").value = st.libres || ""; return; }
+  const [ordre, nom] = LISTE[st.i];
+  $("num").textContent = ordre; $("prog").textContent = `${st.i} / ${LISTE.length} faits`;
+  $("barre").style.width = (100*st.i/LISTE.length) + "%";
+  $("saisie").value = ""; $("saisie").disabled = true; $("etat").textContent = "Écoute…";
+  dire(nom, () => { $("saisie").disabled = false; $("saisie").focus(); $("etat").textContent = "Tape ce que tu as entendu."; t0 = performance.now(); });
+  setTimeout(() => { if ($("saisie").disabled) { $("saisie").disabled = false; $("saisie").focus(); t0 = performance.now(); } }, 6000);
+}
+function enregistrer(val){
+  const [ordre] = LISTE[st.i];
+  st.res[ordre] = {saisie: val, ms: Math.round(performance.now() - t0), appareil: $("appareil").value};
+  st.i++; save(); afficher();
+}
+$("go").onclick = () => { $("intro").classList.add("hidden"); $("dictee").classList.remove("hidden"); afficher(); };
+$("valider").onclick = () => enregistrer($("saisie").value);
+$("saisie").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); enregistrer($("saisie").value); } });
+$("pascompris").onclick = () => enregistrer("?");
+$("pause").onclick = () => { speechSynthesis.cancel(); $("dictee").classList.add("hidden"); $("intro").classList.remove("hidden"); };
+$("libres").addEventListener("input", () => { st.libres = $("libres").value; save(); });
+
+function csv(){
+  const q = s => '"' + String(s).replace(/"/g,'""') + '"';
+  const l = ["ordre;saisie;duree_ms;appareil"];
+  for (const [ordre] of LISTE) { const r = st.res[ordre]; if (r) l.push([ordre, q(r.saisie), r.ms, r.appareil].join(";")); }
+  (st.libres||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean).forEach((s,k) => l.push([`L-${String(k+1).padStart(2,"0")}`, q(s), "", "libre"].join(";")));
+  return "﻿" + l.join("\r\n") + "\r\n";
+}
+$("export").onclick = () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv()], {type:"text/csv;charset=utf-8"}));
+  a.download = "saisies.csv"; a.click(); $("msg").textContent = "Fichier saisies.csv téléchargé.";
+};
+$("copier").onclick = async () => { try { await navigator.clipboard.writeText(csv()); $("msg").textContent = "CSV copié : colle-le dans un fichier saisies.csv."; } catch(e) { $("msg").textContent = "Copie impossible : utilise Télécharger."; } };
+$("raz").onclick = () => { if (confirm("Effacer toutes les saisies ?")) { st = {i:0,res:{},libres:""}; save(); location.reload(); } };
+if (st.i > 0) $("go").textContent = `Reprendre (${st.i} / ${LISTE.length})`;
+</script></body></html>
