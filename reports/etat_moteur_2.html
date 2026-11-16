@@ -231,9 +231,9 @@ td .arrow { color: var(--ink-3); }
 <main class="page">
 
 <header class="top">
-  <div class="eyebrow">Moteur d'entity resolution · relevé du 10 novembre 2026 · banc d'essai, partition dev</div>
-  <h1>Étape 2 : l'approché borné fait passer les réponses attendues de 68 % à 90 %, toujours sans erreur silencieuse.</h1>
-  <p class="lede">L'étape 1 n'utilise que la normalisation et les alias du catalogue : elle ne se trompe jamais mais répond « inconnu » dès que le terme n'existe pas tel quel. L'étape 2 ajoute un Jaro-Winkler borné, avec un seuil injectable : fixe à 0,88, ou calibré type par type par SGR. Sur la part de dev réservée à l'évaluation, le seuil fixe donne 89,9 % de réponses attendues, le seuil calibré 79,4 %, et aucune des deux configurations ne crée d'erreur silencieuse.</p>
+  <div class="eyebrow">Moteur d'entity resolution · relevé du 13 novembre 2026 · partition dev et jeux de calibration</div>
+  <h1>Étape 2 : le seuil fixe 0,88 se trompe sur 7 % des termes qu'il accepte ; seules les pièces tiennent la garantie de 0,5 %.</h1>
+  <p class="lede">L'étape 1 n'utilise que la normalisation et les alias du catalogue : elle ne se trompe jamais mais répond « inconnu » dès que le terme n'existe pas tel quel. L'étape 2 ajoute un Jaro-Winkler borné, fixe à 0,88 (B) ou calibré par famille avec une garantie r* = 0,5 % à 95 % (C). Sur la part eval de dev, B donne 89,5 % de réponses attendues sans erreur silencieuse, mais sur le jeu de certification il se trompe sur 7,0 % des termes qu'il accepte. C n'active que la famille des pièces (θ = 0,97) : 69,4 % de réponses attendues, sans erreur silencieuse, même sans index négatif. Les sections <a href="#diagnostic">Diagnostic</a> à <a href="#exemples-calibration">Exemples</a> décrivent ce relevé ; les sections plus haut, les relevés précédents.</p>
 </header>
 
 <div class="board" role="list" aria-label="État de chaque étape">
@@ -460,6 +460,7 @@ td .arrow { color: var(--ink-3); }
 <section id="etape2">
   <div class="head">
     <h2>Étape 2 : Jaro-Winkler borné, trois configurations comparées</h2>
+    <!-- calibration-familles:note:debut --><p class="cap"><strong>Mise à jour :</strong> cette section décrit la première calibration, un seuil par type avec r* = 5 %. Elle est remplacée par la calibration par famille (r* = 0,5 %) des sections <a href="#calibration">Calibration</a> et <a href="#comparaison-abc">Comparaison A / B / C</a> ci-dessous.</p><!-- calibration-familles:note:fin -->
     <p>L'approché ne s'applique que si l'alias exact, les mots triés et l'index négatif n'ont rien donné. La comparaison porte sur la part « eval » de dev : 2 133 cas, soit 30 % de dev choisis par hash du <code>case_id</code>, jamais vus par la calibration. La partition test n'a pas été ouverte.</p>
   </div>
   <div class="configs">
@@ -577,6 +578,1587 @@ td .arrow { color: var(--ink-3); }
     </div>
   </div>
 </section>
+
+<!-- calibration-familles:debut -->
+<style>
+.small { font-size: 12px; } .mu { color: var(--ink-3); }
+#calibration table td, #comparaison-abc table td, #exemples-calibration table td { vertical-align: top; }
+.silencieuses { display: grid; gap: 4px; }
+.silencieuses details { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; font-size: 13.5px; }
+.silencieuses summary { cursor: pointer; }
+pre.trace { font: 12px/1.45 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; background: var(--sunken); padding: 10px; border-radius: 4px; margin: 8px 0 2px; max-height: 360px; overflow: auto; }
+#calibration .configs .k, #calibration .configs .kA { color: var(--ink); }
+</style>
+<section id="diagnostic">
+  <div class="head">
+    <p class="eyebrow">Étape 2 · jeu d'analyse</p>
+    <h2>Diagnostic : d'où viennent les pertes de l'approché</h2>
+    <p>Sur <code>challenges/calibration_analyse.csv</code> (17 708 termes), pour chaque famille, au meilleur point de la grille (plus petite borne) puis au seuil 0,88 de B, les pertes parmi les termes acceptés sont réparties entre <strong>présents confondus</strong> (une faute sur un nom du catalogue mène à une autre entité) et <strong>absents acceptés</strong> (un terme hors catalogue est accepté). « Voisin réel » : un autre nom du même type est à une seule faute du terme tapé, comme Fressin pour « Fresin » (faute pour Fretin). La flèche donne le nombre de présents confondus avant puis après les deux corrections.</p>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr><th rowspan="2">Famille</th><th class="r" rowspan="2">Retenables</th><th colspan="6">Meilleur point de la grille</th><th colspan="6">Seuil 0,88 (B)</th></tr>
+    <tr><th class="r">θ</th><th class="r">n</th><th class="r">Présents confondus</th><th class="r">dont voisin réel</th><th class="r">Absents acceptés</th><th class="r">Borne</th><th class="r">θ</th><th class="r">n</th><th class="r">Présents confondus</th><th class="r">dont voisin réel</th><th class="r">Absents acceptés</th><th class="r">Borne</th></tr></thead>
+    <tbody><tr><td><strong>Géographie</strong></td><td class='r'>2 994</td><td class='r'>0,98</td><td class='r'>370</td><td class='r'>0 → <b>0</b></td><td class='r'>0</td><td class='r'><b>0</b></td><td class='r'>1,61 %</td><td class='r'>0,88</td><td class='r'>2 714</td><td class='r'>121 → <b>65</b></td><td class='r'>9</td><td class='r'><b>152</b></td><td class='r'>9,56 %</td></tr><tr><td><strong>Pièces</strong></td><td class='r'>2 874</td><td class='r'>0,98</td><td class='r'>1 433</td><td class='r'>1 → <b>1</b></td><td class='r'>0</td><td class='r'><b>0</b></td><td class='r'>0,57 %</td><td class='r'>0,88</td><td class='r'>2 837</td><td class='r'>8 → <b>6</b></td><td class='r'>2</td><td class='r'><b>154</b></td><td class='r'>6,96 %</td></tr><tr><td><strong>Véhicules</strong></td><td class='r'>2 583</td><td class='r'>0,97</td><td class='r'>1 287</td><td class='r'>6 → <b>0</b></td><td class='r'>0</td><td class='r'><b>0</b></td><td class='r'>0,46 %</td><td class='r'>0,88</td><td class='r'>2 451</td><td class='r'>10 → <b>3</b></td><td class='r'>1</td><td class='r'><b>140</b></td><td class='r'>7,29 %</td></tr><tr><td><strong>Clients</strong></td><td class='r'>1 528</td><td class='r'>0,96</td><td class='r'>1 169</td><td class='r'>4 → <b>0</b></td><td class='r'>0</td><td class='r'><b>4</b></td><td class='r'>1,15 %</td><td class='r'>0,88</td><td class='r'>1 516</td><td class='r'>11 → <b>0</b></td><td class='r'>0</td><td class='r'><b>54</b></td><td class='r'>5,11 %</td></tr><tr><td><strong>Marques</strong></td><td class='r'>219</td><td class='r'>0,91</td><td class='r'>171</td><td class='r'>2 → <b>2</b></td><td class='r'>0</td><td class='r'><b>0</b></td><td class='r'>5,78 %</td><td class='r'>0,88</td><td class='r'>199</td><td class='r'>3 → <b>3</b></td><td class='r'>0</td><td class='r'><b>1</b></td><td class='r'>6,65 %</td></tr><tr><td><strong>Douane</strong></td><td class='r'>824</td><td class='r'>0,99</td><td class='r'>324</td><td class='r'>0 → <b>0</b></td><td class='r'>0</td><td class='r'><b>1</b></td><td class='r'>2,51 %</td><td class='r'>0,88</td><td class='r'>818</td><td class='r'>0 → <b>0</b></td><td class='r'>0</td><td class='r'><b>157</b></td><td class='r'>23,33 %</td></tr><tr><td><strong>Vocabulaire métier</strong></td><td class='r'>232</td><td class='r'>0,95</td><td class='r'>158</td><td class='r'>0 → <b>0</b></td><td class='r'>0</td><td class='r'><b>0</b></td><td class='r'>3,72 %</td><td class='r'>0,88</td><td class='r'>224</td><td class='r'>1 → <b>0</b></td><td class='r'>0</td><td class='r'><b>12</b></td><td class='r'>11,01 %</td></tr><tr><td><strong>Mixte (plusieurs familles)</strong></td><td class='r'>23</td><td class='r'>0,80</td><td class='r'>21</td><td class='r'>1 → <b>1</b></td><td class='r'>1</td><td class='r'><b>1</b></td><td class='r'>39,81 %</td><td class='r'>0,88</td><td class='r'>15</td><td class='r'>1 → <b>1</b></td><td class='r'>1</td><td class='r'><b>1</b></td><td class='r'>51,69 %</td></tr></tbody></table></div>
+  <div class="why">
+    <p><strong>À 0,88, la perte principale n'est pas la confusion entre deux noms réels, ce sont les termes absents acceptés.</strong> Origine de ces absents, toutes familles : noms recombinés 557 (83 %), fautes sur l&#x27;index négatif 95 (14 %), vraies marques hors catalogue 19 (3 %). Un nom recombiné garde tous ses mots sauf un (« nombre de Julie » pour « nombre de clients ») : sur une chaîne longue, Jaro-Winkler reste au-dessus de 0,9 malgré un mot entièrement faux. Ni l'ordre des mots ni R-RES-11 ne corrigent ce cas.</p>
+    <p>Les deux corrections retirent en revanche l'essentiel des présents confondus. <strong>R-RES-11</strong> (voisins en distance d'édition) traite les fautes qui tombent à égale distance de deux lieux réels : en géographie, le meilleur nom n'est plus choisi seul. <strong>L'ordre des mots</strong> réunit, comme l'exact, « Fiat Abarth 500 » et « Fiat 500 Abarth » : les clients et les véhicules ne répondent plus « résolu » là où l'exact répond « ambigu ».</p>
+  </div>
+  <h3>Effet des deux corrections, une à une</h3><div class='scroll'><table><thead><tr><th>Mesure</th><th class='r'>sans correction</th><th class='r'>ordre des mots</th><th class='r'>R-RES-11</th><th class='r'>les deux</th></tr></thead><tbody><tr><td>présent confondu (θ = 0,88)</td><td class='r'>155</td><td class='r'>137</td><td class='r'>94</td><td class='r'>78</td></tr><tr><td>absent accepté (θ = 0,88)</td><td class='r'>676</td><td class='r'>732</td><td class='r'>619</td><td class='r'>671</td></tr><tr><td>dev entière, B : idéal / sûr / silencieux / trop confiant</td><td class='r'>88,6 / 98,7 / 0 / 5</td><td class='r'>88,5 / 98,6 / 0 / 6</td><td class='r'>88,3 / 98,5 / 0 / 0</td><td class='r'>88,3 / 98,5 / 0 / 1</td></tr></tbody></table></div>
+  <details><summary>10 exemples de présents confondus à 0,88 (après corrections)</summary><div class='scroll'><table><thead><tr><th>Famille</th><th>Terme tapé</th><th>Origine</th><th class='r'>κ</th><th>Noms retenus</th><th>Réponse</th><th>Voisin réel à 1 faute</th></tr></thead><tbody><tr><td>Géographie</td><td class='mono'>Alelt</td><td class='mono'>Aspelt</td><td class='r'>0,880</td><td class='mono'>alle, jallet, albert</td><td class='mono'>ambiguous</td><td class='mono'>·</td></tr><tr><td>Géographie</td><td class='mono'>Allke</td><td class='mono'>Alleke</td><td class='r'>0,953</td><td class='mono'>alle</td><td class='mono'>resolved</td><td class='mono'>·</td></tr><tr><td>Pièces</td><td class='mono'>aort</td><td class='mono'>Haors</td><td class='r'>0,900</td><td class='mono'>amorto, porte</td><td class='mono'>ambiguous</td><td class='mono'>wort</td></tr><tr><td>Pièces</td><td class='mono'>Châyies</td><td class='mono'>Châtres</td><td class='r'>0,922</td><td class='mono'>chaine, chaineu</td><td class='mono'>ambiguous</td><td class='mono'>·</td></tr><tr><td>Véhicules</td><td class='mono'>Jiny</td><td class='mono'>Joigny</td><td class='r'>0,947</td><td class='mono'>jimny</td><td class='mono'>resolved</td><td class='mono'>·</td></tr><tr><td>Véhicules</td><td class='mono'>BRIFTER</td><td class='mono'>E-RIFTER</td><td class='r'>0,952</td><td class='mono'>rifter</td><td class='mono'>resolved</td><td class='mono'>rifter</td></tr><tr><td>Marques</td><td class='mono'>Gensies</td><td class='mono'>Hensies</td><td class='r'>0,961</td><td class='mono'>genesi</td><td class='mono'>resolved</td><td class='mono'>·</td></tr><tr><td>Marques</td><td class='mono'>SUBAR</td><td class='mono'>SUPRA</td><td class='r'>0,967</td><td class='mono'>subaru</td><td class='mono'>resolved</td><td class='mono'>·</td></tr><tr><td>Mixte (plusieurs familles)</td><td class='mono'>Vitus</td><td class='mono'>Vertus</td><td class='r'>0,883</td><td class='mono'>vito, vitt, vilt</td><td class='mono'>ambiguous</td><td class='mono'>vitt</td></tr></tbody></table></div></details>
+  <details><summary>10 exemples d'absents acceptés à 0,88 (après corrections)</summary><div class='scroll'><table><thead><tr><th>Famille</th><th>Terme tapé</th><th>Origine</th><th class='r'>κ</th><th>Noms retenus</th><th>Réponse</th></tr></thead><tbody><tr><td>Géographie</td><td class='mono'>La Amjenoa</td><td class='mono'>La Baffe ⊕ Amjenoa</td><td class='r'>0,971</td><td class='mono'>amjena, amjen, amjenso</td><td class='mono'>resolved</td></tr><tr><td>Géographie</td><td class='mono'>Le Anthonis</td><td class='mono'>Le Nouvion-le-Franc ⊕ Anthonis</td><td class='r'>0,967</td><td class='mono'>antoni</td><td class='mono'>resolved</td></tr><tr><td>Pièces</td><td class='mono'>Freihun</td><td class='mono'>Freihung</td><td class='r'>0,943</td><td class='mono'>frein, frethun</td><td class='mono'>ambiguous</td></tr><tr><td>Pièces</td><td class='mono'>Fürthein</td><td class='mono'>Fürthen</td><td class='r'>0,887</td><td class='mono'>frein, fretin</td><td class='mono'>ambiguous</td></tr><tr><td>Véhicules</td><td class='mono'>Frerren</td><td class='mono'>Freren</td><td class='r'>0,900</td><td class='mono'>free, freten, friere</td><td class='mono'>ambiguous</td></tr><tr><td>Véhicules</td><td class='mono'>La super</td><td class='mono'>La Voivre ⊕ super</td><td class='r'>0,967</td><td class='mono'>superb</td><td class='mono'>resolved</td></tr><tr><td>Clients</td><td class='mono'>Adam Fleet Terville S.C.</td><td class='mono'>Adam Fleet Services S.C. ⊕ Terville</td><td class='r'>0,956</td><td class='mono'>adam fleet service s c</td><td class='mono'>resolved</td></tr><tr><td>Clients</td><td class='mono'>Affligem Auto Enghien</td><td class='mono'>Affligem Auto Center ⊕ Enghien</td><td class='r'>0,932</td><td class='mono'>affligem auto center</td><td class='mono'>resolved</td></tr><tr><td>Marques</td><td class='mono'>Pirelli</td><td class='mono'>Pirelli</td><td class='r'>0,905</td><td class='mono'>cirelli</td><td class='mono'>resolved</td></tr><tr><td>Douane</td><td class='mono'>Air conditioning machines; comprising a motor-driven fan an…</td><td class='mono'>Air conditioning machines; comprising a motor-driven fan an…</td><td class='r'>0,976</td><td class='mono'>air conditioning machine comprising motor driven fan and el…</td><td class='mono'>resolved</td></tr></tbody></table></div></details>
+</section>
+<section id="calibration">
+  <div class="head">
+    <p class="eyebrow">Étape 2 · R-RES-10</p>
+    <h2>Calibration par famille : r* = 0,5 %, garanti à 95 %</h2>
+    <p>La première calibration (un seuil par type, r* = 5 %) n'activait le fuzzy que pour les villes : chaque type avait trop peu de cas. Elle est refaite sur le jeu de <strong>certification</strong>, <code>challenges/calibration_certif.csv</code> : 17 687 termes qui atteignent tous l'étape approchée (fautes de frappe sur des noms du catalogue, et termes absents), sans aucune entité de la partition test. Ce jeu sert seulement à calculer θ : on n'en regarde jamais les erreurs. Les règles ont été conçues sur l'autre jeu, <code>calibration_analyse.csv</code>, tiré avec une autre graine et sans terme commun. Le seuil est calibré par <strong>famille</strong> de types (<code>spec/familles_fuzzy.yaml</code>).</p>
+  </div>
+  <div class="configs">
+    <div><b class="k kA">r*</b><span><strong>0,5 % de pertes</strong> au plus parmi les termes que le fuzzy accepte. Perte « dangereuse » : le nom accepté mène à une entité qui n'est pas la bonne.</span></div>
+    <div><b class="k kA">δ</b><span><strong>5 %</strong> : probabilité que cette garantie soit fausse. Bonferroni sur les 20 seuils : chaque borne est calculée au niveau δ/20.</span></div>
+    <div><b class="k kA">θ</b><span><strong>Grille fixe 0,80 → 0,99</strong> (pas 0,01). On retient le θ le plus bas dont la borne B*(k, n, δ/20) est ≤ r*. Il faut au moins 1 196 termes acceptés sans erreur.</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>1</b><span>famille(s) active(s) sur 7</span></div>
+    <div class="stat"><b>1 196</b><span>termes acceptés au minimum, sans erreur, pour garantir 0,5 %</span></div>
+    <div class="stat"><b>8,1 %</b><span>pertes de B (0,88) en géographie, jeu de certification</span></div>
+    <div class="stat"><b>5,9 %</b><span>pertes de B en pièces, jeu de certification</span></div>
+    <div class="stat"><b>4,6 %</b><span>pertes de B en véhicules, jeu de certification</span></div>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Famille</th><th class="r">Entités</th><th class="r">Cas présents</th><th class="r">Cas absents</th><th class="r">Retenables</th><th class="r">θ</th><th class="r">n</th><th class="r">k</th><th class="r">Borne B*</th><th class="r">Couverture</th><th>Statut</th></tr></thead>
+      <tbody><tr><td><strong>Géographie</strong><br><span class='mu small'>arrondissement, canton, commune, localite_postale, pays, province, region, ville</span></td><td class='r'>7 478</td><td class='r'>3 000</td><td class='r'>1 000</td><td class='r'>2 973</td><td class='r'>—</td><td class='r mu'>797</td><td class='r mu'>2</td><td class='r mu'>1,26 % à 0,97</td><td class='r'>0 %</td><td><span class="pill no">désactivé · risque</span></td></tr><tr><td><strong>Pièces</strong><br><span class='mu small'>article, categorie_piece, famille_mecanova, gamme, qualite</span></td><td class='r'>2 791</td><td class='r'>3 000</td><td class='r'>1 000</td><td class='r'>2 890</td><td class='r'>0,97</td><td class='r'>1 815</td><td class='r'>1</td><td class='r'>0,45 %</td><td class='r'>62,8 %</td><td><span class="pill ok">actif</span></td></tr><tr><td><strong>Véhicules</strong><br><span class='mu small'>modele_vehicule</span></td><td class='r'>1 179</td><td class='r'>3 000</td><td class='r'>1 000</td><td class='r'>2 563</td><td class='r'>—</td><td class='r mu'>1 713</td><td class='r mu'>5</td><td class='r mu'>0,88 % à 0,96</td><td class='r'>0 %</td><td><span class="pill no">désactivé · risque</span></td></tr><tr><td><strong>Clients</strong><br><span class='mu small'>client</span></td><td class='r'>1 400</td><td class='r'>3 000</td><td class='r'>1 000</td><td class='r'>1 537</td><td class='r'>—</td><td class='r mu'>975</td><td class='r mu'>10</td><td class='r mu'>2,30 % à 0,97</td><td class='r'>0 %</td><td><span class="pill no">désactivé · risque</span></td></tr><tr><td><strong>Marques</strong><br><span class='mu small'>groupe_industriel, marque_piece, marque_vehicule</span></td><td class='r'>144</td><td class='r'>252</td><td class='r'>63</td><td class='r'>218</td><td class='r'>—</td><td class='r mu'>151</td><td class='r mu'>0</td><td class='r mu'>3,89 % à 0,93</td><td class='r'>0 %</td><td><span class="pill no">désactivé · volume</span></td></tr><tr><td><strong>Douane</strong><br><span class='mu small'>code_douanier</span></td><td class='r'>280</td><td class='r'>771</td><td class='r'>257</td><td class='r'>824</td><td class='r'>—</td><td class='r mu'>326</td><td class='r mu'>1</td><td class='r mu'>2,49 % à 0,99</td><td class='r'>0 %</td><td><span class="pill no">désactivé · volume</span></td></tr><tr><td><strong>Vocabulaire métier</strong><br><span class='mu small'>canal, commercial, forme_juridique, groupe_canal, mesure, motif_retour, segment, site, type_client</span></td><td class='r'>79</td><td class='r'>258</td><td class='r'>86</td><td class='r'>237</td><td class='r'>—</td><td class='r mu'>157</td><td class='r mu'>0</td><td class='r mu'>3,74 % à 0,95</td><td class='r'>0 %</td><td><span class="pill no">désactivé · volume</span></td></tr><tr><td><strong>Mixte (plusieurs familles)</strong><br><span class='mu small'>clé de repli</span></td><td class='r'>·</td><td class='r'>0</td><td class='r'>0</td><td class='r'>31</td><td class='r'>—</td><td class='r mu'>19</td><td class='r mu'>0</td><td class='r mu'>27,05 % à 0,87</td><td class='r'>0 %</td><td><span class="pill no">désactivé · mixte</span></td></tr></tbody>
+    </table>
+  </div>
+  <p class="cap">Présents et absents : par famille attendue du cas. Retenables, n, k : par famille des meilleurs noms trouvés, celle que le moteur utilise pour choisir le seuil (un terme de la famille « pièces » peut tomber sur un nom de lieu). Pour une famille désactivée, n, k et la borne en gris sont ceux du meilleur point de la grille, qui reste au-dessus de r*.</p>
+  <div class="panel">
+    <h3>Risque et borne selon le seuil, par famille</h3>
+    <div class="legend"><span><i style="background:var(--s1)"></i>risque observé k/n</span><span><i style="background:var(--s2)"></i>borne B*(k, n, δ/20)</span><span><i class="tk"></i>r* = 0,5 %</span><span><i class="ring"></i>θ retenu</span></div>
+    <div class="facets"><figure class='facet'><figcaption><strong>Géographie</strong><span>2 973 cas retenables · désactivé</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Géographie"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.0 223.4,12.0 238.3,49.9 253.3,63.3 268.2,80.5 283.2,99.8 298.1,134.5 313.1,122.3 328.0,12.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 2963 acceptés · k = 354 pertes · risque 11,95 % · borne 13,71 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 2955 acceptés · k = 350 pertes · risque 11,84 % · borne 13,60 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 2944 acceptés · k = 339 pertes · risque 11,51 % · borne 13,26 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 2924 acceptés · k = 331 pertes · risque 11,32 % · borne 13,06 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 2902 acceptés · k = 315 pertes · risque 10,85 % · borne 12,57 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 2857 acceptés · k = 298 pertes · risque 10,43 % · borne 12,13 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 2803 acceptés · k = 268 pertes · risque 9,56 % · borne 11,22 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 2726 acceptés · k = 247 pertes · risque 9,06 % · borne 10,71 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 2679 acceptés · k = 217 pertes · risque 8,10 % · borne 9,69 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 2568 acceptés · k = 171 pertes · risque 6,66 % · borne 8,16 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 2487 acceptés · k = 145 pertes · risque 5,83 % · borne 7,27 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,91 · n = 2350 acceptés · k = 117 pertes · risque 4,98 % · borne 6,37 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,92 · n = 2206 acceptés · k = 89 pertes · risque 4,03 % · borne 5,35 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="49.9" style="fill:var(--s2)"><title>θ = 0,93 · n = 2019 acceptés · k = 54 pertes · risque 2,67 % · borne 3,85 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="63.3" style="fill:var(--s2)"><title>θ = 0,94 · n = 1808 acceptés · k = 41 pertes · risque 2,27 % · borne 3,44 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="80.5" style="fill:var(--s2)"><title>θ = 0,95 · n = 1542 acceptés · k = 27 pertes · risque 1,75 % · borne 2,91 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="99.8" style="fill:var(--s2)"><title>θ = 0,96 · n = 1205 acceptés · k = 14 pertes · risque 1,16 % · borne 2,32 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="134.5" style="fill:var(--s2)"><title>θ = 0,97 · n = 797 acceptés · k = 2 pertes · risque 0,25 % · borne 1,26 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="122.3" style="fill:var(--s2)"><title>θ = 0,98 · n = 363 acceptés · k = 0 pertes · risque 0,00 % · borne 1,64 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,99 · n = 15 acceptés · k = 0 pertes · risque 0,00 % · borne 32,93 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.7 223.4,43.7 238.3,88.3 253.3,101.6 268.2,118.6 283.2,137.9 298.1,167.8 313.1,176.0 328.0,176.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s1)"><title>θ = 0,80 · n = 2963 acceptés · k = 354 pertes · risque 11,95 % · borne 13,71 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,81 · n = 2955 acceptés · k = 350 pertes · risque 11,84 % · borne 13,60 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,82 · n = 2944 acceptés · k = 339 pertes · risque 11,51 % · borne 13,26 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,83 · n = 2924 acceptés · k = 331 pertes · risque 11,32 % · borne 13,06 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,84 · n = 2902 acceptés · k = 315 pertes · risque 10,85 % · borne 12,57 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,85 · n = 2857 acceptés · k = 298 pertes · risque 10,43 % · borne 12,13 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,86 · n = 2803 acceptés · k = 268 pertes · risque 9,56 % · borne 11,22 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,87 · n = 2726 acceptés · k = 247 pertes · risque 9,06 % · borne 10,71 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,88 · n = 2679 acceptés · k = 217 pertes · risque 8,10 % · borne 9,69 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s1)"><title>θ = 0,89 · n = 2568 acceptés · k = 171 pertes · risque 6,66 % · borne 8,16 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s1)"><title>θ = 0,90 · n = 2487 acceptés · k = 145 pertes · risque 5,83 % · borne 7,27 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.7" style="fill:var(--s1)"><title>θ = 0,91 · n = 2350 acceptés · k = 117 pertes · risque 4,98 % · borne 6,37 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="43.7" style="fill:var(--s1)"><title>θ = 0,92 · n = 2206 acceptés · k = 89 pertes · risque 4,03 % · borne 5,35 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="88.3" style="fill:var(--s1)"><title>θ = 0,93 · n = 2019 acceptés · k = 54 pertes · risque 2,67 % · borne 3,85 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="101.6" style="fill:var(--s1)"><title>θ = 0,94 · n = 1808 acceptés · k = 41 pertes · risque 2,27 % · borne 3,44 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="118.6" style="fill:var(--s1)"><title>θ = 0,95 · n = 1542 acceptés · k = 27 pertes · risque 1,75 % · borne 2,91 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="137.9" style="fill:var(--s1)"><title>θ = 0,96 · n = 1205 acceptés · k = 14 pertes · risque 1,16 % · borne 2,32 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="167.8" style="fill:var(--s1)"><title>θ = 0,97 · n = 797 acceptés · k = 2 pertes · risque 0,25 % · borne 1,26 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="176.0" style="fill:var(--s1)"><title>θ = 0,98 · n = 363 acceptés · k = 0 pertes · risque 0,00 % · borne 1,64 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="176.0" style="fill:var(--s1)"><title>θ = 0,99 · n = 15 acceptés · k = 0 pertes · risque 0,00 % · borne 32,93 %</title></circle><text class="tick lbl" x="186.0" y="24" text-anchor="middle">aucun θ admissible : fuzzy désactivé</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure><figure class='facet'><figcaption><strong>Pièces</strong><span>θ = 0,97 · n = 1 815 · k = 1 · borne 0,45 %</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Pièces"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.0 223.4,32.0 238.3,60.8 253.3,95.2 268.2,122.0 283.2,139.5 298.1,161.2 313.1,162.2 328.0,145.3"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 2888 acceptés · k = 181 pertes · risque 6,27 % · borne 7,64 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 2887 acceptés · k = 181 pertes · risque 6,27 % · borne 7,64 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 2886 acceptés · k = 180 pertes · risque 6,24 % · borne 7,60 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 2884 acceptés · k = 179 pertes · risque 6,21 % · borne 7,57 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 2882 acceptés · k = 179 pertes · risque 6,21 % · borne 7,58 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 2878 acceptés · k = 178 pertes · risque 6,18 % · borne 7,55 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 2875 acceptés · k = 177 pertes · risque 6,16 % · borne 7,52 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 2866 acceptés · k = 174 pertes · risque 6,07 % · borne 7,43 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 2855 acceptés · k = 169 pertes · risque 5,92 % · borne 7,27 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 2823 acceptés · k = 155 pertes · risque 5,49 % · borne 6,80 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 2780 acceptés · k = 136 pertes · risque 4,89 % · borne 6,15 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,91 · n = 2732 acceptés · k = 113 pertes · risque 4,14 % · borne 5,32 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="32.0" style="fill:var(--s2)"><title>θ = 0,92 · n = 2668 acceptés · k = 88 pertes · risque 3,30 % · borne 4,39 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="60.8" style="fill:var(--s2)"><title>θ = 0,93 · n = 2581 acceptés · k = 65 pertes · risque 2,52 % · borne 3,51 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="95.2" style="fill:var(--s2)"><title>θ = 0,94 · n = 2478 acceptés · k = 40 pertes · risque 1,61 % · borne 2,46 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="122.0" style="fill:var(--s2)"><title>θ = 0,95 · n = 2348 acceptés · k = 22 pertes · risque 0,94 % · borne 1,64 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="139.5" style="fill:var(--s2)"><title>θ = 0,96 · n = 2152 acceptés · k = 11 pertes · risque 0,51 % · borne 1,11 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="161.2" style="fill:var(--s2)"><title>θ = 0,97 · n = 1815 acceptés · k = 1 pertes · risque 0,06 % · borne 0,45 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="162.2" style="fill:var(--s2)"><title>θ = 0,98 · n = 1424 acceptés · k = 0 pertes · risque 0,00 % · borne 0,42 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="145.3" style="fill:var(--s2)"><title>θ = 0,99 · n = 637 acceptés · k = 0 pertes · risque 0,00 % · borne 0,94 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,15.5 208.4,40.3 223.4,67.8 238.3,93.4 253.3,123.1 268.2,145.3 283.2,159.2 298.1,174.2 313.1,176.0 328.0,176.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s1)"><title>θ = 0,80 · n = 2888 acceptés · k = 181 pertes · risque 6,27 % · borne 7,64 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,81 · n = 2887 acceptés · k = 181 pertes · risque 6,27 % · borne 7,64 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,82 · n = 2886 acceptés · k = 180 pertes · risque 6,24 % · borne 7,60 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,83 · n = 2884 acceptés · k = 179 pertes · risque 6,21 % · borne 7,57 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,84 · n = 2882 acceptés · k = 179 pertes · risque 6,21 % · borne 7,58 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,85 · n = 2878 acceptés · k = 178 pertes · risque 6,18 % · borne 7,55 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,86 · n = 2875 acceptés · k = 177 pertes · risque 6,16 % · borne 7,52 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,87 · n = 2866 acceptés · k = 174 pertes · risque 6,07 % · borne 7,43 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,88 · n = 2855 acceptés · k = 169 pertes · risque 5,92 % · borne 7,27 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s1)"><title>θ = 0,89 · n = 2823 acceptés · k = 155 pertes · risque 5,49 % · borne 6,80 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="15.5" style="fill:var(--s1)"><title>θ = 0,90 · n = 2780 acceptés · k = 136 pertes · risque 4,89 % · borne 6,15 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="40.3" style="fill:var(--s1)"><title>θ = 0,91 · n = 2732 acceptés · k = 113 pertes · risque 4,14 % · borne 5,32 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="67.8" style="fill:var(--s1)"><title>θ = 0,92 · n = 2668 acceptés · k = 88 pertes · risque 3,30 % · borne 4,39 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="93.4" style="fill:var(--s1)"><title>θ = 0,93 · n = 2581 acceptés · k = 65 pertes · risque 2,52 % · borne 3,51 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="123.1" style="fill:var(--s1)"><title>θ = 0,94 · n = 2478 acceptés · k = 40 pertes · risque 1,61 % · borne 2,46 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="145.3" style="fill:var(--s1)"><title>θ = 0,95 · n = 2348 acceptés · k = 22 pertes · risque 0,94 % · borne 1,64 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="159.2" style="fill:var(--s1)"><title>θ = 0,96 · n = 2152 acceptés · k = 11 pertes · risque 0,51 % · borne 1,11 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="174.2" style="fill:var(--s1)"><title>θ = 0,97 · n = 1815 acceptés · k = 1 pertes · risque 0,06 % · borne 0,45 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="176.0" style="fill:var(--s1)"><title>θ = 0,98 · n = 1424 acceptés · k = 0 pertes · risque 0,00 % · borne 0,42 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="176.0" style="fill:var(--s1)"><title>θ = 0,99 · n = 637 acceptés · k = 0 pertes · risque 0,00 % · borne 0,94 %</title></circle><line class="cross" x1="298.1" x2="298.1" y1="12" y2="176"/><circle class="anneau" r="7" cx="298.1" cy="161.2"/><text class="tick lbl" x="303.1" y="22">θ retenu 0,97</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure><figure class='facet'><figcaption><strong>Véhicules</strong><span>2 563 cas retenables · désactivé</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Véhicules"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,19.0 208.4,46.2 223.4,72.4 238.3,100.1 253.3,122.9 268.2,139.9 283.2,147.1 298.1,142.4 313.1,146.5 328.0,82.4"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 2531 acceptés · k = 187 pertes · risque 7,39 % · borne 8,96 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 2526 acceptés · k = 183 pertes · risque 7,24 % · borne 8,81 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 2524 acceptés · k = 181 pertes · risque 7,17 % · borne 8,73 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 2514 acceptés · k = 173 pertes · risque 6,88 % · borne 8,42 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 2502 acceptés · k = 164 pertes · risque 6,55 % · borne 8,06 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 2492 acceptés · k = 157 pertes · risque 6,30 % · borne 7,79 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 2473 acceptés · k = 148 pertes · risque 5,98 % · borne 7,45 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 2437 acceptés · k = 127 pertes · risque 5,21 % · borne 6,60 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 2413 acceptés · k = 111 pertes · risque 4,60 % · borne 5,93 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 2379 acceptés · k = 94 pertes · risque 3,95 % · borne 5,21 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="19.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 2349 acceptés · k = 84 pertes · risque 3,58 % · borne 4,79 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="46.2" style="fill:var(--s2)"><title>θ = 0,91 · n = 2289 acceptés · k = 65 pertes · risque 2,84 % · borne 3,96 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="72.4" style="fill:var(--s2)"><title>θ = 0,92 · n = 2234 acceptés · k = 48 pertes · risque 2,15 % · borne 3,16 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="100.1" style="fill:var(--s2)"><title>θ = 0,93 · n = 2160 acceptés · k = 31 pertes · risque 1,44 % · borne 2,31 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="122.9" style="fill:var(--s2)"><title>θ = 0,94 · n = 2063 acceptés · k = 18 pertes · risque 0,87 % · borne 1,62 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="139.9" style="fill:var(--s2)"><title>θ = 0,95 · n = 1919 acceptés · k = 9 pertes · risque 0,47 % · borne 1,10 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="147.1" style="fill:var(--s2)"><title>θ = 0,96 · n = 1713 acceptés · k = 5 pertes · risque 0,29 % · borne 0,88 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="142.4" style="fill:var(--s2)"><title>θ = 0,97 · n = 1318 acceptés · k = 4 pertes · risque 0,30 % · borne 1,02 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="146.5" style="fill:var(--s2)"><title>θ = 0,98 · n = 908 acceptés · k = 1 pertes · risque 0,11 % · borne 0,90 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="82.4" style="fill:var(--s2)"><title>θ = 0,99 · n = 207 acceptés · k = 0 pertes · risque 0,00 % · borne 2,85 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,25.1 178.5,46.4 193.5,58.7 208.4,82.9 223.4,105.5 238.3,128.9 253.3,147.4 268.2,160.6 283.2,166.4 298.1,166.0 313.1,172.4 328.0,176.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s1)"><title>θ = 0,80 · n = 2531 acceptés · k = 187 pertes · risque 7,39 % · borne 8,96 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,81 · n = 2526 acceptés · k = 183 pertes · risque 7,24 % · borne 8,81 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,82 · n = 2524 acceptés · k = 181 pertes · risque 7,17 % · borne 8,73 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,83 · n = 2514 acceptés · k = 173 pertes · risque 6,88 % · borne 8,42 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,84 · n = 2502 acceptés · k = 164 pertes · risque 6,55 % · borne 8,06 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,85 · n = 2492 acceptés · k = 157 pertes · risque 6,30 % · borne 7,79 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,86 · n = 2473 acceptés · k = 148 pertes · risque 5,98 % · borne 7,45 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,87 · n = 2437 acceptés · k = 127 pertes · risque 5,21 % · borne 6,60 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="25.1" style="fill:var(--s1)"><title>θ = 0,88 · n = 2413 acceptés · k = 111 pertes · risque 4,60 % · borne 5,93 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="46.4" style="fill:var(--s1)"><title>θ = 0,89 · n = 2379 acceptés · k = 94 pertes · risque 3,95 % · borne 5,21 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="58.7" style="fill:var(--s1)"><title>θ = 0,90 · n = 2349 acceptés · k = 84 pertes · risque 3,58 % · borne 4,79 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="82.9" style="fill:var(--s1)"><title>θ = 0,91 · n = 2289 acceptés · k = 65 pertes · risque 2,84 % · borne 3,96 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="105.5" style="fill:var(--s1)"><title>θ = 0,92 · n = 2234 acceptés · k = 48 pertes · risque 2,15 % · borne 3,16 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="128.9" style="fill:var(--s1)"><title>θ = 0,93 · n = 2160 acceptés · k = 31 pertes · risque 1,44 % · borne 2,31 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="147.4" style="fill:var(--s1)"><title>θ = 0,94 · n = 2063 acceptés · k = 18 pertes · risque 0,87 % · borne 1,62 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="160.6" style="fill:var(--s1)"><title>θ = 0,95 · n = 1919 acceptés · k = 9 pertes · risque 0,47 % · borne 1,10 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="166.4" style="fill:var(--s1)"><title>θ = 0,96 · n = 1713 acceptés · k = 5 pertes · risque 0,29 % · borne 0,88 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="166.0" style="fill:var(--s1)"><title>θ = 0,97 · n = 1318 acceptés · k = 4 pertes · risque 0,30 % · borne 1,02 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="172.4" style="fill:var(--s1)"><title>θ = 0,98 · n = 908 acceptés · k = 1 pertes · risque 0,11 % · borne 0,90 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="176.0" style="fill:var(--s1)"><title>θ = 0,99 · n = 207 acceptés · k = 0 pertes · risque 0,00 % · borne 2,85 %</title></circle><text class="tick lbl" x="186.0" y="24" text-anchor="middle">aucun θ admissible : fuzzy désactivé</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure><figure class='facet'><figcaption><strong>Clients</strong><span>1 537 cas retenables · désactivé</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Clients"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,14.6 223.4,25.6 238.3,44.2 253.3,71.5 268.2,73.1 283.2,91.7 298.1,100.5 313.1,96.8 328.0,23.7"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 1534 acceptés · k = 73 pertes · risque 4,76 % · borne 6,49 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 1532 acceptés · k = 73 pertes · risque 4,77 % · borne 6,50 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 1532 acceptés · k = 73 pertes · risque 4,77 % · borne 6,50 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 1531 acceptés · k = 72 pertes · risque 4,70 % · borne 6,43 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 1526 acceptés · k = 69 pertes · risque 4,52 % · borne 6,22 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 1512 acceptés · k = 63 pertes · risque 4,17 % · borne 5,82 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 1500 acceptés · k = 60 pertes · risque 4,00 % · borne 5,63 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="14.6" style="fill:var(--s2)"><title>θ = 0,91 · n = 1479 acceptés · k = 50 pertes · risque 3,38 % · borne 4,92 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="25.6" style="fill:var(--s2)"><title>θ = 0,92 · n = 1457 acceptés · k = 45 pertes · risque 3,09 % · borne 4,59 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="44.2" style="fill:var(--s2)"><title>θ = 0,93 · n = 1423 acceptés · k = 37 pertes · risque 2,60 % · borne 4,02 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="71.5" style="fill:var(--s2)"><title>θ = 0,94 · n = 1369 acceptés · k = 26 pertes · risque 1,90 % · borne 3,18 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="73.1" style="fill:var(--s2)"><title>θ = 0,95 · n = 1309 acceptés · k = 24 pertes · risque 1,83 % · borne 3,14 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="91.7" style="fill:var(--s2)"><title>θ = 0,96 · n = 1193 acceptés · k = 16 pertes · risque 1,34 % · borne 2,57 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="100.5" style="fill:var(--s2)"><title>θ = 0,97 · n = 975 acceptés · k = 10 pertes · risque 1,03 % · borne 2,30 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="96.8" style="fill:var(--s2)"><title>θ = 0,98 · n = 687 acceptés · k = 6 pertes · risque 0,87 % · borne 2,41 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="23.7" style="fill:var(--s2)"><title>θ = 0,99 · n = 214 acceptés · k = 2 pertes · risque 0,93 % · borne 4,64 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,15.9 58.9,15.9 73.9,15.9 88.8,15.9 103.8,19.9 118.7,19.7 133.7,19.7 148.6,21.7 163.6,27.7 178.5,39.3 193.5,44.8 208.4,65.1 223.4,74.7 238.3,90.7 253.3,113.7 268.2,115.9 283.2,132.0 298.1,142.4 313.1,147.4 328.0,145.3"/><circle class="pt" r="3.2" cx="44.0" cy="15.9" style="fill:var(--s1)"><title>θ = 0,80 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="15.9" style="fill:var(--s1)"><title>θ = 0,81 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="15.9" style="fill:var(--s1)"><title>θ = 0,82 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="15.9" style="fill:var(--s1)"><title>θ = 0,83 · n = 1537 acceptés · k = 75 pertes · risque 4,88 % · borne 6,63 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="19.9" style="fill:var(--s1)"><title>θ = 0,84 · n = 1534 acceptés · k = 73 pertes · risque 4,76 % · borne 6,49 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="19.7" style="fill:var(--s1)"><title>θ = 0,85 · n = 1532 acceptés · k = 73 pertes · risque 4,77 % · borne 6,50 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="19.7" style="fill:var(--s1)"><title>θ = 0,86 · n = 1532 acceptés · k = 73 pertes · risque 4,77 % · borne 6,50 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="21.7" style="fill:var(--s1)"><title>θ = 0,87 · n = 1531 acceptés · k = 72 pertes · risque 4,70 % · borne 6,43 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="27.7" style="fill:var(--s1)"><title>θ = 0,88 · n = 1526 acceptés · k = 69 pertes · risque 4,52 % · borne 6,22 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="39.3" style="fill:var(--s1)"><title>θ = 0,89 · n = 1512 acceptés · k = 63 pertes · risque 4,17 % · borne 5,82 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="44.8" style="fill:var(--s1)"><title>θ = 0,90 · n = 1500 acceptés · k = 60 pertes · risque 4,00 % · borne 5,63 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="65.1" style="fill:var(--s1)"><title>θ = 0,91 · n = 1479 acceptés · k = 50 pertes · risque 3,38 % · borne 4,92 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="74.7" style="fill:var(--s1)"><title>θ = 0,92 · n = 1457 acceptés · k = 45 pertes · risque 3,09 % · borne 4,59 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="90.7" style="fill:var(--s1)"><title>θ = 0,93 · n = 1423 acceptés · k = 37 pertes · risque 2,60 % · borne 4,02 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="113.7" style="fill:var(--s1)"><title>θ = 0,94 · n = 1369 acceptés · k = 26 pertes · risque 1,90 % · borne 3,18 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="115.9" style="fill:var(--s1)"><title>θ = 0,95 · n = 1309 acceptés · k = 24 pertes · risque 1,83 % · borne 3,14 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="132.0" style="fill:var(--s1)"><title>θ = 0,96 · n = 1193 acceptés · k = 16 pertes · risque 1,34 % · borne 2,57 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="142.4" style="fill:var(--s1)"><title>θ = 0,97 · n = 975 acceptés · k = 10 pertes · risque 1,03 % · borne 2,30 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="147.4" style="fill:var(--s1)"><title>θ = 0,98 · n = 687 acceptés · k = 6 pertes · risque 0,87 % · borne 2,41 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="145.3" style="fill:var(--s1)"><title>θ = 0,99 · n = 214 acceptés · k = 2 pertes · risque 0,93 % · borne 4,64 %</title></circle><text class="tick lbl" x="186.0" y="24" text-anchor="middle">aucun θ admissible : fuzzy désactivé</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure><figure class='facet'><figcaption><strong>Marques</strong><span>218 cas retenables · désactivé</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Marques"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.0 223.4,12.0 238.3,48.4 253.3,34.6 268.2,12.0 283.2,12.0 298.1,12.0 313.1,12.0 328.0,12.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 217 acceptés · k = 9 pertes · risque 4,15 % · borne 9,48 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 212 acceptés · k = 9 pertes · risque 4,25 % · borne 9,70 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 211 acceptés · k = 9 pertes · risque 4,27 % · borne 9,75 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 205 acceptés · k = 9 pertes · risque 4,39 % · borne 10,02 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 203 acceptés · k = 8 pertes · risque 3,94 % · borne 9,43 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 193 acceptés · k = 8 pertes · risque 4,15 % · borne 9,91 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 184 acceptés · k = 7 pertes · risque 3,80 % · borne 9,61 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,91 · n = 169 acceptés · k = 4 pertes · risque 2,37 % · borne 7,80 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,92 · n = 162 acceptés · k = 3 pertes · risque 1,85 % · borne 7,14 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="48.4" style="fill:var(--s2)"><title>θ = 0,93 · n = 151 acceptés · k = 0 pertes · risque 0,00 % · borne 3,89 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="34.6" style="fill:var(--s2)"><title>θ = 0,94 · n = 136 acceptés · k = 0 pertes · risque 0,00 % · borne 4,31 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="12.0" style="fill:var(--s2)"><title>θ = 0,95 · n = 116 acceptés · k = 0 pertes · risque 0,00 % · borne 5,03 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="12.0" style="fill:var(--s2)"><title>θ = 0,96 · n = 93 acceptés · k = 0 pertes · risque 0,00 % · borne 6,24 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="12.0" style="fill:var(--s2)"><title>θ = 0,97 · n = 49 acceptés · k = 0 pertes · risque 0,00 % · borne 11,51 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="12.0" style="fill:var(--s2)"><title>θ = 0,98 · n = 24 acceptés · k = 0 pertes · risque 0,00 % · borne 22,09 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,99 · n = 3 acceptés · k = 0 pertes · risque 0,00 % · borne 86,43 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,40.6 58.9,40.6 73.9,40.6 88.8,40.6 103.8,40.0 118.7,36.8 133.7,36.1 148.6,32.0 163.6,46.7 178.5,40.0 193.5,51.2 208.4,98.4 223.4,115.3 238.3,176.0 253.3,176.0 268.2,176.0 283.2,176.0 298.1,176.0 313.1,176.0 328.0,176.0"/><circle class="pt" r="3.2" cx="44.0" cy="40.6" style="fill:var(--s1)"><title>θ = 0,80 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="40.6" style="fill:var(--s1)"><title>θ = 0,81 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="40.6" style="fill:var(--s1)"><title>θ = 0,82 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="40.6" style="fill:var(--s1)"><title>θ = 0,83 · n = 218 acceptés · k = 9 pertes · risque 4,13 % · borne 9,44 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="40.0" style="fill:var(--s1)"><title>θ = 0,84 · n = 217 acceptés · k = 9 pertes · risque 4,15 % · borne 9,48 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="36.8" style="fill:var(--s1)"><title>θ = 0,85 · n = 212 acceptés · k = 9 pertes · risque 4,25 % · borne 9,70 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="36.1" style="fill:var(--s1)"><title>θ = 0,86 · n = 211 acceptés · k = 9 pertes · risque 4,27 % · borne 9,75 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="32.0" style="fill:var(--s1)"><title>θ = 0,87 · n = 205 acceptés · k = 9 pertes · risque 4,39 % · borne 10,02 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="46.7" style="fill:var(--s1)"><title>θ = 0,88 · n = 203 acceptés · k = 8 pertes · risque 3,94 % · borne 9,43 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="40.0" style="fill:var(--s1)"><title>θ = 0,89 · n = 193 acceptés · k = 8 pertes · risque 4,15 % · borne 9,91 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="51.2" style="fill:var(--s1)"><title>θ = 0,90 · n = 184 acceptés · k = 7 pertes · risque 3,80 % · borne 9,61 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="98.4" style="fill:var(--s1)"><title>θ = 0,91 · n = 169 acceptés · k = 4 pertes · risque 2,37 % · borne 7,80 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="115.3" style="fill:var(--s1)"><title>θ = 0,92 · n = 162 acceptés · k = 3 pertes · risque 1,85 % · borne 7,14 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="176.0" style="fill:var(--s1)"><title>θ = 0,93 · n = 151 acceptés · k = 0 pertes · risque 0,00 % · borne 3,89 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="176.0" style="fill:var(--s1)"><title>θ = 0,94 · n = 136 acceptés · k = 0 pertes · risque 0,00 % · borne 4,31 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="176.0" style="fill:var(--s1)"><title>θ = 0,95 · n = 116 acceptés · k = 0 pertes · risque 0,00 % · borne 5,03 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="176.0" style="fill:var(--s1)"><title>θ = 0,96 · n = 93 acceptés · k = 0 pertes · risque 0,00 % · borne 6,24 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="176.0" style="fill:var(--s1)"><title>θ = 0,97 · n = 49 acceptés · k = 0 pertes · risque 0,00 % · borne 11,51 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="176.0" style="fill:var(--s1)"><title>θ = 0,98 · n = 24 acceptés · k = 0 pertes · risque 0,00 % · borne 22,09 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="176.0" style="fill:var(--s1)"><title>θ = 0,99 · n = 3 acceptés · k = 0 pertes · risque 0,00 % · borne 86,43 %</title></circle><text class="tick lbl" x="186.0" y="24" text-anchor="middle">aucun θ admissible : fuzzy désactivé</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure><figure class='facet'><figcaption><strong>Douane</strong><span>824 cas retenables · désactivé</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Douane"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.0 223.4,12.0 238.3,12.0 253.3,12.0 268.2,12.0 283.2,12.0 298.1,12.0 313.1,12.0 328.0,94.3"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 818 acceptés · k = 156 pertes · risque 19,07 % · borne 23,20 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 815 acceptés · k = 153 pertes · risque 18,77 % · borne 22,88 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,91 · n = 805 acceptés · k = 143 pertes · risque 17,76 % · borne 21,83 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,92 · n = 792 acceptés · k = 133 pertes · risque 16,79 % · borne 20,82 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="12.0" style="fill:var(--s2)"><title>θ = 0,93 · n = 773 acceptés · k = 121 pertes · risque 15,65 % · borne 19,63 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="12.0" style="fill:var(--s2)"><title>θ = 0,94 · n = 737 acceptés · k = 103 pertes · risque 13,98 % · borne 17,90 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="12.0" style="fill:var(--s2)"><title>θ = 0,95 · n = 699 acceptés · k = 84 pertes · risque 12,02 % · borne 15,85 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="12.0" style="fill:var(--s2)"><title>θ = 0,96 · n = 646 acceptés · k = 63 pertes · risque 9,75 % · borne 13,46 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="12.0" style="fill:var(--s2)"><title>θ = 0,97 · n = 571 acceptés · k = 40 pertes · risque 7,01 % · borne 10,53 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="12.0" style="fill:var(--s2)"><title>θ = 0,98 · n = 467 acceptés · k = 20 pertes · risque 4,28 % · borne 7,61 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="94.3" style="fill:var(--s2)"><title>θ = 0,99 · n = 326 acceptés · k = 1 pertes · risque 0,31 % · borne 2,49 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.0 223.4,12.0 238.3,12.0 253.3,12.0 268.2,12.0 283.2,12.0 298.1,12.0 313.1,35.5 328.0,165.9"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s1)"><title>θ = 0,80 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,81 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,82 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,83 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,84 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,85 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,86 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,87 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,88 · n = 824 acceptés · k = 162 pertes · risque 19,66 % · borne 23,81 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s1)"><title>θ = 0,89 · n = 818 acceptés · k = 156 pertes · risque 19,07 % · borne 23,20 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s1)"><title>θ = 0,90 · n = 815 acceptés · k = 153 pertes · risque 18,77 % · borne 22,88 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.0" style="fill:var(--s1)"><title>θ = 0,91 · n = 805 acceptés · k = 143 pertes · risque 17,76 % · borne 21,83 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="12.0" style="fill:var(--s1)"><title>θ = 0,92 · n = 792 acceptés · k = 133 pertes · risque 16,79 % · borne 20,82 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="12.0" style="fill:var(--s1)"><title>θ = 0,93 · n = 773 acceptés · k = 121 pertes · risque 15,65 % · borne 19,63 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="12.0" style="fill:var(--s1)"><title>θ = 0,94 · n = 737 acceptés · k = 103 pertes · risque 13,98 % · borne 17,90 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="12.0" style="fill:var(--s1)"><title>θ = 0,95 · n = 699 acceptés · k = 84 pertes · risque 12,02 % · borne 15,85 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="12.0" style="fill:var(--s1)"><title>θ = 0,96 · n = 646 acceptés · k = 63 pertes · risque 9,75 % · borne 13,46 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="12.0" style="fill:var(--s1)"><title>θ = 0,97 · n = 571 acceptés · k = 40 pertes · risque 7,01 % · borne 10,53 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="35.5" style="fill:var(--s1)"><title>θ = 0,98 · n = 467 acceptés · k = 20 pertes · risque 4,28 % · borne 7,61 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="165.9" style="fill:var(--s1)"><title>θ = 0,99 · n = 326 acceptés · k = 1 pertes · risque 0,31 % · borne 2,49 %</title></circle><text class="tick lbl" x="186.0" y="24" text-anchor="middle">aucun θ admissible : fuzzy désactivé</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure><figure class='facet'><figcaption><strong>Vocabulaire métier</strong><span>237 cas retenables · désactivé</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Vocabulaire métier"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.0 223.4,12.0 238.3,12.0 253.3,29.3 268.2,53.2 283.2,32.6 298.1,12.0 313.1,12.0 328.0,12.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 236 acceptés · k = 20 pertes · risque 8,47 % · borne 14,80 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 234 acceptés · k = 18 pertes · risque 7,69 % · borne 13,86 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 233 acceptés · k = 18 pertes · risque 7,73 % · borne 13,91 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 230 acceptés · k = 16 pertes · risque 6,96 % · borne 12,99 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 225 acceptés · k = 14 pertes · risque 6,22 % · borne 12,13 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 222 acceptés · k = 12 pertes · risque 5,41 % · borne 11,10 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,91 · n = 212 acceptés · k = 9 pertes · risque 4,25 % · borne 9,70 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,92 · n = 203 acceptés · k = 4 pertes · risque 1,97 % · borne 6,52 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="12.0" style="fill:var(--s2)"><title>θ = 0,93 · n = 197 acceptés · k = 3 pertes · risque 1,52 % · borne 5,90 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="29.3" style="fill:var(--s2)"><title>θ = 0,94 · n = 180 acceptés · k = 1 pertes · risque 0,56 % · borne 4,47 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="53.2" style="fill:var(--s2)"><title>θ = 0,95 · n = 157 acceptés · k = 0 pertes · risque 0,00 % · borne 3,74 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="32.6" style="fill:var(--s2)"><title>θ = 0,96 · n = 134 acceptés · k = 0 pertes · risque 0,00 % · borne 4,37 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="12.0" style="fill:var(--s2)"><title>θ = 0,97 · n = 100 acceptés · k = 0 pertes · risque 0,00 % · borne 5,82 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="12.0" style="fill:var(--s2)"><title>θ = 0,98 · n = 54 acceptés · k = 0 pertes · risque 0,00 % · borne 10,50 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,99 · n = 8 acceptés · k = 0 pertes · risque 0,00 % · borne 52,71 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,36.8 223.4,111.4 238.3,126.1 253.3,157.8 268.2,176.0 283.2,176.0 298.1,176.0 313.1,176.0 328.0,176.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s1)"><title>θ = 0,80 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,81 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,82 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,83 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,84 · n = 237 acceptés · k = 20 pertes · risque 8,44 % · borne 14,74 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,85 · n = 236 acceptés · k = 20 pertes · risque 8,47 % · borne 14,80 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,86 · n = 234 acceptés · k = 18 pertes · risque 7,69 % · borne 13,86 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,87 · n = 233 acceptés · k = 18 pertes · risque 7,73 % · borne 13,91 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s1)"><title>θ = 0,88 · n = 230 acceptés · k = 16 pertes · risque 6,96 % · borne 12,99 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s1)"><title>θ = 0,89 · n = 225 acceptés · k = 14 pertes · risque 6,22 % · borne 12,13 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s1)"><title>θ = 0,90 · n = 222 acceptés · k = 12 pertes · risque 5,41 % · borne 11,10 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="36.8" style="fill:var(--s1)"><title>θ = 0,91 · n = 212 acceptés · k = 9 pertes · risque 4,25 % · borne 9,70 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="111.4" style="fill:var(--s1)"><title>θ = 0,92 · n = 203 acceptés · k = 4 pertes · risque 1,97 % · borne 6,52 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="126.1" style="fill:var(--s1)"><title>θ = 0,93 · n = 197 acceptés · k = 3 pertes · risque 1,52 % · borne 5,90 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="157.8" style="fill:var(--s1)"><title>θ = 0,94 · n = 180 acceptés · k = 1 pertes · risque 0,56 % · borne 4,47 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="176.0" style="fill:var(--s1)"><title>θ = 0,95 · n = 157 acceptés · k = 0 pertes · risque 0,00 % · borne 3,74 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="176.0" style="fill:var(--s1)"><title>θ = 0,96 · n = 134 acceptés · k = 0 pertes · risque 0,00 % · borne 4,37 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="176.0" style="fill:var(--s1)"><title>θ = 0,97 · n = 100 acceptés · k = 0 pertes · risque 0,00 % · borne 5,82 %</title></circle><circle class="pt" r="3.2" cx="313.1" cy="176.0" style="fill:var(--s1)"><title>θ = 0,98 · n = 54 acceptés · k = 0 pertes · risque 0,00 % · borne 10,50 %</title></circle><circle class="pt" r="3.2" cx="328.0" cy="176.0" style="fill:var(--s1)"><title>θ = 0,99 · n = 8 acceptés · k = 0 pertes · risque 0,00 % · borne 52,71 %</title></circle><text class="tick lbl" x="186.0" y="24" text-anchor="middle">aucun θ admissible : fuzzy désactivé</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure><figure class='facet'><figcaption><strong>Mixte (plusieurs familles)</strong><span>31 cas retenables · désactivé</span></figcaption><svg viewBox="0 0 340 210" role="img" aria-label="Risque et borne selon le seuil, Mixte (plusieurs familles)"><line class="grid" x1="44" x2="328" y1="176.0" y2="176.0"/><text class="tick" x="38" y="179.5" text-anchor="end">0 %</text><line class="grid" x1="44" x2="328" y1="143.2" y2="143.2"/><text class="tick" x="38" y="146.7" text-anchor="end">1 %</text><line class="grid" x1="44" x2="328" y1="110.4" y2="110.4"/><text class="tick" x="38" y="113.9" text-anchor="end">2 %</text><line class="grid" x1="44" x2="328" y1="77.6" y2="77.6"/><text class="tick" x="38" y="81.1" text-anchor="end">3 %</text><line class="grid" x1="44" x2="328" y1="44.8" y2="44.8"/><text class="tick" x="38" y="48.3" text-anchor="end">4 %</text><line class="grid" x1="44" x2="328" y1="12.0" y2="12.0"/><text class="tick" x="38" y="15.5" text-anchor="end">5 %</text><text class="tick" x="44.0" y="191" text-anchor="middle">0,80</text><text class="tick" x="118.7" y="191" text-anchor="middle">0,85</text><text class="tick" x="193.5" y="191" text-anchor="middle">0,90</text><text class="tick" x="268.2" y="191" text-anchor="middle">0,95</text><text class="tick" x="328.0" y="191" text-anchor="middle">0,99</text><text class="tick lbl" x="186.0" y="206" text-anchor="middle">seuil θ</text><line class="cible" x1="44" x2="328" y1="159.6" y2="159.6"/><text class="tick lbl" x="328" y="155.6" text-anchor="end">r* = 0,5 %</text><polyline class="ligne" style="stroke:var(--s2)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,12.0 148.6,12.0 163.6,12.0 178.5,12.0 193.5,12.0 208.4,12.0 223.4,12.0 238.3,12.0 253.3,12.0 268.2,12.0 283.2,12.0 298.1,12.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s2)"><title>θ = 0,80 · n = 30 acceptés · k = 3 pertes · risque 10,00 % · borne 34,18 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,81 · n = 29 acceptés · k = 3 pertes · risque 10,34 % · borne 35,17 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s2)"><title>θ = 0,82 · n = 28 acceptés · k = 2 pertes · risque 7,14 % · borne 31,31 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,83 · n = 28 acceptés · k = 2 pertes · risque 7,14 % · borne 31,31 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s2)"><title>θ = 0,84 · n = 27 acceptés · k = 2 pertes · risque 7,41 % · borne 32,30 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,85 · n = 24 acceptés · k = 2 pertes · risque 8,33 % · borne 35,67 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="12.0" style="fill:var(--s2)"><title>θ = 0,86 · n = 22 acceptés · k = 1 pertes · risque 4,55 % · borne 31,77 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,87 · n = 19 acceptés · k = 0 pertes · risque 0,00 % · borne 27,05 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="12.0" style="fill:var(--s2)"><title>θ = 0,88 · n = 18 acceptés · k = 0 pertes · risque 0,00 % · borne 28,31 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,89 · n = 14 acceptés · k = 0 pertes · risque 0,00 % · borne 34,82 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="12.0" style="fill:var(--s2)"><title>θ = 0,90 · n = 12 acceptés · k = 0 pertes · risque 0,00 % · borne 39,30 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,91 · n = 10 acceptés · k = 0 pertes · risque 0,00 % · borne 45,07 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="12.0" style="fill:var(--s2)"><title>θ = 0,92 · n = 8 acceptés · k = 0 pertes · risque 0,00 % · borne 52,71 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="12.0" style="fill:var(--s2)"><title>θ = 0,93 · n = 8 acceptés · k = 0 pertes · risque 0,00 % · borne 52,71 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="12.0" style="fill:var(--s2)"><title>θ = 0,94 · n = 3 acceptés · k = 0 pertes · risque 0,00 % · borne 86,43 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="12.0" style="fill:var(--s2)"><title>θ = 0,95 · n = 3 acceptés · k = 0 pertes · risque 0,00 % · borne 86,43 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="12.0" style="fill:var(--s2)"><title>θ = 0,96 · n = 2 acceptés · k = 0 pertes · risque 0,00 % · borne 95,00 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="12.0" style="fill:var(--s2)"><title>θ = 0,97 · n = 1 acceptés · k = 0 pertes · risque 0,00 % · borne 99,75 %</title></circle><polyline class="ligne" style="stroke:var(--s1)" points="44.0,12.0 58.9,12.0 73.9,12.0 88.8,12.0 103.8,12.0 118.7,12.0 133.7,26.9 148.6,176.0 163.6,176.0 178.5,176.0 193.5,176.0 208.4,176.0 223.4,176.0 238.3,176.0 253.3,176.0 268.2,176.0 283.2,176.0 298.1,176.0"/><circle class="pt" r="3.2" cx="44.0" cy="12.0" style="fill:var(--s1)"><title>θ = 0,80 · n = 30 acceptés · k = 3 pertes · risque 10,00 % · borne 34,18 %</title></circle><circle class="pt" r="3.2" cx="58.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,81 · n = 29 acceptés · k = 3 pertes · risque 10,34 % · borne 35,17 %</title></circle><circle class="pt" r="3.2" cx="73.9" cy="12.0" style="fill:var(--s1)"><title>θ = 0,82 · n = 28 acceptés · k = 2 pertes · risque 7,14 % · borne 31,31 %</title></circle><circle class="pt" r="3.2" cx="88.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,83 · n = 28 acceptés · k = 2 pertes · risque 7,14 % · borne 31,31 %</title></circle><circle class="pt" r="3.2" cx="103.8" cy="12.0" style="fill:var(--s1)"><title>θ = 0,84 · n = 27 acceptés · k = 2 pertes · risque 7,41 % · borne 32,30 %</title></circle><circle class="pt" r="3.2" cx="118.7" cy="12.0" style="fill:var(--s1)"><title>θ = 0,85 · n = 24 acceptés · k = 2 pertes · risque 8,33 % · borne 35,67 %</title></circle><circle class="pt" r="3.2" cx="133.7" cy="26.9" style="fill:var(--s1)"><title>θ = 0,86 · n = 22 acceptés · k = 1 pertes · risque 4,55 % · borne 31,77 %</title></circle><circle class="pt" r="3.2" cx="148.6" cy="176.0" style="fill:var(--s1)"><title>θ = 0,87 · n = 19 acceptés · k = 0 pertes · risque 0,00 % · borne 27,05 %</title></circle><circle class="pt" r="3.2" cx="163.6" cy="176.0" style="fill:var(--s1)"><title>θ = 0,88 · n = 18 acceptés · k = 0 pertes · risque 0,00 % · borne 28,31 %</title></circle><circle class="pt" r="3.2" cx="178.5" cy="176.0" style="fill:var(--s1)"><title>θ = 0,89 · n = 14 acceptés · k = 0 pertes · risque 0,00 % · borne 34,82 %</title></circle><circle class="pt" r="3.2" cx="193.5" cy="176.0" style="fill:var(--s1)"><title>θ = 0,90 · n = 12 acceptés · k = 0 pertes · risque 0,00 % · borne 39,30 %</title></circle><circle class="pt" r="3.2" cx="208.4" cy="176.0" style="fill:var(--s1)"><title>θ = 0,91 · n = 10 acceptés · k = 0 pertes · risque 0,00 % · borne 45,07 %</title></circle><circle class="pt" r="3.2" cx="223.4" cy="176.0" style="fill:var(--s1)"><title>θ = 0,92 · n = 8 acceptés · k = 0 pertes · risque 0,00 % · borne 52,71 %</title></circle><circle class="pt" r="3.2" cx="238.3" cy="176.0" style="fill:var(--s1)"><title>θ = 0,93 · n = 8 acceptés · k = 0 pertes · risque 0,00 % · borne 52,71 %</title></circle><circle class="pt" r="3.2" cx="253.3" cy="176.0" style="fill:var(--s1)"><title>θ = 0,94 · n = 3 acceptés · k = 0 pertes · risque 0,00 % · borne 86,43 %</title></circle><circle class="pt" r="3.2" cx="268.2" cy="176.0" style="fill:var(--s1)"><title>θ = 0,95 · n = 3 acceptés · k = 0 pertes · risque 0,00 % · borne 86,43 %</title></circle><circle class="pt" r="3.2" cx="283.2" cy="176.0" style="fill:var(--s1)"><title>θ = 0,96 · n = 2 acceptés · k = 0 pertes · risque 0,00 % · borne 95,00 %</title></circle><circle class="pt" r="3.2" cx="298.1" cy="176.0" style="fill:var(--s1)"><title>θ = 0,97 · n = 1 acceptés · k = 0 pertes · risque 0,00 % · borne 99,75 %</title></circle><text class="tick lbl" x="186.0" y="24" text-anchor="middle">aucun θ admissible : fuzzy désactivé</text><line class="base" x1="44" x2="328" y1="176" y2="176"/></svg></figure></div>
+    <p class="cap">Axe vertical de 0 à 5 % : une borne plus haute est posée sur le bord. Survoler un point donne n, k, le risque et la borne. Plus θ monte, moins de termes sont acceptés : la borne finit par remonter faute de cas, même quand le risque observé tombe à zéro.</p>
+  </div>
+</section>
+<section id="risque-b">
+  <div class="head">
+    <p class="eyebrow">Étape 2 · jeu de certification</p>
+    <h2>Risque de B (seuil fixe 0,88) sur le jeu de certification</h2>
+    <p>Le seuil 0,88 a été choisi à la main, pas sur ces données : sa borne se calcule au niveau δ = 5 %, sans correction de grille. Sur 10 748 termes que B accepte, 752 mènent à une mauvaise entité ou sont des absents acceptés : <strong>7,0 %</strong>, borne 7,4 % à 95 %. C'est 14 fois la cible r* = 0,5 %.</p>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr><th>Famille de la proposition</th><th class="r">Acceptés n</th><th class="r">Pertes k</th><th class="r">Risque k/n</th><th class="r">Borne B*(k, n, δ)</th></tr></thead>
+    <tbody><tr><td>Clients</td><td class='r'>1 526</td><td class='r'>69</td><td class='r'>4,52 %</td><td class='r'>5,50 %</td></tr><tr><td>Douane</td><td class='r'>824</td><td class='r'>162</td><td class='r'>19,66 %</td><td class='r'>22,08 %</td></tr><tr><td>Géographie</td><td class='r'>2 679</td><td class='r'>217</td><td class='r'>8,10 %</td><td class='r'>9,02 %</td></tr><tr><td>Marques</td><td class='r'>203</td><td class='r'>8</td><td class='r'>3,94 %</td><td class='r'>7,00 %</td></tr><tr><td>Mixte (plusieurs familles)</td><td class='r'>18</td><td class='r'>0</td><td class='r'>0,00 %</td><td class='r'>15,33 %</td></tr><tr><td>Pièces</td><td class='r'>2 855</td><td class='r'>169</td><td class='r'>5,92 %</td><td class='r'>6,70 %</td></tr><tr><td>Véhicules</td><td class='r'>2 413</td><td class='r'>111</td><td class='r'>4,60 %</td><td class='r'>5,36 %</td></tr><tr><td>Vocabulaire métier</td><td class='r'>230</td><td class='r'>16</td><td class='r'>6,96 %</td><td class='r'>10,37 %</td></tr><tr class=tot><td><strong>Total</strong></td><td class='r'>10 748</td><td class='r'>752</td><td class='r'>7,00 %</td><td class='r'>7,41 %</td></tr></tbody></table></div>
+  <p class="cap">On ne regarde que ces totaux : les erreurs du jeu de certification ne sont jamais examinées une à une.</p>
+</section>
+<section id="garantie">
+  <div class="avenir">
+    <h3>Ce que garantit C, et que B ne garantit pas</h3>
+    <p><strong>B</strong> applique le même seuil 0,88 partout. Ce chiffre a été choisi à la main. Sur la part eval de dev, il ne fait aucune erreur silencieuse, mais rien ne dit combien il en ferait sur des termes nouveaux : il suffit de retirer l'index négatif pour qu'il en fasse 36.</p>
+    <p><strong>C</strong> fait une promesse chiffrée, famille par famille : « parmi les termes que j'accepte par approximation, au plus 0,5 % mènent à une mauvaise entité, et je me trompe sur cette promesse au plus 5 fois sur 100 ». Quand les données ne permettent pas de tenir cette promesse, C ne devine pas : il répond « je ne sais pas » (unknown), et la question est reformulée.</p>
+    <p>Aujourd'hui : seule(s) la famille pièces (θ = 0,97, borne 0,45 %) tient 0,5 %. Les autres restent sans approché : C répond « je ne sais pas » plutôt que de deviner. Au seuil 0,88, B se trompe sur 7,0 % des termes qu'il accepte dans le jeu de certification (borne 7,4 % à 95 %) : son « 0 erreur silencieuse » sur la part eval de dev ne prouve pas sa sûreté. Pour activer d'autres familles, il faut refuser les termes absents que l'approché accepte encore (noms recombinés, voir le diagnostic), une cible moins stricte décidée par le métier, ou plus de données.</p>
+  </div>
+</section>
+<section id="comparaison-abc">
+  <div class="head">
+    <p class="eyebrow">Étape 2 · dev, part eval</p>
+    <h2>Comparaison A / B / C, avec et sans index négatif</h2>
+    <p>2 133 cas : les 30 % de dev réservés à l'évaluation, même découpe par hash du <code>case_id</code> qu'avant. Le jeu de calibration n'en contient aucun. B− et C− : mêmes configurations, mais l'index négatif ne répond plus, comme pour un lieu réel qu'il ne connaîtrait pas encore.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>89,5 %</b><span>idéal avec B (seuil fixe 0,88)</span></div>
+    <div class="stat"><b>69,4 %</b><span>idéal avec C (famille active : pièces), contre 67,9 % pour A</span></div>
+    <div class="stat"><b class="good">0</b><span>erreur silencieuse pour A, B et C</span></div>
+    <div class="stat"><b>36</b><span>erreurs silencieuses pour B sans index négatif, contre 0 pour C</span></div>
+    <div class="stat"><b>100,0 %</b><span>sûr avec C, contre 98,6 % pour B</span></div>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr><th></th><th>Configuration</th><th class="r">Idéal %</th><th class="r">Sûr %</th><th class="r">Silencieux</th><th class="r">Fuzzy %</th></tr></thead>
+    <tbody><tr><td><b class='k kA'>A</b></td><td>étape 1 seule (exact)</td><td class='r'>67,9</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td><b class='k kB'>B</b></td><td>SeuilFixe(0.88, 0.03)</td><td class='r'>89,5</td><td class='r'>98,6</td><td class='r'>0</td><td class='r'>23,4</td></tr><tr><td><b class='k kC'>C</b></td><td>SeuilsCalibres par famille (SGR, r* = 0.005, δ = 0.05)</td><td class='r'>69,4</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>1,4</td></tr><tr><td><b class='k kB'>B−</b></td><td>B sans index négatif</td><td class='r'>84,8</td><td class='r'>93,9</td><td class='r'>36</td><td class='r'>28,3</td></tr><tr><td><b class='k kC'>C−</b></td><td>C sans index négatif</td><td class='r'>69,4</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>1,4</td></tr></tbody></table></div>
+  <p class="cap">« Fuzzy % » : part des cas dont la réponse vient de l'étape approchée (les cas rattrapés). Silencieux : nombre de cas.</p>
+  <h3>Par famille, avec index négatif</h3>
+  <div class='scroll'><table><thead><tr><th>Famille du cas</th><th class='r'>Cas</th><th class='r'>A idéal</th><th class='r'>A sûr</th><th class='r'>A sil.</th><th class='r'>A fuzzy</th><th class='r'>B idéal</th><th class='r'>B sûr</th><th class='r'>B sil.</th><th class='r'>B fuzzy</th><th class='r'>C idéal</th><th class='r'>C sûr</th><th class='r'>C sil.</th><th class='r'>C fuzzy</th></tr></thead><tbody><tr><td>Géographie</td><td class='r'>976</td><td class='r'>45,4</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>83,3</td><td class='r'>97,1</td><td class='r'>0</td><td class='r'>41,6</td><td class='r'>45,4</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Pièces</td><td class='r'>281</td><td class='r'>82,2</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>98,6</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>16,4</td><td class='r'>93,2</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>11,0</td></tr><tr><td>Véhicules</td><td class='r'>217</td><td class='r'>80,7</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>93,5</td><td class='r'>99,5</td><td class='r'>0</td><td class='r'>13,4</td><td class='r'>80,7</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Clients</td><td class='r'>287</td><td class='r'>86,1</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>86,1</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>86,1</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Marques</td><td class='r'>53</td><td class='r'>94,3</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>5,7</td><td class='r'>94,3</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Douane</td><td class='r'>31</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Vocabulaire métier</td><td class='r'>37</td><td class='r'>73,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>97,3</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>24,3</td><td class='r'>73,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Mixte (plusieurs familles)</td><td class='r'>16</td><td class='r'>62,5</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>87,5</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>37,5</td><td class='r'>62,5</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Sans entité (attendu inconnu)</td><td class='r'>235</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td><strong>Total</strong></td><td class='r'>2 133</td><td class='r'>67,9</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>89,5</td><td class='r'>98,6</td><td class='r'>0</td><td class='r'>23,4</td><td class='r'>69,4</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>1,4</td></tr></tbody></table></div>
+  <h3>Par famille, sans index négatif</h3>
+  <div class='scroll'><table><thead><tr><th>Famille du cas</th><th class='r'>Cas</th><th class='r'>B− idéal</th><th class='r'>B− sûr</th><th class='r'>B− sil.</th><th class='r'>B− fuzzy</th><th class='r'>C− idéal</th><th class='r'>C− sûr</th><th class='r'>C− sil.</th><th class='r'>C− fuzzy</th></tr></thead><tbody><tr><td>Géographie</td><td class='r'>976</td><td class='r'>83,4</td><td class='r'>97,0</td><td class='r'>0</td><td class='r'>41,9</td><td class='r'>45,4</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Pièces</td><td class='r'>281</td><td class='r'>98,6</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>16,4</td><td class='r'>93,2</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>11,0</td></tr><tr><td>Véhicules</td><td class='r'>217</td><td class='r'>93,5</td><td class='r'>99,5</td><td class='r'>0</td><td class='r'>13,4</td><td class='r'>80,7</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Clients</td><td class='r'>287</td><td class='r'>86,1</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>86,1</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Marques</td><td class='r'>53</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>5,7</td><td class='r'>94,3</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Douane</td><td class='r'>31</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Vocabulaire métier</td><td class='r'>37</td><td class='r'>97,3</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>24,3</td><td class='r'>73,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Mixte (plusieurs familles)</td><td class='r'>16</td><td class='r'>87,5</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>37,5</td><td class='r'>62,5</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td>Sans entité (attendu inconnu)</td><td class='r'>235</td><td class='r'>57,0</td><td class='r'>57,0</td><td class='r'>36</td><td class='r'>43,0</td><td class='r'>100,0</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>0,0</td></tr><tr><td><strong>Total</strong></td><td class='r'>2 133</td><td class='r'>84,8</td><td class='r'>93,9</td><td class='r'>36</td><td class='r'>28,3</td><td class='r'>69,4</td><td class='r'>100,0</td><td class='r'>0</td><td class='r'>1,4</td></tr></tbody></table></div>
+  <div class="why">
+    <p><strong>Pourquoi C reste sous B en idéal.</strong> C perd 429 cas que B résout correctement, et tous viennent de familles désactivées, jamais d'un θ plus haut que 0,88 :</p>
+    <ul class="etapes"><li><b>370</b> · Géographie : famille geographie désactivée (risque)</li><li><b>28</b> · Véhicules : famille vehicules désactivée (risque)</li><li><b>15</b> · Pièces : κ sous θ pieces = 0.97 (B accepte dès 0,88)</li><li><b>9</b> · Vocabulaire métier : famille vocabulaire_metier désactivée (volume)</li><li><b>4</b> · Mixte (plusieurs familles) : famille geographie désactivée (risque)</li><li><b>3</b> · Marques : famille marques désactivée (volume)</li></ul>
+    <p>« Risque » : la famille a assez de cas, mais à aucun seuil de la grille la borne ne descend sous 0,5 %. Les deux corrections de structure (ordre des mots, voisins R-RES-11) ont retiré l'essentiel des présents confondus ; ce qui reste vient surtout de termes absents que l'approché accepte (voir le <a href="#diagnostic">diagnostic</a>). « Volume » : moins de 1 196 termes acceptés, même sans aucune erreur ce n'est pas assez pour garantir 0,5 %. « κ sous θ » : la famille est active, mais le score du terme est sous son seuil calibré.</p>
+    <p>Sur la part eval, B ne fait aucune erreur silencieuse avec l'index négatif. Sans lui, il en fait 36, sur des lieux réels hors périmètre rapprochés d'un lieu du catalogue (Arbusigny, Beauvoisin, Bizanet, Breteil). C en fait 0.</p>
+  </div>
+</section>
+<section id="exemples-calibration">
+  <div class="head">
+    <p class="eyebrow">Étape 2 · exemples</p>
+    <h2>Exemples : rattrapés, perdus et erreurs silencieuses</h2>
+  </div>
+  <h3>Cas rattrapés par C (31)</h3>
+  <div class='scroll'><table><thead><tr><th>Cas</th><th>Famille</th><th>Terme</th><th>Réponse de C</th></tr></thead><tbody><tr><td class='mono'>ER-03154</td><td>Pièces</td><td class='mono'>Antriecswellen</td><td class='mono'>piece:cat:vp-1-4-19-4</td></tr><tr><td class='mono'>ER-03186</td><td>Pièces</td><td class='mono'>Audhängungsteile für Autos</td><td class='mono'>piece:cat:vp-1-4-17</td></tr><tr><td class='mono'>ER-03196</td><td>Pièces</td><td class='mono'>Autoobanden</td><td class='mono'>piece:cat:vp-1-4-20-3-1</td></tr><tr><td class='mono'>ER-03397</td><td>Pièces</td><td class='mono'>Bremsbaacken</td><td class='mono'>piece:cat:vp-1-4-1-11</td></tr><tr><td class='mono'>ER-03476</td><td>Pièces</td><td class='mono'>CV Joinnts</td><td class='mono'>piece:cat:vp-1-4-19-11</td></tr><tr><td class='mono'>ER-03494</td><td>Pièces</td><td class='mono'>Capteurs de vitsese</td><td class='mono'>piece:cat:vp-1-4-16-5</td></tr><tr><td class='mono'>ER-03532</td><td>Pièces</td><td class='mono'>Cnduites d&#x27;embrayage</td><td class='mono'>piece:cat:vp-1-4-19-17</td></tr><tr><td class='mono'>ER-03659</td><td>Pièces</td><td class='mono'>Druwksensoren</td><td class='mono'>piece:cat:vp-1-4-16-4</td></tr><tr><td class='mono'>ER-03800</td><td>Pièces</td><td class='mono'>Fitres d&#x27;habitacle</td><td class='mono'>mecanova:cat:filtre-habitacle</td></tr><tr><td class='mono'>ER-03801</td><td>Pièces</td><td class='mono'>Fixaions et écrous antivol pour roues</td><td class='mono'>piece:cat:vp-1-4-20-4-2</td></tr></tbody></table></div>
+  <h3>Cas perdus par C par rapport à B (10 sur 429)</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Cas</th><th>Famille</th><th>Terme</th><th class="r">κ</th><th>Réponse de B (correcte)</th><th>C</th><th>Raison, lue dans la trace de C</th></tr></thead>
+    <tbody><tr><td class='mono'>ER-03077</td><td>Géographie</td><td class='mono'>Aalbuurg</td><td class='r'>0,975</td><td class='mono'>resolved · geo:ville:NL-2760144</td><td class='mono'>unknown</td><td>famille geographie désactivée (risque)</td></tr><tr><td class='mono'>ER-03214</td><td>Marques</td><td class='mono'>BENTLEEY</td><td class='r'>0,975</td><td class='mono'>resolved · veh:marque:bentley</td><td class='mono'>unknown</td><td>famille marques désactivée (volume)</td></tr><tr><td class='mono'>ER-03418</td><td>Mixte (plusieurs familles)</td><td class='mono'>Bruksli</td><td class='r'>0,975</td><td class='mono'>ambiguous · geo:commune:BE-21004, mecanova:site:agence-bruxelle</td><td class='mono'>unknown</td><td>famille geographie désactivée (risque)</td></tr><tr><td class='mono'>ER-03079</td><td>Pièces</td><td class='mono'>Aanhangwagevkoppelingen</td><td class='r'>0,937</td><td class='mono'>resolved · piece:cat:vp-1-4-18-6</td><td class='mono'>unknown</td><td>κ sous θ pieces = 0.97 (B accepte dès 0,88)</td></tr><tr><td class='mono'>ER-03045</td><td>Véhicules</td><td class='mono'>225E XDRIVE ACTIVE TOUURER</td><td class='r'>0,992</td><td class='mono'>resolved · veh:modele:bmw-225e-xdrive-active-tourer</td><td class='mono'>unknown</td><td>famille vehicules désactivée (risque)</td></tr><tr><td class='mono'>ER-03722</td><td>Vocabulaire métier</td><td class='mono'>Entrrepôt central</td><td class='r'>0,988</td><td class='mono'>resolved · mecanova:site:entrepot-central</td><td class='mono'>unknown</td><td>famille vocabulaire_metier désactivée (volume)</td></tr><tr><td class='mono'>ER-03086</td><td>Géographie</td><td class='mono'>Abskkon</td><td class='r'>0,971</td><td class='mono'>resolved · geo:ville:FR-3038731</td><td class='mono'>unknown</td><td>famille geographie désactivée (risque)</td></tr><tr><td class='mono'>ER-05382</td><td>Marques</td><td class='mono'>TOYYOTA</td><td class='r'>0,967</td><td class='mono'>resolved · veh:marque:toyota</td><td class='mono'>unknown</td><td>famille marques désactivée (volume)</td></tr><tr><td class='mono'>ER-03425</td><td>Mixte (plusieurs familles)</td><td class='mono'>Bruxelkes</td><td class='r'>0,950</td><td class='mono'>ambiguous · geo:commune:BE-21004, mecanova:site:agence-bruxelle</td><td class='mono'>unknown</td><td>famille geographie désactivée (risque)</td></tr><tr><td class='mono'>ER-03129</td><td>Pièces</td><td class='mono'>Alternztors</td><td class='r'>0,960</td><td class='mono'>resolved · piece:cat:vp-1-4-14-1</td><td class='mono'>unknown</td><td>κ sous θ pieces = 0.97 (B accepte dès 0,88)</td></tr></tbody></table></div>
+  <h3>Erreurs silencieuses (36 · B− : 36)</h3>
+  <p class="cap">Par configuration : B− : 36. Trace complète du moteur en dépliant chaque ligne.</p>
+  <div class="silencieuses"><details><summary><span class='mono'>B− · ER-05793</span> « Arbusigny » → <span class='mono'>geo:ville:FR-3029477</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;arbusigny&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9259259259259259,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;busigny&quot;,
+   &quot;aubigny&quot;,
+   &quot;buigny&quot;,
+   &quot;lusigny&quot;,
+   &quot;marigny&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;busigny&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3029477&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05809</span> « Beauvoisin » → <span class='mono'>geo:ville:FR-3033962</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;beauvoisin&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9400000000000001,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;beauvoi&quot;,
+   &quot;beauvoi cambresi&quot;,
+   &quot;beauvai&quot;,
+   &quot;bauvin&quot;,
+   &quot;beaurevoir&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;beauvoi&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3033962&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05827</span> « Bizanet » → <span class='mono'>geo:localite:BE-7783-bizet</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;bizanet&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9333333333333333,
+  &quot;type&quot;: &quot;localite_postale&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;bizet&quot;,
+   &quot;bivange&quot;,
+   &quot;nef brizak&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;bizet&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:localite:BE-7783-bizet&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05844</span> « Breteil » → <span class='mono'>geo:ville:FR-3030276</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;breteil&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.975,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;breteuil&quot;,
+   &quot;retel&quot;,
+   &quot;bree&quot;,
+   &quot;breuil&quot;,
+   &quot;viler bretonneu&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;breteuil&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3030276&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05862</span> « Chalon-sur-Saône » → <span class='mono'>geo:ville:FR-3027487</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;chalon sur saone&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.95,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;chalon sur marne&quot;,
+   &quot;chatillon sur marne&quot;,
+   &quot;chatillon sur marna&quot;,
+   &quot;chalon&quot;,
+   &quot;calonne sur lys&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;chalon sur marne&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3027487&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05869</span> « Charpont » → <span class='mono'>geo:ville:FR-3026553</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;charpont&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.95,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;charmont&quot;,
+   &quot;carlepont&quot;,
+   &quot;capot&quot;,
+   &quot;champion&quot;,
+   &quot;champlon&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;charmont&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3026553&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05885</span> « Coubron » → <span class='mono'>geo:ville:FR-3022770</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;coubron&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9333333333333333,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;couvron&quot;,
+   &quot;corbion&quot;,
+   &quot;couvrot&quot;,
+   &quot;couargnon&quot;,
+   &quot;fouron&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;couvron&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3022770&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05916</span> « Eymoutiers » → <span class='mono'>geo:ville:FR-2991320</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;eymoutier&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9259259259259259,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;moutier&quot;,
+   &quot;moustier&quot;,
+   &quot;moyenmoutier&quot;,
+   &quot;mortier&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;moutier&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2991320&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05920</span> « Flachslanden » → <span class='mono'>geo:ville:FR-3018358</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;flachslanden&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9398989898989898,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;flakslanden&quot;,
+   &quot;flaxlanden&quot;,
+   &quot;lalande&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;flakslanden&quot;,
+   &quot;flaxlanden&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3018358&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05936</span> « Gesvres » → <span class='mono'>geo:commune:BE-92054</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;gesvre&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9666666666666667,
+  &quot;type&quot;: &quot;mixte&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;gesve&quot;,
+   &quot;desvre&quot;,
+   &quot;gasveren&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;gesve&quot;
+  ],
+  &quot;trouves&quot;: 2
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:commune:BE-92054&quot;,
+   &quot;geo:localite:BE-5340-gesve&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;regle&quot;,
+  &quot;regle&quot;: &quot;R-GEO-02&quot;,
+  &quot;action&quot;: &quot;retire&quot;,
+  &quot;id&quot;: &quot;geo:localite:BE-5340-gesve&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05938</span> « Glomel » → <span class='mono'>geo:commune:BE-72020</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;glomel&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9444444444444445,
+  &quot;type&quot;: &quot;commune&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;lomel&quot;,
+   &quot;lomeli&quot;,
+   &quot;lommel&quot;,
+   &quot;glime&quot;,
+   &quot;goe&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;lomel&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:commune:BE-72020&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05966</span> « Hochstätten » → <span class='mono'>geo:ville:FR-3013248</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;hochstatten&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9636363636363636,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;hochstatt&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;hochstatt&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3013248&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-05997</span> « La Genevraye » → <span class='mono'>geo:ville:FR-3016290</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;genevraye&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9222222222222222,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;genvry&quot;,
+   &quot;genderen&quot;,
+   &quot;genval&quot;,
+   &quot;geer&quot;,
+   &quot;genen&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;genvry&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3016290&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06032</span> « Lesches » → <span class='mono'>geo:ville:FR-3019810</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;lesche&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9444444444444445,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;esche&quot;,
+   &quot;pesche&quot;,
+   &quot;esch&quot;,
+   &quot;lesve&quot;,
+   &quot;eischen&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;esche&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3019810&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06035</span> « Lijnden » → <span class='mono'>geo:localite:BE-3210-linden</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;lijnden&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9619047619047619,
+  &quot;type&quot;: &quot;localite_postale&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;linden&quot;,
+   &quot;lidje&quot;,
+   &quot;gelinden&quot;,
+   &quot;vijanden&quot;,
+   &quot;lijeven&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;linden&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:localite:BE-3210-linden&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06047</span> « Lügde » → <span class='mono'>geo:ville:FR-2997190</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;lugde&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9466666666666665,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;lude&quot;,
+   &quot;ludre&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;lude&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2997190&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06056</span> « Mansac » → <span class='mono'>geo:ville:FR-2996158</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;mansac&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.95,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;manspach&quot;,
+   &quot;marnach&quot;,
+   &quot;mance&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;manspach&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2996158&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06061</span> « Marcilly-sur-Vienne » → <span class='mono'>geo:ville:FR-2995941</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;marcilly sur vienne&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9560715514275886,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;marcilly sur seine&quot;,
+   &quot;marcilly&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;marcilly sur seine&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2995941&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06079</span> « Modane » → <span class='mono'>geo:commune:BE-61041</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;modane&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9333333333333333,
+  &quot;type&quot;: &quot;mixte&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;modave&quot;,
+   &quot;mane&quot;,
+   &quot;modav&quot;,
+   &quot;mon&quot;,
+   &quot;monte&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;modave&quot;
+  ],
+  &quot;trouves&quot;: 2
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:commune:BE-61041&quot;,
+   &quot;geo:localite:BE-4577-modave&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;regle&quot;,
+  &quot;regle&quot;: &quot;R-GEO-02&quot;,
+  &quot;action&quot;: &quot;retire&quot;,
+  &quot;id&quot;: &quot;geo:localite:BE-4577-modave&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06087</span> « Montaudin » → <span class='mono'>geo:ville:FR-2992983</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;montaudin&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9555555555555556,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;montaulin&quot;,
+   &quot;montaigu&quot;,
+   &quot;mont&quot;,
+   &quot;montagne&quot;,
+   &quot;montagny&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;montaulin&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2992983&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06092</span> « Montfoort » → <span class='mono'>geo:ville:NL-2750624</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;montfoort&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9777777777777777,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;montfort&quot;,
+   &quot;moutfort&quot;,
+   &quot;montdor&quot;,
+   &quot;montcornet&quot;,
+   &quot;mont&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;montfort&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:NL-2750624&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06098</span> « Mosbach » → <span class='mono'>geo:ville:FR-2991716</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;mosbach&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9666666666666667,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;morsbach&quot;,
+   &quot;musbach&quot;,
+   &quot;munsbach&quot;,
+   &quot;moosch&quot;,
+   &quot;osenbach&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;morsbach&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2991716&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06109</span> « Neuhausen » → <span class='mono'>geo:ville:FR-2990676</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;neuhausen&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9274074074074075,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;neunhauser&quot;,
+   &quot;kutzenhausen&quot;,
+   &quot;muelhausen&quot;,
+   &quot;sundhausen&quot;,
+   &quot;mulhausen&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;neunhauser&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2990676&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06118</span> « Odenbach » → <span class='mono'>geo:ville:FR-2989145</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;odenbach&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9249999999999999,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;osenbach&quot;,
+   &quot;oudenbosch&quot;,
+   &quot;odengan&quot;,
+   &quot;durrenbach&quot;,
+   &quot;dieffenbach&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;osenbach&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2989145&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06136</span> « Pontcarré » → <span class='mono'>geo:ville:FR-2986300</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;pontcarre&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9305555555555555,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;pontarme&quot;,
+   &quot;pont&quot;,
+   &quot;pontfaverger&quot;,
+   &quot;pont marck&quot;,
+   &quot;pont marcq&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;pontarme&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2986300&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06145</span> « Reichersbeuern » → <span class='mono'>geo:ville:FR-2983648</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;reichersbeuern&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9404761904761905,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;reichersberg&quot;,
+   &quot;reichenweier&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;reichersberg&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2983648&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06152</span> « Rogerville » → <span class='mono'>geo:localite:BE-4950-robertville</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;rogerville&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9248484848484849,
+  &quot;type&quot;: &quot;localite_postale&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;robertville&quot;,
+   &quot;gondreville&quot;,
+   &quot;dogneville&quot;,
+   &quot;longeville&quot;,
+   &quot;mogneville&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;robertville&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:localite:BE-4950-robertville&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06168</span> « Saint-Barnabé » → <span class='mono'>geo:ville:FR-2980746</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;saint barnabe&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9525641025641025,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;sainte barbe&quot;,
+   &quot;saint andre&quot;,
+   &quot;saint nabor&quot;,
+   &quot;saint brice&quot;,
+   &quot;saint parre&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;sainte barbe&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2980746&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06288</span> « Solingen » → <span class='mono'>geo:commune:LU-2960198</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;solingen&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9583333333333334,
+  &quot;type&quot;: &quot;commune&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;olingen&quot;,
+   &quot;solgne&quot;,
+   &quot;songeon&quot;,
+   &quot;goblingen&quot;,
+   &quot;holvingen&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;olingen&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:commune:LU-2960198&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06300</span> « Surberg » → <span class='mono'>geo:ville:FR-2973686</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;surberg&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9428571428571428,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;surburg&quot;,
+   &quot;surbourg&quot;,
+   &quot;surburi&quot;,
+   &quot;suerburi&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;surburg&quot;,
+   &quot;surbourg&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2973686&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06309</span> « Thune » → <span class='mono'>geo:ville:FR-2972655</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;thune&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.96,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;thun&quot;,
+   &quot;thuin&quot;,
+   &quot;bethune&quot;,
+   &quot;thine&quot;,
+   &quot;thyne&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;thun&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-2972655&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06338</span> « Wachenheim » → <span class='mono'>geo:ville:FR-3038715</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;wachenheim&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9666666666666667,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;achenheim&quot;,
+   &quot;schwenheim&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;achenheim&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3038715&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06342</span> « Waldems » → <span class='mono'>geo:localite:BE-2800-walem</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;waldem&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9611111111111111,
+  &quot;type&quot;: &quot;localite_postale&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;walem&quot;,
+   &quot;waldbredimu&quot;,
+   &quot;walheim&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;walem&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:localite:BE-2800-walem&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06358</span> « Wolde » → <span class='mono'>geo:ville:NL-2744227</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;wolde&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9666666666666667,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;wolder&quot;,
+   &quot;wolixe&quot;,
+   &quot;wolwen&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;wolder&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:NL-2744227&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06360</span> « Workum » → <span class='mono'>geo:ville:NL-2744156</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;workum&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9619047619047619,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;woerkum&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;woerkum&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:NL-2744156&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details><details><summary><span class='mono'>B− · ER-06369</span> « Étrelles » → <span class='mono'>geo:ville:FR-3019369</span> (attendu unknown)</summary><pre class='trace'>[
+ {
+  &quot;etape&quot;: &quot;normalisation&quot;,
+  &quot;norm&quot;: &quot;etrelle&quot;
+ },
+ {
+  &quot;etape&quot;: &quot;exact&quot;,
+  &quot;trouves&quot;: 0
+ },
+ {
+  &quot;etape&quot;: &quot;approche&quot;,
+  &quot;regle&quot;: &quot;R-RES-03&quot;,
+  &quot;score&quot;: 0.9555555555555556,
+  &quot;type&quot;: &quot;ville&quot;,
+  &quot;famille&quot;: &quot;geographie&quot;,
+  &quot;meilleurs&quot;: [
+   &quot;etreiller&quot;,
+   &quot;etreu&quot;,
+   &quot;vermelle&quot;,
+   &quot;estree&quot;
+  ],
+  &quot;seuil&quot;: 0.88,
+  &quot;ecart&quot;: 0.03,
+  &quot;decisive&quot;: true,
+  &quot;noms&quot;: [
+   &quot;etreiller&quot;
+  ],
+  &quot;trouves&quot;: 1
+ },
+ {
+  &quot;etape&quot;: &quot;candidats_bruts&quot;,
+  &quot;ids&quot;: [
+   &quot;geo:ville:FR-3019369&quot;
+  ]
+ },
+ {
+  &quot;etape&quot;: &quot;statut&quot;,
+  &quot;statut&quot;: &quot;resolved&quot;,
+  &quot;n&quot;: 1
+ }
+]</pre></details></div>
+</section>
+<!-- calibration-familles:fin -->
 
 <section id="acquis">
   <div class="head"><h2>Ce qui a été fait</h2></div>

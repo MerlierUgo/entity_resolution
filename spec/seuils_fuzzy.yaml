@@ -1,142 +1,115 @@
-# Seuils de l'étape approchée (R-RES-03), un par type de nom.
+# Seuils de l'étape approchée (R-RES-03, R-RES-10), un par famille de noms.
 # Fichier GÉNÉRÉ par python -m engine.calibration : ne pas modifier à la main, recalibrer.
 # Le moteur refuse ces seuils si l'empreinte du catalogue a changé.
-methode: SGR (Geifman et El-Yaniv, 2017), un seuil par type
-cible_risque: 0.05
+methode: SGR sur grille fixe (Geifman et El-Yaniv, 2017, lemme 3.1 et théorème 3.2 avec Bonferroni sur la grille),
+  un seuil par famille
+regle: R-RES-10
+cible_risque: 0.005
 delta: 0.05
 ecart: 0.03
 perte: dangereuse
-donnees: challenges/cases.csv, partition dev, part calib (70 %, hash SHA-256 du case_id), 5025 cas
+grille:
+  de: 0.8
+  a: 0.99
+  pas: 0.01
+  n_seuils: 20
+n_minimum: 1196
+date: '2026-11-16'
+donnees: challenges/calibration_certif.csv
+sha256_donnees: 0167bb00f31a2abcc82f4006433d32f7b9d3e2e79aca94db56d9b15c35b75d64
+n_cas: 17687
+familles_source: spec/familles_fuzzy.yaml
 absents_simules: false
 empreinte_catalogue: 9af7156dd14d5dbc
-types:
-  canal:
+familles:
+  clients:
     fuzzy: desactive
-    n_cas: 2
-    n_retenables: 2
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 2 cas retenables, il en faut au moins 97 pour r* = 0.05
-  categorie_piece:
+    couverture: 0.0
+    n_cas: 3828
+    n_retenables: 1537
+    meilleur_point:
+      seuil: 0.97
+      n: 975
+      k: 10
+      borne: 0.023032
+    raison: aucun seuil de la grille ne garantit r* = 0.005 au niveau δ = 0.05 (meilleure borne 0.0230 à θ = 0.97,
+      k = 10 sur n = 975)
+  douane:
     fuzzy: desactive
-    n_cas: 102
-    n_retenables: 95
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 95 cas retenables, il en faut au moins 97 pour r* = 0.05
-  client:
+    couverture: 0.0
+    n_cas: 1022
+    n_retenables: 824
+    meilleur_point:
+      seuil: 0.99
+      n: 326
+      k: 1
+      borne: 0.024913
+    raison: 824 cas retenables, il en faut au moins 1196 pour r* = 0.005
+  geographie:
     fuzzy: desactive
-    n_cas: 101
-    n_retenables: 0
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 0 cas retenables, il en faut au moins 97 pour r* = 0.05
-  commune:
+    couverture: 0.0
+    n_cas: 4225
+    n_retenables: 2973
+    meilleur_point:
+      seuil: 0.97
+      n: 797
+      k: 2
+      borne: 0.012639
+    raison: aucun seuil de la grille ne garantit r* = 0.005 au niveau δ = 0.05 (meilleure borne 0.0126 à θ = 0.97,
+      k = 2 sur n = 797)
+  marques:
     fuzzy: desactive
-    n_cas: 147
-    n_retenables: 132
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05
-  famille_mecanova:
-    fuzzy: desactive
-    n_cas: 2
-    n_retenables: 2
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 2 cas retenables, il en faut au moins 97 pour r* = 0.05
-  gamme:
-    fuzzy: desactive
-    n_cas: 3
-    n_retenables: 3
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 3 cas retenables, il en faut au moins 97 pour r* = 0.05
-  groupe_industriel:
-    fuzzy: desactive
-    n_cas: 1
-    n_retenables: 1
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 1 cas retenables, il en faut au moins 97 pour r* = 0.05
-  localite_postale:
-    fuzzy: desactive
-    n_cas: 216
-    n_retenables: 155
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05
-  marque_piece:
-    fuzzy: desactive
-    n_cas: 5
-    n_retenables: 4
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 4 cas retenables, il en faut au moins 97 pour r* = 0.05
-  marque_vehicule:
-    fuzzy: desactive
-    n_cas: 3
-    n_retenables: 3
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 3 cas retenables, il en faut au moins 97 pour r* = 0.05
-  mesure:
-    fuzzy: desactive
-    n_cas: 12
-    n_retenables: 12
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 12 cas retenables, il en faut au moins 97 pour r* = 0.05
+    couverture: 0.0
+    n_cas: 340
+    n_retenables: 218
+    meilleur_point:
+      seuil: 0.93
+      n: 151
+      k: 0
+      borne: 0.038902
+    raison: 218 cas retenables, il en faut au moins 1196 pour r* = 0.005
   mixte:
     fuzzy: desactive
-    n_cas: 149
-    n_retenables: 127
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05
-  modele_vehicule:
-    fuzzy: desactive
-    n_cas: 92
-    n_retenables: 76
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 76 cas retenables, il en faut au moins 97 pour r* = 0.05
-  motif_retour:
-    fuzzy: desactive
-    n_cas: 1
-    n_retenables: 1
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 1 cas retenables, il en faut au moins 97 pour r* = 0.05
-  pays:
-    fuzzy: desactive
-    n_cas: 5
-    n_retenables: 5
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 5 cas retenables, il en faut au moins 97 pour r* = 0.05
-  province:
-    fuzzy: desactive
-    n_cas: 1
-    n_retenables: 1
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 1 cas retenables, il en faut au moins 97 pour r* = 0.05
-  qualite:
-    fuzzy: desactive
-    n_cas: 1
-    n_retenables: 1
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 1 cas retenables, il en faut au moins 97 pour r* = 0.05
-  segment:
-    fuzzy: desactive
-    n_cas: 2
-    n_retenables: 2
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 2 cas retenables, il en faut au moins 97 pour r* = 0.05
-  site:
-    fuzzy: desactive
-    n_cas: 1
-    n_retenables: 1
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 1 cas retenables, il en faut au moins 97 pour r* = 0.05
-  type_client:
-    fuzzy: desactive
-    n_cas: 1
-    n_retenables: 1
-    empreinte_catalogue: 9af7156dd14d5dbc
-    raison: 1 cas retenables, il en faut au moins 97 pour r* = 0.05
-  ville:
+    couverture: 0.0
+    n_cas: 68
+    n_retenables: 31
+    meilleur_point:
+      seuil: 0.87
+      n: 19
+      k: 0
+      borne: 0.270459
+    raison: 'meilleurs noms de plusieurs familles : jamais d''approché (R-RES-10)'
+  pieces:
     fuzzy: actif
-    seuil: 0.859649
+    seuil: 0.97
     ecart: 0.03
-    borne: 0.014942
-    n_cas: 865
-    n_retenables: 618
-    empreinte_catalogue: 9af7156dd14d5dbc
-    n_retenus: 617
-    risque_empirique: 0.003241
+    n: 1815
+    k: 1
+    borne: 0.004516
+    risque_empirique: 0.000551
+    couverture: 0.628
+    n_cas: 3961
+    n_retenables: 2890
+  vehicules:
+    fuzzy: desactive
+    couverture: 0.0
+    n_cas: 3911
+    n_retenables: 2563
+    meilleur_point:
+      seuil: 0.96
+      n: 1713
+      k: 5
+      borne: 0.008823
+    raison: aucun seuil de la grille ne garantit r* = 0.005 au niveau δ = 0.05 (meilleure borne 0.0088 à θ = 0.96,
+      k = 5 sur n = 1713)
+  vocabulaire_metier:
+    fuzzy: desactive
+    couverture: 0.0
+    n_cas: 332
+    n_retenables: 237
+    meilleur_point:
+      seuil: 0.95
+      n: 157
+      k: 0
+      borne: 0.037443
+    raison: 237 cas retenables, il en faut au moins 1196 pour r* = 0.005

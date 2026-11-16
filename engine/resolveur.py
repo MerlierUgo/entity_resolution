@@ -133,12 +133,17 @@ class ResolveurExact:
 
 
 class ResolveurApproche(ResolveurExact):
-    """Résolveur de l'étape 2 : l'étape 1, puis Jaro-Winkler borné si rien n'est trouvé (R-RES-03).
+    """Résolveur de l'étape 2 : l'étape 1, puis Jaro-Winkler borné si rien n'est trouvé (R-RES-03), avec
+    l'ordre des mots et la règle de voisinage R-RES-11 (engine/approche.py).
 
-    `politique` fixe le seuil et l'écart par type : SeuilFixe(0.88, 0.03) ou SeuilsCalibres."""
+    `politique` fixe le seuil et l'écart par famille : SeuilFixe(0.88, 0.03) ou SeuilsCalibres."""
 
-    def __init__(self, catalogue: Catalogue, politique=None, index: IndexApproche | None = None):
+    def __init__(self, catalogue: Catalogue, politique=None, index: IndexApproche | None = None,
+                 voisinage: bool = True):
+        """`voisinage=False` (sans R-RES-11) et `IndexApproche(mots_tries=False)` ne servent qu'aux mesures
+        avant/après des deux corrections de structure."""
         super().__init__(catalogue)
+        self.voisinage = voisinage
         self.politique = politique if politique is not None else SeuilFixe()
         self.index = index or IndexApproche(catalogue)
 
@@ -148,11 +153,11 @@ class ResolveurApproche(ResolveurExact):
             trace.append({"etape": "absent", "decisive": True, "raison": f"aucun alias du catalogue ; {raison}"})
             return set()
         etape = {"etape": "approche", "regle": "R-RES-03", "score": prop.score, "type": prop.cle,
-                 "meilleurs": [n for n, s in prop.voisins[:5]]}
-        regle = self.politique.regle(prop.cle)
+                 "famille": prop.famille, "meilleurs": [n for n, s in prop.voisins[:5]]}
+        regle = self.politique.regle(prop.famille)
         if regle is None:
             trace.append({**etape, "etape": "absent", "decisive": True,
-                          "raison": f"approché désactivé pour le type {prop.cle} ({self.politique.decrire()})"})
+                          "raison": f"approché désactivé pour la famille {prop.famille} ({self.politique.decrire()})"})
             return set()
         seuil, ecart = regle
         etape.update(seuil=seuil, ecart=ecart)
@@ -161,6 +166,11 @@ class ResolveurApproche(ResolveurExact):
                           "raison": f"meilleur nom à {prop.score:.3f}, sous le seuil {seuil:g}"})
             return set()
         noms = [n for n, s in prop.voisins if s >= prop.score - ecart]
+        d, proches = self.index.voisins_edition(norm, prop, hint) if self.voisinage else (0, [])
+        ajoutes = [n for n in proches if n not in noms]
+        if ajoutes:   # R-RES-11 : autre nom du même type, aussi proche en distance d'édition
+            etape["voisinage"] = {"regle": "R-RES-11", "distance": d, "n": len(ajoutes), "ajoutes": ajoutes[:20]}
+            noms = noms + ajoutes
         refuses = [n for n in noms if not compatible(norm, n)]
         if refuses:
             trace.append({**etape, "etape": "absent", "decisive": True, "noms": noms,

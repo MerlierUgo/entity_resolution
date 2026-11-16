@@ -282,11 +282,11 @@ sections:
         tests: ["spec/check_spec.py", "challenges/cases.csv"]
       - id: "R-RES-03"
         titre: "Correspondance approchée"
-        texte: "Seuil initial 0,88, à calibrer sur le golden set. Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités. Seuils calibrés par type de nom (SGR) : `spec/seuils_fuzzy.yaml`, généré par `engine/calibration.py`."
+        texte: "Seuil initial 0,88, à calibrer sur le golden set. Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités. Ordre des mots, comme l'exact (R-RES-02, point 6) : le score d'un nom est le meilleur entre le terme contre le nom et les mots triés du terme contre les mots triés du nom, et les noms trouvés par les deux formes sont réunis. Voisins en distance d'édition : R-RES-11. Seuils calibrés par famille de noms (R-RES-10) : `spec/seuils_fuzzy.yaml`, généré par `engine/calibration.py`."
         composant: "resolution"
         statut: "codee"
         implementation: ["engine/approche.py", "engine/resolveur.py · ResolveurApproche", "engine/calibration.py"]
-        tests: ["tests/test_engine_fuzzy.py", "challenges/cases.csv"]
+        tests: ["tests/test_engine_fuzzy.py", "challenges/cases.csv", "challenges/calibration_analyse.csv"]
       - id: "R-RES-04"
         titre: "Valeur absente"
         texte: "Un terme qui ressemble à une valeur plausible mais absente des données (« Allemagne », « Suède ») renvoie **unknown**. L'agent n'approche jamais un pays ou une ville inexistants vers un autre."
@@ -321,6 +321,20 @@ sections:
         statut: "codee"
         implementation: ["build/rules.py"]
         tests: ["challenges/cases.csv", "spec/check_spec.py"]
+      - id: "R-RES-10"
+        titre: "Seuil fuzzy calibré"
+        texte: "Le seuil Jaro-Winkler de R-RES-03 est calibré par **famille** de noms (`spec/familles_fuzzy.yaml` : géographie, pièces, véhicules, clients, marques, douane, vocabulaire métier) avec SGR sur une grille fixe de 20 seuils (0,80 à 0,99), borne binomiale exacte et correction de Bonferroni. Décisions métier : **r* = 0,5 %** d'erreurs parmi les termes que l'approché accepte, garanti avec **δ = 5 %** (à 95 %). Raison : pour environ 900 termes rattrapés par l'approché chaque mois, au plus ≈ 4 mènent à une mauvaise entité, et cette promesse n'est fausse qu'avec une probabilité de 5 %. Le seuil retenu est le plus bas de la grille dont la borne reste ≤ r* ; une famille sans seuil admissible, ou avec moins de ≈ 1 200 cas acceptés, n'a pas d'approché (unknown). Des meilleurs noms de familles différentes (« mixte ») : jamais d'approché. Données en deux jeux tirés avec deux graines, sans terme commun (fautes de frappe sur des noms du catalogue et termes absents, aucune entité de la partition test) : `challenges/calibration_analyse.csv` pour concevoir les règles (diagnostic des pertes), `challenges/calibration_certif.csv` seulement pour calculer θ, dont on ne regarde jamais les erreurs ; son SHA-256 est inscrit dans `spec/seuils_fuzzy.yaml`."
+        composant: "resolution"
+        statut: "codee"
+        implementation: ["engine/calibration.py", "engine/approche.py · SeuilsCalibres", "build/build_calibration.py", "engine/diagnostic_fuzzy.py", "spec/familles_fuzzy.yaml", "spec/seuils_fuzzy.yaml"]
+        tests: ["tests/test_engine_fuzzy.py", "tests/test_calibration_cases.py", "challenges/calibration_certif.csv"]
+      - id: "R-RES-11"
+        titre: "Voisins en distance d'édition"
+        texte: "Quand l'étape approchée accepte un terme (R-RES-03), tout autre nom du même type que le meilleur nom, aussi proche du terme en distance d'édition (OSA : substitution, omission, insertion ou transposition de deux lettres voisines, dans l'ordre d'origine ou en mots triés), est retenu avec lui, avec toutes ses entités. La réponse devient ambiguous : le moteur demande au lieu de choisir. Raison : une faute de frappe peut tomber à égale distance de deux noms réels ; Jaro-Winkler favorise celui qui partage le début du mot, ce qui n'est pas un indice de la bonne réponse (« Fresin », faute pour Fretin, est à 0,97 de Fressin, mais à une seule faute des deux). Les noms retenus restent soumis aux garde-fous de R-RES-03 (même nombre de mots, mêmes mots courts) et aux règles de contexte. Conçue sur `challenges/calibration_analyse.csv` et la partition dev, jamais sur le jeu de certification."
+        composant: "resolution"
+        statut: "codee"
+        implementation: ["engine/approche.py · IndexApproche.voisins_edition", "engine/resolveur.py · ResolveurApproche"]
+        tests: ["tests/test_engine_fuzzy.py", "challenges/calibration_analyse.csv"]
   - section: "Affichage"
     regles:
       - id: "R-AFF-01"

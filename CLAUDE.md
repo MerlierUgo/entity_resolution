@@ -76,6 +76,7 @@ La question brute, la langue, la trace terme → champ et le rendu restent **hor
 ```bash
 python build/rebuild_spec.py            # après toute modification de spec/ ou human/ : reconstruit et contrôle
 python build/rebuild_spec.py --rapide   # contrôles seulement
+python build/rebuild_spec.py --sans-details   # n'affiche que le NOMBRE d'écarts de human_questions check (travail sur le moteur)
 python build/human_questions.py check   # questions humaines et réponses attendues
 python spec/check_spec.py               # cohérence de la spec
 python -m pytest -q tests               # tests unitaires

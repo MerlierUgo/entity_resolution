@@ -1,0 +1,37 @@
+# Familles d'entités de l'étape approchée (R-RES-03, R-RES-10).
+#
+# Un seuil Jaro-Winkler est calibré par FAMILLE, pas par entity_type : un type seul a trop peu de cas
+# pour garantir r* = 0,5 % (il en faut ≈ 1 200 acceptés sans erreur). Une famille regroupe des types de
+# même nature, pour qu'un seuil commun ait un sens (des noms de lieux entre eux, des noms de pièces
+# entre eux…).
+#
+# Lu par engine/approche.py (charger_familles), engine/calibration.py et build/build_calibration.py.
+# Chaque entity_type du catalogue doit apparaître dans exactement une famille : sinon le moteur refuse
+# de démarrer. Après une modification : python build/build_calibration.py puis python -m engine.calibration.
+#
+# Au moment de la résolution, la famille d'une proposition est celle des types des meilleurs noms
+# (score égal à κ), calculée sans connaître la réponse. Des meilleurs noms de familles différentes
+# donnent la clé « mixte » : approché toujours désactivé.
+
+familles:
+  geographie:
+    description: "Lieux : villes, communes, localités postales et découpages administratifs."
+    types: [ville, localite_postale, commune, arrondissement, canton, province, region, pays]
+  pieces:
+    description: "Désignations de pièces : catégories, articles, familles, gammes et qualités Mécanova."
+    types: [categorie_piece, article, famille_mecanova, gamme, qualite]
+  vehicules:
+    description: "Modèles de véhicules."
+    types: [modele_vehicule]
+  clients:
+    description: "Raisons sociales et noms commerciaux des clients."
+    types: [client]
+  marques:
+    description: "Marques de pièces, marques de véhicules et groupes industriels."
+    types: [marque_piece, marque_vehicule, groupe_industriel]
+  douane:
+    description: "Libellés de la nomenclature douanière (descriptions anglaises longues)."
+    types: [code_douanier]
+  vocabulaire_metier:
+    description: "Vocabulaire interne : mesures, sites, commerciaux, canaux, segments, types de client, motifs de retour, formes juridiques."
+    types: [mesure, site, commercial, canal, groupe_canal, segment, type_client, motif_retour, forme_juridique]

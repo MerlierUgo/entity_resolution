@@ -1,0 +1,2537 @@
+{
+ "donnees": "challenges/calibration_analyse.csv",
+ "variante": "actuel",
+ "n_cas": 17708,
+ "cible": 0.005,
+ "delta": 0.05,
+ "grille": [
+  0.8,
+  0.81,
+  0.82,
+  0.83,
+  0.84,
+  0.85,
+  0.86,
+  0.87,
+  0.88,
+  0.89,
+  0.9,
+  0.91,
+  0.92,
+  0.93,
+  0.94,
+  0.95,
+  0.96,
+  0.97,
+  0.98,
+  0.99
+ ],
+ "familles": {
+  "clients": {
+   "n_retenables": 1528,
+   "meilleur": {
+    "seuil": 0.96,
+    "n": 1169,
+    "k": 4,
+    "borne": 0.011549003071040292,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 4,
+      "notes": {
+       "erreur_silencieuse": 2,
+       "incorrect": 2
+      },
+      "par_origine": {
+       "nom_recombine": 4
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-03043",
+       "terme": "Auto Center Moulin SRL",
+       "source": "Auto Center Evrard SRL ⊕ Moulin",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9718,
+       "noms": [
+        "auto center loui srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-723559"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03187",
+       "terme": "Carrosserie Dupont SA",
+       "source": "Carrosserie Visé SA ⊕ Dupont",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.981,
+       "noms": [
+        "carrosserie dumont sa",
+        "carrosserie duboi sa"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-344373",
+        "mecanova:client:CL-499837"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03580",
+       "terme": "Garage Thuin & Fils",
+       "source": "Garage Delvaux & Fils ⊕ Thuin",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.964,
+       "noms": [
+        "garage turpin fil",
+        "garage gustin fil",
+        "garage mathieu fil",
+        "garage julien fil",
+        "garage martin fil",
+        "garage moulin fil",
+        "garage seguin fil",
+        "garage loui fil",
+        "garage guiot fil",
+        "garage robin fil",
+        "garage thoma fil"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-141191",
+        "mecanova:client:CL-157569",
+        "mecanova:client:CL-186380",
+        "mecanova:client:CL-284473",
+        "mecanova:client:CL-345221",
+        "mecanova:client:CL-465845",
+        "mecanova:client:CL-630813",
+        "mecanova:client:CL-631717",
+        "mecanova:client:CL-778311",
+        "mecanova:client:CL-786777",
+        "mecanova:client:CL-798530",
+        "mecanova:client:CL-799945",
+        "mecanova:client:CL-803457",
+        "mecanova:client:CL-986886"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03661",
+       "terme": "Humblet Carrosserie",
+       "source": "Schneider Carrosserie ⊕ Humblet",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9789,
+       "noms": [
+        "humbert carrosserie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-855695"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 1516,
+    "k": 54,
+    "borne": 0.05111594611150272,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 54,
+      "notes": {
+       "erreur_silencieuse": 33,
+       "incorrect": 21
+      },
+      "par_origine": {
+       "nom_recombine": 54
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-03003",
+       "terme": "Adam Fleet Terville S.C.",
+       "source": "Adam Fleet Services S.C. ⊕ Terville",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9557,
+       "noms": [
+        "adam fleet service s c"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-129322"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03004",
+       "terme": "Affligem Auto Enghien",
+       "source": "Affligem Auto Center ⊕ Enghien",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9319,
+       "noms": [
+        "affligem auto center"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-768111"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03019",
+       "terme": "Arnaud Claassen Services",
+       "source": "Arnaud Fleet Services ⊕ Claassen",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8825,
+       "noms": [
+        "arnaud fleet service"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-335989"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03027",
+       "terme": "Audi Walderade S.P.R.L.",
+       "source": "Audi Auderghem S.P.R.L. ⊕ Walderade",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.92,
+       "noms": [
+        "audi auderghem s p r"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-739997"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03043",
+       "terme": "Auto Center Moulin SRL",
+       "source": "Auto Center Evrard SRL ⊕ Moulin",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9718,
+       "noms": [
+        "auto center loui srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-723559"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03048",
+       "terme": "Auto Clavier",
+       "source": "Auto Rousset ⊕ Clavier",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9381,
+       "noms": [
+        "auto chevalier",
+        "auto libert",
+        "auto lienard",
+        "auto barbier",
+        "auto david",
+        "auto labbe",
+        "auto lambert",
+        "auto mahieu",
+        "auto regnier"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-123236",
+        "mecanova:client:CL-237849",
+        "mecanova:client:CL-245326",
+        "mecanova:client:CL-245827",
+        "mecanova:client:CL-256073",
+        "mecanova:client:CL-264641",
+        "mecanova:client:CL-311099",
+        "mecanova:client:CL-362340",
+        "mecanova:client:CL-442361",
+        "mecanova:client:CL-472874"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03063",
+       "terme": "Auto Lebon",
+       "source": "Auto Goffin ⊕ Lebon",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.92,
+       "noms": [
+        "auto legro",
+        "auto gilson",
+        "auto lemmen",
+        "auto bonnet",
+        "auto demoulin",
+        "auto devo",
+        "auto jean",
+        "auto labbe",
+        "auto clement",
+        "auto flament",
+        "auto lecomte",
+        "auto legrand",
+        "auto lejeune",
+        "auto lienard",
+        "deni automobile",
+        "noel automobile",
+        "pneu automobile",
+        "auto duboi",
+        "auto simon"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-150784",
+        "mecanova:client:CL-176568",
+        "mecanova:client:CL-220691",
+        "mecanova:client:CL-245827",
+        "mecanova:client:CL-264641",
+        "mecanova:client:CL-332280",
+        "mecanova:client:CL-346756",
+        "mecanova:client:CL-466476",
+        "mecanova:client:CL-558037",
+        "mecanova:client:CL-562764",
+        "mecanova:client:CL-567464",
+        "mecanova:client:CL-590525",
+        "mecanova:client:CL-649481",
+        "mecanova:client:CL-654619",
+        "mecanova:client:CL-659991",
+        "mecanova:client:CL-708762",
+        "mecanova:client:CL-737287",
+        "mecanova:client:CL-781768",
+        "mecanova:client:CL-846827",
+        "mecanova:client:CL-968689",
+        "mecanova:client:CL-980535",
+        "mecanova:client:CL-998444",
+        "piece:cat:vp-1-4-20-3-1"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03065",
+       "terme": "Auto Ledoux",
+       "source": "Auto Willems ⊕ Ledoux",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9338,
+       "noms": [
+        "auto delcourt",
+        "auto legro",
+        "auto demoulin",
+        "auto devo",
+        "duboi automobile",
+        "ledou automobile",
+        "auto adam",
+        "auto albert",
+        "auto allard",
+        "auto clement",
+        "auto coulon",
+        "auto david",
+        "auto devau",
+        "auto duboi",
+        "auto gallo",
+        "auto george",
+        "auto gille",
+        "auto gilson",
+        "auto heinen",
+        "auto jadot",
+        "auto jean",
+        "auto kinet",
+        "auto labbe",
+        "auto lecomte",
+        "auto lefevre",
+        "auto legrand",
+        "auto lejeune",
+        "auto lemmen",
+        "auto libert",
+        "auto lienard",
+        "auto mahieu",
+        "auto mahy",
+        "auto mary",
+        "auto meyer",
+        "auto moreau",
+        "auto munoz",
+        "auto renard",
+        "auto roger",
+        "auto simon",
+        "auto traore"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-127993",
+        "mecanova:client:CL-142631",
+        "mecanova:client:CL-150784",
+        "mecanova:client:CL-152176",
+        "mecanova:client:CL-201401",
+        "mecanova:client:CL-203010",
+        "mecanova:client:CL-236522",
+        "mecanova:client:CL-244909",
+        "mecanova:client:CL-245827",
+        "mecanova:client:CL-254163",
+        "mecanova:client:CL-256073",
+        "mecanova:client:CL-264641",
+        "mecanova:client:CL-311099",
+        "mecanova:client:CL-332280",
+        "mecanova:client:CL-346756",
+        "mecanova:client:CL-362340",
+        "mecanova:client:CL-449146",
+        "mecanova:client:CL-472874",
+        "mecanova:client:CL-558037",
+        "mecanova:client:CL-562764",
+        "mecanova:client:CL-567464",
+        "mecanova:client:CL-590525",
+        "mecanova:client:CL-644421",
+        "mecanova:client:CL-649481",
+        "mecanova:client:CL-703837",
+        "mecanova:client:CL-708762",
+        "mecanova:client:CL-715563",
+        "mecanova:client:CL-737287",
+        "mecanova:client:CL-763295",
+        "mecanova:client:CL-767933",
+        "mecanova:client:CL-781767",
+        "mecanova:client:CL-781768",
+        "mecanova:client:CL-812151",
+        "mecanova:client:CL-821001",
+        "mecanova:client:CL-864993",
+        "mecanova:client:CL-866690",
+        "mecanova:client:CL-881197",
+        "mecanova:client:CL-887743",
+        "mecanova:client:CL-895027",
+        "mecanova:client:CL-914120",
+        "mecanova:client:CL-935239",
+        "mecanova:client:CL-962513",
+        "mecanova:client:CL-980535",
+        "mecanova:client:CL-994656",
+        "mecanova:client:CL-998444"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03120",
+       "terme": "Bergh Guillon & Fils",
+       "source": "Garage Guillon & Fils ⊕ Bergh",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.883,
+       "noms": [
+        "garage guillon fil"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-951420"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03124",
+       "terme": "Berloz Claassen B.V.",
+       "source": "Autobedrijf Claassen B.V. ⊕ Berloz",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9139,
+       "noms": [
+        "carrosserie berloz b v"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-670312"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "douane": {
+   "n_retenables": 824,
+   "meilleur": {
+    "seuil": 0.99,
+    "n": 324,
+    "k": 1,
+    "borne": 0.025065381088451563,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 1,
+      "notes": {
+       "erreur_silencieuse": 1
+      },
+      "par_origine": {
+       "nom_recombine": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-04851",
+       "terme": "Gas-tight biological safety cabinets; whether or not fitted wood, filters, having a maximum horizontal side not exceeding 120cm",
+       "source": "Gas-tight biological safety cabinets; whether or not fitted with filters, having a maximum horizontal side not exceeding 120cm ⊕ wood,",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.99,
+       "noms": [
+        "gas tight biological safety cabinet whether or not fitted with filter having maximum horizontal side not exceeding 120cm"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:841470"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 818,
+    "k": 157,
+    "borne": 0.23325979440020678,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 157,
+      "notes": {
+       "erreur_silencieuse": 149,
+       "incorrect": 8
+      },
+      "par_origine": {
+       "nom_recombine": 157
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-04773",
+       "terme": "Air conditioning machines; comprising a motor-driven fan and elements for changing the temperature and humidity, of a kind designed to be windows, to a window, wall, ceiling or floor, self-contained or split-system",
+       "source": "Air conditioning machines; comprising a motor-driven fan and elements for changing the temperature and humidity, of a kind designed to be fixed to a window, wall, ceiling or floor, self-contained or split-system ⊕ windows,",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9755,
+       "noms": [
+        "air conditioning machine comprising motor driven fan and element for changing the temperature and humidity of kind designed to be fixed to window wall ceiling or floor self contained or split system"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:841510"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04777",
+       "terme": "Air conditioning machines; level motor driven fan and elements for temperature control, parts thereof",
+       "source": "Air conditioning machines; with motor driven fan and elements for temperature control, parts thereof ⊕ level",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9394,
+       "noms": [
+        "air conditioning machine with motor driven fan and element for temperature control part thereof"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:841590"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04778",
+       "terme": "Air or vacuum pumps, air or other gas compressors and fans; ventilating or recycling hoods incorporating a fan; gas-tight biological engines, cabinets whether or not fitted with filters",
+       "source": "Air or vacuum pumps, air or other gas compressors and fans; ventilating or recycling hoods incorporating a fan; gas-tight biological safety cabinets whether or not fitted with filters ⊕ engines,",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9728,
+       "noms": [
+        "air or vacuum pump air or other gas compressor and fan ventilating or recycling hood incorporating fan gas tight biological safety cabinet whether or not fitted with filter"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:8414"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04779",
+       "terme": "Automatic door closures; of subheading metal",
+       "source": "Automatic door closures; of base metal ⊕ subheading",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9603,
+       "noms": [
+        "automatic door closure of base metal"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:830260"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04783",
+       "terme": "Base metal mountings, fittings and similar articles for furniture, doors, staircases, these trunks, chests etc, castors with mountings of base metal, automatic door closers of base metal",
+       "source": "Base metal mountings, fittings and similar articles for furniture, doors, staircases, windows, trunks, chests etc, castors with mountings of base metal, automatic door closers of base metal ⊕ these",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9821,
+       "noms": [
+        "base metal mounting fitting and similar article for furniture door staircase window trunk chest etc castor with mounting of base metal automatic door closer of base metal"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:8302"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04784",
+       "terme": "Bearing checking incorporating ball or roller bearings",
+       "source": "Bearing housings, incorporating ball or roller bearings ⊕ checking",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9366,
+       "noms": [
+        "bearing housing incorporating ball or roller bearing"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848320"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04785",
+       "terme": "Bearings; cylindrical roller bearings, including articles and roller assemblies n.e.c. in heading no. 8482",
+       "source": "Bearings; cylindrical roller bearings, including cage and roller assemblies n.e.c. in heading no. 8482 ⊕ articles",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9642,
+       "noms": [
+        "bearing cylindrical roller bearing including cage and roller assemblie n e c in heading no 8482"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848250"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04786",
+       "terme": "Bearings; n.e.c. in heading no. 8482, tachometers; combined ball/roller",
+       "source": "Bearings; n.e.c. in heading no. 8482, including combined ball/roller ⊕ tachometers;",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9283,
+       "noms": [
+        "bearing n e c in heading no 8482 including combined ball roller"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848280"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04787",
+       "terme": "Bearings; needle roller bearings, including cage and castors roller assemblies",
+       "source": "Bearings; needle roller bearings, including cage and needle roller assemblies ⊕ castors",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9455,
+       "noms": [
+        "bearing needle roller bearing including cage and needle roller assemblie",
+        "bearing tapered roller bearing including cone and tapered roller assemblie"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "douane:sh:848220",
+        "douane:sh:848240"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-04789",
+       "terme": "Bearings; tapered roller bearings, including laminated and tapered roller assemblies",
+       "source": "Bearings; tapered roller bearings, including cone and tapered roller assemblies ⊕ laminated",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.938,
+       "noms": [
+        "bearing tapered roller bearing including cone and tapered roller assemblie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848220"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "geographie": {
+   "n_retenables": 2994,
+   "meilleur": {
+    "seuil": 0.98,
+    "n": 370,
+    "k": 0,
+    "borne": 0.016062743246368485,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 2714,
+    "k": 217,
+    "borne": 0.09563465420938128,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 65,
+      "notes": {
+       "incorrect": 41,
+       "erreur_silencieuse": 22,
+       "partiel": 2
+      },
+      "par_origine": {
+       "faute_de_frappe": 65
+      },
+      "avec_voisin_reel": 9
+     },
+     "absent_accepte": {
+      "n": 152,
+      "notes": {
+       "erreur_silencieuse": 56,
+       "incorrect": 96
+      },
+      "par_origine": {
+       "nom_recombine": 42,
+       "faute_index_negatif": 92,
+       "marque_reelle_hors_catalogue": 18
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-05097",
+       "terme": "Alelt",
+       "source": "Aspelt",
+       "perturbation": "clavier_azerty+omission",
+       "attendu": "resolved",
+       "attendus": "geo:commune:LU-2960823",
+       "kappa": 0.88,
+       "noms": [
+        "alle",
+        "jallet",
+        "albert",
+        "leut",
+        "pelt",
+        "tielt"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:arrondissement:be-tielt",
+        "geo:commune:BE-37015",
+        "geo:commune:BE-72043",
+        "geo:localite:BE-3390-tielt",
+        "geo:localite:BE-3630-leut",
+        "geo:localite:BE-5354-jallet",
+        "geo:localite:BE-5550-alle",
+        "geo:ville:FR-3038271"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05101",
+       "terme": "Allke",
+       "source": "Alleke",
+       "perturbation": "omission",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-73001",
+       "kappa": 0.9533,
+       "noms": [
+        "alle"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:localite:BE-5550-alle"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05118",
+       "terme": "Amil",
+       "source": "Amel",
+       "perturbation": "substitution",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-63001",
+       "kappa": 0.9333,
+       "noms": [
+        "uamil",
+        "amie"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3013044",
+        "geo:ville:NL-2759850"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05154",
+       "terme": "Apion",
+       "source": "Airion",
+       "perturbation": "omission+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3038392",
+       "kappa": 0.88,
+       "noms": [
+        "avion",
+        "champion",
+        "pinon"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-5020-champion",
+        "geo:ville:FR-2987086",
+        "geo:ville:FR-3035667",
+        "piece:marque:champion"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "avion"
+       ]
+      },
+      {
+       "case_id": "CAL-A-05176",
+       "terme": "Artr",
+       "source": "Attre",
+       "perturbation": "omission+clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:localite:BE-7941-attre",
+       "kappa": 0.96,
+       "noms": [
+        "artre",
+        "ardr"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3036638",
+        "geo:ville:FR-3037113"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05399",
+       "terme": "Boerer",
+       "source": "Voeren",
+       "perturbation": "substitution+clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-73109",
+       "kappa": 0.9022,
+       "noms": [
+        "borre",
+        "bourler",
+        "boxmeer",
+        "beer",
+        "bieren",
+        "boekel",
+        "boren",
+        "bouber",
+        "bovren",
+        "breber",
+        "moere"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:BE-91013",
+        "geo:localite:BE-6464-bourler",
+        "geo:localite:BE-8470-moere",
+        "geo:ville:FR-3000275",
+        "geo:ville:FR-3030446",
+        "geo:ville:FR-3031399",
+        "geo:ville:FR-3031508",
+        "geo:ville:FR-3032726",
+        "geo:ville:FR-3032914",
+        "geo:ville:FR-3034103",
+        "geo:ville:NL-2758462",
+        "geo:ville:NL-2758759",
+        "geo:ville:NL-2759309"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05517",
+       "terme": "Buzen",
+       "source": "Bulen",
+       "perturbation": "substitution",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-84010",
+       "kappa": 0.9429,
+       "noms": [
+        "buzenol",
+        "buzenkur",
+        "buzet",
+        "balen",
+        "bazel",
+        "beuzet",
+        "bilzen",
+        "bizet",
+        "buken",
+        "bure",
+        "eupen",
+        "kozen",
+        "muizen",
+        "ruien"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:BE-13003",
+        "geo:commune:BE-63023",
+        "geo:commune:BE-73006",
+        "geo:localite:BE-1910-buken",
+        "geo:localite:BE-2812-muizen",
+        "geo:localite:BE-3850-kozen",
+        "geo:localite:BE-3891-muizen",
+        "geo:localite:BE-5030-beuzet",
+        "geo:localite:BE-6230-buzet",
+        "geo:localite:BE-6743-buzenol",
+        "geo:localite:BE-6927-bure",
+        "geo:localite:BE-7783-bizet",
+        "geo:localite:BE-9150-bazel",
+        "geo:localite:BE-9690-ruien",
+        "geo:ville:FR-3030673"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05608",
+       "terme": "Ckmblen",
+       "source": "Tomblen",
+       "perturbation": "clavier_azerty+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2972486",
+       "kappa": 0.9048,
+       "noms": [
+        "komblen"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:commune:BE-62026"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05684",
+       "terme": "Daurl",
+       "source": "Caurel",
+       "perturbation": "omission+clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3028173",
+       "kappa": 0.96,
+       "noms": [
+        "daur"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3021745"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": [
+        "daur"
+       ]
+      },
+      {
+       "case_id": "CAL-A-05686",
+       "terme": "DBefting",
+       "source": "Betting",
+       "perturbation": "insertion+clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3032967",
+       "kappa": 0.925,
+       "noms": [
+        "deftinge"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:localite:BE-9570-deftinge"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08045",
+       "terme": "La Amjenoa",
+       "source": "La Baffe ⊕ Amjenoa",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9714,
+       "noms": [
+        "amjena",
+        "amjen",
+        "amjenso"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3037854"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08052",
+       "terme": "Le Anthonis",
+       "source": "Le Nouvion-le-Franc ⊕ Anthonis",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "antoni"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:NL-2747290"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08061",
+       "terme": "Ark an Nibas",
+       "source": "Ark an Baroa ⊕ Nibas",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9136,
+       "noms": [
+        "ark an baroa",
+        "ark an barrua"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3037229"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08066",
+       "terme": "Asheks an Meysse",
+       "source": "Asheks an Amjenoa ⊕ Meysse",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9159,
+       "noms": [
+        "ashek an vime",
+        "ashe an vime"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3038706"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08068",
+       "terme": "asparrne",
+       "source": "Hasparren",
+       "perturbation": "faute_index_negatif:omission+transposition",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9125,
+       "noms": [
+        "aspre",
+        "aspelare",
+        "aspr",
+        "sparte"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-9404-aspelare",
+        "geo:ville:FR-3013875",
+        "geo:ville:FR-3014029"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08070",
+       "terme": "Asyo an Milsbeek",
+       "source": "Asyo an Amenua ⊕ Milsbeek",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9027,
+       "noms": [
+        "asyo an vime"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3038706"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08079",
+       "terme": "Aviji Sen Laarne",
+       "source": "Aviji Sen Leonar ⊕ Laarne",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9483,
+       "noms": [
+        "aviji sen leonar"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3035669"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08082",
+       "terme": "Awlanc",
+       "source": "Arlanc",
+       "perturbation": "faute_index_negatif:substitution",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9111,
+       "noms": [
+        "awan"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:commune:BE-62006"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08108",
+       "terme": "Le Barcrès",
+       "source": "Le Barcarès",
+       "perturbation": "faute_index_negatif:omission",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9222,
+       "noms": [
+        "barr",
+        "arche",
+        "ardre",
+        "artre",
+        "borre"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3031508",
+        "geo:ville:FR-3034868",
+        "geo:ville:FR-3036638",
+        "geo:ville:FR-3037113",
+        "geo:ville:FR-3037209"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08116",
+       "terme": "Bary",
+       "source": "Barby",
+       "perturbation": "faute_index_negatif:substitution+omission",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9533,
+       "noms": [
+        "barry",
+        "bray",
+        "bury"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-7130-bray",
+        "geo:localite:BE-7534-barry",
+        "geo:localite:BE-7602-bury",
+        "geo:ville:FR-3029483",
+        "geo:ville:FR-3030459",
+        "geo:ville:FR-3030473"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   }
+  },
+  "marques": {
+   "n_retenables": 219,
+   "meilleur": {
+    "seuil": 0.91,
+    "n": 171,
+    "k": 2,
+    "borne": 0.05782051892954887,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 2,
+      "notes": {
+       "erreur_silencieuse": 2
+      },
+      "par_origine": {
+       "faute_de_frappe": 2
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-06045",
+       "terme": "Gensies",
+       "source": "Hensies",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-53039",
+       "kappa": 0.9611,
+       "noms": [
+        "genesi"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:genesis"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-15998",
+       "terme": "SUBAR",
+       "source": "SUPRA",
+       "perturbation": "substitution+transposition",
+       "attendu": "resolved",
+       "attendus": "veh:modele:toyota-supra",
+       "kappa": 0.9667,
+       "noms": [
+        "subaru"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:subaru"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 199,
+    "k": 4,
+    "borne": 0.06650380929111263,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 3,
+      "notes": {
+       "erreur_silencieuse": 2,
+       "partiel": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 3
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 1,
+      "notes": {
+       "erreur_silencieuse": 1
+      },
+      "par_origine": {
+       "marque_reelle_hors_catalogue": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-06045",
+       "terme": "Gensies",
+       "source": "Hensies",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-53039",
+       "kappa": 0.9611,
+       "noms": [
+        "genesi"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:genesis"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-15998",
+       "terme": "SUBAR",
+       "source": "SUPRA",
+       "perturbation": "substitution+transposition",
+       "attendu": "resolved",
+       "attendus": "veh:modele:toyota-supra",
+       "kappa": 0.9667,
+       "noms": [
+        "subaru"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:subaru"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-17566",
+       "terme": "SBAR",
+       "source": "SARL",
+       "perturbation": "insertion+omission",
+       "attendu": "ambiguous",
+       "attendus": "juridique:FR:sarl|juridique:LU:s-r",
+       "kappa": 0.9,
+       "noms": [
+        "subaru",
+        "seat",
+        "smart"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "veh:marque:seat",
+        "veh:marque:smart",
+        "veh:marque:subaru"
+       ],
+       "note": "partiel",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-09347",
+       "terme": "Pirelli",
+       "source": "Pirelli",
+       "perturbation": "marque_reelle_hors_catalogue",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9048,
+       "noms": [
+        "cirelli"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:cirelli"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "mixte": {
+   "n_retenables": 23,
+   "meilleur": {
+    "seuil": 0.8,
+    "n": 21,
+    "k": 2,
+    "borne": 0.3981391315076556,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 1,
+      "notes": {
+       "incorrect": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 1
+      },
+      "avec_voisin_reel": 1
+     },
+     "absent_accepte": {
+      "n": 1,
+      "notes": {
+       "incorrect": 1
+      },
+      "par_origine": {
+       "nom_recombine": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-07817",
+       "terme": "Vitus",
+       "source": "Vertus",
+       "perturbation": "omission+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2969607",
+       "kappa": 0.8833,
+       "noms": [
+        "vito",
+        "vitt",
+        "vilt"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:LU-2959977",
+        "geo:ville:FR-2967313",
+        "geo:ville:NL-2745510",
+        "veh:modele:mercedes-benz-vito"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "vitt"
+       ]
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08100",
+       "terme": "Les Balani",
+       "source": "Les Islettes ⊕ Balani",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "balai",
+        "balan"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3035278",
+        "piece:cat:vp-1-4-21-4-2"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 15,
+    "k": 2,
+    "borne": 0.5169143718317329,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 1,
+      "notes": {
+       "incorrect": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 1
+      },
+      "avec_voisin_reel": 1
+     },
+     "absent_accepte": {
+      "n": 1,
+      "notes": {
+       "incorrect": 1
+      },
+      "par_origine": {
+       "nom_recombine": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-07817",
+       "terme": "Vitus",
+       "source": "Vertus",
+       "perturbation": "omission+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2969607",
+       "kappa": 0.8833,
+       "noms": [
+        "vito",
+        "vitt",
+        "vilt"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:LU-2959977",
+        "geo:ville:FR-2967313",
+        "geo:ville:NL-2745510",
+        "veh:modele:mercedes-benz-vito"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "vitt"
+       ]
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08100",
+       "terme": "Les Balani",
+       "source": "Les Islettes ⊕ Balani",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "balai",
+        "balan"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3035278",
+        "piece:cat:vp-1-4-21-4-2"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   }
+  },
+  "pieces": {
+   "n_retenables": 2874,
+   "meilleur": {
+    "seuil": 0.98,
+    "n": 1433,
+    "k": 1,
+    "borne": 0.0057162141831504625,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 1,
+      "notes": {
+       "erreur_silencieuse": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 1
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-09730",
+       "terme": "Batterijne",
+       "source": "Batterijen",
+       "perturbation": "transposition",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.98,
+       "noms": [
+        "batterijen",
+        "batterie",
+        "batterien"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:famille:batterie"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 2837,
+    "k": 160,
+    "borne": 0.06962878985275806,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 6,
+      "notes": {
+       "incorrect": 3,
+       "erreur_silencieuse": 3
+      },
+      "par_origine": {
+       "faute_de_frappe": 6
+      },
+      "avec_voisin_reel": 2
+     },
+     "absent_accepte": {
+      "n": 154,
+      "notes": {
+       "incorrect": 83,
+       "erreur_silencieuse": 71
+      },
+      "par_origine": {
+       "faute_index_negatif": 2,
+       "nom_recombine": 152
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-05151",
+       "terme": "aort",
+       "source": "Haors",
+       "perturbation": "substitution+omission",
+       "attendu": "resolved",
+       "attendus": "geo:ville:NL-2753591",
+       "kappa": 0.9,
+       "noms": [
+        "amorto",
+        "porte"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3002551",
+        "piece:cat:vp-1-4-17-5",
+        "piece:cat:vp-1-4-9-2"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "wort"
+       ]
+      },
+      {
+       "case_id": "CAL-A-05587",
+       "terme": "Châyies",
+       "source": "Châtres",
+       "perturbation": "clavier_azerty+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3026023",
+       "kappa": 0.9222,
+       "noms": [
+        "chaine",
+        "chaineu"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-4650-chaineu",
+        "mecanova:cat:chaine-neige"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-06287",
+       "terme": "Huille",
+       "source": "Muille",
+       "perturbation": "substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2991223",
+       "kappa": 0.9667,
+       "noms": [
+        "huile"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:cat:huile-moteur"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": [
+        "heille"
+       ]
+      },
+      {
+       "case_id": "CAL-A-09730",
+       "terme": "Batterijne",
+       "source": "Batterijen",
+       "perturbation": "transposition",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.98,
+       "noms": [
+        "batterijen",
+        "batterie",
+        "batterien"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:famille:batterie"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-09731",
+       "terme": "Batterisn",
+       "source": "Batterien",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.9556,
+       "noms": [
+        "batterien",
+        "batterijen",
+        "batterie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:famille:batterie"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-09738",
+       "terme": "Battzrijen",
+       "source": "Batterijen",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.9156,
+       "noms": [
+        "batterijen",
+        "batterien",
+        "battice",
+        "batterie"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-4651-battice",
+        "mecanova:famille:batterie"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08387",
+       "terme": "Freihun",
+       "source": "Freihung",
+       "perturbation": "faute_index_negatif:omission",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9429,
+       "noms": [
+        "frein",
+        "frethun"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3017104",
+        "mecanova:famille:freinage"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08392",
+       "terme": "Fürthein",
+       "source": "Fürthen",
+       "perturbation": "faute_index_negatif:insertion",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8875,
+       "noms": [
+        "frein",
+        "fretin"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3017100",
+        "mecanova:famille:freinage"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12380",
+       "terme": "Ailes de boîte de vitesses – ATE Standard",
+       "source": "Huile de boîte de vitesses – ATE Standard ⊕ Ailes",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9684,
+       "noms": [
+        "huile boite vitesse ate standard"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:article:MN-LTR-31622"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-12382",
+       "terme": "Air Intake voie Sensors",
+       "source": "Air Intake Temperature Sensors ⊕ voie",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9205,
+       "noms": [
+        "motor vehicle air intake",
+        "air intake temperature sensor"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "piece:cat:vp-1-4-16-15",
+        "piece:cat:vp-1-4-23"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12397",
+       "terme": "Amortisseur Achterlichten – Mécanova Select Standard",
+       "source": "Amortisseur arrière – Mécanova Select Standard ⊕ Achterlichten",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9065,
+       "noms": [
+        "amortisseur arriere mecanova select standard",
+        "amortisseur avant mecanova select standard"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-43750",
+        "mecanova:article:MN-AMO-63462",
+        "mecanova:article:MN-AMO-91600",
+        "mecanova:article:MN-AMO-94065",
+        "mecanova:article:MN-AMO-94115"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12407",
+       "terme": "Amortisseur arrière – Lemförder Coupelles",
+       "source": "Amortisseur arrière – Lemförder Premium ⊕ Coupelles",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.946,
+       "noms": [
+        "amortisseur arriere lemforder premium",
+        "amortisseur arriere lemforder standard"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-11916",
+        "mecanova:article:MN-AMO-24888",
+        "mecanova:article:MN-AMO-30986",
+        "mecanova:article:MN-AMO-34017",
+        "mecanova:article:MN-AMO-51168"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12424",
+       "terme": "Amortisseur Lights – KYB Éco",
+       "source": "Amortisseur arrière – KYB Éco ⊕ Lights",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.936,
+       "noms": [
+        "amortisseur avant kyb eco"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-53142",
+        "mecanova:article:MN-AMO-61309"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12430",
+       "terme": "Ampoule – Denso Premium",
+       "source": "Radiateur – Denso Premium ⊕ Ampoule",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9429,
+       "noms": [
+        "ampoule valeo premium",
+        "ampoule hella premium"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMP-28998",
+        "mecanova:article:MN-AMP-36940",
+        "mecanova:article:MN-AMP-61413",
+        "mecanova:article:MN-AMP-80710",
+        "mecanova:article:MN-AMP-99098"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12431",
+       "terme": "Ampoule – Fabric Select Premium",
+       "source": "Ampoule – Mécanova Select Premium ⊕ Fabric",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9177,
+       "noms": [
+        "ampoule mecanova select premium"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMP-30258",
+        "mecanova:article:MN-AMP-41146",
+        "mecanova:article:MN-AMP-42921",
+        "mecanova:article:MN-AMP-50133",
+        "mecanova:article:MN-AMP-51228"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12443",
+       "terme": "Auswuchtgewichte & Têtes",
+       "source": "Auswuchtgewichte & -zubehör ⊕ Têtes",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9214,
+       "noms": [
+        "auswuchtgewichte zubehor"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "piece:cat:vp-1-4-20-4-3"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "vehicules": {
+   "n_retenables": 2583,
+   "meilleur": {
+    "seuil": 0.97,
+    "n": 1287,
+    "k": 0,
+    "borne": 0.004644553157450388,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 2451,
+    "k": 143,
+    "borne": 0.07287253336270567,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 3,
+      "notes": {
+       "erreur_silencieuse": 3
+      },
+      "par_origine": {
+       "faute_de_frappe": 3
+      },
+      "avec_voisin_reel": 1
+     },
+     "absent_accepte": {
+      "n": 140,
+      "notes": {
+       "incorrect": 17,
+       "erreur_silencieuse": 123
+      },
+      "par_origine": {
+       "faute_index_negatif": 1,
+       "nom_recombine": 139
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-06364",
+       "terme": "Jiny",
+       "source": "Joigny",
+       "perturbation": "omission+omission",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3012317",
+       "kappa": 0.9467,
+       "noms": [
+        "jimny"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:suzuki-jimny"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14091",
+       "terme": "BRIFTER",
+       "source": "E-RIFTER",
+       "perturbation": "substitution+trait_union_manquant",
+       "attendu": "resolved",
+       "attendus": "veh:modele:peugeot-e-rifter",
+       "kappa": 0.9524,
+       "noms": [
+        "rifter"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:peugeot-rifter"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": [
+        "rifter"
+       ]
+      },
+      {
+       "case_id": "CAL-A-17417",
+       "terme": "colttes",
+       "source": "flottes",
+       "perturbation": "clavier_azerty+transposition",
+       "attendu": "resolved",
+       "attendus": "mecanova:type_client:flotte-loueur",
+       "kappa": 0.9333,
+       "noms": [
+        "colt"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:mitsubishi-colt"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08389",
+       "terme": "Frerren",
+       "source": "Freren",
+       "perturbation": "faute_index_negatif:lettre_doublee",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9,
+       "noms": [
+        "free",
+        "freten",
+        "friere"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3017038",
+        "geo:ville:FR-3017104",
+        "veh:modele:dongfeng-free"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08899",
+       "terme": "La super",
+       "source": "La Voivre ⊕ super",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "superb"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:skoda-superb"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16366",
+       "terme": "12 CILINDRI SEAL",
+       "source": "12 CILINDRI SPIDER ⊕ SEAL",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9306,
+       "noms": [
+        "12 cilindri spider"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:ferrari-12-cilindri-spider"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16369",
+       "terme": "216I ACTIVE ELECTRIC",
+       "source": "216I ACTIVE TOURER ⊕ ELECTRIC",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9033,
+       "noms": [
+        "216i active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-216i-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16371",
+       "terme": "220I ACTIVE QUATTRO",
+       "source": "220I ACTIVE TOURER ⊕ QUATTRO",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9212,
+       "noms": [
+        "220i active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-220i-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16375",
+       "terme": "230E XDRIVE TRANSIT TOURER",
+       "source": "230E XDRIVE ACTIVE TOURER ⊕ TRANSIT",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.918,
+       "noms": [
+        "230e xdrive active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-230e-xdrive-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16376",
+       "terme": "296 ECLIPSE",
+       "source": "296 SPECIALE ⊕ ECLIPSE",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9288,
+       "noms": [
+        "296 speciale"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:ferrari-296-speciale"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16381",
+       "terme": "330D RIFTER",
+       "source": "330D XDRIVE ⊕ RIFTER",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8909,
+       "noms": [
+        "330d xdrive"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-330d-xdrive"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16391",
+       "terme": "500 CATERHAM",
+       "source": "500 HYBRID ⊕ CATERHAM",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9078,
+       "noms": [
+        "500 abarth",
+        "abarth 500"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "veh:modele:abarth-500",
+        "veh:modele:fiat-500-abarth",
+        "veh:modele:fiat-abarth-500"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-16410",
+       "terme": "911 TIGER 50",
+       "source": "911 TURBO 50 ⊕ TIGER",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9,
+       "noms": [
+        "911 turbo 50"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:porsche-911-turbo-50"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "vocabulaire_metier": {
+   "n_retenables": 232,
+   "meilleur": {
+    "seuil": 0.95,
+    "n": 158,
+    "k": 0,
+    "borne": 0.03721067606158027,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 224,
+    "k": 12,
+    "borne": 0.11008461600385384,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 12,
+      "notes": {
+       "incorrect": 6,
+       "erreur_silencieuse": 6
+      },
+      "par_origine": {
+       "nom_recombine": 12
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-13095",
+       "terme": "pièce Butée",
+       "source": "pièce d'origine ⊕ Butée",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8952,
+       "noms": [
+        "piece retournee",
+        "piece moteur",
+        "piece vendue",
+        "piece distributeur",
+        "piece alternateur",
+        "besoin piece",
+        "marge brute",
+        "piece stock"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M08",
+        "metier:mesure:M09",
+        "metier:mesure:M13",
+        "metier:mesure:M23",
+        "piece:cat:vp-1-4-14-9",
+        "piece:cat:vp-1-4-6",
+        "piece:cat:vp-1-4-6-5-5"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17624",
+       "terme": "accordées d'affaires",
+       "source": "chiffre d'affaires ⊕ accordées",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8933,
+       "noms": [
+        "remise accordee"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M02"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17626",
+       "terme": "achètent qui achètent",
+       "source": "clients qui achètent ⊕ achètent",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9056,
+       "noms": [
+        "client qui achetent"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M18"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17642",
+       "terme": "Collard Dubois",
+       "source": "Kevin Dubois ⊕ Collard",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9077,
+       "noms": [
+        "julie collard",
+        "collard automobile"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-209112",
+        "mecanova:commercial:julie-collard"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17648",
+       "terme": "coût d'achat des Lille",
+       "source": "coût d'achat des ventes ⊕ Lille",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9,
+       "noms": [
+        "cout achat vente"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M12"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17649",
+       "terme": "coût d'achat des panier",
+       "source": "coût d'achat des ventes ⊕ panier",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9001,
+       "noms": [
+        "cout achat vente"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M12"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17671",
+       "terme": "montant des coût",
+       "source": "montant des remises ⊕ coût",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9223,
+       "noms": [
+        "montant retour",
+        "montant facture"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M03",
+        "metier:mesure:M04"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17677",
+       "terme": "nombre de Centre",
+       "source": "nombre de clients ⊕ Centre",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9385,
+       "noms": [
+        "nombre client"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M18"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17678",
+       "terme": "nombre de Julie",
+       "source": "nombre de retours ⊕ Julie",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9333,
+       "noms": [
+        "nombre ligne",
+        "nombre client"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M11",
+        "metier:mesure:M18"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17679",
+       "terme": "nombre de ventes",
+       "source": "nombre de clients ⊕ ventes",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9205,
+       "noms": [
+        "nombre client",
+        "nombre ligne"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M11",
+        "metier:mesure:M18"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

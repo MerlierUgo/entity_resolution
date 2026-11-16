@@ -1,0 +1,2925 @@
+{
+ "donnees": "challenges/calibration_analyse.csv",
+ "variante": "avant",
+ "n_cas": 17708,
+ "cible": 0.005,
+ "delta": 0.05,
+ "grille": [
+  0.8,
+  0.81,
+  0.82,
+  0.83,
+  0.84,
+  0.85,
+  0.86,
+  0.87,
+  0.88,
+  0.89,
+  0.9,
+  0.91,
+  0.92,
+  0.93,
+  0.94,
+  0.95,
+  0.96,
+  0.97,
+  0.98,
+  0.99
+ ],
+ "familles": {
+  "clients": {
+   "n_retenables": 1560,
+   "meilleur": {
+    "seuil": 0.97,
+    "n": 875,
+    "k": 6,
+    "borne": 0.018983937706393526,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 4,
+      "notes": {
+       "trop_confiant": 4
+      },
+      "par_origine": {
+       "faute_de_frappe": 4
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 2,
+      "notes": {
+       "erreur_silencieuse": 1,
+       "incorrect": 1
+      },
+      "par_origine": {
+       "nom_recombine": 2
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-00586",
+       "terme": "Carrhsserie Dutrieux SRL",
+       "source": "Carrosserie Dutrieux SRL",
+       "perturbation": "substitution",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-776347|mecanova:client:CL-976237",
+       "kappa": 0.9826,
+       "noms": [
+        "carrosserie dutrieu srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-776347"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-01144",
+       "terme": "Dutrieux CCarrosserie SRL",
+       "source": "Dutrieux Carrosserie SRL",
+       "perturbation": "lettre_doublee",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-776347|mecanova:client:CL-976237",
+       "kappa": 0.9917,
+       "noms": [
+        "dutrieu carrosserie srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-976237"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-02391",
+       "terme": "Laurent Crarsoserie",
+       "source": "Laurent Carrosserie",
+       "perturbation": "transposition+transposition",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-344104|mecanova:client:CL-787606",
+       "kappa": 0.9789,
+       "noms": [
+        "laurent carrosserie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-787606"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-02721",
+       "terme": "Rousseau Carroserie",
+       "source": "Rousseau Carrosserie",
+       "perturbation": "clavier_azerty+omission",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-392970|mecanova:client:CL-582510",
+       "kappa": 0.99,
+       "noms": [
+        "rousseau carrosserie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-392970"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-03043",
+       "terme": "Auto Center Moulin SRL",
+       "source": "Auto Center Evrard SRL ⊕ Moulin",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9718,
+       "noms": [
+        "auto center loui srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-723559"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03187",
+       "terme": "Carrosserie Dupont SA",
+       "source": "Carrosserie Visé SA ⊕ Dupont",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.981,
+       "noms": [
+        "carrosserie dumont sa",
+        "carrosserie duboi sa"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-344373",
+        "mecanova:client:CL-499837"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 1513,
+    "k": 78,
+    "borne": 0.06956292503791432,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 11,
+      "notes": {
+       "erreur_silencieuse": 2,
+       "trop_confiant": 9
+      },
+      "par_origine": {
+       "faute_de_frappe": 11
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 67,
+      "notes": {
+       "erreur_silencieuse": 38,
+       "incorrect": 29
+      },
+      "par_origine": {
+       "nom_recombine": 67
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-00458",
+       "terme": "Auuto Moulin",
+       "source": "Auto Moulin",
+       "perturbation": "insertion",
+       "attendu": "resolved",
+       "attendus": "mecanova:client:CL-911333",
+       "kappa": 0.9368,
+       "noms": [
+        "auto demoulin"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-590525"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-00577",
+       "terme": "Carosserie Mathieu",
+       "source": "Carrosserie Mathieu",
+       "perturbation": "omission",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-624693|mecanova:client:CL-795245",
+       "kappa": 0.9618,
+       "noms": [
+        "carrosserie mathieu"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-795245"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-00580",
+       "terme": "Carosserie Rousseaux",
+       "source": "Carrosserie Rousseaux",
+       "perturbation": "omission",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-392970|mecanova:client:CL-582510",
+       "kappa": 0.9392,
+       "noms": [
+        "carrosserie rousseau"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-582510"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-00586",
+       "terme": "Carrhsserie Dutrieux SRL",
+       "source": "Carrosserie Dutrieux SRL",
+       "perturbation": "substitution",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-776347|mecanova:client:CL-976237",
+       "kappa": 0.9826,
+       "noms": [
+        "carrosserie dutrieu srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-776347"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-01099",
+       "terme": "Darrosserie Laurent",
+       "source": "Carrosserie Laurent",
+       "perturbation": "clavier_azerty",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-344104|mecanova:client:CL-787606",
+       "kappa": 0.9649,
+       "noms": [
+        "carrosserie laurent"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-344104"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-01144",
+       "terme": "Dutrieux CCarrosserie SRL",
+       "source": "Dutrieux Carrosserie SRL",
+       "perturbation": "lettre_doublee",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-776347|mecanova:client:CL-976237",
+       "kappa": 0.9917,
+       "noms": [
+        "dutrieu carrosserie srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-976237"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-01145",
+       "terme": "Dutrueux Carrosserie",
+       "source": "Dutrieux Carrosserie",
+       "perturbation": "clavier_azerty",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-776347|mecanova:client:CL-976237",
+       "kappa": 0.9678,
+       "noms": [
+        "dutrieu carrosserie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-976237"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-02148",
+       "terme": "Gatzge Hoarau SARL",
+       "source": "Garage Hoarau SARL",
+       "perturbation": "clavier_azerty+clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "mecanova:client:CL-371715",
+       "kappa": 0.888,
+       "noms": [
+        "garage thoma sarl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-617712"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-02391",
+       "terme": "Laurent Crarsoserie",
+       "source": "Laurent Carrosserie",
+       "perturbation": "transposition+transposition",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-344104|mecanova:client:CL-787606",
+       "kappa": 0.9789,
+       "noms": [
+        "laurent carrosserie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-787606"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-02720",
+       "terme": "Rouskeau Carrossezie",
+       "source": "Rousseau Carrosserie",
+       "perturbation": "substitution+substitution",
+       "attendu": "ambiguous",
+       "attendus": "mecanova:client:CL-392970|mecanova:client:CL-582510",
+       "kappa": 0.96,
+       "noms": [
+        "rousseau carrosserie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-392970"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-03004",
+       "terme": "Affligem Auto Enghien",
+       "source": "Affligem Auto Center ⊕ Enghien",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9319,
+       "noms": [
+        "affligem auto center"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-768111"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03015",
+       "terme": "Amay Automobiles",
+       "source": "Petit Automobiles ⊕ Amay",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8951,
+       "noms": [
+        "yilmaz automobile",
+        "aubry automobile"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-268010",
+        "mecanova:client:CL-582159"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03019",
+       "terme": "Arnaud Claassen Services",
+       "source": "Arnaud Fleet Services ⊕ Claassen",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8825,
+       "noms": [
+        "arnaud fleet service"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-335989"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03021",
+       "terme": "Attert Peugeot SPRL",
+       "source": "Attert Lease SPRL ⊕ Peugeot",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8978,
+       "noms": [
+        "attert lease sprl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-645809"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03027",
+       "terme": "Audi Walderade S.P.R.L.",
+       "source": "Audi Auderghem S.P.R.L. ⊕ Walderade",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.92,
+       "noms": [
+        "audi auderghem s p r"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-739997"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03043",
+       "terme": "Auto Center Moulin SRL",
+       "source": "Auto Center Evrard SRL ⊕ Moulin",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9718,
+       "noms": [
+        "auto center loui srl"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-723559"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-03048",
+       "terme": "Auto Clavier",
+       "source": "Auto Rousset ⊕ Clavier",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9381,
+       "noms": [
+        "auto chevalier",
+        "auto libert",
+        "auto lienard"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-245326",
+        "mecanova:client:CL-264641",
+        "mecanova:client:CL-311099",
+        "mecanova:client:CL-472874"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03063",
+       "terme": "Auto Lebon",
+       "source": "Auto Goffin ⊕ Lebon",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.92,
+       "noms": [
+        "auto legro",
+        "auto gilson",
+        "auto lemmen",
+        "auto bonnet",
+        "auto demoulin",
+        "auto devo",
+        "auto jean",
+        "auto labbe",
+        "auto clement",
+        "auto flament",
+        "auto lecomte",
+        "auto legrand",
+        "auto lejeune",
+        "auto lienard"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-150784",
+        "mecanova:client:CL-220691",
+        "mecanova:client:CL-245827",
+        "mecanova:client:CL-264641",
+        "mecanova:client:CL-332280",
+        "mecanova:client:CL-558037",
+        "mecanova:client:CL-562764",
+        "mecanova:client:CL-567464",
+        "mecanova:client:CL-590525",
+        "mecanova:client:CL-649481",
+        "mecanova:client:CL-659991",
+        "mecanova:client:CL-708762",
+        "mecanova:client:CL-737287",
+        "mecanova:client:CL-980535",
+        "mecanova:client:CL-998444"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03065",
+       "terme": "Auto Ledoux",
+       "source": "Auto Willems ⊕ Ledoux",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9338,
+       "noms": [
+        "auto delcourt",
+        "auto legro",
+        "auto demoulin",
+        "auto devo"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:client:CL-332280",
+        "mecanova:client:CL-567464",
+        "mecanova:client:CL-590525",
+        "mecanova:client:CL-781767"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-03120",
+       "terme": "Bergh Guillon & Fils",
+       "source": "Garage Guillon & Fils ⊕ Bergh",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.883,
+       "noms": [
+        "garage guillon fil"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:client:CL-951420"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "douane": {
+   "n_retenables": 815,
+   "meilleur": {
+    "seuil": 0.99,
+    "n": 255,
+    "k": 0,
+    "borne": 0.0232220590351155,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 783,
+    "k": 138,
+    "borne": 0.21738725833890055,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 138,
+      "notes": {
+       "erreur_silencieuse": 134,
+       "incorrect": 4
+      },
+      "par_origine": {
+       "nom_recombine": 138
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-04773",
+       "terme": "Air conditioning machines; comprising a motor-driven fan and elements for changing the temperature and humidity, of a kind designed to be windows, to a window, wall, ceiling or floor, self-contained or split-system",
+       "source": "Air conditioning machines; comprising a motor-driven fan and elements for changing the temperature and humidity, of a kind designed to be fixed to a window, wall, ceiling or floor, self-contained or split-system ⊕ windows,",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9755,
+       "noms": [
+        "air conditioning machine comprising motor driven fan and element for changing the temperature and humidity of kind designed to be fixed to window wall ceiling or floor self contained or split system"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:841510"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04777",
+       "terme": "Air conditioning machines; level motor driven fan and elements for temperature control, parts thereof",
+       "source": "Air conditioning machines; with motor driven fan and elements for temperature control, parts thereof ⊕ level",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9152,
+       "noms": [
+        "air conditioning machine with motor driven fan and element for temperature control part thereof"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:841590"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04778",
+       "terme": "Air or vacuum pumps, air or other gas compressors and fans; ventilating or recycling hoods incorporating a fan; gas-tight biological engines, cabinets whether or not fitted with filters",
+       "source": "Air or vacuum pumps, air or other gas compressors and fans; ventilating or recycling hoods incorporating a fan; gas-tight biological safety cabinets whether or not fitted with filters ⊕ engines,",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9728,
+       "noms": [
+        "air or vacuum pump air or other gas compressor and fan ventilating or recycling hood incorporating fan gas tight biological safety cabinet whether or not fitted with filter"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:8414"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04779",
+       "terme": "Automatic door closures; of subheading metal",
+       "source": "Automatic door closures; of base metal ⊕ subheading",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9603,
+       "noms": [
+        "automatic door closure of base metal"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:830260"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04783",
+       "terme": "Base metal mountings, fittings and similar articles for furniture, doors, staircases, these trunks, chests etc, castors with mountings of base metal, automatic door closers of base metal",
+       "source": "Base metal mountings, fittings and similar articles for furniture, doors, staircases, windows, trunks, chests etc, castors with mountings of base metal, automatic door closers of base metal ⊕ these",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9541,
+       "noms": [
+        "base metal mounting fitting and similar article for furniture door staircase window trunk chest etc castor with mounting of base metal automatic door closer of base metal"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:8302"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04784",
+       "terme": "Bearing checking incorporating ball or roller bearings",
+       "source": "Bearing housings, incorporating ball or roller bearings ⊕ checking",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9285,
+       "noms": [
+        "bearing housing incorporating ball or roller bearing"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848320"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04785",
+       "terme": "Bearings; cylindrical roller bearings, including articles and roller assemblies n.e.c. in heading no. 8482",
+       "source": "Bearings; cylindrical roller bearings, including cage and roller assemblies n.e.c. in heading no. 8482 ⊕ articles",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9642,
+       "noms": [
+        "bearing cylindrical roller bearing including cage and roller assemblie n e c in heading no 8482"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848250"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04786",
+       "terme": "Bearings; n.e.c. in heading no. 8482, tachometers; combined ball/roller",
+       "source": "Bearings; n.e.c. in heading no. 8482, including combined ball/roller ⊕ tachometers;",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9065,
+       "noms": [
+        "bearing n e c in heading no 8482 including combined ball roller"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848280"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04787",
+       "terme": "Bearings; needle roller bearings, including cage and castors roller assemblies",
+       "source": "Bearings; needle roller bearings, including cage and needle roller assemblies ⊕ castors",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9455,
+       "noms": [
+        "bearing needle roller bearing including cage and needle roller assemblie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848240"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-04789",
+       "terme": "Bearings; tapered roller bearings, including laminated and tapered roller assemblies",
+       "source": "Bearings; tapered roller bearings, including cone and tapered roller assemblies ⊕ laminated",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.938,
+       "noms": [
+        "bearing tapered roller bearing including cone and tapered roller assemblie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "douane:sh:848220"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "geographie": {
+   "n_retenables": 3199,
+   "meilleur": {
+    "seuil": 0.98,
+    "n": 352,
+    "k": 0,
+    "borne": 0.016877163787066454,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 2778,
+    "k": 306,
+    "borne": 0.1277963641590892,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 121,
+      "notes": {
+       "erreur_silencieuse": 81,
+       "incorrect": 39,
+       "partiel": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 121
+      },
+      "avec_voisin_reel": 27
+     },
+     "absent_accepte": {
+      "n": 185,
+      "notes": {
+       "erreur_silencieuse": 103,
+       "incorrect": 82
+      },
+      "par_origine": {
+       "nom_recombine": 50,
+       "faute_index_negatif": 110,
+       "marque_reelle_hors_catalogue": 25
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-05052",
+       "terme": "acrange",
+       "source": "Racrange",
+       "perturbation": "omission",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2984593",
+       "kappa": 0.9464,
+       "noms": [
+        "acraigne"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3016993"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05054",
+       "terme": "Aelelse",
+       "source": "Avelse",
+       "perturbation": "insertion+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3035656",
+       "kappa": 0.8867,
+       "noms": [
+        "aelse"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:NL-2756169"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05058",
+       "terme": "Aettaihcourt",
+       "source": "Bettaincourt",
+       "perturbation": "substitution+clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3032983",
+       "kappa": 0.8889,
+       "noms": [
+        "mattaincourt"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-2995166"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05095",
+       "terme": "Alburt",
+       "source": "Albert",
+       "perturbation": "substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3038271",
+       "kappa": 0.9667,
+       "noms": [
+        "albur"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:NL-2760144"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": [
+        "albur"
+       ]
+      },
+      {
+       "case_id": "CAL-A-05097",
+       "terme": "Alelt",
+       "source": "Aspelt",
+       "perturbation": "clavier_azerty+omission",
+       "attendu": "resolved",
+       "attendus": "geo:commune:LU-2960823",
+       "kappa": 0.88,
+       "noms": [
+        "alle",
+        "jallet",
+        "albert"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-5354-jallet",
+        "geo:localite:BE-5550-alle",
+        "geo:ville:FR-3038271"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05101",
+       "terme": "Allke",
+       "source": "Alleke",
+       "perturbation": "omission",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-73001",
+       "kappa": 0.9533,
+       "noms": [
+        "alle"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:localite:BE-5550-alle"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05118",
+       "terme": "Amil",
+       "source": "Amel",
+       "perturbation": "substitution",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-63001",
+       "kappa": 0.9333,
+       "noms": [
+        "uamil"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3013044"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-05146",
+       "terme": "aNves",
+       "source": "Naves",
+       "perturbation": "transposition",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2990857",
+       "kappa": 0.96,
+       "noms": [
+        "anven",
+        "anver",
+        "ranve"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:arrondissement:be-anver",
+        "geo:commune:BE-11002",
+        "geo:province:BE-VAN",
+        "geo:ville:FR-2983957",
+        "geo:ville:FR-3037406"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "anven",
+        "ranve"
+       ]
+      },
+      {
+       "case_id": "CAL-A-05154",
+       "terme": "Apion",
+       "source": "Airion",
+       "perturbation": "omission+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3038392",
+       "kappa": 0.88,
+       "noms": [
+        "avion",
+        "champion",
+        "pinon"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-5020-champion",
+        "geo:ville:FR-2987086",
+        "geo:ville:FR-3035667",
+        "piece:marque:champion"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "avion"
+       ]
+      },
+      {
+       "case_id": "CAL-A-05176",
+       "terme": "Artr",
+       "source": "Attre",
+       "perturbation": "omission+clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:localite:BE-7941-attre",
+       "kappa": 0.96,
+       "noms": [
+        "artre"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3036638"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08045",
+       "terme": "La Amjenoa",
+       "source": "La Baffe ⊕ Amjenoa",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9714,
+       "noms": [
+        "amjena",
+        "amjen",
+        "amjenso"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3037854"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08052",
+       "terme": "Le Anthonis",
+       "source": "Le Nouvion-le-Franc ⊕ Anthonis",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "antoni"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:NL-2747290"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08061",
+       "terme": "Ark an Nibas",
+       "source": "Ark an Baroa ⊕ Nibas",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9136,
+       "noms": [
+        "ark an baroa",
+        "ark an barrua"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3037229"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08066",
+       "terme": "Asheks an Meysse",
+       "source": "Asheks an Amjenoa ⊕ Meysse",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9159,
+       "noms": [
+        "ashek an vime",
+        "ashe an vime"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3038706"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08068",
+       "terme": "asparrne",
+       "source": "Hasparren",
+       "perturbation": "faute_index_negatif:omission+transposition",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9125,
+       "noms": [
+        "aspre",
+        "aspelare",
+        "aspr"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-9404-aspelare",
+        "geo:ville:FR-3013875"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08070",
+       "terme": "Asyo an Milsbeek",
+       "source": "Asyo an Amenua ⊕ Milsbeek",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9027,
+       "noms": [
+        "asyo an vime"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3038706"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08079",
+       "terme": "Aviji Sen Laarne",
+       "source": "Aviji Sen Leonar ⊕ Laarne",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9483,
+       "noms": [
+        "aviji sen leonar"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3035669"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08082",
+       "terme": "Awlanc",
+       "source": "Arlanc",
+       "perturbation": "faute_index_negatif:substitution",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9111,
+       "noms": [
+        "awan"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:commune:BE-62006"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08108",
+       "terme": "Le Barcrès",
+       "source": "Le Barcarès",
+       "perturbation": "faute_index_negatif:omission",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9222,
+       "noms": [
+        "barr"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3034868"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-08111",
+       "terme": "Barhaira",
+       "source": "Barbaira",
+       "perturbation": "faute_index_negatif:substitution",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8833,
+       "noms": [
+        "barr"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "geo:ville:FR-3034868"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "marques": {
+   "n_retenables": 222,
+   "meilleur": {
+    "seuil": 0.91,
+    "n": 172,
+    "k": 2,
+    "borne": 0.05749227310226318,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 2,
+      "notes": {
+       "erreur_silencieuse": 2
+      },
+      "par_origine": {
+       "faute_de_frappe": 2
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-06045",
+       "terme": "Gensies",
+       "source": "Hensies",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-53039",
+       "kappa": 0.9611,
+       "noms": [
+        "genesi"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:genesis"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-15998",
+       "terme": "SUBAR",
+       "source": "SUPRA",
+       "perturbation": "substitution+transposition",
+       "attendu": "resolved",
+       "attendus": "veh:modele:toyota-supra",
+       "kappa": 0.9667,
+       "noms": [
+        "subaru"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:subaru"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 200,
+    "k": 4,
+    "borne": 0.06617924570126403,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 3,
+      "notes": {
+       "erreur_silencieuse": 3
+      },
+      "par_origine": {
+       "faute_de_frappe": 3
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 1,
+      "notes": {
+       "erreur_silencieuse": 1
+      },
+      "par_origine": {
+       "marque_reelle_hors_catalogue": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-06045",
+       "terme": "Gensies",
+       "source": "Hensies",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "geo:commune:BE-53039",
+       "kappa": 0.9611,
+       "noms": [
+        "genesi"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:genesis"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-15998",
+       "terme": "SUBAR",
+       "source": "SUPRA",
+       "perturbation": "substitution+transposition",
+       "attendu": "resolved",
+       "attendus": "veh:modele:toyota-supra",
+       "kappa": 0.9667,
+       "noms": [
+        "subaru"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:subaru"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-17566",
+       "terme": "SBAR",
+       "source": "SARL",
+       "perturbation": "insertion+omission",
+       "attendu": "ambiguous",
+       "attendus": "juridique:FR:sarl|juridique:LU:s-r",
+       "kappa": 0.9,
+       "noms": [
+        "subaru"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:subaru"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-09347",
+       "terme": "Pirelli",
+       "source": "Pirelli",
+       "perturbation": "marque_reelle_hors_catalogue",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9048,
+       "noms": [
+        "cirelli"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:marque:cirelli"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "mixte": {
+   "n_retenables": 28,
+   "meilleur": {
+    "seuil": 0.8,
+    "n": 25,
+    "k": 4,
+    "borne": 0.4473644300367312,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 1,
+      "notes": {
+       "incorrect": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 1
+      },
+      "avec_voisin_reel": 1
+     },
+     "absent_accepte": {
+      "n": 3,
+      "notes": {
+       "incorrect": 3
+      },
+      "par_origine": {
+       "nom_recombine": 2,
+       "faute_index_negatif": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-07817",
+       "terme": "Vitus",
+       "source": "Vertus",
+       "perturbation": "omission+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2969607",
+       "kappa": 0.8833,
+       "noms": [
+        "vito",
+        "vitt",
+        "vilt"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:LU-2959977",
+        "geo:ville:FR-2967313",
+        "geo:ville:NL-2745510",
+        "veh:modele:mercedes-benz-vito"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "vitt"
+       ]
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08100",
+       "terme": "Les Balani",
+       "source": "Les Islettes ⊕ Balani",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "balai",
+        "balan"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3035278",
+        "piece:cat:vp-1-4-21-4-2"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08126",
+       "terme": "Beeuje",
+       "source": "Beaujeu",
+       "perturbation": "faute_index_negatif:omission+substitution",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8444,
+       "noms": [
+        "beerse",
+        "beesel",
+        "beetle",
+        "beek",
+        "beer",
+        "beez",
+        "beegden",
+        "beernem",
+        "beersel",
+        "beersse",
+        "beerzel",
+        "belleu",
+        "bergue",
+        "bersee",
+        "berzee",
+        "bevere"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:BE-13004",
+        "geo:commune:BE-23003",
+        "geo:commune:BE-31003",
+        "geo:localite:BE-2580-beerzel",
+        "geo:localite:BE-3960-beek",
+        "geo:localite:BE-5000-beez",
+        "geo:localite:BE-5651-berzee",
+        "geo:localite:BE-9700-bevere",
+        "geo:ville:FR-3033222",
+        "geo:ville:FR-3033363",
+        "geo:ville:FR-3033657",
+        "geo:ville:NL-2759286",
+        "geo:ville:NL-2759309",
+        "geo:ville:NL-2759349",
+        "geo:ville:NL-2759350",
+        "geo:ville:NL-2759353",
+        "veh:modele:volkswagen-beetle"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08286",
+       "terme": "De Data",
+       "source": "De Heeg ⊕ Data",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8333,
+       "noms": [
+        "atak",
+        "cata",
+        "odanktan",
+        "dacia",
+        "dista"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:BE-24020",
+        "geo:ville:FR-3002108",
+        "geo:ville:FR-3036239",
+        "piece:cat:vp-1-4-8-2",
+        "veh:marque:dacia"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 16,
+    "k": 2,
+    "borne": 0.49263727315908695,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 1,
+      "notes": {
+       "incorrect": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 1
+      },
+      "avec_voisin_reel": 1
+     },
+     "absent_accepte": {
+      "n": 1,
+      "notes": {
+       "incorrect": 1
+      },
+      "par_origine": {
+       "nom_recombine": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-07817",
+       "terme": "Vitus",
+       "source": "Vertus",
+       "perturbation": "omission+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2969607",
+       "kappa": 0.8833,
+       "noms": [
+        "vito",
+        "vitt",
+        "vilt"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:commune:LU-2959977",
+        "geo:ville:FR-2967313",
+        "geo:ville:NL-2745510",
+        "veh:modele:mercedes-benz-vito"
+       ],
+       "note": "incorrect",
+       "voisins_reels": [
+        "vitt"
+       ]
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08100",
+       "terme": "Les Balani",
+       "source": "Les Islettes ⊕ Balani",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "balai",
+        "balan"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3035278",
+        "piece:cat:vp-1-4-21-4-2"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   }
+  },
+  "pieces": {
+   "n_retenables": 2838,
+   "meilleur": {
+    "seuil": 0.98,
+    "n": 1247,
+    "k": 1,
+    "borne": 0.006566369443432868,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 1,
+      "notes": {
+       "erreur_silencieuse": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 1
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-09730",
+       "terme": "Batterijne",
+       "source": "Batterijen",
+       "perturbation": "transposition",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.98,
+       "noms": [
+        "batterijen",
+        "batterie",
+        "batterien"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:famille:batterie"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 2745,
+    "k": 126,
+    "borne": 0.05825118237218436,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 8,
+      "notes": {
+       "erreur_silencieuse": 6,
+       "incorrect": 2
+      },
+      "par_origine": {
+       "faute_de_frappe": 8
+      },
+      "avec_voisin_reel": 2
+     },
+     "absent_accepte": {
+      "n": 118,
+      "notes": {
+       "incorrect": 59,
+       "erreur_silencieuse": 59
+      },
+      "par_origine": {
+       "faute_index_negatif": 2,
+       "nom_recombine": 116
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-05151",
+       "terme": "aort",
+       "source": "Haors",
+       "perturbation": "substitution+omission",
+       "attendu": "resolved",
+       "attendus": "geo:ville:NL-2753591",
+       "kappa": 0.9,
+       "noms": [
+        "amorto"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "piece:cat:vp-1-4-17-5"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": [
+        "wort"
+       ]
+      },
+      {
+       "case_id": "CAL-A-05587",
+       "terme": "Châyies",
+       "source": "Châtres",
+       "perturbation": "clavier_azerty+substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3026023",
+       "kappa": 0.9222,
+       "noms": [
+        "chaine",
+        "chaineu"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-4650-chaineu",
+        "mecanova:cat:chaine-neige"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-06287",
+       "terme": "Huille",
+       "source": "Muille",
+       "perturbation": "substitution",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-2991223",
+       "kappa": 0.9667,
+       "noms": [
+        "huile"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:cat:huile-moteur"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": [
+        "heille"
+       ]
+      },
+      {
+       "case_id": "CAL-A-09730",
+       "terme": "Batterijne",
+       "source": "Batterijen",
+       "perturbation": "transposition",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.98,
+       "noms": [
+        "batterijen",
+        "batterie",
+        "batterien"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:famille:batterie"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-09731",
+       "terme": "Batterisn",
+       "source": "Batterien",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.9556,
+       "noms": [
+        "batterien",
+        "batterijen",
+        "batterie"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:famille:batterie"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-09738",
+       "terme": "Battzrijen",
+       "source": "Batterijen",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-14-2",
+       "kappa": 0.9156,
+       "noms": [
+        "batterijen",
+        "batterien",
+        "battice",
+        "batterie"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:localite:BE-4651-battice",
+        "mecanova:famille:batterie"
+       ],
+       "note": "incorrect",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-10166",
+       "terme": "Deucksensoren",
+       "source": "Drucksensoren",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "piece:cat:vp-1-4-16-4",
+       "kappa": 0.9077,
+       "noms": [
+        "oldrucksensoren"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "piece:cat:vp-1-4-5-7"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-11775",
+       "terme": "Ritule – febi bilstein Éco",
+       "source": "Rotule – febi bilstein Éco",
+       "perturbation": "clavier_azerty",
+       "attendu": "resolved",
+       "attendus": "mecanova:article:MN-ROT-88237",
+       "kappa": 0.93,
+       "noms": [
+        "radiateur febi bilstein eco"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:article:MN-RAD-22334"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08387",
+       "terme": "Freihun",
+       "source": "Freihung",
+       "perturbation": "faute_index_negatif:omission",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9429,
+       "noms": [
+        "frein",
+        "frethun"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3017104",
+        "mecanova:famille:freinage"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08392",
+       "terme": "Fürthein",
+       "source": "Fürthen",
+       "perturbation": "faute_index_negatif:insertion",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8875,
+       "noms": [
+        "frein",
+        "fretin"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3017100",
+        "mecanova:famille:freinage"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12370",
+       "terme": "Accessoires de pneus Koppelingssteunen véhicules",
+       "source": "Accessoires de pneus pour véhicules ⊕ Koppelingssteunen",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8907,
+       "noms": [
+        "accessoire pneu pour vehicule"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "piece:cat:vp-1-4-20-2"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-12380",
+       "terme": "Ailes de boîte de vitesses – ATE Standard",
+       "source": "Huile de boîte de vitesses – ATE Standard ⊕ Ailes",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9684,
+       "noms": [
+        "huile boite vitesse ate standard"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:article:MN-LTR-31622"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-12397",
+       "terme": "Amortisseur Achterlichten – Mécanova Select Standard",
+       "source": "Amortisseur arrière – Mécanova Select Standard ⊕ Achterlichten",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9065,
+       "noms": [
+        "amortisseur arriere mecanova select standard",
+        "amortisseur avant mecanova select standard"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-43750",
+        "mecanova:article:MN-AMO-63462",
+        "mecanova:article:MN-AMO-91600",
+        "mecanova:article:MN-AMO-94065",
+        "mecanova:article:MN-AMO-94115"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12401",
+       "terme": "Amortisseur arrière – Discs Éco",
+       "source": "Amortisseur arrière – Monroe Éco ⊕ Discs",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9714,
+       "noms": [
+        "amortisseur arriere sach eco"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-15351",
+        "mecanova:article:MN-AMO-75708"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12404",
+       "terme": "Amortisseur arrière – Frame Premium",
+       "source": "Amortisseur arrière – Sachs Premium ⊕ Frame",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9638,
+       "noms": [
+        "amortisseur arriere monroe premium",
+        "amortisseur arriere lemforder premium"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-13245",
+        "mecanova:article:MN-AMO-34017",
+        "mecanova:article:MN-AMO-35723",
+        "mecanova:article:MN-AMO-46911",
+        "mecanova:article:MN-AMO-53303"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12407",
+       "terme": "Amortisseur arrière – Lemförder Coupelles",
+       "source": "Amortisseur arrière – Lemförder Premium ⊕ Coupelles",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.946,
+       "noms": [
+        "amortisseur arriere lemforder premium"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "mecanova:article:MN-AMO-34017"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-12416",
+       "terme": "Amortisseur avant – Position Éco",
+       "source": "Amortisseur avant – Lemförder Éco ⊕ Position",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9452,
+       "noms": [
+        "amortisseur avant bilstein eco",
+        "amortisseur avant monroe eco",
+        "amortisseur avant sach eco"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-33074",
+        "mecanova:article:MN-AMO-37667",
+        "mecanova:article:MN-AMO-75641",
+        "mecanova:article:MN-AMO-90906"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-12424",
+       "terme": "Amortisseur Lights – KYB Éco",
+       "source": "Amortisseur arrière – KYB Éco ⊕ Lights",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.936,
+       "noms": [
+        "amortisseur avant kyb eco"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "mecanova:article:MN-AMO-53142",
+        "mecanova:article:MN-AMO-61309"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   }
+  },
+  "vehicules": {
+   "n_retenables": 2791,
+   "meilleur": {
+    "seuil": 0.96,
+    "n": 1571,
+    "k": 7,
+    "borne": 0.011561314181609507,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 6,
+      "notes": {
+       "trop_confiant": 6
+      },
+      "par_origine": {
+       "faute_de_frappe": 6
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 1,
+      "notes": {
+       "erreur_silencieuse": 1
+      },
+      "par_origine": {
+       "nom_recombine": 1
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-13441",
+       "terme": "500 ABARH",
+       "source": "500 ABARTH",
+       "perturbation": "omission",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:abarth-500|veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.98,
+       "noms": [
+        "500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-13442",
+       "terme": "500 ABARHT",
+       "source": "500 ABARTH",
+       "perturbation": "transposition",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:abarth-500|veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.98,
+       "noms": [
+        "500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-13443",
+       "terme": "500 ABARTGH",
+       "source": "500 ABARTH",
+       "perturbation": "insertion",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:abarth-500|veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.9818,
+       "noms": [
+        "500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14500",
+       "terme": "FIAT 500 ABBARTH",
+       "source": "FIAT 500 ABARTH",
+       "perturbation": "lettre_doublee",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.9875,
+       "noms": [
+        "fiat 500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14504",
+       "terme": "FIAT ABAXRTH 500",
+       "source": "FIAT ABARTH 500",
+       "perturbation": "insertion",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.9875,
+       "noms": [
+        "fiat abarth 500"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-abarth-500"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14588",
+       "terme": "FUAT ABARTH 500",
+       "source": "FIAT ABARTH 500",
+       "perturbation": "clavier_azerty",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.96,
+       "noms": [
+        "fiat abarth 500"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-abarth-500"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08899",
+       "terme": "La super",
+       "source": "La Voivre ⊕ super",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "superb"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:skoda-superb"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 2516,
+    "k": 162,
+    "borne": 0.07931366983755993,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 10,
+      "notes": {
+       "erreur_silencieuse": 3,
+       "trop_confiant": 7
+      },
+      "par_origine": {
+       "faute_de_frappe": 10
+      },
+      "avec_voisin_reel": 1
+     },
+     "absent_accepte": {
+      "n": 152,
+      "notes": {
+       "incorrect": 17,
+       "erreur_silencieuse": 135
+      },
+      "par_origine": {
+       "faute_index_negatif": 1,
+       "nom_recombine": 151
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-06364",
+       "terme": "Jiny",
+       "source": "Joigny",
+       "perturbation": "omission+omission",
+       "attendu": "resolved",
+       "attendus": "geo:ville:FR-3012317",
+       "kappa": 0.9467,
+       "noms": [
+        "jimny"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:suzuki-jimny"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-13441",
+       "terme": "500 ABARH",
+       "source": "500 ABARTH",
+       "perturbation": "omission",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:abarth-500|veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.98,
+       "noms": [
+        "500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-13442",
+       "terme": "500 ABARHT",
+       "source": "500 ABARTH",
+       "perturbation": "transposition",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:abarth-500|veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.98,
+       "noms": [
+        "500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-13443",
+       "terme": "500 ABARTGH",
+       "source": "500 ABARTH",
+       "perturbation": "insertion",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:abarth-500|veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.9818,
+       "noms": [
+        "500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14091",
+       "terme": "BRIFTER",
+       "source": "E-RIFTER",
+       "perturbation": "substitution+trait_union_manquant",
+       "attendu": "resolved",
+       "attendus": "veh:modele:peugeot-e-rifter",
+       "kappa": 0.9524,
+       "noms": [
+        "rifter"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:peugeot-rifter"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": [
+        "rifter"
+       ]
+      },
+      {
+       "case_id": "CAL-A-14500",
+       "terme": "FIAT 500 ABBARTH",
+       "source": "FIAT 500 ABARTH",
+       "perturbation": "lettre_doublee",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.9875,
+       "noms": [
+        "fiat 500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14501",
+       "terme": "FIAT 500 BAARTJ",
+       "source": "FIAT 500 ABARTH",
+       "perturbation": "transposition+substitution",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.959,
+       "noms": [
+        "fiat 500 abarth"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-500-abarth"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14504",
+       "terme": "FIAT ABAXRTH 500",
+       "source": "FIAT ABARTH 500",
+       "perturbation": "insertion",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.9875,
+       "noms": [
+        "fiat abarth 500"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-abarth-500"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-14588",
+       "terme": "FUAT ABARTH 500",
+       "source": "FIAT ABARTH 500",
+       "perturbation": "clavier_azerty",
+       "attendu": "ambiguous",
+       "attendus": "veh:modele:fiat-500-abarth|veh:modele:fiat-abarth-500",
+       "kappa": 0.96,
+       "noms": [
+        "fiat abarth 500"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:fiat-abarth-500"
+       ],
+       "note": "trop_confiant",
+       "voisins_reels": []
+      },
+      {
+       "case_id": "CAL-A-17417",
+       "terme": "colttes",
+       "source": "flottes",
+       "perturbation": "clavier_azerty+transposition",
+       "attendu": "resolved",
+       "attendus": "mecanova:type_client:flotte-loueur",
+       "kappa": 0.9333,
+       "noms": [
+        "colt"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:mitsubishi-colt"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-08389",
+       "terme": "Frerren",
+       "source": "Freren",
+       "perturbation": "faute_index_negatif:lettre_doublee",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9,
+       "noms": [
+        "free",
+        "freten",
+        "friere"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "geo:ville:FR-3017038",
+        "geo:ville:FR-3017104",
+        "veh:modele:dongfeng-free"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-08899",
+       "terme": "La super",
+       "source": "La Voivre ⊕ super",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9667,
+       "noms": [
+        "superb"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:skoda-superb"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16366",
+       "terme": "12 CILINDRI SEAL",
+       "source": "12 CILINDRI SPIDER ⊕ SEAL",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9306,
+       "noms": [
+        "12 cilindri spider"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:ferrari-12-cilindri-spider"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16369",
+       "terme": "216I ACTIVE ELECTRIC",
+       "source": "216I ACTIVE TOURER ⊕ ELECTRIC",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9033,
+       "noms": [
+        "216i active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-216i-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16371",
+       "terme": "220I ACTIVE QUATTRO",
+       "source": "220I ACTIVE TOURER ⊕ QUATTRO",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9212,
+       "noms": [
+        "220i active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-220i-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16373",
+       "terme": "223I LABEL TOURER",
+       "source": "223I ACTIVE TOURER ⊕ LABEL",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.906,
+       "noms": [
+        "223i active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-223i-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16374",
+       "terme": "225E BIGSTER ACTIVE TOURER",
+       "source": "225E XDRIVE ACTIVE TOURER ⊕ BIGSTER",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.918,
+       "noms": [
+        "225e xdrive active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-225e-xdrive-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16375",
+       "terme": "230E XDRIVE TRANSIT TOURER",
+       "source": "230E XDRIVE ACTIVE TOURER ⊕ TRANSIT",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.918,
+       "noms": [
+        "230e xdrive active tourer"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-230e-xdrive-active-tourer"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16376",
+       "terme": "296 ECLIPSE",
+       "source": "296 SPECIALE ⊕ ECLIPSE",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9288,
+       "noms": [
+        "296 speciale"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:ferrari-296-speciale"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-16381",
+       "terme": "330D RIFTER",
+       "source": "330D XDRIVE ⊕ RIFTER",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8909,
+       "noms": [
+        "330d xdrive"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "veh:modele:bmw-330d-xdrive"
+       ],
+       "note": "erreur_silencieuse"
+      }
+     ]
+    }
+   }
+  },
+  "vocabulaire_metier": {
+   "n_retenables": 246,
+   "meilleur": {
+    "seuil": 0.94,
+    "n": 166,
+    "k": 0,
+    "borne": 0.03544956814588505,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {},
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 0,
+      "notes": {},
+      "par_origine": {}
+     }
+    },
+    "exemples": {
+     "present_confondu": [],
+     "absent_accepte": []
+    }
+   },
+   "b": {
+    "seuil": 0.88,
+    "n": 229,
+    "k": 15,
+    "borne": 0.12485574768572798,
+    "par_sorte": {
+     "present_confondu": {
+      "n": 1,
+      "notes": {
+       "erreur_silencieuse": 1
+      },
+      "par_origine": {
+       "faute_de_frappe": 1
+      },
+      "avec_voisin_reel": 0
+     },
+     "absent_accepte": {
+      "n": 14,
+      "notes": {
+       "incorrect": 6,
+       "erreur_silencieuse": 8
+      },
+      "par_origine": {
+       "nom_recombine": 14
+      }
+     }
+    },
+    "exemples": {
+     "present_confondu": [
+      {
+       "case_id": "CAL-A-17406",
+       "terme": "Clents inactifs",
+       "source": "Clients inactifs",
+       "perturbation": "omission",
+       "attendu": "resolved",
+       "attendus": "metier:mesure:M19",
+       "kappa": 0.935,
+       "noms": [
+        "client actif"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M18"
+       ],
+       "note": "erreur_silencieuse",
+       "voisins_reels": []
+      }
+     ],
+     "absent_accepte": [
+      {
+       "case_id": "CAL-A-13095",
+       "terme": "pièce Butée",
+       "source": "pièce d'origine ⊕ Butée",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8952,
+       "noms": [
+        "piece retournee",
+        "piece moteur",
+        "piece vendue",
+        "piece distributeur",
+        "piece alternateur"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M08",
+        "metier:mesure:M09",
+        "piece:cat:vp-1-4-14-9",
+        "piece:cat:vp-1-4-6",
+        "piece:cat:vp-1-4-6-5-5"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17637",
+       "terme": "chiffre Carrossier brut",
+       "source": "chiffre d'affaires brut ⊕ Carrossier",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.8943,
+       "noms": [
+        "chiffre affaire brut"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M01"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17644",
+       "terme": "commandé par facturées",
+       "source": "commandé par erreur ⊕ facturées",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9291,
+       "noms": [
+        "commande par erreur"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:motif_retour:erreur-commande"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17648",
+       "terme": "coût d'achat des Lille",
+       "source": "coût d'achat des ventes ⊕ Lille",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9,
+       "noms": [
+        "cout achat vente"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M12"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17649",
+       "terme": "coût d'achat des panier",
+       "source": "coût d'achat des ventes ⊕ panier",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9001,
+       "noms": [
+        "cout achat vente"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M12"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17667",
+       "terme": "Marge retour",
+       "source": "Marge brute ⊕ retour",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9285,
+       "noms": [
+        "marge brute",
+        "marge euro",
+        "marge pourcent"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M13",
+        "metier:mesure:M14"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17670",
+       "terme": "Montant des catalogue",
+       "source": "Montant des consignes ⊕ catalogue",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9109,
+       "noms": [
+        "montant facture",
+        "montant consigne"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M03",
+        "metier:mesure:M06"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17671",
+       "terme": "montant des coût",
+       "source": "montant des remises ⊕ coût",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9223,
+       "noms": [
+        "montant retour",
+        "montant facture"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M03",
+        "metier:mesure:M04"
+       ],
+       "note": "incorrect"
+      },
+      {
+       "case_id": "CAL-A-17677",
+       "terme": "nombre de Centre",
+       "source": "nombre de clients ⊕ Centre",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9385,
+       "noms": [
+        "nombre client"
+       ],
+       "statut": "resolved",
+       "ids": [
+        "metier:mesure:M18"
+       ],
+       "note": "erreur_silencieuse"
+      },
+      {
+       "case_id": "CAL-A-17678",
+       "terme": "nombre de Julie",
+       "source": "nombre de retours ⊕ Julie",
+       "perturbation": "nom_recombine",
+       "attendu": "unknown",
+       "attendus": "",
+       "kappa": 0.9333,
+       "noms": [
+        "nombre ligne",
+        "nombre client"
+       ],
+       "statut": "ambiguous",
+       "ids": [
+        "metier:mesure:M11",
+        "metier:mesure:M18"
+       ],
+       "note": "incorrect"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "avant": {
+  "n": 7158,
+  "ideal": 88.56,
+  "sur": 98.66,
+  "silencieux": 0,
+  "trop_confiant": 5,
+  "notes": {
+   "correct": 6339,
+   "acceptable": 686,
+   "incorrect": 91,
+   "partiel": 37,
+   "trop_confiant": 5
+  },
+  "C07": {
+   "correct": 1605,
+   "acceptable": 194,
+   "incorrect": 91,
+   "partiel": 37,
+   "trop_confiant": 5
+  }
+ },
+ "mots_tries": {
+  "n": 7158,
+  "ideal": 88.54,
+  "sur": 98.64,
+  "silencieux": 0,
+  "trop_confiant": 6,
+  "notes": {
+   "correct": 6338,
+   "acceptable": 686,
+   "incorrect": 91,
+   "partiel": 37,
+   "trop_confiant": 6
+  },
+  "C07": {
+   "correct": 1604,
+   "acceptable": 194,
+   "incorrect": 91,
+   "partiel": 37,
+   "trop_confiant": 6
+  }
+ },
+ "voisinage": {
+  "n": 7158,
+  "ideal": 88.28,
+  "sur": 98.51,
+  "silencieux": 0,
+  "trop_confiant": 0,
+  "notes": {
+   "correct": 6319,
+   "acceptable": 688,
+   "incorrect": 107,
+   "partiel": 44
+  },
+  "C07": {
+   "correct": 1585,
+   "acceptable": 196,
+   "incorrect": 107,
+   "partiel": 44
+  }
+ },
+ "actuel": {
+  "n": 7158,
+  "ideal": 88.26,
+  "sur": 98.49,
+  "silencieux": 0,
+  "trop_confiant": 1,
+  "notes": {
+   "correct": 6318,
+   "acceptable": 689,
+   "incorrect": 107,
+   "partiel": 43,
+   "trop_confiant": 1
+  },
+  "C07": {
+   "correct": 1584,
+   "acceptable": 197,
+   "incorrect": 107,
+   "partiel": 43,
+   "trop_confiant": 1
+  }
+ }
+}

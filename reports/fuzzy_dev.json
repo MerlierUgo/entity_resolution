@@ -3,4153 +3,3679 @@
  "configurations": {
   "A": "étape 1 seule (exact)",
   "B": "SeuilFixe(0.88, 0.03)",
-  "C": "SeuilsCalibres (SGR, r* = 0.05, δ = 0.05)"
+  "C": "SeuilsCalibres par famille (SGR, r* = 0.005, δ = 0.05)",
+  "B−": "B sans index négatif",
+  "C−": "C sans index négatif"
  },
  "seuils": {
-  "methode": "SGR (Geifman et El-Yaniv, 2017), un seuil par type",
-  "cible_risque": 0.05,
+  "methode": "SGR sur grille fixe (Geifman et El-Yaniv, 2017, lemme 3.1 et théorème 3.2 avec Bonferroni sur la grille), un seuil par famille",
+  "regle": "R-RES-10",
+  "cible_risque": 0.005,
   "delta": 0.05,
   "ecart": 0.03,
   "perte": "dangereuse",
-  "donnees": "challenges/cases.csv, partition dev, part calib (70 %, hash SHA-256 du case_id), 5025 cas",
+  "grille": {
+   "de": 0.8,
+   "a": 0.99,
+   "pas": 0.01,
+   "n_seuils": 20
+  },
+  "n_minimum": 1196,
+  "date": "2026-11-16",
+  "donnees": "challenges/calibration_certif.csv",
+  "sha256_donnees": "0167bb00f31a2abcc82f4006433d32f7b9d3e2e79aca94db56d9b15c35b75d64",
+  "n_cas": 17687,
+  "familles_source": "spec/familles_fuzzy.yaml",
   "absents_simules": false,
   "empreinte_catalogue": "9af7156dd14d5dbc",
-  "types": {
-   "canal": {
+  "familles": {
+   "clients": {
     "fuzzy": "desactive",
-    "n_cas": 2,
-    "n_retenables": 2,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "2 cas retenables, il en faut au moins 97 pour r* = 0.05"
+    "couverture": 0.0,
+    "n_cas": 3828,
+    "n_retenables": 1537,
+    "meilleur_point": {
+     "seuil": 0.97,
+     "n": 975,
+     "k": 10,
+     "borne": 0.023032
+    },
+    "raison": "aucun seuil de la grille ne garantit r* = 0.005 au niveau δ = 0.05 (meilleure borne 0.0230 à θ = 0.97, k = 10 sur n = 975)"
    },
-   "categorie_piece": {
+   "douane": {
     "fuzzy": "desactive",
-    "n_cas": 102,
-    "n_retenables": 95,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "95 cas retenables, il en faut au moins 97 pour r* = 0.05"
+    "couverture": 0.0,
+    "n_cas": 1022,
+    "n_retenables": 824,
+    "meilleur_point": {
+     "seuil": 0.99,
+     "n": 326,
+     "k": 1,
+     "borne": 0.024913
+    },
+    "raison": "824 cas retenables, il en faut au moins 1196 pour r* = 0.005"
    },
-   "client": {
+   "geographie": {
     "fuzzy": "desactive",
-    "n_cas": 101,
-    "n_retenables": 0,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "0 cas retenables, il en faut au moins 97 pour r* = 0.05"
+    "couverture": 0.0,
+    "n_cas": 4225,
+    "n_retenables": 2973,
+    "meilleur_point": {
+     "seuil": 0.97,
+     "n": 797,
+     "k": 2,
+     "borne": 0.012639
+    },
+    "raison": "aucun seuil de la grille ne garantit r* = 0.005 au niveau δ = 0.05 (meilleure borne 0.0126 à θ = 0.97, k = 2 sur n = 797)"
    },
-   "commune": {
+   "marques": {
     "fuzzy": "desactive",
-    "n_cas": 147,
-    "n_retenables": 132,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
-   },
-   "famille_mecanova": {
-    "fuzzy": "desactive",
-    "n_cas": 2,
-    "n_retenables": 2,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "2 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "gamme": {
-    "fuzzy": "desactive",
-    "n_cas": 3,
-    "n_retenables": 3,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "3 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "groupe_industriel": {
-    "fuzzy": "desactive",
-    "n_cas": 1,
-    "n_retenables": 1,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "localite_postale": {
-    "fuzzy": "desactive",
-    "n_cas": 216,
-    "n_retenables": 155,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
-   },
-   "marque_piece": {
-    "fuzzy": "desactive",
-    "n_cas": 5,
-    "n_retenables": 4,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "4 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "marque_vehicule": {
-    "fuzzy": "desactive",
-    "n_cas": 3,
-    "n_retenables": 3,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "3 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "mesure": {
-    "fuzzy": "desactive",
-    "n_cas": 12,
-    "n_retenables": 12,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "12 cas retenables, il en faut au moins 97 pour r* = 0.05"
+    "couverture": 0.0,
+    "n_cas": 340,
+    "n_retenables": 218,
+    "meilleur_point": {
+     "seuil": 0.93,
+     "n": 151,
+     "k": 0,
+     "borne": 0.038902
+    },
+    "raison": "218 cas retenables, il en faut au moins 1196 pour r* = 0.005"
    },
    "mixte": {
     "fuzzy": "desactive",
-    "n_cas": 149,
-    "n_retenables": 127,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
+    "couverture": 0.0,
+    "n_cas": 68,
+    "n_retenables": 31,
+    "meilleur_point": {
+     "seuil": 0.87,
+     "n": 19,
+     "k": 0,
+     "borne": 0.270459
+    },
+    "raison": "meilleurs noms de plusieurs familles : jamais d'approché (R-RES-10)"
    },
-   "modele_vehicule": {
-    "fuzzy": "desactive",
-    "n_cas": 92,
-    "n_retenables": 76,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "76 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "motif_retour": {
-    "fuzzy": "desactive",
-    "n_cas": 1,
-    "n_retenables": 1,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "pays": {
-    "fuzzy": "desactive",
-    "n_cas": 5,
-    "n_retenables": 5,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "5 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "province": {
-    "fuzzy": "desactive",
-    "n_cas": 1,
-    "n_retenables": 1,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "qualite": {
-    "fuzzy": "desactive",
-    "n_cas": 1,
-    "n_retenables": 1,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "segment": {
-    "fuzzy": "desactive",
-    "n_cas": 2,
-    "n_retenables": 2,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "2 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "site": {
-    "fuzzy": "desactive",
-    "n_cas": 1,
-    "n_retenables": 1,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "type_client": {
-    "fuzzy": "desactive",
-    "n_cas": 1,
-    "n_retenables": 1,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "1 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "ville": {
+   "pieces": {
     "fuzzy": "actif",
-    "seuil": 0.859649,
+    "seuil": 0.97,
     "ecart": 0.03,
-    "borne": 0.014942,
-    "n_cas": 865,
-    "n_retenables": 618,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "n_retenus": 617,
-    "risque_empirique": 0.003241
+    "n": 1815,
+    "k": 1,
+    "borne": 0.004516,
+    "risque_empirique": 0.000551,
+    "couverture": 0.628,
+    "n_cas": 3961,
+    "n_retenables": 2890
+   },
+   "vehicules": {
+    "fuzzy": "desactive",
+    "couverture": 0.0,
+    "n_cas": 3911,
+    "n_retenables": 2563,
+    "meilleur_point": {
+     "seuil": 0.96,
+     "n": 1713,
+     "k": 5,
+     "borne": 0.008823
+    },
+    "raison": "aucun seuil de la grille ne garantit r* = 0.005 au niveau δ = 0.05 (meilleure borne 0.0088 à θ = 0.96, k = 5 sur n = 1713)"
+   },
+   "vocabulaire_metier": {
+    "fuzzy": "desactive",
+    "couverture": 0.0,
+    "n_cas": 332,
+    "n_retenables": 237,
+    "meilleur_point": {
+     "seuil": 0.95,
+     "n": 157,
+     "k": 0,
+     "borne": 0.037443
+    },
+    "raison": "237 cas retenables, il en faut au moins 1196 pour r* = 0.005"
    }
   }
  },
  "resultats": {
   "A": {
-   "C01_libelle_canonique": {
-    "n": 83,
+   "clients": {
+    "n": 287,
+    "ideal": 86.06,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "douane": {
+    "n": 31,
     "ideal": 100.0,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 83
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C02_traduction_officielle": {
-    "n": 120,
+   "geographie": {
+    "n": 976,
+    "ideal": 45.39,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "marques": {
+    "n": 53,
+    "ideal": 94.34,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "mixte": {
+    "n": 16,
+    "ideal": 62.5,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "pieces": {
+    "n": 281,
+    "ideal": 82.21,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "sans_entite": {
+    "n": 235,
     "ideal": 100.0,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 120
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C03_variante_geonames": {
-    "n": 105,
-    "ideal": 100.0,
+   "vehicules": {
+    "n": 217,
+    "ideal": 80.65,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 105
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C04_terme_metier": {
-    "n": 20,
-    "ideal": 100.0,
+   "vocabulaire_metier": {
+    "n": 37,
+    "ideal": 72.97,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 20
-    }
-   },
-   "C05_homonyme": {
-    "n": 148,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 148
-    }
-   },
-   "C06_indice_de_type": {
-    "n": 196,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 196
-    }
-   },
-   "C07_faute_de_frappe": {
-    "n": 554,
-    "ideal": 0.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 554
-    }
-   },
-   "C08_hors_perimetre_proche": {
-    "n": 136,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 136
-    }
-   },
-   "C09_code": {
-    "n": 237,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 237
-    }
-   },
-   "C10_client": {
-    "n": 237,
-    "ideal": 83.12,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 40,
-     "correct": 197
-    }
-   },
-   "C11_marque": {
-    "n": 40,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 40
-    }
-   },
-   "C12_vehicule": {
-    "n": 167,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 167
-    }
-   },
-   "C13_abreviation": {
-    "n": 90,
-    "ideal": 0.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 90
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
    "TOTAL": {
     "n": 2133,
     "ideal": 67.93,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 684,
-     "correct": 1449
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    }
   },
   "B": {
-   "C01_libelle_canonique": {
-    "n": 83,
+   "clients": {
+    "n": 287,
+    "ideal": 86.06,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "douane": {
+    "n": 31,
     "ideal": 100.0,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 83
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C02_traduction_officielle": {
-    "n": 120,
+   "geographie": {
+    "n": 976,
+    "ideal": 83.3,
+    "sur": 97.13,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 41.6,
+    "rattrapes": 406,
+    "rattrapes_corrects": 370
+   },
+   "marques": {
+    "n": 53,
     "ideal": 100.0,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 120
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 5.66,
+    "rattrapes": 3,
+    "rattrapes_corrects": 3
    },
-   "C03_variante_geonames": {
-    "n": 105,
+   "mixte": {
+    "n": 16,
+    "ideal": 87.5,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 37.5,
+    "rattrapes": 6,
+    "rattrapes_corrects": 4
+   },
+   "pieces": {
+    "n": 281,
+    "ideal": 98.58,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 16.37,
+    "rattrapes": 46,
+    "rattrapes_corrects": 46
+   },
+   "sans_entite": {
+    "n": 235,
     "ideal": 100.0,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 105
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C04_terme_metier": {
-    "n": 20,
-    "ideal": 100.0,
+   "vehicules": {
+    "n": 217,
+    "ideal": 93.55,
+    "sur": 99.54,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 13.36,
+    "rattrapes": 29,
+    "rattrapes_corrects": 28
+   },
+   "vocabulaire_metier": {
+    "n": 37,
+    "ideal": 97.3,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 20
-    }
-   },
-   "C05_homonyme": {
-    "n": 148,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 148
-    }
-   },
-   "C06_indice_de_type": {
-    "n": 196,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 196
-    }
-   },
-   "C07_faute_de_frappe": {
-    "n": 554,
-    "ideal": 84.48,
-    "sur": 95.67,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 53,
-     "correct": 468,
-     "incorrect": 23,
-     "partiel": 9,
-     "trop_confiant": 1
-    }
-   },
-   "C08_hors_perimetre_proche": {
-    "n": 136,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 136
-    }
-   },
-   "C09_code": {
-    "n": 237,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 237
-    }
-   },
-   "C10_client": {
-    "n": 237,
-    "ideal": 83.12,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 40,
-     "correct": 197
-    }
-   },
-   "C11_marque": {
-    "n": 40,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 40
-    }
-   },
-   "C12_vehicule": {
-    "n": 167,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 167
-    }
-   },
-   "C13_abreviation": {
-    "n": 90,
-    "ideal": 0.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 90
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 24.32,
+    "rattrapes": 9,
+    "rattrapes_corrects": 9
    },
    "TOTAL": {
     "n": 2133,
-    "ideal": 89.87,
-    "sur": 98.87,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 183,
-     "correct": 1917,
-     "incorrect": 23,
-     "partiel": 9,
-     "trop_confiant": 1
-    }
+    "ideal": 89.5,
+    "sur": 98.64,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 23.39,
+    "rattrapes": 499,
+    "rattrapes_corrects": 460
    }
   },
   "C": {
-   "C01_libelle_canonique": {
-    "n": 83,
+   "clients": {
+    "n": 287,
+    "ideal": 86.06,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "douane": {
+    "n": 31,
     "ideal": 100.0,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 83
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C02_traduction_officielle": {
-    "n": 120,
+   "geographie": {
+    "n": 976,
+    "ideal": 45.39,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "marques": {
+    "n": 53,
+    "ideal": 94.34,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "mixte": {
+    "n": 16,
+    "ideal": 62.5,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "pieces": {
+    "n": 281,
+    "ideal": 93.24,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 11.03,
+    "rattrapes": 31,
+    "rattrapes_corrects": 31
+   },
+   "sans_entite": {
+    "n": 235,
     "ideal": 100.0,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 120
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C03_variante_geonames": {
-    "n": 105,
-    "ideal": 100.0,
+   "vehicules": {
+    "n": 217,
+    "ideal": 80.65,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 105
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
-   "C04_terme_metier": {
-    "n": 20,
-    "ideal": 100.0,
+   "vocabulaire_metier": {
+    "n": 37,
+    "ideal": 72.97,
     "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 20
-    }
-   },
-   "C05_homonyme": {
-    "n": 148,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 148
-    }
-   },
-   "C06_indice_de_type": {
-    "n": 196,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 196
-    }
-   },
-   "C07_faute_de_frappe": {
-    "n": 554,
-    "ideal": 44.22,
-    "sur": 98.92,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 299,
-     "correct": 245,
-     "incorrect": 6,
-     "partiel": 4
-    }
-   },
-   "C08_hors_perimetre_proche": {
-    "n": 136,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 136
-    }
-   },
-   "C09_code": {
-    "n": 237,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 237
-    }
-   },
-   "C10_client": {
-    "n": 237,
-    "ideal": 83.12,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 40,
-     "correct": 197
-    }
-   },
-   "C11_marque": {
-    "n": 40,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 40
-    }
-   },
-   "C12_vehicule": {
-    "n": 167,
-    "ideal": 100.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "correct": 167
-    }
-   },
-   "C13_abreviation": {
-    "n": 90,
-    "ideal": 0.0,
-    "sur": 100.0,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 90
-    }
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
    },
    "TOTAL": {
     "n": 2133,
-    "ideal": 79.42,
-    "sur": 99.72,
-    "silencieux": 0.0,
-    "detail": {
-     "acceptable": 429,
-     "correct": 1694,
-     "incorrect": 6,
-     "partiel": 4
-    }
+    "ideal": 69.39,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 1.45,
+    "rattrapes": 31,
+    "rattrapes_corrects": 31
+   }
+  },
+  "B−": {
+   "clients": {
+    "n": 287,
+    "ideal": 86.06,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "douane": {
+    "n": 31,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "geographie": {
+    "n": 976,
+    "ideal": 83.4,
+    "sur": 97.03,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 41.91,
+    "rattrapes": 409,
+    "rattrapes_corrects": 371
+   },
+   "marques": {
+    "n": 53,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 5.66,
+    "rattrapes": 3,
+    "rattrapes_corrects": 3
+   },
+   "mixte": {
+    "n": 16,
+    "ideal": 87.5,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 37.5,
+    "rattrapes": 6,
+    "rattrapes_corrects": 4
+   },
+   "pieces": {
+    "n": 281,
+    "ideal": 98.58,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 16.37,
+    "rattrapes": 46,
+    "rattrapes_corrects": 46
+   },
+   "sans_entite": {
+    "n": 235,
+    "ideal": 57.02,
+    "sur": 57.02,
+    "silencieux": 36,
+    "silencieux_pct": 15.32,
+    "couverture_fuzzy": 42.98,
+    "rattrapes": 101,
+    "rattrapes_corrects": 0
+   },
+   "vehicules": {
+    "n": 217,
+    "ideal": 93.55,
+    "sur": 99.54,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 13.36,
+    "rattrapes": 29,
+    "rattrapes_corrects": 28
+   },
+   "vocabulaire_metier": {
+    "n": 37,
+    "ideal": 97.3,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 24.32,
+    "rattrapes": 9,
+    "rattrapes_corrects": 9
+   },
+   "TOTAL": {
+    "n": 2133,
+    "ideal": 84.81,
+    "sur": 93.86,
+    "silencieux": 36,
+    "silencieux_pct": 1.69,
+    "couverture_fuzzy": 28.27,
+    "rattrapes": 603,
+    "rattrapes_corrects": 461
+   }
+  },
+  "C−": {
+   "clients": {
+    "n": 287,
+    "ideal": 86.06,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "douane": {
+    "n": 31,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "geographie": {
+    "n": 976,
+    "ideal": 45.39,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "marques": {
+    "n": 53,
+    "ideal": 94.34,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "mixte": {
+    "n": 16,
+    "ideal": 62.5,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "pieces": {
+    "n": 281,
+    "ideal": 93.24,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 11.03,
+    "rattrapes": 31,
+    "rattrapes_corrects": 31
+   },
+   "sans_entite": {
+    "n": 235,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "vehicules": {
+    "n": 217,
+    "ideal": 80.65,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "vocabulaire_metier": {
+    "n": 37,
+    "ideal": 72.97,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 0.0,
+    "rattrapes": 0,
+    "rattrapes_corrects": 0
+   },
+   "TOTAL": {
+    "n": 2133,
+    "ideal": 69.39,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "couverture_fuzzy": 1.45,
+    "rattrapes": 31,
+    "rattrapes_corrects": 31
    }
   }
  },
- "robustesse": {
-  "B": {
-   "n": 139,
-   "silencieux": 47,
-   "exemples": [
-    {
-     "texte": "Arbusigny",
-     "ids": [
-      "geo:ville:FR-3029477"
-     ]
-    },
-    {
-     "texte": "Beauvoisin",
-     "ids": [
-      "geo:ville:FR-3033962"
-     ]
-    },
-    {
-     "texte": "Bizanet",
-     "ids": [
-      "geo:localite:BE-7783-bizet"
-     ]
-    },
-    {
-     "texte": "Breteil",
-     "ids": [
-      "geo:ville:FR-3030276"
-     ]
-    },
-    {
-     "texte": "Chalon-sur-Saône",
-     "ids": [
-      "geo:ville:FR-3027487"
-     ]
-    },
-    {
-     "texte": "Charpont",
-     "ids": [
-      "geo:ville:FR-3026553"
-     ]
-    },
-    {
-     "texte": "Coubron",
-     "ids": [
-      "geo:ville:FR-3022770"
-     ]
-    },
-    {
-     "texte": "Dettingen",
-     "ids": [
-      "geo:ville:FR-3019338"
-     ]
-    }
-   ]
-  },
-  "C": {
-   "n": 139,
-   "silencieux": 34,
-   "exemples": [
-    {
-     "texte": "Arbusigny",
-     "ids": [
-      "geo:ville:FR-3029477"
-     ]
-    },
-    {
-     "texte": "Beauvoisin",
-     "ids": [
-      "geo:ville:FR-3033962"
-     ]
-    },
-    {
-     "texte": "Breteil",
-     "ids": [
-      "geo:ville:FR-3030276"
-     ]
-    },
-    {
-     "texte": "Chalon-sur-Saône",
-     "ids": [
-      "geo:ville:FR-3027487"
-     ]
-    },
-    {
-     "texte": "Charpont",
-     "ids": [
-      "geo:ville:FR-3026553"
-     ]
-    },
-    {
-     "texte": "Coubron",
-     "ids": [
-      "geo:ville:FR-3022770"
-     ]
-    },
-    {
-     "texte": "Dettingen",
-     "ids": [
-      "geo:ville:FR-3019338"
-     ]
-    },
-    {
-     "texte": "Emmerich",
-     "ids": [
-      "geo:ville:FR-3020236"
-     ]
-    }
-   ]
-  }
+ "perdus_par_c": {
+  "total": 429,
+  "raisons": [
+   {
+    "famille": "geographie",
+    "raison": "famille geographie désactivée (risque)",
+    "n": 370
+   },
+   {
+    "famille": "vehicules",
+    "raison": "famille vehicules désactivée (risque)",
+    "n": 28
+   },
+   {
+    "famille": "pieces",
+    "raison": "κ sous θ pieces = 0.97 (B accepte dès 0,88)",
+    "n": 15
+   },
+   {
+    "famille": "vocabulaire_metier",
+    "raison": "famille vocabulaire_metier désactivée (volume)",
+    "n": 9
+   },
+   {
+    "famille": "mixte",
+    "raison": "famille geographie désactivée (risque)",
+    "n": 4
+   },
+   {
+    "famille": "marques",
+    "raison": "famille marques désactivée (volume)",
+    "n": 3
+   }
+  ]
  },
- "courbes": {
-  "ville": {
-   "n_cas": 342,
-   "calibration": {
-    "fuzzy": "actif",
-    "seuil": 0.859649,
-    "ecart": 0.03,
-    "borne": 0.014942,
-    "n_cas": 865,
-    "n_retenables": 618,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "n_retenus": 617,
-    "risque_empirique": 0.003241
-   },
-   "dangereuse": {
-    "points": [
+ "exemples": {
+  "rattrapes_c": [
+   {
+    "case_id": "ER-03154",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Antriecswellen",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-19-4",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-19-4"
+    ],
+    "note": "correct",
+    "trace": [
      {
-      "seuil": 0.9909,
-      "couverture": 0.0029,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
+      "etape": "normalisation",
+      "norm": "antriecswellen"
      },
      {
-      "seuil": 0.99,
-      "couverture": 0.0058,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
+      "etape": "exact",
+      "trouves": 0
      },
      {
-      "seuil": 0.9895,
-      "couverture": 0.0088,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9889,
-      "couverture": 0.0146,
-      "risque": 0.0,
-      "retenus": 5,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.0175,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9875,
-      "couverture": 0.0409,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9867,
-      "couverture": 0.0526,
-      "risque": 0.0,
-      "retenus": 18,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.986,
-      "couverture": 0.0556,
-      "risque": 0.0,
-      "retenus": 19,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.0673,
-      "risque": 0.0,
-      "retenus": 23,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.0906,
-      "risque": 0.0,
-      "retenus": 31,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.0936,
-      "risque": 0.0,
-      "retenus": 32,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.1316,
-      "risque": 0.0,
-      "retenus": 45,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9824,
-      "couverture": 0.1345,
-      "risque": 0.0,
-      "retenus": 46,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9822,
-      "couverture": 0.1374,
-      "risque": 0.0,
-      "retenus": 47,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9821,
-      "couverture": 0.1433,
-      "risque": 0.0,
-      "retenus": 49,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9818,
-      "couverture": 0.1813,
-      "risque": 0.0,
-      "retenus": 62,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.981,
-      "couverture": 0.1842,
-      "risque": 0.0,
-      "retenus": 63,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9806,
-      "couverture": 0.1871,
-      "risque": 0.0,
-      "retenus": 64,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.193,
-      "risque": 0.0,
-      "retenus": 66,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.231,
-      "risque": 0.0,
-      "retenus": 79,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9795,
-      "couverture": 0.2339,
-      "risque": 0.0,
-      "retenus": 80,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.2398,
-      "risque": 0.0,
-      "retenus": 82,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.2456,
-      "risque": 0.0,
-      "retenus": 84,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.2982,
-      "risque": 0.0,
-      "retenus": 102,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9769,
-      "couverture": 0.3012,
-      "risque": 0.0,
-      "retenus": 103,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9767,
-      "couverture": 0.3129,
-      "risque": 0.0,
-      "retenus": 107,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9758,
-      "couverture": 0.3187,
-      "risque": 0.0,
-      "retenus": 109,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9757,
-      "couverture": 0.3216,
-      "risque": 0.0,
-      "retenus": 110,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.3772,
-      "risque": 0.0,
-      "retenus": 129,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9741,
-      "couverture": 0.3918,
-      "risque": 0.0,
-      "retenus": 134,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9733,
-      "couverture": 0.3977,
-      "risque": 0.0,
-      "retenus": 136,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9727,
-      "couverture": 0.4006,
-      "risque": 0.0,
-      "retenus": 137,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.4532,
-      "risque": 0.0,
-      "retenus": 155,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9708,
-      "couverture": 0.4649,
-      "risque": 0.0,
-      "retenus": 159,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9704,
-      "couverture": 0.4912,
-      "risque": 0.0,
-      "retenus": 168,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9703,
-      "couverture": 0.4942,
-      "risque": 0.0,
-      "retenus": 169,
-      "pertes": 0
-     },
-     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9714285714285714,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "antriebswellen"
+      ],
       "seuil": 0.97,
-      "couverture": 0.4971,
-      "risque": 0.0,
-      "retenus": 170,
-      "pertes": 0
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "antriebswellen"
+      ],
+      "trouves": 1
      },
      {
-      "seuil": 0.9692,
-      "couverture": 0.5,
-      "risque": 0.0,
-      "retenus": 171,
-      "pertes": 0
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-19-4"
+      ]
      },
      {
-      "seuil": 0.9667,
-      "couverture": 0.5439,
-      "risque": 0.0,
-      "retenus": 186,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5468,
-      "risque": 0.0,
-      "retenus": 187,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.5556,
-      "risque": 0.0,
-      "retenus": 190,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9625,
-      "couverture": 0.5702,
-      "risque": 0.0,
-      "retenus": 195,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.5789,
-      "risque": 0.0,
-      "retenus": 198,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5819,
-      "risque": 0.0,
-      "retenus": 199,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5848,
-      "risque": 0.0,
-      "retenus": 200,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.5936,
-      "risque": 0.0,
-      "retenus": 203,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9593,
-      "couverture": 0.5965,
-      "risque": 0.0,
-      "retenus": 204,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.959,
-      "couverture": 0.5994,
-      "risque": 0.0,
-      "retenus": 205,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9583,
-      "couverture": 0.6023,
-      "risque": 0.0,
-      "retenus": 206,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9578,
-      "couverture": 0.6082,
-      "risque": 0.0,
-      "retenus": 208,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9571,
-      "couverture": 0.6111,
-      "risque": 0.0,
-      "retenus": 209,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.6316,
-      "risque": 0.0,
-      "retenus": 216,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9538,
-      "couverture": 0.6374,
-      "risque": 0.0,
-      "retenus": 218,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6433,
-      "risque": 0.0,
-      "retenus": 220,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6491,
-      "risque": 0.0,
-      "retenus": 222,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9481,
-      "couverture": 0.652,
-      "risque": 0.0,
-      "retenus": 223,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9464,
-      "couverture": 0.655,
-      "risque": 0.0,
-      "retenus": 224,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9449,
-      "couverture": 0.6579,
-      "risque": 0.0,
-      "retenus": 225,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.6667,
-      "risque": 0.0,
-      "retenus": 228,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9417,
-      "couverture": 0.6725,
-      "risque": 0.0,
-      "retenus": 230,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9396,
-      "couverture": 0.6754,
-      "risque": 0.0,
-      "retenus": 231,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9381,
-      "couverture": 0.6784,
-      "risque": 0.0,
-      "retenus": 232,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9375,
-      "couverture": 0.6813,
-      "risque": 0.0,
-      "retenus": 233,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.6988,
-      "risque": 0.0,
-      "retenus": 239,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.7018,
-      "risque": 0.0,
-      "retenus": 240,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9301,
-      "couverture": 0.7047,
-      "risque": 0.0,
-      "retenus": 241,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9265,
-      "couverture": 0.7076,
-      "risque": 0.0,
-      "retenus": 242,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.925,
-      "couverture": 0.7105,
-      "risque": 0.0,
-      "retenus": 243,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9238,
-      "couverture": 0.7164,
-      "risque": 0.0,
-      "retenus": 245,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7222,
-      "risque": 0.0,
-      "retenus": 247,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9196,
-      "couverture": 0.7251,
-      "risque": 0.0,
-      "retenus": 248,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9134,
-      "couverture": 0.7281,
-      "risque": 0.0,
-      "retenus": 249,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.911,
-      "couverture": 0.731,
-      "risque": 0.0,
-      "retenus": 250,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9,
-      "couverture": 0.7368,
-      "risque": 0.0,
-      "retenus": 252,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.8958,
-      "couverture": 0.7398,
-      "risque": 0.0,
-      "retenus": 253,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.8844,
-      "couverture": 0.7427,
-      "risque": 0.0,
-      "retenus": 254,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.8821,
-      "couverture": 0.7456,
-      "risque": 0.0,
-      "retenus": 255,
-      "pertes": 0
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
      }
-    ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.7456,
-     "risque": 0.0,
-     "retenus": 255,
-     "pertes": 0
-    },
-    "c": {
-     "seuil": 0.859649,
-     "couverture": 0.7456,
-     "risque": 0.0,
-     "retenus": 255,
-     "pertes": 0
-    }
+    ]
    },
-   "non_sure": {
-    "points": [
+   {
+    "case_id": "ER-03186",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Audhängungsteile für Autos",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-17",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-17"
+    ],
+    "note": "correct",
+    "trace": [
      {
-      "seuil": 0.9909,
-      "couverture": 0.0029,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
+      "etape": "normalisation",
+      "norm": "audhangungsteile fur auto"
      },
      {
-      "seuil": 0.99,
-      "couverture": 0.0058,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
+      "etape": "exact",
+      "trouves": 0
      },
      {
-      "seuil": 0.9895,
-      "couverture": 0.0088,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9889,
-      "couverture": 0.0146,
-      "risque": 0.0,
-      "retenus": 5,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.0175,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9875,
-      "couverture": 0.0409,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9867,
-      "couverture": 0.0526,
-      "risque": 0.0,
-      "retenus": 18,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.986,
-      "couverture": 0.0556,
-      "risque": 0.0,
-      "retenus": 19,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.0673,
-      "risque": 0.0,
-      "retenus": 23,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.0906,
-      "risque": 0.0,
-      "retenus": 31,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.0936,
-      "risque": 0.0,
-      "retenus": 32,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.1316,
-      "risque": 0.0222,
-      "retenus": 45,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9824,
-      "couverture": 0.1345,
-      "risque": 0.0217,
-      "retenus": 46,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9822,
-      "couverture": 0.1374,
-      "risque": 0.0213,
-      "retenus": 47,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9821,
-      "couverture": 0.1433,
-      "risque": 0.0204,
-      "retenus": 49,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9818,
-      "couverture": 0.1813,
-      "risque": 0.0161,
-      "retenus": 62,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.981,
-      "couverture": 0.1842,
-      "risque": 0.0159,
-      "retenus": 63,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9806,
-      "couverture": 0.1871,
-      "risque": 0.0156,
-      "retenus": 64,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.193,
-      "risque": 0.0152,
-      "retenus": 66,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.231,
-      "risque": 0.0127,
-      "retenus": 79,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9795,
-      "couverture": 0.2339,
-      "risque": 0.0125,
-      "retenus": 80,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.2398,
-      "risque": 0.0122,
-      "retenus": 82,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.2456,
-      "risque": 0.0119,
-      "retenus": 84,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.2982,
-      "risque": 0.0098,
-      "retenus": 102,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9769,
-      "couverture": 0.3012,
-      "risque": 0.0097,
-      "retenus": 103,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9767,
-      "couverture": 0.3129,
-      "risque": 0.0093,
-      "retenus": 107,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9758,
-      "couverture": 0.3187,
-      "risque": 0.0092,
-      "retenus": 109,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9757,
-      "couverture": 0.3216,
-      "risque": 0.0091,
-      "retenus": 110,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.3772,
-      "risque": 0.0155,
-      "retenus": 129,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9741,
-      "couverture": 0.3918,
-      "risque": 0.0149,
-      "retenus": 134,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9733,
-      "couverture": 0.3977,
-      "risque": 0.0147,
-      "retenus": 136,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9727,
-      "couverture": 0.4006,
-      "risque": 0.0146,
-      "retenus": 137,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.4532,
-      "risque": 0.0129,
-      "retenus": 155,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9708,
-      "couverture": 0.4649,
-      "risque": 0.0126,
-      "retenus": 159,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9704,
-      "couverture": 0.4912,
-      "risque": 0.0119,
-      "retenus": 168,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9703,
-      "couverture": 0.4942,
-      "risque": 0.0118,
-      "retenus": 169,
-      "pertes": 2
-     },
-     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9786666666666666,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "aufhangungsteile fur auto"
+      ],
       "seuil": 0.97,
-      "couverture": 0.4971,
-      "risque": 0.0118,
-      "retenus": 170,
-      "pertes": 2
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "aufhangungsteile fur auto"
+      ],
+      "trouves": 1
      },
      {
-      "seuil": 0.9692,
-      "couverture": 0.5,
-      "risque": 0.0117,
-      "retenus": 171,
-      "pertes": 2
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-17"
+      ]
      },
      {
-      "seuil": 0.9667,
-      "couverture": 0.5439,
-      "risque": 0.0108,
-      "retenus": 186,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5468,
-      "risque": 0.0107,
-      "retenus": 187,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.5556,
-      "risque": 0.0105,
-      "retenus": 190,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9625,
-      "couverture": 0.5702,
-      "risque": 0.0103,
-      "retenus": 195,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.5789,
-      "risque": 0.0101,
-      "retenus": 198,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5819,
-      "risque": 0.0101,
-      "retenus": 199,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5848,
-      "risque": 0.01,
-      "retenus": 200,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.5936,
-      "risque": 0.0099,
-      "retenus": 203,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9593,
-      "couverture": 0.5965,
-      "risque": 0.0098,
-      "retenus": 204,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.959,
-      "couverture": 0.5994,
-      "risque": 0.0098,
-      "retenus": 205,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9583,
-      "couverture": 0.6023,
-      "risque": 0.0097,
-      "retenus": 206,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9578,
-      "couverture": 0.6082,
-      "risque": 0.0096,
-      "retenus": 208,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9571,
-      "couverture": 0.6111,
-      "risque": 0.0096,
-      "retenus": 209,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.6316,
-      "risque": 0.0093,
-      "retenus": 216,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9538,
-      "couverture": 0.6374,
-      "risque": 0.0092,
-      "retenus": 218,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6433,
-      "risque": 0.0091,
-      "retenus": 220,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6491,
-      "risque": 0.009,
-      "retenus": 222,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9481,
-      "couverture": 0.652,
-      "risque": 0.009,
-      "retenus": 223,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9464,
-      "couverture": 0.655,
-      "risque": 0.0089,
-      "retenus": 224,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9449,
-      "couverture": 0.6579,
-      "risque": 0.0089,
-      "retenus": 225,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.6667,
-      "risque": 0.0132,
-      "retenus": 228,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9417,
-      "couverture": 0.6725,
-      "risque": 0.013,
-      "retenus": 230,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9396,
-      "couverture": 0.6754,
-      "risque": 0.013,
-      "retenus": 231,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9381,
-      "couverture": 0.6784,
-      "risque": 0.0129,
-      "retenus": 232,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9375,
-      "couverture": 0.6813,
-      "risque": 0.0129,
-      "retenus": 233,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.6988,
-      "risque": 0.0167,
-      "retenus": 239,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.7018,
-      "risque": 0.0167,
-      "retenus": 240,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9301,
-      "couverture": 0.7047,
-      "risque": 0.0166,
-      "retenus": 241,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9265,
-      "couverture": 0.7076,
-      "risque": 0.0165,
-      "retenus": 242,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.925,
-      "couverture": 0.7105,
-      "risque": 0.0165,
-      "retenus": 243,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9238,
-      "couverture": 0.7164,
-      "risque": 0.0204,
-      "retenus": 245,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7222,
-      "risque": 0.0202,
-      "retenus": 247,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.9196,
-      "couverture": 0.7251,
-      "risque": 0.0202,
-      "retenus": 248,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.9134,
-      "couverture": 0.7281,
-      "risque": 0.0201,
-      "retenus": 249,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.911,
-      "couverture": 0.731,
-      "risque": 0.02,
-      "retenus": 250,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.9,
-      "couverture": 0.7368,
-      "risque": 0.0198,
-      "retenus": 252,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.8958,
-      "couverture": 0.7398,
-      "risque": 0.0198,
-      "retenus": 253,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.8844,
-      "couverture": 0.7427,
-      "risque": 0.0236,
-      "retenus": 254,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.8821,
-      "couverture": 0.7456,
-      "risque": 0.0235,
-      "retenus": 255,
-      "pertes": 6
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
      }
+    ]
+   },
+   {
+    "case_id": "ER-03196",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Autoobanden",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-20-3-1",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-20-3-1"
     ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.7456,
-     "risque": 0.0235,
-     "retenus": 255,
-     "pertes": 6
-    },
-    "c": {
-     "seuil": 0.859649,
-     "couverture": 0.7456,
-     "risque": 0.0235,
-     "retenus": 255,
-     "pertes": 6
-    }
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "autoobanden"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9818181818181818,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "autobanden",
+       "auto bernard",
+       "auto bonnet"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "autobanden"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-20-3-1"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "case_id": "ER-03397",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Bremsbaacken",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-1-11",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-1-11"
+    ],
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "bremsbaacken"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9833333333333333,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "bremsbacken"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "bremsbacken"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-1-11"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "case_id": "ER-03476",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "CV Joinnts",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-19-11",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-19-11"
+    ],
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "cv joinnt"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9777777777777777,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "cv joint"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "cv joint"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-19-11"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "case_id": "ER-03494",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Capteurs de vitsese",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-16-5",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-16-5"
+    ],
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "capteur vitsese"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9866666666666667,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "capteur vitesse",
+       "compteur vitesse",
+       "capteur pression",
+       "capteur pluie"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "capteur vitesse"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-16-5"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "case_id": "ER-03532",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Cnduites d'embrayage",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-19-17",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-19-17"
+    ],
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "cnduite embrayage"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9833333333333334,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "conduite embrayage"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "conduite embrayage"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-19-17"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "case_id": "ER-03659",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Druwksensoren",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-16-4",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-16-4"
+    ],
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "druwksensoren"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9820512820512821,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "druksensoren",
+       "drucksensoren",
+       "oldrucksensoren"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "druksensoren",
+       "drucksensoren"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-16-4"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "case_id": "ER-03800",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Fitres d'habitacle",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "mecanova:cat:filtre-habitacle",
+    "statut": "resolved",
+    "ids": [
+     "mecanova:cat:filtre-habitacle"
+    ],
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "fitre habitacle"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9833333333333333,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "filtre habitacle"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "filtre habitacle"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "mecanova:cat:filtre-habitacle"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "case_id": "ER-03801",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Fixaions et écrous antivol pour roues",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-20-4-2",
+    "statut": "resolved",
+    "ids": [
+     "piece:cat:vp-1-4-20-4-2"
+    ],
+    "note": "correct",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "fixaion ecrou antivol pour roue"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.99375,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "fixation ecrou antivol pour roue"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "fixation ecrou antivol pour roue"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "piece:cat:vp-1-4-20-4-2"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
    }
-  },
-  "localite_postale": {
-   "n_cas": 92,
-   "calibration": {
-    "fuzzy": "desactive",
-    "n_cas": 216,
-    "n_retenables": 155,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
-   },
-   "dangereuse": {
-    "points": [
+  ],
+  "n_rattrapes_c": 31,
+  "perdus_c": [
+   {
+    "case_id": "ER-03077",
+    "famille": "geographie",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Aalbuurg",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "geo:ville:NL-2760144",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
      {
-      "seuil": 0.9931,
-      "couverture": 0.0109,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
+      "etape": "normalisation",
+      "norm": "aalbuurg"
      },
      {
-      "seuil": 0.9905,
-      "couverture": 0.0217,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
+      "etape": "exact",
+      "trouves": 0
      },
      {
-      "seuil": 0.9895,
-      "couverture": 0.0326,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9889,
-      "couverture": 0.0435,
-      "risque": 0.0,
-      "retenus": 4,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.0652,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9854,
-      "couverture": 0.0761,
-      "risque": 0.0,
-      "retenus": 7,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.087,
-      "risque": 0.0,
-      "retenus": 8,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9844,
-      "couverture": 0.0978,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.1304,
-      "risque": 0.0,
-      "retenus": 12,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9818,
-      "couverture": 0.163,
-      "risque": 0.0,
-      "retenus": 15,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.2174,
-      "risque": 0.0,
-      "retenus": 20,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.2283,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.2391,
-      "risque": 0.0,
-      "retenus": 22,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.3261,
-      "risque": 0.0,
-      "retenus": 30,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9769,
-      "couverture": 0.337,
-      "risque": 0.0,
-      "retenus": 31,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.3913,
-      "risque": 0.0,
-      "retenus": 36,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.4239,
-      "risque": 0.0,
-      "retenus": 39,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9704,
-      "couverture": 0.4457,
-      "risque": 0.0,
-      "retenus": 41,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9673,
-      "couverture": 0.4565,
-      "risque": 0.0,
-      "retenus": 42,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.4891,
-      "risque": 0.0,
-      "retenus": 45,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.5,
-      "risque": 0.0,
-      "retenus": 46,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.5109,
-      "risque": 0.0,
-      "retenus": 47,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5217,
-      "risque": 0.0,
-      "retenus": 48,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.5435,
-      "risque": 0.0,
-      "retenus": 50,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9515,
-      "couverture": 0.5543,
-      "risque": 0.0,
-      "retenus": 51,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.5978,
-      "risque": 0.0,
-      "retenus": 55,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6087,
-      "risque": 0.0,
-      "retenus": 56,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.947,
-      "couverture": 0.6196,
-      "risque": 0.0,
-      "retenus": 57,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9467,
-      "couverture": 0.6304,
-      "risque": 0.0,
-      "retenus": 58,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9455,
-      "couverture": 0.6413,
-      "risque": 0.0,
-      "retenus": 59,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.6522,
-      "risque": 0.0,
-      "retenus": 60,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9417,
-      "couverture": 0.663,
-      "risque": 0.0,
-      "retenus": 61,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.6848,
-      "risque": 0.0,
-      "retenus": 63,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9278,
-      "couverture": 0.6957,
-      "risque": 0.0,
-      "retenus": 64,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9238,
-      "couverture": 0.7065,
-      "risque": 0.0,
-      "retenus": 65,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7174,
-      "risque": 0.0,
-      "retenus": 66,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.919,
-      "couverture": 0.7283,
-      "risque": 0.0,
-      "retenus": 67,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9143,
-      "couverture": 0.7391,
-      "risque": 0.0,
-      "retenus": 68,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9074,
-      "couverture": 0.75,
-      "risque": 0.0,
-      "retenus": 69,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9042,
-      "couverture": 0.7609,
-      "risque": 0.0,
-      "retenus": 70,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9013,
-      "couverture": 0.7717,
-      "risque": 0.0,
-      "retenus": 71,
-      "pertes": 0
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.975,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "aalburg",
+       "albur",
+       "albjurg"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille geographie (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
      }
     ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.7717,
-     "risque": 0.0,
-     "retenus": 71,
-     "pertes": 0
-    },
-    "c": null
+    "raison": "famille geographie désactivée (risque)",
+    "b_ids": [
+     "geo:ville:NL-2760144"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.975
    },
-   "non_sure": {
-    "points": [
+   {
+    "case_id": "ER-03214",
+    "famille": "marques",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "BENTLEEY",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "veh:marque:bentley",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
      {
-      "seuil": 0.9931,
-      "couverture": 0.0109,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
+      "etape": "normalisation",
+      "norm": "bentleey"
      },
      {
-      "seuil": 0.9905,
-      "couverture": 0.0217,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
+      "etape": "exact",
+      "trouves": 0
      },
      {
-      "seuil": 0.9895,
-      "couverture": 0.0326,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9889,
-      "couverture": 0.0435,
-      "risque": 0.0,
-      "retenus": 4,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.0652,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9854,
-      "couverture": 0.0761,
-      "risque": 0.0,
-      "retenus": 7,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.087,
-      "risque": 0.0,
-      "retenus": 8,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9844,
-      "couverture": 0.0978,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.1304,
-      "risque": 0.0,
-      "retenus": 12,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9818,
-      "couverture": 0.163,
-      "risque": 0.0,
-      "retenus": 15,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.2174,
-      "risque": 0.0,
-      "retenus": 20,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.2283,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.2391,
-      "risque": 0.0,
-      "retenus": 22,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.3261,
-      "risque": 0.0,
-      "retenus": 30,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9769,
-      "couverture": 0.337,
-      "risque": 0.0,
-      "retenus": 31,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.3913,
-      "risque": 0.0,
-      "retenus": 36,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.4239,
-      "risque": 0.0,
-      "retenus": 39,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9704,
-      "couverture": 0.4457,
-      "risque": 0.0,
-      "retenus": 41,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9673,
-      "couverture": 0.4565,
-      "risque": 0.0,
-      "retenus": 42,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.4891,
-      "risque": 0.0222,
-      "retenus": 45,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.5,
-      "risque": 0.0217,
-      "retenus": 46,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.5109,
-      "risque": 0.0213,
-      "retenus": 47,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5217,
-      "risque": 0.0417,
-      "retenus": 48,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.5435,
-      "risque": 0.04,
-      "retenus": 50,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9515,
-      "couverture": 0.5543,
-      "risque": 0.0392,
-      "retenus": 51,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.5978,
-      "risque": 0.0727,
-      "retenus": 55,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6087,
-      "risque": 0.0714,
-      "retenus": 56,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.947,
-      "couverture": 0.6196,
-      "risque": 0.0702,
-      "retenus": 57,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9467,
-      "couverture": 0.6304,
-      "risque": 0.069,
-      "retenus": 58,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9455,
-      "couverture": 0.6413,
-      "risque": 0.0678,
-      "retenus": 59,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.6522,
-      "risque": 0.0833,
-      "retenus": 60,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.9417,
-      "couverture": 0.663,
-      "risque": 0.082,
-      "retenus": 61,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.6848,
-      "risque": 0.0952,
-      "retenus": 63,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.9278,
-      "couverture": 0.6957,
-      "risque": 0.0938,
-      "retenus": 64,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.9238,
-      "couverture": 0.7065,
-      "risque": 0.0923,
-      "retenus": 65,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7174,
-      "risque": 0.0909,
-      "retenus": 66,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.919,
-      "couverture": 0.7283,
-      "risque": 0.0896,
-      "retenus": 67,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.9143,
-      "couverture": 0.7391,
-      "risque": 0.0882,
-      "retenus": 68,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.9074,
-      "couverture": 0.75,
-      "risque": 0.087,
-      "retenus": 69,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.9042,
-      "couverture": 0.7609,
-      "risque": 0.0857,
-      "retenus": 70,
-      "pertes": 6
-     },
-     {
-      "seuil": 0.9013,
-      "couverture": 0.7717,
-      "risque": 0.0845,
-      "retenus": 71,
-      "pertes": 6
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.975,
+      "type": "marque_vehicule",
+      "famille": "marques",
+      "meilleurs": [
+       "bentley",
+       "beetle"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille marques (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
      }
     ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.7717,
-     "risque": 0.0845,
-     "retenus": 71,
-     "pertes": 6
-    },
-    "c": null
+    "raison": "famille marques désactivée (volume)",
+    "b_ids": [
+     "veh:marque:bentley"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.975
+   },
+   {
+    "case_id": "ER-03418",
+    "famille": "mixte",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Bruksli",
+    "hint": "",
+    "attendu": "ambiguous",
+    "attendus": "geo:commune:BE-21004|mecanova:site:agence-bruxelle",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "bruksli"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.975,
+      "type": "commune",
+      "famille": "geographie",
+      "meilleurs": [
+       "brukseli",
+       "bruksel",
+       "bruksela",
+       "brukselo",
+       "brueksel"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille geographie (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
+     }
+    ],
+    "raison": "famille geographie désactivée (risque)",
+    "b_ids": [
+     "geo:commune:BE-21004",
+     "mecanova:site:agence-bruxelle"
+    ],
+    "b_statut": "ambiguous",
+    "kappa": 0.975
+   },
+   {
+    "case_id": "ER-03079",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Aanhangwagevkoppelingen",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-18-6",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "aanhangwagevkoppelingen"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.9371541501976285,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "aanhangwagenkoppelingen",
+       "aanhangwagenlichten",
+       "aanhangwagenremmen",
+       "aanhangwagenbedrading"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "raison": "meilleur nom à 0.937, sous le seuil 0.97"
+     }
+    ],
+    "raison": "κ sous θ pieces = 0.97 (B accepte dès 0,88)",
+    "b_ids": [
+     "piece:cat:vp-1-4-18-6"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.9372
+   },
+   {
+    "case_id": "ER-03045",
+    "famille": "vehicules",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "225E XDRIVE ACTIVE TOUURER",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "veh:modele:bmw-225e-xdrive-active-tourer",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "225e xdrive active touurer"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.9923076923076923,
+      "type": "modele_vehicule",
+      "famille": "vehicules",
+      "meilleurs": [
+       "225e xdrive active tourer",
+       "bmw 225e xdrive active tourer"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille vehicules (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
+     }
+    ],
+    "raison": "famille vehicules désactivée (risque)",
+    "b_ids": [
+     "veh:modele:bmw-225e-xdrive-active-tourer"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.9923
+   },
+   {
+    "case_id": "ER-03722",
+    "famille": "vocabulaire_metier",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Entrrepôt central",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "mecanova:site:entrepot-central",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "entrrepot central"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.9882352941176471,
+      "type": "site",
+      "famille": "vocabulaire_metier",
+      "meilleurs": [
+       "entrepot central",
+       "entrepot"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille vocabulaire_metier (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
+     }
+    ],
+    "raison": "famille vocabulaire_metier désactivée (volume)",
+    "b_ids": [
+     "mecanova:site:entrepot-central"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.9882
+   },
+   {
+    "case_id": "ER-03086",
+    "famille": "geographie",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Abskkon",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "geo:ville:FR-3038731",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "abskkon"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.9714285714285714,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "abskon",
+       "abscon"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille geographie (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
+     }
+    ],
+    "raison": "famille geographie désactivée (risque)",
+    "b_ids": [
+     "geo:ville:FR-3038731"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.9714
+   },
+   {
+    "case_id": "ER-05382",
+    "famille": "marques",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "TOYYOTA",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "veh:marque:toyota",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "toyyota"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.9666666666666667,
+      "type": "marque_vehicule",
+      "famille": "marques",
+      "meilleurs": [
+       "toyota"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille marques (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
+     }
+    ],
+    "raison": "famille marques désactivée (volume)",
+    "b_ids": [
+     "veh:marque:toyota"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.9667
+   },
+   {
+    "case_id": "ER-03425",
+    "famille": "mixte",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Bruxelkes",
+    "hint": "",
+    "attendu": "ambiguous",
+    "attendus": "geo:commune:BE-21004|mecanova:site:agence-bruxelle",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "bruxelke"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.95,
+      "type": "commune",
+      "famille": "geographie",
+      "meilleurs": [
+       "bruxel",
+       "bruxelle",
+       "bruxellae",
+       "bruxela",
+       "brueksel"
+      ],
+      "decisive": true,
+      "raison": "approché désactivé pour la famille geographie (seuils calibrés (1 familles actives sur 8, seuils_fuzzy.yaml))"
+     }
+    ],
+    "raison": "famille geographie désactivée (risque)",
+    "b_ids": [
+     "geo:commune:BE-21004",
+     "mecanova:site:agence-bruxelle"
+    ],
+    "b_statut": "ambiguous",
+    "kappa": 0.95
+   },
+   {
+    "case_id": "ER-03129",
+    "famille": "pieces",
+    "categorie": "C07_faute_de_frappe",
+    "texte": "Alternztors",
+    "hint": "",
+    "attendu": "resolved",
+    "attendus": "piece:cat:vp-1-4-14-1",
+    "statut": "unknown",
+    "ids": [],
+    "note": "acceptable",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "alternztor"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "absent",
+      "regle": "R-RES-03",
+      "score": 0.96,
+      "type": "categorie_piece",
+      "famille": "pieces",
+      "meilleurs": [
+       "alternator",
+       "alterno",
+       "alternateur",
+       "alter",
+       "alternator part"
+      ],
+      "seuil": 0.97,
+      "ecart": 0.03,
+      "decisive": true,
+      "raison": "meilleur nom à 0.960, sous le seuil 0.97"
+     }
+    ],
+    "raison": "κ sous θ pieces = 0.97 (B accepte dès 0,88)",
+    "b_ids": [
+     "piece:cat:vp-1-4-14-1"
+    ],
+    "b_statut": "resolved",
+    "kappa": 0.96
    }
-  },
-  "commune": {
-   "n_cas": 57,
-   "calibration": {
-    "fuzzy": "desactive",
-    "n_cas": 147,
-    "n_retenables": 132,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
-   },
-   "dangereuse": {
-    "points": [
-     {
-      "seuil": 0.9846,
-      "couverture": 0.0175,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.0351,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9818,
-      "couverture": 0.0702,
-      "risque": 0.0,
-      "retenus": 4,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9806,
-      "couverture": 0.0877,
-      "risque": 0.0,
-      "retenus": 5,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.1404,
-      "risque": 0.0,
-      "retenus": 8,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.1579,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.2456,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9767,
-      "couverture": 0.2632,
-      "risque": 0.0,
-      "retenus": 15,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.2807,
-      "risque": 0.0,
-      "retenus": 16,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9733,
-      "couverture": 0.2982,
-      "risque": 0.0,
-      "retenus": 17,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.3333,
-      "risque": 0.0,
-      "retenus": 19,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9708,
-      "couverture": 0.3509,
-      "risque": 0.0,
-      "retenus": 20,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9704,
-      "couverture": 0.3684,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.4211,
-      "risque": 0.0,
-      "retenus": 24,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.4386,
-      "risque": 0.0,
-      "retenus": 25,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.4561,
-      "risque": 0.0,
-      "retenus": 26,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.4737,
-      "risque": 0.0,
-      "retenus": 27,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.5614,
-      "risque": 0.0,
-      "retenus": 32,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9528,
-      "couverture": 0.5789,
-      "risque": 0.0,
-      "retenus": 33,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.614,
-      "risque": 0.0286,
-      "retenus": 35,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6316,
-      "risque": 0.0278,
-      "retenus": 36,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9487,
-      "couverture": 0.6491,
-      "risque": 0.027,
-      "retenus": 37,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.6667,
-      "risque": 0.0263,
-      "retenus": 38,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9417,
-      "couverture": 0.6842,
-      "risque": 0.0256,
-      "retenus": 39,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.7193,
-      "risque": 0.0244,
-      "retenus": 41,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9237,
-      "couverture": 0.7368,
-      "risque": 0.0238,
-      "retenus": 42,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7895,
-      "risque": 0.0222,
-      "retenus": 45,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9175,
-      "couverture": 0.807,
-      "risque": 0.0217,
-      "retenus": 46,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9067,
-      "couverture": 0.8246,
-      "risque": 0.0213,
-      "retenus": 47,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.8788,
-      "couverture": 0.8421,
-      "risque": 0.0208,
-      "retenus": 48,
-      "pertes": 1
-     }
+  ],
+  "silencieuses": [
+   {
+    "config": "B−",
+    "case_id": "ER-05793",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Arbusigny",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3029477"
     ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.8246,
-     "risque": 0.0213,
-     "retenus": 47,
-     "pertes": 1
-    },
-    "c": null
-   },
-   "non_sure": {
-    "points": [
+    "note": "erreur_silencieuse",
+    "trace": [
      {
-      "seuil": 0.9846,
-      "couverture": 0.0175,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
+      "etape": "normalisation",
+      "norm": "arbusigny"
      },
      {
-      "seuil": 0.9833,
-      "couverture": 0.0351,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
+      "etape": "exact",
+      "trouves": 0
      },
      {
-      "seuil": 0.9818,
-      "couverture": 0.0702,
-      "risque": 0.0,
-      "retenus": 4,
-      "pertes": 0
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9259259259259259,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "busigny",
+       "aubigny",
+       "buigny",
+       "lusigny",
+       "marigny"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "busigny"
+      ],
+      "trouves": 1
      },
      {
-      "seuil": 0.9806,
-      "couverture": 0.0877,
-      "risque": 0.0,
-      "retenus": 5,
-      "pertes": 0
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3029477"
+      ]
      },
      {
-      "seuil": 0.98,
-      "couverture": 0.1404,
-      "risque": 0.0,
-      "retenus": 8,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.1579,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.2456,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9767,
-      "couverture": 0.2632,
-      "risque": 0.0,
-      "retenus": 15,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.2807,
-      "risque": 0.0,
-      "retenus": 16,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9733,
-      "couverture": 0.2982,
-      "risque": 0.0,
-      "retenus": 17,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.3333,
-      "risque": 0.0526,
-      "retenus": 19,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9708,
-      "couverture": 0.3509,
-      "risque": 0.05,
-      "retenus": 20,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9704,
-      "couverture": 0.3684,
-      "risque": 0.0476,
-      "retenus": 21,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.4211,
-      "risque": 0.0417,
-      "retenus": 24,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.4386,
-      "risque": 0.04,
-      "retenus": 25,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.4561,
-      "risque": 0.0385,
-      "retenus": 26,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.4737,
-      "risque": 0.037,
-      "retenus": 27,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.5614,
-      "risque": 0.0312,
-      "retenus": 32,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9528,
-      "couverture": 0.5789,
-      "risque": 0.0303,
-      "retenus": 33,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.614,
-      "risque": 0.0571,
-      "retenus": 35,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.6316,
-      "risque": 0.0556,
-      "retenus": 36,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9487,
-      "couverture": 0.6491,
-      "risque": 0.0541,
-      "retenus": 37,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.6667,
-      "risque": 0.0526,
-      "retenus": 38,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9417,
-      "couverture": 0.6842,
-      "risque": 0.0513,
-      "retenus": 39,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.7193,
-      "risque": 0.0732,
-      "retenus": 41,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9237,
-      "couverture": 0.7368,
-      "risque": 0.0714,
-      "retenus": 42,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7895,
-      "risque": 0.0667,
-      "retenus": 45,
-      "pertes": 3
-     },
-     {
-      "seuil": 0.9175,
-      "couverture": 0.807,
-      "risque": 0.087,
-      "retenus": 46,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9067,
-      "couverture": 0.8246,
-      "risque": 0.1064,
-      "retenus": 47,
-      "pertes": 5
-     },
-     {
-      "seuil": 0.8788,
-      "couverture": 0.8421,
-      "risque": 0.125,
-      "retenus": 48,
-      "pertes": 6
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
      }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05809",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Beauvoisin",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3033962"
     ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.8246,
-     "risque": 0.1064,
-     "retenus": 47,
-     "pertes": 5
-    },
-    "c": null
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "beauvoisin"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9400000000000001,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "beauvoi",
+       "beauvoi cambresi",
+       "beauvai",
+       "bauvin",
+       "beaurevoir"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "beauvoi"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3033962"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05827",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Bizanet",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:localite:BE-7783-bizet"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "bizanet"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9333333333333333,
+      "type": "localite_postale",
+      "famille": "geographie",
+      "meilleurs": [
+       "bizet",
+       "bivange",
+       "nef brizak"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "bizet"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:localite:BE-7783-bizet"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05844",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Breteil",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3030276"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "breteil"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.975,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "breteuil",
+       "retel",
+       "bree",
+       "breuil",
+       "viler bretonneu"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "breteuil"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3030276"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05862",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Chalon-sur-Saône",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3027487"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "chalon sur saone"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.95,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "chalon sur marne",
+       "chatillon sur marne",
+       "chatillon sur marna",
+       "chalon",
+       "calonne sur lys"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "chalon sur marne"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3027487"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05869",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Charpont",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3026553"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "charpont"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.95,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "charmont",
+       "carlepont",
+       "capot",
+       "champion",
+       "champlon"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "charmont"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3026553"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05885",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Coubron",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3022770"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "coubron"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9333333333333333,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "couvron",
+       "corbion",
+       "couvrot",
+       "couargnon",
+       "fouron"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "couvron"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3022770"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05916",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Eymoutiers",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2991320"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "eymoutier"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9259259259259259,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "moutier",
+       "moustier",
+       "moyenmoutier",
+       "mortier"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "moutier"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2991320"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05920",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Flachslanden",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3018358"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "flachslanden"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9398989898989898,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "flakslanden",
+       "flaxlanden",
+       "lalande"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "flakslanden",
+       "flaxlanden"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3018358"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05936",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Gesvres",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:commune:BE-92054"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "gesvre"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9666666666666667,
+      "type": "mixte",
+      "famille": "geographie",
+      "meilleurs": [
+       "gesve",
+       "desvre",
+       "gasveren"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "gesve"
+      ],
+      "trouves": 2
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:commune:BE-92054",
+       "geo:localite:BE-5340-gesve"
+      ]
+     },
+     {
+      "etape": "regle",
+      "regle": "R-GEO-02",
+      "action": "retire",
+      "id": "geo:localite:BE-5340-gesve"
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05938",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Glomel",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:commune:BE-72020"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "glomel"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9444444444444445,
+      "type": "commune",
+      "famille": "geographie",
+      "meilleurs": [
+       "lomel",
+       "lomeli",
+       "lommel",
+       "glime",
+       "goe"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "lomel"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:commune:BE-72020"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05966",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Hochstätten",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3013248"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "hochstatten"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9636363636363636,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "hochstatt"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "hochstatt"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3013248"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-05997",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "La Genevraye",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3016290"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "genevraye"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9222222222222222,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "genvry",
+       "genderen",
+       "genval",
+       "geer",
+       "genen"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "genvry"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3016290"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06032",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Lesches",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3019810"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "lesche"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9444444444444445,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "esche",
+       "pesche",
+       "esch",
+       "lesve",
+       "eischen"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "esche"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3019810"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06035",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Lijnden",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:localite:BE-3210-linden"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "lijnden"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9619047619047619,
+      "type": "localite_postale",
+      "famille": "geographie",
+      "meilleurs": [
+       "linden",
+       "lidje",
+       "gelinden",
+       "vijanden",
+       "lijeven"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "linden"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:localite:BE-3210-linden"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06047",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Lügde",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2997190"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "lugde"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9466666666666665,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "lude",
+       "ludre"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "lude"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2997190"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06056",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Mansac",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2996158"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "mansac"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.95,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "manspach",
+       "marnach",
+       "mance"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "manspach"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2996158"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06061",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Marcilly-sur-Vienne",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2995941"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "marcilly sur vienne"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9560715514275886,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "marcilly sur seine",
+       "marcilly"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "marcilly sur seine"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2995941"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06079",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Modane",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:commune:BE-61041"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "modane"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9333333333333333,
+      "type": "mixte",
+      "famille": "geographie",
+      "meilleurs": [
+       "modave",
+       "mane",
+       "modav",
+       "mon",
+       "monte"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "modave"
+      ],
+      "trouves": 2
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:commune:BE-61041",
+       "geo:localite:BE-4577-modave"
+      ]
+     },
+     {
+      "etape": "regle",
+      "regle": "R-GEO-02",
+      "action": "retire",
+      "id": "geo:localite:BE-4577-modave"
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06087",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Montaudin",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2992983"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "montaudin"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9555555555555556,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "montaulin",
+       "montaigu",
+       "mont",
+       "montagne",
+       "montagny"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "montaulin"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2992983"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06092",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Montfoort",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:NL-2750624"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "montfoort"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9777777777777777,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "montfort",
+       "moutfort",
+       "montdor",
+       "montcornet",
+       "mont"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "montfort"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:NL-2750624"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06098",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Mosbach",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2991716"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "mosbach"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9666666666666667,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "morsbach",
+       "musbach",
+       "munsbach",
+       "moosch",
+       "osenbach"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "morsbach"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2991716"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06109",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Neuhausen",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2990676"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "neuhausen"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9274074074074075,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "neunhauser",
+       "kutzenhausen",
+       "muelhausen",
+       "sundhausen",
+       "mulhausen"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "neunhauser"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2990676"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06118",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Odenbach",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2989145"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "odenbach"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9249999999999999,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "osenbach",
+       "oudenbosch",
+       "odengan",
+       "durrenbach",
+       "dieffenbach"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "osenbach"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2989145"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06136",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Pontcarré",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2986300"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "pontcarre"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9305555555555555,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "pontarme",
+       "pont",
+       "pontfaverger",
+       "pont marck",
+       "pont marcq"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "pontarme"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2986300"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06145",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Reichersbeuern",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2983648"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "reichersbeuern"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9404761904761905,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "reichersberg",
+       "reichenweier"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "reichersberg"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2983648"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06152",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Rogerville",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:localite:BE-4950-robertville"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "rogerville"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9248484848484849,
+      "type": "localite_postale",
+      "famille": "geographie",
+      "meilleurs": [
+       "robertville",
+       "gondreville",
+       "dogneville",
+       "longeville",
+       "mogneville"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "robertville"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:localite:BE-4950-robertville"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06168",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Saint-Barnabé",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2980746"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "saint barnabe"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9525641025641025,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "sainte barbe",
+       "saint andre",
+       "saint nabor",
+       "saint brice",
+       "saint parre"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "sainte barbe"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2980746"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06288",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Solingen",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:commune:LU-2960198"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "solingen"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9583333333333334,
+      "type": "commune",
+      "famille": "geographie",
+      "meilleurs": [
+       "olingen",
+       "solgne",
+       "songeon",
+       "goblingen",
+       "holvingen"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "olingen"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:commune:LU-2960198"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06300",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Surberg",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2973686"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "surberg"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9428571428571428,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "surburg",
+       "surbourg",
+       "surburi",
+       "suerburi"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "surburg",
+       "surbourg"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2973686"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06309",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Thune",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-2972655"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "thune"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.96,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "thun",
+       "thuin",
+       "bethune",
+       "thine",
+       "thyne"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "thun"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-2972655"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06338",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Wachenheim",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3038715"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "wachenheim"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9666666666666667,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "achenheim",
+       "schwenheim"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "achenheim"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3038715"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06342",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Waldems",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:localite:BE-2800-walem"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "waldem"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9611111111111111,
+      "type": "localite_postale",
+      "famille": "geographie",
+      "meilleurs": [
+       "walem",
+       "waldbredimu",
+       "walheim"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "walem"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:localite:BE-2800-walem"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06358",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Wolde",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:NL-2744227"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "wolde"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9666666666666667,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "wolder",
+       "wolixe",
+       "wolwen"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "wolder"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:NL-2744227"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06360",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Workum",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:NL-2744156"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "workum"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9619047619047619,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "woerkum"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "woerkum"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:NL-2744156"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "config": "B−",
+    "case_id": "ER-06369",
+    "famille": "sans_entite",
+    "categorie": "C08_hors_perimetre_proche",
+    "texte": "Étrelles",
+    "hint": "",
+    "attendu": "unknown",
+    "attendus": "",
+    "statut": "resolved",
+    "ids": [
+     "geo:ville:FR-3019369"
+    ],
+    "note": "erreur_silencieuse",
+    "trace": [
+     {
+      "etape": "normalisation",
+      "norm": "etrelle"
+     },
+     {
+      "etape": "exact",
+      "trouves": 0
+     },
+     {
+      "etape": "approche",
+      "regle": "R-RES-03",
+      "score": 0.9555555555555556,
+      "type": "ville",
+      "famille": "geographie",
+      "meilleurs": [
+       "etreiller",
+       "etreu",
+       "vermelle",
+       "estree"
+      ],
+      "seuil": 0.88,
+      "ecart": 0.03,
+      "decisive": true,
+      "noms": [
+       "etreiller"
+      ],
+      "trouves": 1
+     },
+     {
+      "etape": "candidats_bruts",
+      "ids": [
+       "geo:ville:FR-3019369"
+      ]
+     },
+     {
+      "etape": "statut",
+      "statut": "resolved",
+      "n": 1
+     }
+    ]
    }
-  },
-  "categorie_piece": {
-   "n_cas": 49,
-   "calibration": {
-    "fuzzy": "desactive",
-    "n_cas": 102,
-    "n_retenables": 95,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "95 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "dangereuse": {
-    "points": [
-     {
-      "seuil": 0.9947,
-      "couverture": 0.0204,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9923,
-      "couverture": 0.0408,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.992,
-      "couverture": 0.0612,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9905,
-      "couverture": 0.0816,
-      "risque": 0.0,
-      "retenus": 4,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9889,
-      "couverture": 0.1224,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.1429,
-      "risque": 0.0,
-      "retenus": 7,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9867,
-      "couverture": 0.1837,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.986,
-      "couverture": 0.2041,
-      "risque": 0.0,
-      "retenus": 10,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.2245,
-      "risque": 0.0,
-      "retenus": 11,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9854,
-      "couverture": 0.2449,
-      "risque": 0.0,
-      "retenus": 12,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.2653,
-      "risque": 0.0,
-      "retenus": 13,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.2857,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.3265,
-      "risque": 0.0,
-      "retenus": 16,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9821,
-      "couverture": 0.3469,
-      "risque": 0.0,
-      "retenus": 17,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9818,
-      "couverture": 0.3673,
-      "risque": 0.0,
-      "retenus": 18,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.4082,
-      "risque": 0.0,
-      "retenus": 20,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9797,
-      "couverture": 0.4286,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9795,
-      "couverture": 0.449,
-      "risque": 0.0,
-      "retenus": 22,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.4694,
-      "risque": 0.0,
-      "retenus": 23,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9787,
-      "couverture": 0.4898,
-      "risque": 0.0,
-      "retenus": 24,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9786,
-      "couverture": 0.5102,
-      "risque": 0.0,
-      "retenus": 25,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.5306,
-      "risque": 0.0,
-      "retenus": 26,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.551,
-      "risque": 0.0,
-      "retenus": 27,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.5714,
-      "risque": 0.0,
-      "retenus": 28,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5918,
-      "risque": 0.0,
-      "retenus": 29,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.6122,
-      "risque": 0.0,
-      "retenus": 30,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.6327,
-      "risque": 0.0,
-      "retenus": 31,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.6531,
-      "risque": 0.0,
-      "retenus": 32,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9561,
-      "couverture": 0.6735,
-      "risque": 0.0,
-      "retenus": 33,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.6939,
-      "risque": 0.0,
-      "retenus": 34,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.955,
-      "couverture": 0.7143,
-      "risque": 0.0,
-      "retenus": 35,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9549,
-      "couverture": 0.7347,
-      "risque": 0.0,
-      "retenus": 36,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9528,
-      "couverture": 0.7551,
-      "risque": 0.0,
-      "retenus": 37,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9507,
-      "couverture": 0.7959,
-      "risque": 0.0,
-      "retenus": 39,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9483,
-      "couverture": 0.8163,
-      "risque": 0.0,
-      "retenus": 40,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9448,
-      "couverture": 0.8367,
-      "risque": 0.0,
-      "retenus": 41,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9441,
-      "couverture": 0.8571,
-      "risque": 0.0,
-      "retenus": 42,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9425,
-      "couverture": 0.8776,
-      "risque": 0.0,
-      "retenus": 43,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9372,
-      "couverture": 0.898,
-      "risque": 0.0,
-      "retenus": 44,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9346,
-      "couverture": 0.9184,
-      "risque": 0.0,
-      "retenus": 45,
-      "pertes": 0
-     }
-    ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.9184,
-     "risque": 0.0,
-     "retenus": 45,
-     "pertes": 0
-    },
-    "c": null
-   },
-   "non_sure": {
-    "points": [
-     {
-      "seuil": 0.9947,
-      "couverture": 0.0204,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9923,
-      "couverture": 0.0408,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.992,
-      "couverture": 0.0612,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9905,
-      "couverture": 0.0816,
-      "risque": 0.0,
-      "retenus": 4,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9889,
-      "couverture": 0.1224,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.1429,
-      "risque": 0.0,
-      "retenus": 7,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9867,
-      "couverture": 0.1837,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.986,
-      "couverture": 0.2041,
-      "risque": 0.0,
-      "retenus": 10,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.2245,
-      "risque": 0.0,
-      "retenus": 11,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9854,
-      "couverture": 0.2449,
-      "risque": 0.0,
-      "retenus": 12,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.2653,
-      "risque": 0.0,
-      "retenus": 13,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.2857,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.3265,
-      "risque": 0.0,
-      "retenus": 16,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9821,
-      "couverture": 0.3469,
-      "risque": 0.0,
-      "retenus": 17,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9818,
-      "couverture": 0.3673,
-      "risque": 0.0,
-      "retenus": 18,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.4082,
-      "risque": 0.0,
-      "retenus": 20,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9797,
-      "couverture": 0.4286,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9795,
-      "couverture": 0.449,
-      "risque": 0.0,
-      "retenus": 22,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.4694,
-      "risque": 0.0,
-      "retenus": 23,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9787,
-      "couverture": 0.4898,
-      "risque": 0.0,
-      "retenus": 24,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9786,
-      "couverture": 0.5102,
-      "risque": 0.0,
-      "retenus": 25,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9784,
-      "couverture": 0.5306,
-      "risque": 0.0,
-      "retenus": 26,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.551,
-      "risque": 0.0,
-      "retenus": 27,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.5714,
-      "risque": 0.0,
-      "retenus": 28,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5918,
-      "risque": 0.0,
-      "retenus": 29,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.6122,
-      "risque": 0.0,
-      "retenus": 30,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9636,
-      "couverture": 0.6327,
-      "risque": 0.0,
-      "retenus": 31,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.6531,
-      "risque": 0.0,
-      "retenus": 32,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9561,
-      "couverture": 0.6735,
-      "risque": 0.0,
-      "retenus": 33,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.6939,
-      "risque": 0.0,
-      "retenus": 34,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.955,
-      "couverture": 0.7143,
-      "risque": 0.0,
-      "retenus": 35,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9549,
-      "couverture": 0.7347,
-      "risque": 0.0,
-      "retenus": 36,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9528,
-      "couverture": 0.7551,
-      "risque": 0.0,
-      "retenus": 37,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9507,
-      "couverture": 0.7959,
-      "risque": 0.0,
-      "retenus": 39,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9483,
-      "couverture": 0.8163,
-      "risque": 0.0,
-      "retenus": 40,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9448,
-      "couverture": 0.8367,
-      "risque": 0.0,
-      "retenus": 41,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9441,
-      "couverture": 0.8571,
-      "risque": 0.0,
-      "retenus": 42,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9425,
-      "couverture": 0.8776,
-      "risque": 0.0233,
-      "retenus": 43,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9372,
-      "couverture": 0.898,
-      "risque": 0.0227,
-      "retenus": 44,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9346,
-      "couverture": 0.9184,
-      "risque": 0.0222,
-      "retenus": 45,
-      "pertes": 1
-     }
-    ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.9184,
-     "risque": 0.0222,
-     "retenus": 45,
-     "pertes": 1
-    },
-    "c": null
-   }
-  },
-  "mixte": {
-   "n_cas": 41,
-   "calibration": {
-    "fuzzy": "desactive",
-    "n_cas": 149,
-    "n_retenables": 127,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "aucun seuil ne garantit r* = 0.05 au niveau δ = 0.05"
-   },
-   "dangereuse": {
-    "points": [
-     {
-      "seuil": 0.9889,
-      "couverture": 0.0244,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.0488,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.0732,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.1463,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.1707,
-      "risque": 0.0,
-      "retenus": 7,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.2195,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.3415,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9741,
-      "couverture": 0.3659,
-      "risque": 0.0,
-      "retenus": 15,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.439,
-      "risque": 0.0,
-      "retenus": 18,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9708,
-      "couverture": 0.4634,
-      "risque": 0.0,
-      "retenus": 19,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5122,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.5366,
-      "risque": 0.0,
-      "retenus": 22,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9618,
-      "couverture": 0.5854,
-      "risque": 0.0,
-      "retenus": 24,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.6341,
-      "risque": 0.0,
-      "retenus": 26,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.6585,
-      "risque": 0.0,
-      "retenus": 27,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.7073,
-      "risque": 0.0,
-      "retenus": 29,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9515,
-      "couverture": 0.7317,
-      "risque": 0.0,
-      "retenus": 30,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9513,
-      "couverture": 0.7561,
-      "risque": 0.0,
-      "retenus": 31,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.7805,
-      "risque": 0.0,
-      "retenus": 32,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.8293,
-      "risque": 0.0,
-      "retenus": 34,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9143,
-      "couverture": 0.878,
-      "risque": 0.0,
-      "retenus": 36,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9074,
-      "couverture": 0.9024,
-      "risque": 0.0,
-      "retenus": 37,
-      "pertes": 0
-     }
-    ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.9024,
-     "risque": 0.0,
-     "retenus": 37,
-     "pertes": 0
-    },
-    "c": null
-   },
-   "non_sure": {
-    "points": [
-     {
-      "seuil": 0.9889,
-      "couverture": 0.0244,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.0488,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.0732,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.1463,
-      "risque": 0.0,
-      "retenus": 6,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.1707,
-      "risque": 0.0,
-      "retenus": 7,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9778,
-      "couverture": 0.2195,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.975,
-      "couverture": 0.3415,
-      "risque": 0.0714,
-      "retenus": 14,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9741,
-      "couverture": 0.3659,
-      "risque": 0.0667,
-      "retenus": 15,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9714,
-      "couverture": 0.439,
-      "risque": 0.0556,
-      "retenus": 18,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9708,
-      "couverture": 0.4634,
-      "risque": 0.0526,
-      "retenus": 19,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5122,
-      "risque": 0.0476,
-      "retenus": 21,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9619,
-      "couverture": 0.5366,
-      "risque": 0.0455,
-      "retenus": 22,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9618,
-      "couverture": 0.5854,
-      "risque": 0.0417,
-      "retenus": 24,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.6341,
-      "risque": 0.0385,
-      "retenus": 26,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.6585,
-      "risque": 0.037,
-      "retenus": 27,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.7073,
-      "risque": 0.0345,
-      "retenus": 29,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9515,
-      "couverture": 0.7317,
-      "risque": 0.0333,
-      "retenus": 30,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9513,
-      "couverture": 0.7561,
-      "risque": 0.0323,
-      "retenus": 31,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.7805,
-      "risque": 0.0312,
-      "retenus": 32,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9429,
-      "couverture": 0.8293,
-      "risque": 0.0588,
-      "retenus": 34,
-      "pertes": 2
-     },
-     {
-      "seuil": 0.9143,
-      "couverture": 0.878,
-      "risque": 0.1111,
-      "retenus": 36,
-      "pertes": 4
-     },
-     {
-      "seuil": 0.9074,
-      "couverture": 0.9024,
-      "risque": 0.1351,
-      "retenus": 37,
-      "pertes": 5
-     }
-    ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.9024,
-     "risque": 0.1351,
-     "retenus": 37,
-     "pertes": 5
-    },
-    "c": null
-   }
-  },
-  "modele_vehicule": {
-   "n_cas": 38,
-   "calibration": {
-    "fuzzy": "desactive",
-    "n_cas": 92,
-    "n_retenables": 76,
-    "empreinte_catalogue": "9af7156dd14d5dbc",
-    "raison": "76 cas retenables, il en faut au moins 97 pour r* = 0.05"
-   },
-   "dangereuse": {
-    "points": [
-     {
-      "seuil": 0.9931,
-      "couverture": 0.0263,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9923,
-      "couverture": 0.0526,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.0789,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9867,
-      "couverture": 0.2368,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9863,
-      "couverture": 0.2632,
-      "risque": 0.0,
-      "retenus": 10,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.3158,
-      "risque": 0.0,
-      "retenus": 12,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.3684,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.4211,
-      "risque": 0.0,
-      "retenus": 16,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9806,
-      "couverture": 0.4474,
-      "risque": 0.0,
-      "retenus": 17,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.4737,
-      "risque": 0.0,
-      "retenus": 18,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.5,
-      "risque": 0.0,
-      "retenus": 19,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9771,
-      "couverture": 0.5263,
-      "risque": 0.0,
-      "retenus": 20,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5526,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5789,
-      "risque": 0.0,
-      "retenus": 22,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.6053,
-      "risque": 0.0,
-      "retenus": 23,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9583,
-      "couverture": 0.6316,
-      "risque": 0.0,
-      "retenus": 24,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.6579,
-      "risque": 0.0,
-      "retenus": 25,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9515,
-      "couverture": 0.6842,
-      "risque": 0.0,
-      "retenus": 26,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.7105,
-      "risque": 0.0,
-      "retenus": 27,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.7368,
-      "risque": 0.0,
-      "retenus": 28,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7632,
-      "risque": 0.0,
-      "retenus": 29,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9155,
-      "couverture": 0.7895,
-      "risque": 0.0,
-      "retenus": 30,
-      "pertes": 0
-     }
-    ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.7895,
-     "risque": 0.0,
-     "retenus": 30,
-     "pertes": 0
-    },
-    "c": null
-   },
-   "non_sure": {
-    "points": [
-     {
-      "seuil": 0.9931,
-      "couverture": 0.0263,
-      "risque": 0.0,
-      "retenus": 1,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9923,
-      "couverture": 0.0526,
-      "risque": 0.0,
-      "retenus": 2,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9882,
-      "couverture": 0.0789,
-      "risque": 0.0,
-      "retenus": 3,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9867,
-      "couverture": 0.2368,
-      "risque": 0.0,
-      "retenus": 9,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9863,
-      "couverture": 0.2632,
-      "risque": 0.0,
-      "retenus": 10,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9857,
-      "couverture": 0.3158,
-      "risque": 0.0,
-      "retenus": 12,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9846,
-      "couverture": 0.3684,
-      "risque": 0.0,
-      "retenus": 14,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9833,
-      "couverture": 0.4211,
-      "risque": 0.0,
-      "retenus": 16,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9806,
-      "couverture": 0.4474,
-      "risque": 0.0,
-      "retenus": 17,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.98,
-      "couverture": 0.4737,
-      "risque": 0.0,
-      "retenus": 18,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9788,
-      "couverture": 0.5,
-      "risque": 0.0,
-      "retenus": 19,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9771,
-      "couverture": 0.5263,
-      "risque": 0.0,
-      "retenus": 20,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9667,
-      "couverture": 0.5526,
-      "risque": 0.0,
-      "retenus": 21,
-      "pertes": 0
-     },
-     {
-      "seuil": 0.9611,
-      "couverture": 0.5789,
-      "risque": 0.0455,
-      "retenus": 22,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.96,
-      "couverture": 0.6053,
-      "risque": 0.0435,
-      "retenus": 23,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9583,
-      "couverture": 0.6316,
-      "risque": 0.0417,
-      "retenus": 24,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9556,
-      "couverture": 0.6579,
-      "risque": 0.04,
-      "retenus": 25,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9515,
-      "couverture": 0.6842,
-      "risque": 0.0385,
-      "retenus": 26,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.95,
-      "couverture": 0.7105,
-      "risque": 0.037,
-      "retenus": 27,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9333,
-      "couverture": 0.7368,
-      "risque": 0.0357,
-      "retenus": 28,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9222,
-      "couverture": 0.7632,
-      "risque": 0.0345,
-      "retenus": 29,
-      "pertes": 1
-     },
-     {
-      "seuil": 0.9155,
-      "couverture": 0.7895,
-      "risque": 0.0333,
-      "retenus": 30,
-      "pertes": 1
-     }
-    ],
-    "b": {
-     "seuil": 0.88,
-     "couverture": 0.7895,
-     "risque": 0.0333,
-     "retenus": 30,
-     "pertes": 1
-    },
-    "c": null
-   }
-  }
+  ]
  }
 }
