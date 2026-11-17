@@ -79,7 +79,12 @@ python build/rebuild_spec.py --rapide   # contrôles seulement
 python build/human_questions.py check   # questions humaines et réponses attendues
 python spec/check_spec.py               # cohérence de la spec
 python -m pytest -q tests               # tests unitaires
+python build/build_saisies.py           # jeux de saisies (banc, analyse, certif) depuis spec/modele_saisie.yaml
+python -m engine.mesure_saisies         # moteur sur banc, analyse et échantillon réel (jamais la certif)
+python -m engine.rapport_saisies        # → reports/modele_saisie.html
 ```
+
+**Claude Code ajoute toujours `--sans-details`** à `rebuild_spec.py` et à `human_questions.py check` : seul le nombre d'écarts avec les réponses attendues s'affiche, jamais le corrigé.
 
 Ne pas lancer `build/run_all.sh` ni `build/check_global.py` sur la machine de l'utilisateur : ils retéléchargent les sources ouvertes (dossier `raw/` absent du dépôt) et demandent bash.
 
@@ -92,7 +97,7 @@ Environnement : Windows (PowerShell) et Python 3.13 chez l'utilisateur. Dépenda
 `build/` fabrique le catalogue, `engine/` répond aux questions. Chaque étape a ses tests dans `tests/` et se mesure sur le banc d'essai (`challenges/cases.csv`, partition dev) avec les métriques **idéal / sûr / erreur silencieuse** (voir `build/baseline.py`, à battre).
 
 1. **Résolveur exact** : normalisation → alias exact (puis mots triés) → index négatif → `Rules.apply` → statut. Objectif ≈ 66 % idéal, **0 % erreur silencieuse** (comme la référence B0).
-2. **Jaro-Winkler borné** (rapidfuzz) : seulement si rien n'est trouvé ; borné au type attendu ; seuil 0,88 ; au moins 4 caractères ; jamais sur un code ; ambigu si les deux meilleurs **noms** sont à moins de 0,03. Raisonner **par nom, pas par entité** : un nom trouvé ramène toutes ses entités (homonymes), puis les règles de contexte tranchent. Pour les noms de plusieurs mots (clients), comparer les mots distinctifs en ignorant les mots génériques (« garage », « auto », « carrosserie ») : G14.
+2. **Jaro-Winkler borné** (rapidfuzz) : seulement si rien n'est trouvé ; borné au type attendu ; seuil 0,88 **provisoire, au risque connu** (mesuré dans le tag `calibration-v1`, voir `notes/calibration-v1.md` : 7,0 % d'erreurs sur les termes acceptés du jeu de certification de l'époque ; ce n'est pas une valeur validée) ; au moins 4 caractères ; jamais sur un code ; ambigu si les deux meilleurs **noms** sont à moins de 0,03. Raisonner **par nom, pas par entité** : un nom trouvé ramène toutes ses entités (homonymes), puis les règles de contexte tranchent. Pour les noms de plusieurs mots (clients), comparer les mots distinctifs en ignorant les mots génériques (« garage », « auto », « carrosserie ») : G14.
 3. **Contexte et assemblage** : prépositions et mots de contexte (R-CTX-03), profil (« mon agence », R-CTX-02), rôles, période par défaut (R-TPS-02), assemblage et validation du Manifest. Test : les 34 questions de `spec/questions.yaml`.
 4. **Extraction LLM** : sortie JSON validée, température 0, cache sur la question normalisée.
 5. **Examen** : les questions humaines de bout en bout, sur demande de l'utilisateur ; chaque échec est rattaché à une lacune (G…) ou à un module manquant.
@@ -104,7 +109,7 @@ Chaque résolution produit une **trace** par terme (étape, score, règle appliq
 - **Liège** : l'index renvoie commune, arrondissement, province et deux localités ; R-GEO-02 retire les localités, R-CTX-05 ajoute l'agence → ambiguous à 4 candidats.
 - **Dinan / Dinant** : lieu réel hors périmètre très proche d'un lieu du catalogue ; l'index négatif doit répondre avant le fuzzy (catégorie C08).
 - **Codes voisins** : MN-AMO-70514 n'est pas MN-AMO-70513 (C09).
-- **Collisions entre domaines** : Champion (marque / localité), Bayon, Tivoli, Seres, « en ligne » → localité Ligne, « appel » → localité Appels.
+- **Collisions entre domaines** : Champion (marque / localité), Bayon, Tivoli, Seres, « en ligne » → localité Ligne, « appel » → localité Appels, « loyer » → localité Loyers, Chery (marque) / Chery (commune).
 - **Stock** : toujours une photo (`{photo}`), jamais additionné dans le temps (R-STK-01).
 
 ## Vocabulaire

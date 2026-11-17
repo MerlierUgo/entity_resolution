@@ -4,6 +4,9 @@ Relance tout ce qui dépend de la spec et des questions humaines, sans retéléc
 
     python build/rebuild_spec.py            reconstruit puis contrôle
     python build/rebuild_spec.py --rapide   contrôle seulement (aucune reconstruction)
+    --sans-details                          s'ajoute aux deux : le contrôle des questions humaines n'affiche que
+                                            le nombre d'écarts avec les réponses attendues (pour Claude Code,
+                                            qui ne doit pas voir le corrigé de l'examen)
 
 Fonctionne sous Windows, macOS et Linux. Le catalogue ouvert (catalog/open_*.csv, mecanova_*.csv)
 n'est pas reconstruit : il ne dépend pas de la spec. Pour tout reconstruire depuis les sources
@@ -40,12 +43,15 @@ def run(label: str, args: list[str]) -> bool:
 
 def main() -> int:
     console_utf8()
-    steps = CHECKS if "--rapide" in sys.argv else BUILD + CHECKS
+    sans_details = "--sans-details" in sys.argv
+    checks = [(l, a + ["--sans-details"] if sans_details and a[0] == "build/human_questions.py" else a)
+              for l, a in CHECKS]
+    steps = checks if "--rapide" in sys.argv else BUILD + checks
     failed = []
     for label, args in steps:
         if not run(label, args):
             failed.append(label)
-            if (label, args) in BUILD:
+            if any(label == b[0] for b in BUILD):
                 break  # inutile de continuer sur un catalogue incomplet
     print("\n" + ("OK · tout est à jour et cohérent" if not failed else "ÉCHEC · " + ", ".join(failed)))
     return 1 if failed else 0

@@ -247,13 +247,15 @@ def check(rows: list[dict], lock: dict[str, str], refs: Refs) -> tuple[list[str]
     return errors, warnings
 
 
-def summary(rows: list[dict]) -> str:
+def summary(rows: list[dict], details: bool = True) -> str:
+    """Résumé des questions. `details=False` masque la ligne « statut proposé » (étiquetage = corrigé)."""
     from collections import Counter
     act = [r for r in rows if r["etat"] == "active"]
     c = lambda k: ", ".join(f"{v or '—'} {n}" for v, n in sorted(Counter(r[k] for r in act).items()))
     val = Counter(r["validation"] or "à valider" for r in act)
+    propose = f"  statut proposé (csv) : {c('statut_attendu')}\n" if details else ""
     return (f"{len(act)} questions actives ({len(rows) - len(act)} retirées)\n"
-            f"  split : {c('split')}\n  persona : {c('persona')}\n  statut proposé (csv) : {c('statut_attendu')}\n"
+            f"  split : {c('split')}\n  persona : {c('persona')}\n{propose}"
             f"  validation : {', '.join(f'{k} {v}' for k, v in sorted(val.items()))}\n"
             f"  auteurs : {c('auteur')}")
 
@@ -340,7 +342,12 @@ def check_attendus(rows: list[dict], attendus: dict, mrefs) -> tuple[list[str], 
 
 
 # ---------------------------------------------------------------------------------------------- commandes
-def cmd_check(path=QUESTIONS, lock_path=LOCK, root=ROOT, attendus_path=None) -> int:
+def cmd_check(path=QUESTIONS, lock_path=LOCK, root=ROOT, attendus_path=None, details: bool = True) -> int:
+    """Contrôle les questions et les réponses attendues.
+
+    `details=False` (option --sans-details) n'affiche que des nombres pour ce qui vient du corrigé
+    (écarts avec la proposition, erreurs de attendus.yaml) et masque la ligne « statut proposé ».
+    À utiliser par Claude Code, qui ne doit pas voir le corrigé de l'examen (CLAUDE.md, règle 2)."""
     from manifest import load_manifest_refs
     attendus_path = attendus_path or (root / "human" / "attendus.yaml")
     try:
@@ -351,21 +358,25 @@ def cmd_check(path=QUESTIONS, lock_path=LOCK, root=ROOT, attendus_path=None) -> 
         return 1
     errors, warnings = check(rows, read_lock(lock_path), load_refs(root))
     e2, w2, ecarts, written = check_attendus(rows, attendus, load_manifest_refs(root))
-    errors += e2
     warnings += w2
-    print(summary(rows))
+    print(summary(rows, details))
     n_act = sum(r["etat"] == "active" for r in rows)
     print(f"  réponses attendues écrites : {written} / {n_act}")
     for w in warnings:
         print(f"  avertissement · {w}")
-    if ecarts:
+    if ecarts and details:
         print(f"  écarts avec la proposition de départ ({len(ecarts)}, à arbitrer) :")
         for x in ecarts:
             print(f"    - {x}")
-    for e in errors:
+    elif ecarts:
+        print(f"  écarts avec la proposition de départ : {len(ecarts)}, à arbitrer (détail : sans --sans-details)")
+    for e in errors + (e2 if details else []):
         print(f"  ERREUR · {e}")
-    print(f"{'OK' if not errors else 'ÉCHEC'} · {len(errors)} erreur(s), {len(warnings)} avertissement(s)")
-    return 1 if errors else 0
+    if e2 and not details:
+        print(f"  ERREUR · attendus.yaml : {len(e2)} erreur(s) (détail : sans --sans-details)")
+    n_err = len(errors) + len(e2)
+    print(f"{'OK' if not n_err else 'ÉCHEC'} · {n_err} erreur(s), {len(warnings)} avertissement(s)")
+    return 1 if n_err else 0
 
 
 def next_id(rows: list[dict], lock: dict[str, str]) -> str:
@@ -411,7 +422,9 @@ def cmd_lock(path=QUESTIONS, lock_path=LOCK) -> int:
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(description="Questions humaines du knowledge catalog")
     sub = p.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("check")
+    ch = sub.add_parser("check")
+    ch.add_argument("--sans-details", action="store_true",
+                    help="n'affiche que le nombre d'écarts avec les réponses attendues (masque le corrigé)")
     a = sub.add_parser("add")
     a.add_argument("texte")
     a.add_argument("--split", default="test")
@@ -419,7 +432,7 @@ def main(argv=None) -> int:
     sub.add_parser("lock")
     args = p.parse_args(argv)
     if args.cmd == "check":
-        return cmd_check()
+        return cmd_check(details=not args.sans_details)
     if args.cmd == "add":
         return cmd_add(args.texte, args.split, args.auteur)
     return cmd_lock()
