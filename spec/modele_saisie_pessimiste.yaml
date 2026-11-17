@@ -1,0 +1,295 @@
+# Modèle de saisie : SCÉNARIO PESSIMISTE.
+#
+# Scénario pessimiste : on suppose le réel entre la v0.3 (spec/modele_saisie.yaml) et ce fichier.
+#
+# Valeurs de la v0.2 de spec/modele_saisie.yaml (historique git, commit 0af9315), écrites dans le format des
+# clés de la v0.3. Seule traduction : la classe « 4 = 4 ou 5 perturbations à parts égales » (0,12) de la v0.2
+# devient deux classes explicites 4 et 5 à 0,06 chacune (décision de l'auteur, 2026-11-17). Les clés précisées
+# le 2026-11-17 (fusion avec mots vides ou mots à chiffre, morceau minimal de coupure, tirage pondéré des
+# règles de la transcription, borne des voisins) reprennent le comportement du générateur v0.2.
+#
+# Lu UNIQUEMENT par le générateur (build/build_saisies.py --scenario pessimiste) : certification pessimiste
+# (challenges/saisies_certif_pessimiste.csv) et banc pessimiste, pour la calibration des seuils (R-RES-10).
+# Le moteur ne lit JAMAIS ce fichier.
+#
+# Poids : relatifs à l'intérieur de chaque bloc, leur somme vaut 1 (contrôlé par le générateur).
+
+version: "0.2-pessimiste"
+date: "2026-11-17"
+auteur: Ugo Merlier
+statut: valide            # valide | a_revoir
+scenario: pessimiste
+source_des_valeurs: "spec/modele_saisie.yaml v0.2 (git 0af9315)"
+
+sources:
+  echantillon_reel: >
+    human/echantillon_reel/saisies_combinees.csv : 314 saisies d'un seul auteur (Ugo),
+    234 en dictée vocale (mode « entendu ») et 80 en mode mémoire (mode « lu », nom affiché
+    2 secondes), plus 22 termes libres hors catalogue. Artefacts de la synthèse vocale (tiret lu
+    « eu ») retirés par build/combiner_echantillon_reel.py. Proportions indicatives : un seul
+    auteur, un seul clavier.
+  damerau_1964: >
+    Damerau, F. J. (1964). A technique for computer detection and correction of spelling errors.
+    Communications of the ACM 7(3). La majorité des fautes de frappe sont une seule opération :
+    insertion, omission, substitution ou inversion de deux lettres voisines.
+  questions_reference: >
+    spec/questions.yaml (34 questions de développement) : mentions d'entités, pour la répartition
+    par famille. Les questions humaines (examen) sont volontairement exclues.
+
+# ---------------------------------------------------------------------------------------------
+# 1. Modes : comment le nom arrive dans la tête de l'utilisateur
+# ---------------------------------------------------------------------------------------------
+modes:
+  lu:
+    poids: 0.80
+    pourquoi: >
+      Un utilisateur BI tape surtout des noms qu'il a lus (rapports, listes, écrans).
+      Mesuré en mode mémoire : fautes de clavier, peu de mots oubliés, 0 erreur silencieuse du fuzzy.
+  entendu:
+    poids: 0.20
+    pourquoi: >
+      Cas minoritaire : nom entendu au téléphone ou d'un collègue. Mesuré en dictée :
+      fautes phonétiques, souvent plusieurs par nom. Mode le plus dangereux :
+      5 erreurs silencieuses sur 48 noms acceptés seuls par le fuzzy à 0,88.
+  sensibilite_entendu: [0.10, 0.20, 0.40]
+
+# ---------------------------------------------------------------------------------------------
+# 2. Nombre de fautes par saisie (en perturbations, pas en lettres ; mots oubliés à part, § 4)
+# ---------------------------------------------------------------------------------------------
+nombre_de_fautes:
+  lu:      {0: 0.50, 1: 0.30, 2: 0.11, 3: 0.09}   # v0.2 ; réel : 0 faute 50,6 %, 1 faute 33,8 %, 3 et plus 9,1 %
+  entendu: {0: 0.33, 1: 0.25, 2: 0.17, 3: 0.13, 4: 0.06, 5: 0.06}   # v0.2 : classe « 4 » (4 ou 5 perturbations, 0,12) → 4 et 5 à 0,06
+  compte: >
+    Une perturbation ne compte que si elle change la forme normalisée (un accent seul ou un « s » final
+    absorbé par la normalisation ne compte pas) : le générateur l'annule et en tire une autre.
+  note: >
+    Une perturbation phonétique peut changer plusieurs lettres (« ss » → « c ») et compte pour une.
+    Les saisies à 0 faute servent au banc d'essai ; les jeux de calibration ne gardent que les
+    saisies à 1 faute ou plus (sinon la recherche exacte les trouve et le fuzzy n'est jamais appelé).
+
+# ---------------------------------------------------------------------------------------------
+# 3. Quelles fautes
+# ---------------------------------------------------------------------------------------------
+melange_fautes:                 # pour chaque faute tirée : clavier ou phonétique, selon le mode
+  lu:      {clavier: 0.85, phonetique: 0.15}
+  entendu: {clavier: 0.20, phonetique: 0.80}
+
+clavier:
+  disposition: azerty_be
+  types:
+    omission:     0.30   # knech (Knecht), selet (Select), couvertur
+    substitution: 0.25   # standatd (r → t), mercedez (s → z)
+    inversion:    0.15   # prmeium, tsfi
+    insertion:    0.15   # premiumù
+    doublement:   0.05   # lettre doublée ou dédoublée : carroserie
+    espace:       0.10   # mots collés ou coupés
+  espace:
+    fusion: 0.70         # deux mots collés : « e tron » → « etron », « sint lambrechts » → « sintlambrechts »
+    coupure: 0.30        # un mot coupé en deux : « carrosseriebedrijf » → « carrosserie bedrijf »
+    fusion_mots_vides: false     # précisé le 2026-11-17 : jamais avec un mot vide (de, la, d')
+    fusion_mots_a_chiffre: true  # précisé le 2026-11-17 : « ds 4 » → « ds4 » observé dans le réel
+    coupure_morceau_min: 2       # une coupure ne crée jamais un morceau de moins de 2 lettres
+    note: >
+      Le tiret est déjà remplacé par un espace à la normalisation : « e-tron » et « e tron » sont identiques,
+      seule la fusion « etron » est une faute. S'il n'existe aucun site de fusion, une autre faute est tirée.
+  choix_de_la_lettre:    # pour substitution et insertion (v0.2)
+    touche_voisine: 0.50 # voisine sur un clavier AZERTY belge
+    quelconque: 0.50     # n'importe quelle lettre de l'alphabet
+  contraintes:
+    - jamais sur la première lettre du nom
+    - une coupure ne crée jamais un morceau de moins de 2 lettres
+
+phonetique:
+  # Règles de réécriture à son identique ou proche ; uniquement des cas observés en dictée.
+  # v0.2 : les sept règles simples gardent leurs proportions sur 0,70 ; transcription_libre prend 0,30.
+  regles:
+    transcription_libre:
+      poids: 0.30
+      nombre_de_regles: {2: 0.5, 3: 0.5}
+      tirage_des_regles: pondere      # précisé le 2026-11-17 : selon les poids des sept règles, avec remise
+      proba_voyelle_proche: 0.5
+      longueur_min_mot: 5
+      voyelles_proches: [[a, e], [e, i], [o, ou], [u, ou], [i, y]]
+      exemples: ["montataire → montatère", "brunssum → bransom", "chaource → chaours", "tervuren → tervurant"]
+      definition: >
+        Le mot est réécrit « comme on l'entend » : on applique sur le MÊME mot 2 ou 3 règles phonétiques
+        tirées parmi les sept ci-dessous (avec remise, à parts égales entre 2 et 3), puis, avec une
+        probabilité de 0,5, on remplace une voyelle au hasard par une voyelle de son proche
+        (a ↔ e, e ↔ i, o ↔ ou, u ↔ ou, i ↔ y). Ne s'applique qu'aux mots d'au moins 5 lettres.
+      pourquoi: >
+        Les règles une à une n'expliquent qu'≈ 11 % des fautes entendues réelles : les vraies transcriptions
+        combinent plusieurs changements sur un même mot.
+    voyelles_e:      {poids: 0.14, exemples: ["montataire → montatère", "quantité → quantitée"],
+                      motifs: ["é ↔ è ↔ ai ↔ ei ↔ e", "er/et/ez final ↔ é", "aire ↔ ère"]}
+    finale_muette:   {poids: 0.14, exemples: ["chaource → chaours", "standard → standar", "courbevoie → courbevois"],
+                      motifs: ["ajout ou retrait de e, s, t, d, x en fin de mot"]}
+    s_c_k:           {poids: 0.105, exemples: ["sachs → saxe", "jacquet → jack"],
+                      motifs: ["s ↔ ss ↔ c ↔ ç", "c ↔ k ↔ qu ↔ ck", "x ↔ cs ↔ ks"]}
+    consonne_double: {poids: 0.105, exemples: ["carrosserie → carosserie"],
+                      motifs: ["rr ↔ r", "ss ↔ s", "ll ↔ l", "tt ↔ t", "nn ↔ n", "mm ↔ m"]}
+    nasales:         {poids: 0.07, exemples: ["tervuren → tervurant"],
+                      motifs: ["an ↔ en ↔ am ↔ em", "in ↔ ain ↔ ein ↔ im"]}
+    neerlandais:
+      poids: 0.105
+      exemples: ["roosbeek → rosbic", "spiere → speer", "brunssum → bransom"]
+      motifs: ["oe → ou", "ee ↔ é", "ie ↔ i", "ij ↔ ei", "sch → ch", "beek → bic", "u → a", "oo → o"]
+      pourquoi: >
+        Mécanova couvre la Flandre et le sud des Pays-Bas ; utilisateurs supposés francophones.
+        2 des 5 erreurs silencieuses de la dictée sont des noms flamands.
+    h_y_w_z:         {poids: 0.035, exemples: ["hopel → opel", "mercedes → mercedez"],
+                      motifs: ["h initial muet", "y ↔ i", "w ↔ v", "z ↔ s"]}
+
+# ---------------------------------------------------------------------------------------------
+# 4. Mots oubliés
+# ---------------------------------------------------------------------------------------------
+omissions_de_mots:
+  probabilite_par_type:                             # v0.2 : selon le type d'entité, en mode « lu »
+    article: 0.35
+    modele_vehicule: 0.30
+    client: 0.25
+    autres: 0.02                                    # tous les autres types : très rare
+  multiplicateur_entendu: 1.5
+  plafond: 0.6                                      # après multiplication
+  mesure: >
+    Sur les jeux générés, l'oubli est noté à la génération (colonne dédiée), jamais redétecté après coup.
+    Sur l'échantillon réel, il reste repéré par alignement des mots.
+  reel: "mots oubliés : lu 14,3 %, entendu 24,6 % (surtout articles et véhicules)"
+  par_famille:                                      # quel mot est oublié
+    article:
+      marque: 0.70          # « filtre à huile standard »
+      gamme: 0.20           # « filtre à huile knecht »
+      tete: 0.10            # « allumage standard » (« bougie d' » oublié)
+    client:
+      mot_generique: 0.70   # garage, carrosserie, ets, auto, transport…
+      complement: 0.30      # « centre auto » (Hannut oublié)
+    modele_vehicule:
+      version_finale: 0.80  # 4matic, quattro, sdrive, d…
+      marque: 0.20          # « a110 » sans Alpine
+    autres:
+      dernier_mot: 1.0      # pour les 2 % des autres types : le dernier mot (« sint lambrechts woluwe » → « sint lambrechts »)
+  forme_juridique_toujours_omise: true              # personne ne tape SRL, SA, BV
+  mots_generiques_clients:
+    generiques: [garage, garagebedrijf, auto, autos, automobile, automobiles, autobedrijf, autoservice,
+                 carrosserie, carrosseriebedrijf, centre, center, ets, etablissements, transport, transports,
+                 logistic, logistics, logistique, service, services, fleet, lease]
+    complements_familiaux: [fils, freres, zonen]   # « & Fils », « Frères », « & Zonen » : traités comme génériques
+    exclus_volontairement: [van, gare, bmw, benz, mercede, dacia]
+                                                   # van, gare : parties de noms propres ou mot distinctif ;
+                                                   # marques : partie distinctive des noms de concessions
+    source: fréquences des mots dans les noms de clients du catalogue (≥ 2 %), relues par l'auteur
+  note: >
+    Une forme raccourcie désigne souvent une autre entité réelle, plus générale (« skoda » → la marque,
+    « kit de distribution » → la catégorie). La réponse attendue suit le § 8.
+
+# ---------------------------------------------------------------------------------------------
+# 5. Termes absents (hors catalogue)
+# ---------------------------------------------------------------------------------------------
+absents:
+  part: 0.10
+  sensibilite: [0.05, 0.10, 0.25]
+  pourquoi: >
+    Un utilisateur BI parle surtout de ce qu'il vend. L'ancien générateur utilisait 25 % sans
+    justification ; gardé comme cas pessimiste. Non mesurable avec l'échantillon réel (les termes
+    libres avaient été demandés).
+  nature:
+    notions_metier:     {poids: 0.35, exemples: ["airbag", "loa", "double embrayage", "hybridation", "tableau de bord"],
+                         source: "liste à écrire ensemble (100 à 150 termes : équipements, financement, logistique)"}
+    lieux_hors_perimetre: {poids: 0.35, exemples: ["lyon", "courbevoie"],
+                         source: "index négatif partagé en deux (voir partage_index_negatif)"}
+    marques_hors_catalogue: {poids: 0.15, source: "liste de vraies marques auto et pièces, vérifiée contre le catalogue"}
+    synonyme_manquant:  {poids: 0.10, exemples: ["filtre à gazole (catégorie : filtres à carburant)"],
+                         source: "liste de paires écrite par l'auteur",
+                         note: "l'entité existe sous un autre nom ; le moteur ne peut pas le deviner"}
+    noms_recombines:    {poids: 0.05, exemples: ["911 tiger 50"],
+                         note: "cas surreprésenté par l'ancien générateur ; gardé minoritaire"}
+  fautes: comme_un_present          # un absent reçoit aussi des fautes selon les § 1 à 3
+  partage_index_negatif:
+    reste_dans_index: 0.50          # le moteur les connaît : teste l'index négatif
+    absents_inconnus: 0.50          # retirés de l'index pour les jeux générés : teste un lieu que
+                                    # personne n'a prévu, qui ressemble à un lieu du catalogue
+    graine: fixe
+
+# ---------------------------------------------------------------------------------------------
+# 6. Exclusions et garde-fous
+# ---------------------------------------------------------------------------------------------
+exclusions:
+  codes: >
+    Jamais perturbés dans les jeux de calibration (le fuzzy ne s'applique jamais à un code,
+    R-RES-03). Le banc d'essai garde quelques codes voisins (MN-AMO-70514 / 70513) pour vérifier
+    que le moteur ne les rapproche jamais.
+  longueur_minimale: 4              # un mot de moins de 4 lettres n'est pas perturbé
+  mots_vides: non_perturbes         # de, la, le, du…
+  partition_test: exclue            # aucune entité attendue dans la partition test de challenges/
+  max_cas_par_nom:
+    calibration: 3
+    banc: sans_plafond              # le banc suit le trafic, où un petit vocabulaire revient souvent
+  graine: une_par_jeu               # notée dans l'en-tête de chaque fichier généré
+
+# ---------------------------------------------------------------------------------------------
+# 7. Répartition par famille
+# ---------------------------------------------------------------------------------------------
+repartition_par_famille:            # banc d'essai : à quoi ressemble le trafic
+  vocabulaire_metier: 0.30          # mesuré 40 % (17 mentions d'agences sur 78)
+  pieces: 0.30                      # mesuré 31 %
+  geographie: 0.20                  # mesuré 17 %
+  marques: 0.10                     # mesuré 8 %
+  clients: 0.05                     # mesuré 3 %, remonté (2 mentions ne prouvent pas la rareté)
+  vehicules: 0.05                   # mesuré 3 %, idem
+  source: mentions d'entités dans les 34 questions de spec/questions.yaml
+  geographie_dans_le_banc:          # v0.2
+    plus_peuples: 0.50              # parmi les lieux les plus peuplés (ceux qu'on cite le plus)
+    nombre_plus_peuples: 300        # communes et villes (les localités postales n'ont pas de population)
+    au_hasard: 0.50
+    note: jeux de calibration tirés uniformément (ils doivent couvrir tous les noms)
+  a_revoir: quand on aura de vraies questions d'utilisateurs
+calibration_volume: >
+  Les jeux de calibration ne suivent pas cette répartition : volume fixe d'au moins 3 000 saisies
+  fautives par famille (la borne SGR en a besoin dans chaque famille, même rare).
+familles: spec/familles_fuzzy.yaml  # même regroupement que la calibration
+
+# ---------------------------------------------------------------------------------------------
+# 8. Réponse attendue d'un cas généré
+# ---------------------------------------------------------------------------------------------
+attendu:
+  statut: provisoire                # décision de l'auteur, susceptible d'être revue
+  principe: >
+    La réponse attendue est l'ensemble des entités compatibles avec ce que l'utilisateur a tapé :
+    une seule → resolved ; plusieurs → ambiguous ; aucune → unknown. On ne note pas le moteur sur
+    ce que l'utilisateur pensait, qu'il ne peut pas deviner.
+  regles:
+    faute_sans_voisin: "resolved → l'entité source"
+    faute_avec_voisin: >
+      ambiguous → l'entité source et tout autre nom du même type à une distance d'édition (OSA)
+      inférieure ou égale à celle du nom source (ex. « fresin » → Fretin ou Fressin).
+      Un voisin n'est ajouté que si sa distance au terme tapé est ≤ min(d, voisins_distance_max), où d est
+      la distance du nom source au terme tapé (précisé le 2026-11-17). Si d dépasse la borne, l'attendu
+      est le nom source et ses voisins dans la borne, et unknown est accepté comme sûr.
+    nom_source_homonyme: "ce que donne le résolveur exact sur le nom source (ex. « liege » → ambiguous)"
+    mot_oublie_autre_entite: "l'entité désignée par la forme courte (ex. « skoda » → la marque)"
+    mot_oublie_plusieurs: "ambiguous → toutes les entités compatibles avec la forme courte"
+    absent: unknown
+    synonyme_manquant: unknown
+  voisins_distance_max: 2
+  indice_de_type:
+    part_avec_indice: 0.50          # la moitié des cas ont un indice de type, l'autre non
+    note: le corrigé est calculé avec le même indice que celui donné au moteur
+  reponses_sures_non_ideales:
+    - ambiguous qui contient la bonne entité alors qu'on attendait resolved
+    - unknown alors qu'on attendait resolved ou ambiguous
+  erreur_silencieuse: >
+    resolved vers une entité hors de l'ensemble attendu, ou resolved alors qu'on attendait unknown
+    (= perte « dangereuse » de la calibration).
+  collision_exacte: >
+    v0.2 : une saisie fautive qui tombe exactement sur un autre nom réel (ex. « opel » tapé pour la
+    localité Hopel, résolu vers la marque Opel). Comptée dans le total des erreurs silencieuses, mais
+    affichée à part et exclue des métriques « fuzzy seul » et de la calibration : aucun seuil n'y peut rien.
+  limite_connue: >
+    L'erreur de variante (taper « eco » au lieu de « premium ») produit le nom d'une autre entité
+    réelle : aucun corrigé ne peut la détecter. Elle relève de l'affichage de ce qui a été compris
+    (étape 3), pas du seuil.
+
+# ---------------------------------------------------------------------------------------------
+# Reste à faire avant de générer
+# ---------------------------------------------------------------------------------------------
+a_faire:
+  - table des touches voisines AZERTY belge (dans le code du générateur)

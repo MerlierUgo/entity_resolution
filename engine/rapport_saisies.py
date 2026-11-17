@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import html
 import json
+import math
 import sys
 
 from engine.catalogue import ROOT, console_utf8
@@ -21,6 +22,8 @@ PRECEDENTES = {"v0.1": ROOT / "reports" / "mesure_saisies_v0_1.json",
                "v0.2": ROOT / "reports" / "mesure_saisies_v0_2.json"}
 COURANTE = "v0.3"
 SORTIE = ROOT / "reports" / "modele_saisie.html"
+CALIBRATION = ROOT / "reports" / "calibration.json"           # python -m engine.calibration
+COMPARAISON = ROOT / "reports" / "comparaison_seuils.json"    # python -m engine.comparaison_seuils
 
 # Changements décidés par l'auteur (spec/modele_saisie.yaml · changements_v0_2 et _v0_3), rappelés pour lecture.
 CHANGEMENTS = {
@@ -381,6 +384,139 @@ def section_sensibilite(d: dict, prec: dict) -> str:
 </section>"""
 
 
+# ── calibration SGR (R-RES-10) et comparaison A / B / C ──────────────────────────────────────────
+
+NOMS_SCENARIOS = {"central": "modèle v0.3", "pessimiste": "pessimiste (v0.2)"}
+COULEUR_SCENARIO = {"central": "var(--s1)", "pessimiste": "var(--s2)"}
+
+
+def courbe_svg(famille: str, scen: dict, r_etoile: float, final) -> str:
+    """Risque-couverture d'une famille : borne haute B* (trait plein) et risque observé k/n (pointillé) en
+    fonction de la couverture, un point par θ ; ligne horizontale r* ; θ retenu (ou meilleur point) marqué."""
+    W, H, G, D, Hh, B = 300, 190, 40, 10, 12, 30
+    ymax = 10.0                                   # % : au-delà, les points sont posés sur le bord (écrêtés)
+    x = lambda c: G + (W - G - D) * c
+    y = lambda v: Hh + (H - Hh - B) * (1 - min(v, ymax) / ymax)
+    el = [f'<line x1="{G}" y1="{y(0)}" x2="{W - D}" y2="{y(0)}" class="axe"/>',
+          f'<line x1="{G}" y1="{y(r_etoile * 100):.1f}" x2="{W - D}" y2="{y(r_etoile * 100):.1f}" class="cible"/>',
+          f'<text x="{W - D}" y="{y(r_etoile * 100) - 3:.1f}" text-anchor="end" class="t">r* {pct(r_etoile * 100)}</text>']
+    for v in (0, 5, 10):
+        el.append(f'<text x="{G - 4}" y="{y(v) + 3:.1f}" text-anchor="end" class="t">{v} %</text>')
+    for c in (0, 0.5, 1):
+        el.append(f'<text x="{x(c):.1f}" y="{H - B + 14}" text-anchor="middle" class="t">{int(c * 100)} %</text>')
+    el.append(f'<text x="{(G + W - D) / 2}" y="{H - 4}" text-anchor="middle" class="t">couverture du fuzzy</text>')
+    for sc, d in scen.items():
+        pts = d["courbe"]
+        col = COULEUR_SCENARIO.get(sc, "currentColor")
+        borne = " ".join(f"{x(p['couverture']):.1f},{y(100 * p['borne']):.1f}" for p in pts if p["n"])
+        obs = " ".join(f"{x(p['couverture']):.1f},{y(100 * p['risque_observe']):.1f}" for p in pts if p["n"])
+        if borne:
+            el.append(f'<polyline points="{borne}" fill="none" stroke="{col}" stroke-width="2"/>')
+        if obs:
+            el.append(f'<polyline points="{obs}" fill="none" stroke="{col}" stroke-width="1.5" stroke-dasharray="3 3"/>')
+        c = d["choix"]
+        mp = c if not c["desactive"] else c["meilleur_point"]
+        if mp.get("theta") is not None and mp.get("n"):
+            cx, cy = x(mp["couverture"]), y(100 * mp["borne"])
+            el.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="4" fill="{col}" stroke="var(--bg)" stroke-width="2">'
+                      f'<title>{e(NOMS_SCENARIOS.get(sc, sc))} : θ {mp["theta"]:.2f}, n {mp["n"]}, k {mp["k"]}, '
+                      f'borne {pct(100 * mp["borne"], 2)}, couverture {pct(100 * mp["couverture"])}</title></circle>')
+            el.append(f'<text x="{cx + 6:.1f}" y="{cy - 6:.1f}" class="t">θ {mp["theta"]:.2f}</text>')
+    titre = f"{famille} : " + ("désactivé" if final is None else f"θ {final:.2f}")
+    return (f'<figure class="mini"><figcaption>{e(titre)}</figcaption><svg viewBox="0 0 {W} {H}" role="img" '
+            f'aria-label="{e(titre)} ; borne haute et risque observé selon la couverture">{"".join(el)}</svg></figure>')
+
+
+def section_calibration(cal: dict, comp: dict) -> str:
+    p = cal["parametres"]
+    r_etoile = p["r_etoile"]
+    lignes = []
+    for f, final in cal["familles"].items():
+        for sc, d in cal["scenarios"].items():
+            fd = d["familles"][f]
+            c = fd["choix"]
+            if c["desactive"]:
+                mp = c["meilleur_point"]
+                lignes.append([e(f), e(NOMS_SCENARIOS.get(sc, sc)), nb(fd["saisies_approche"]), "<span class='mal'>désactivé</span>",
+                               f"θ {mp['theta']:.2f}" if mp.get("theta") is not None else "·", nb(mp["n"]), nb(mp["k"]),
+                               pct(100 * mp["borne"], 2), pct(100 * mp["couverture"])])
+            else:
+                lignes.append([e(f), e(NOMS_SCENARIOS.get(sc, sc)), nb(fd["saisies_approche"]), f"<b>{c['seuil']:.2f}</b>", "·",
+                               nb(c["n"]), nb(c["k"]), pct(100 * c["borne"], 2), pct(100 * c["couverture"])])
+        lignes.append([f"<b>{e(f)}</b>", "<b>seuil final</b>", "", "<b>désactivé</b>" if final is None else f"<b>{final:.2f}</b>",
+                       "", "", "", "", ""])
+    n_min = math.log(1 / p["delta_prime"]) / r_etoile
+    dp_txt = f"{p['delta_prime']:.4f}".replace(".", ",")
+    courbes = "".join(courbe_svg(f, {sc: d["familles"][f] for sc, d in cal["scenarios"].items()}, r_etoile, final)
+                      for f, final in cal["familles"].items())
+    leg = "".join(f'<span><i style="background:{COULEUR_SCENARIO[sc]}"></i>{e(NOMS_SCENARIOS[sc])}</span>'
+                  for sc in cal["scenarios"])
+    comptes = " ; ".join(f"{NOMS_SCENARIOS.get(sc, sc)} : {nb(d['comptes'].get('approche'))} saisies passées par l'approché, "
+                         f"{nb(d['comptes'].get('familles_melangees', 0))} écartées (noms de plusieurs familles), "
+                         f"{nb(d['comptes'].get('hors_approche', 0))} arrêtées avant"
+                         for sc, d in cal["scenarios"].items())
+    return f"""
+<section id="calibration"><h2>7. Calibration SGR des seuils par famille (R-RES-10)</h2>
+<p>Méthode SGR (Geifman et El-Yaniv, 2017) : pour chaque famille, le plus petit θ d'une grille de {p['grille'][0]:.2f} à
+{p['grille'][-1]:.2f} ({len(p['grille'])} seuils) dont la borne haute du risque, binomiale exacte à δ' = δ / {len(p['grille'])}
+= {dp_txt}, est ≤ r* = {pct(100 * r_etoile, 1)} (δ = {pct(100 * p['delta'], 0)}). Calcul sur les deux
+jeux de certification, une fois chacun, en comptes agrégés seulement ; seuil final = le plus strict des deux. Écart
+inchangé ({str(p['ecart']).replace('.', ',')}). Seuils écrits dans <code>spec/seuils_fuzzy.yaml</code>.</p>
+<p class="note">{e(comptes)}.</p>
+<p><b>Volume nécessaire</b> : même sans aucune perte, la borne n'atteint r* qu'à partir de ln(1/δ') / r* ≈
+{nb(round(n_min))} noms acceptés par le fuzzy dans la famille ; avec 1 perte, il en faut environ 1,6 fois plus.</p>
+{table(["Famille", "Scénario", "Saisies passées par l'approché", "θ retenu", "Meilleur point (désactivée)", "n acceptés",
+        "k pertes", "Borne B*", "Couverture"], lignes)}
+<h3>Courbes risque-couverture</h3>
+<p class="note">Un point par θ de la grille, de droite (θ = {p['grille'][0]:.2f}, couverture maximale) à gauche. Trait plein :
+borne haute B* ; pointillé : risque observé k/n ; ligne fine : r*. Le point marqué est le θ retenu, ou, pour une famille
+désactivée, le meilleur point (borne la plus basse). Axe vertical écrêté à 10 %.</p>
+<div class="leg">{leg}<span>trait plein : borne B*</span><span>pointillé : risque observé</span></div>
+<div class="minis">{courbes}</div>
+{section_comparaison(comp)}
+</section>"""
+
+
+NOMS_JEUX = {"banc": "banc (v0.3)", "banc_pessimiste": "banc pessimiste", "reel_sans_indice": "échantillon réel, sans indice",
+             "reel_avec_indice": "échantillon réel, avec indice", "banc_absents_0.05": "banc, absents 5 %",
+             "banc_absents_0.25": "banc, absents 25 %", "analyse_absents_0.05": "analyse, absents 5 %",
+             "analyse_absents_0.25": "analyse, absents 25 %"}
+
+
+def lignes_abc(jeux: dict, cle_groupe=None) -> list:
+    out = []
+    for nom, cfg in jeux.items():
+        for k, m in cfg.items():
+            g = m["global"] if cle_groupe is None else m["par_famille"].get(cle_groupe)
+            if not g or not g.get("n"):
+                continue
+            out.append([e(NOMS_JEUX.get(nom, nom)) if cle_groupe is None else e(cle_groupe), f"<b>{k}</b>", nb(g["n"]),
+                        pct(g["ideal"]), pct(g["sur"]), cell_sil(g), nb(g["dont_collision_exacte"]),
+                        pct(g["couverture_fuzzy"]), pct(g["risque_fuzzy_pct"], 2) + f" ({nb(g['silencieux_fuzzy'])} / {nb(g['acceptes_fuzzy'])})"])
+    return out
+
+
+ENTETES_ABC = ["Jeu", "Config.", "Cas", "Idéal", "Sûr", "Silencieux", "dont collision exacte", "Couverture du fuzzy",
+               "Risque du fuzzy seul"]
+
+
+def section_comparaison(comp: dict) -> str:
+    pol = " ; ".join(f"<b>{k}</b> = {e(v)}" for k, v in comp["politiques"].items())
+    familles = sorted({f for cfg in comp["jeux"].values() for m in cfg.values() for f in m["par_famille"]})
+    blocs = []
+    for nom in ("banc", "banc_pessimiste"):
+        if nom in comp["jeux"]:
+            lignes = [l for f in familles for l in lignes_abc({nom: comp["jeux"][nom]}, f)]
+            blocs.append(f"<details><summary>Par famille : {e(NOMS_JEUX[nom])}</summary>"
+                         + table(["Famille"] + ENTETES_ABC[1:], lignes) + "</details>")
+    return f"""
+<h3>Comparaison A / B / C (mesure « avant corrections »)</h3>
+<p>{pol}. Les jeux de certification ne sont jamais évalués ici. « Couverture du fuzzy » : part des saisies passées par
+l'étape approchée où le fuzzy accepte un nom ; « risque du fuzzy seul » : erreurs silencieuses parmi ces noms acceptés.</p>
+{table(ENTETES_ABC, lignes_abc(comp["jeux"]))}
+{"".join(blocs)}"""
+
+
 CSS = """
 :root{--bg:#fcfcfb;--fg:#0b0b0b;--fg2:#52514e;--ligne:#e4e3df;--zebre:#f4f3f0;--s1:#2a78d6;--s0:#a3a29b;--s3:#8c6bd1;--s2:#eb6834;--mal:#d03b3b;--ok:#1b8a5a;--code:#efeeea}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1a19;--fg:#f0efec;--fg2:#c3c2b7;--ligne:#383835;--zebre:#222220;--s1:#3987e5;--s0:#6f6e68;--s3:#9d80e0;--s2:#d95926;--mal:#e66767;--ok:#3fb27f;--code:#2a2a28}}
@@ -400,11 +536,15 @@ nav a{color:var(--fg2);margin-right:1em;font-size:.9rem}.cles{display:grid;grid-
 .bl{display:grid;grid-template-columns:3em 1fr;gap:2px 8px;margin-bottom:8px}.bk{grid-row:span var(--n,2);align-self:center;color:var(--fg2)}
 .bb{display:flex;align-items:center;gap:6px;height:14px}.bar{height:12px;border-radius:0 4px 4px 0;min-width:1px}
 .s1{background:var(--s1)}.s0{background:var(--s0)}.s3{background:var(--s3)}.s2{background:var(--s2)}.ok{color:var(--ok);font-weight:600}.bv{font-size:.8rem;color:var(--fg2);white-space:nowrap}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 20px;margin:.6em 0}
+.mini{margin:0}.mini figcaption{font-size:.88rem;color:var(--fg2);margin-bottom:2px}.mini svg{width:100%;height:auto;color:var(--fg2)}
+.mini .axe{stroke:var(--ligne);stroke-width:1}.mini .cible{stroke:var(--mal);stroke-width:1;stroke-dasharray:4 3}
+.mini .t{font-size:10px;fill:var(--fg2)}
 .leg{display:flex;flex-wrap:wrap;gap:16px;font-size:.88rem;color:var(--fg2)}.leg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
 """
 
 
-def page(d: dict, prec: dict) -> str:
+def page(d: dict, prec: dict, cal: dict, comp: dict) -> str:
     b, a = d["banc"]["global"], d["analyse"]["global"]
     ra = d["analyse"]["risque_approche"].get("TOTAL", {})
     rb = d["banc"]["risque_approche"].get("TOTAL", {})
@@ -429,11 +569,13 @@ calculé et le jeu de certification n'est pas ouvert.</p>
 <div class="cles">{tuiles}</div>
 <p class="note">Analyse : {nb(a["n"])} cas, idéal {pct(a["ideal"])}, {nb(a["silencieux"])} silencieuses dont
 {nb(a.get("dont_collision_exacte"))} collision(s) exacte(s).</p>
-<nav><a href="#jeux">Jeux</a><a href="#verification">Vérification</a><a href="#banc">Banc</a><a href="#diagnostic">Diagnostic</a><a href="#reel">Réel</a><a href="#sensibilite">Sensibilité</a></nav>
-{section_jeux(d, prec)}{section_verification(d, prec)}{section_banc(d, prec)}{section_diagnostic(d, prec)}{section_reel(d, prec)}{section_sensibilite(d, prec)}
+<nav><a href="#jeux">Jeux</a><a href="#verification">Vérification</a><a href="#banc">Banc</a><a href="#diagnostic">Diagnostic</a><a href="#reel">Réel</a><a href="#sensibilite">Sensibilité</a><a href="#calibration">Calibration</a></nav>
+{section_jeux(d, prec)}{section_verification(d, prec)}{section_banc(d, prec)}{section_diagnostic(d, prec)}{section_reel(d, prec)}{section_sensibilite(d, prec)}{section_calibration(cal, comp)}
 <p class="note">Généré par <code>python -m engine.rapport_saisies</code> depuis <code>reports/mesure_saisies.json</code>
 (<code>python -m engine.mesure_saisies</code>) et les mesures conservées des versions précédentes
-(<code>reports/mesure_saisies_v0_1.json</code>, <code>reports/mesure_saisies_v0_2.json</code>).</p>
+(<code>reports/mesure_saisies_v0_1.json</code>, <code>reports/mesure_saisies_v0_2.json</code>) ; calibration et comparaison
+depuis <code>reports/calibration.json</code> (<code>python -m engine.calibration</code>) et
+<code>reports/comparaison_seuils.json</code> (<code>python -m engine.comparaison_seuils</code>).</p>
 </main></body></html>"""
 
 
@@ -446,7 +588,12 @@ def main() -> int:
         raise SystemExit(f"mesures des versions précédentes introuvables : {manquants}.")
     d = json.loads(ENTREE.read_text(encoding="utf-8"))
     prec = {k: json.loads(p.read_text(encoding="utf-8")) for k, p in PRECEDENTES.items()}
-    SORTIE.write_text(page(d, prec), encoding="utf-8")
+    for chemin, cmd in ((CALIBRATION, "engine.calibration"), (COMPARAISON, "engine.comparaison_seuils")):
+        if not chemin.exists():
+            raise SystemExit(f"{chemin} introuvable : lancer python -m {cmd}.")
+    cal = json.loads(CALIBRATION.read_text(encoding="utf-8"))
+    comp = json.loads(COMPARAISON.read_text(encoding="utf-8"))
+    SORTIE.write_text(page(d, prec, cal, comp), encoding="utf-8")
     print(f"→ {SORTIE.relative_to(ROOT)}")
     return 0
 

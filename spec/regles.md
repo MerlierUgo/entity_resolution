@@ -7,7 +7,7 @@
 >
 > Ces règles s'appliquent partout : génération des données, mesures DAX, oracle, résolution des termes par l'agent. Chaque règle a un identifiant stable, à citer dans le code et dans les tests.
 
-**État d'implémentation** : 56 règles · 7 codées · 1 prototypées · 48 à coder
+**État d'implémentation** : 57 règles · 8 codées · 1 prototypées · 48 à coder
 
 ## Chiffre d'affaires et montants
 
@@ -219,7 +219,7 @@ Tous les calculs de dates partent de `data_as_of` = **2026-09-30**. L'horloge du
 
 *codée · resolution* · `build/common.py · normalize()`
 
-**R-RES-03 · Correspondance approchée.** Seuil 0,88 PROVISOIRE, à calibrer (risque mesuré dans le tag calibration-v1, voir notes/calibration-v1.md). Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités.
+**R-RES-03 · Correspondance approchée.** Seuil : 0,88 fixe (configuration de référence, provisoire) ou seuil par famille calibré (R-RES-10). Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités.
 
 *codée · resolution* · `engine/approche.py`, `engine/resolveur.py · ResolveurApproche`
 
@@ -246,6 +246,10 @@ Tous les calculs de dates partent de `data_as_of` = **2026-09-30**. L'horloge du
 **R-RES-09 · Indice de type dès l'exact.** Quand l'étape intention fournit le type attendu, il filtre aussi les correspondances **exactes**, pas seulement l'étape approchée. Raison : la normalisation crée des collisions entre domaines (« Seres » marque / « Sere » variante de Seraing ; « en ligne » / localité « Ligne »).
 
 *codée · resolution* · `build/rules.py`
+
+**R-RES-10 · Seuil approché calibré par famille.** Le seuil Jaro-Winkler de l'étape approchée (R-RES-03) est choisi par famille d'entités (spec/familles_fuzzy.yaml) par la méthode SGR (Geifman et El-Yaniv, 2017) : le plus petit seuil d'une grille de 0,80 à 0,99 (pas 0,01) qui garantit, avec une confiance de 95 % (δ = 5 %, correction de Bonferroni sur les 20 seuils), au plus 0,5 % d'erreurs silencieuses (r*) parmi les noms acceptés par le fuzzy. Décisions métier : au plus ≈ 4 erreurs pour 900 termes rattrapés par mois, garanties à 95 %. Calcul sur deux jeux de certification, une fois chacun : le modèle de saisie v0.3 et le scénario pessimiste (valeurs v0.2) ; seuil final = le plus strict des deux, approché désactivé pour la famille si l'un des deux ne trouve aucun seuil. Nom dont les meilleures entités sont dans plusieurs familles : pas d'approché. Garantie valable si le réel est entre les deux scénarios. Seuils écrits dans spec/seuils_fuzzy.yaml (jamais à la main).
+
+*codée · resolution* · `engine/calibration.py`, `engine/approche.py · SeuilsCalibres`, `spec/seuils_fuzzy.yaml`
 
 ## Affichage
 

@@ -282,7 +282,7 @@ sections:
         tests: ["spec/check_spec.py", "challenges/cases.csv"]
       - id: "R-RES-03"
         titre: "Correspondance approchée"
-        texte: "Seuil 0,88 PROVISOIRE, à calibrer (risque mesuré dans le tag calibration-v1, voir notes/calibration-v1.md). Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités."
+        texte: "Seuil : 0,88 fixe (configuration de référence, provisoire) ou seuil par famille calibré (R-RES-10). Jamais sur un code : les alias de type code ne sont pas comparés, et les mots qui contiennent un chiffre doivent être identiques. Jamais pour un terme de moins de 4 caractères, ni sur un mot de moins de 4 lettres : le nom retenu a le même nombre de mots et les mêmes mots courts que le terme (« St.-Jan » ne devient pas « T Jan »). Si les deux meilleurs noms sont à moins de 0,03 d'écart : tous deux sont retenus, avec toutes leurs entités."
         composant: "resolution"
         statut: "codee"
         implementation: ["engine/approche.py", "engine/resolveur.py · ResolveurApproche"]
@@ -321,6 +321,13 @@ sections:
         statut: "codee"
         implementation: ["build/rules.py"]
         tests: ["challenges/cases.csv", "spec/check_spec.py"]
+      - id: "R-RES-10"
+        titre: "Seuil approché calibré par famille"
+        texte: "Le seuil Jaro-Winkler de l'étape approchée (R-RES-03) est choisi par famille d'entités (spec/familles_fuzzy.yaml) par la méthode SGR (Geifman et El-Yaniv, 2017) : le plus petit seuil d'une grille de 0,80 à 0,99 (pas 0,01) qui garantit, avec une confiance de 95 % (δ = 5 %, correction de Bonferroni sur les 20 seuils), au plus 0,5 % d'erreurs silencieuses (r*) parmi les noms acceptés par le fuzzy. Décisions métier : au plus ≈ 4 erreurs pour 900 termes rattrapés par mois, garanties à 95 %. Calcul sur deux jeux de certification, une fois chacun : le modèle de saisie v0.3 et le scénario pessimiste (valeurs v0.2) ; seuil final = le plus strict des deux, approché désactivé pour la famille si l'un des deux ne trouve aucun seuil. Nom dont les meilleures entités sont dans plusieurs familles : pas d'approché. Garantie valable si le réel est entre les deux scénarios. Seuils écrits dans spec/seuils_fuzzy.yaml (jamais à la main)."
+        composant: "resolution"
+        statut: "codee"
+        implementation: ["engine/calibration.py", "engine/approche.py · SeuilsCalibres", "spec/seuils_fuzzy.yaml"]
+        tests: ["tests/test_calibration.py", "challenges/saisies_certif.csv", "challenges/saisies_certif_pessimiste.csv"]
   - section: "Affichage"
     regles:
       - id: "R-AFF-01"

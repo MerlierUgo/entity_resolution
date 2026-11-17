@@ -16,22 +16,28 @@ Garde-fous, tous appliqués avant le moindre score :
 On raisonne par nom, pas par entité : le meilleur nom donne le score κ ; tous les noms à moins de
 l'écart du meilleur sont retenus et ramènent toutes leurs entités (homonymes) ; les règles de
 contexte tranchent ensuite. Le seuil et l'écart viennent d'une politique injectée :
-  SeuilFixe(0.88, 0.03)          même seuil pour tous les types (valeur initiale de R-RES-03).
-Le 0,88 est PROVISOIRE : son risque a été mesuré dans le tag calibration-v1 (notes/calibration-v1.md),
-la calibration elle-même n'est pas dans cette branche.
+  SeuilFixe(0.88, 0.03)          même seuil pour tous les types (valeur initiale de R-RES-03, provisoire) ;
+  SeuilsCalibres.charger()       seuil par famille lu dans spec/seuils_fuzzy.yaml (calibration SGR, R-RES-10,
+                                 engine/calibration.py) ; famille désactivée ou noms de plusieurs familles :
+                                 pas d'approché ;
+  AucunApproche()                jamais d'approché (configuration « exact seul », pour comparer).
+Seul le choix du seuil change d'une politique à l'autre : recherche, écart, garde-fous et règles sont les mêmes.
 
 Le « type » d'une proposition est celui des entités des meilleurs noms (score égal à κ) : un seul
-type → ce type ; plusieurs → « mixte ». Il se calcule sans connaître la réponse.
+type → ce type ; plusieurs → « mixte ». Il se calcule sans connaître la réponse. La proposition garde aussi
+l'ensemble de ces types : une politique par famille en a besoin (deux types d'une même famille, comme
+commune et localité postale, ne sont pas un mélange de familles).
 """
 from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from rapidfuzz import process
 from rapidfuzz.distance import JaroWinkler
 
-from engine.catalogue import Catalogue
+from engine.catalogue import ROOT, Catalogue
 
 MIN_CARS = 4
 ECART_MAX = 0.10          # borne de l'écart admis par une politique (recherche des voisins)
@@ -72,11 +78,74 @@ class SeuilFixe:
     def __post_init__(self):
         _valider(self.seuil, self.ecart, "SeuilFixe")
 
-    def regle(self, cle: str) -> tuple[float, float] | None:
+    def regle(self, cle: str, types: frozenset[str] = frozenset()) -> tuple[float, float] | None:
         return self.seuil, self.ecart
 
     def decrire(self) -> str:
         return f"seuil fixe {self.seuil:g}, écart {self.ecart:g}"
+
+
+@dataclass(frozen=True)
+class AucunApproche:
+    """Jamais d'approché : configuration « exact seul » (exact, mots triés, index négatif)."""
+
+    def regle(self, cle: str, types: frozenset[str] = frozenset()) -> tuple[float, float] | None:
+        return None
+
+    def decrire(self) -> str:
+        return "exact seul (approché désactivé)"
+
+
+SEUILS_FUZZY = ROOT / "spec" / "seuils_fuzzy.yaml"
+FAMILLES_FUZZY = ROOT / "spec" / "familles_fuzzy.yaml"
+
+
+@dataclass(frozen=True)
+class SeuilsCalibres:
+    """Seuil par famille (R-RES-10), lu dans spec/seuils_fuzzy.yaml (écrit par engine/calibration.py).
+
+    La famille d'une proposition est celle des types des meilleurs noms (spec/familles_fuzzy.yaml) ;
+    plusieurs familles, un type hors famille ou une famille désactivée (seuil null) → pas d'approché."""
+    seuils: dict = field(default_factory=dict)       # famille → seuil (None : désactivée)
+    ecart: float = 0.03
+    famille_de: dict = field(default_factory=dict)   # type → famille
+
+    def __post_init__(self):
+        for f, t in self.seuils.items():
+            if t is not None:
+                _valider(t, self.ecart, f"SeuilsCalibres · {f}")
+
+    @classmethod
+    def charger(cls, chemin: Path = SEUILS_FUZZY, familles: Path = FAMILLES_FUZZY) -> "SeuilsCalibres":
+        import yaml
+        if not chemin.exists():
+            raise FileNotFoundError(f"{chemin} introuvable : lancer python -m engine.calibration.")
+        y = yaml.safe_load(chemin.read_text(encoding="utf-8"))
+        fam = yaml.safe_load(familles.read_text(encoding="utf-8"))["familles"]
+        famille_de = {t: f for f, ts in fam.items() for t in ts}
+        seuils = {}
+        for f, v in y["familles"].items():
+            if f not in fam:
+                raise ValueError(f"{chemin.name} : famille « {f} » absente de {familles.name}.")
+            seuils[f] = v["seuil_final"]
+        manquantes = set(fam) - set(seuils)
+        if manquantes:
+            raise ValueError(f"{chemin.name} : famille(s) sans seuil {sorted(manquantes)} ; relancer la calibration.")
+        return cls(seuils=seuils, ecart=float(y["parametres"]["ecart"]), famille_de=famille_de)
+
+    def famille(self, types) -> str | None:
+        fams = {self.famille_de.get(t) for t in types}
+        return next(iter(fams)) if len(fams) == 1 and None not in fams else None
+
+    def regle(self, cle: str, types: frozenset[str] = frozenset()) -> tuple[float, float] | None:
+        f = self.famille(types or ({cle} if cle != MIXTE else set()))
+        if f is None or self.seuils.get(f) is None:
+            return None
+        return self.seuils[f], self.ecart
+
+    def decrire(self) -> str:
+        return "seuils calibrés par famille (R-RES-10) : " + ", ".join(
+            f"{f} {'désactivé' if t is None else f'{t:g}'}" for f, t in sorted(self.seuils.items()))
 
 
 def _valider(seuil, ecart, ou: str):
@@ -94,6 +163,7 @@ class Proposition:
     score: float                              # κ : score du meilleur nom
     cle: str                                  # type des meilleurs noms (ou « mixte »)
     voisins: tuple[tuple[str, float], ...]    # noms à moins de ECART_MAX du meilleur, triés
+    types: frozenset = frozenset()            # types des meilleurs noms (pour une politique par famille)
 
 
 class IndexApproche:
@@ -126,4 +196,4 @@ class IndexApproche:
                               score_cutoff=max(0.0, s1 - ECART_MAX))
         voisins = tuple(sorted(((n, s) for n, s, _ in res), key=lambda x: (-x[1], x[0])))
         tete = set().union(*(self.types_de(n) for n, s in voisins if s >= s1))
-        return Proposition(s1, cle_type(tete), voisins), ""
+        return Proposition(s1, cle_type(tete), voisins, frozenset(tete)), ""

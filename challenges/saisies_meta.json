@@ -633,6 +633,67 @@
    },
    "sha256": "c5dc2e94951e7d96"
   },
+  "banc_pessimiste": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 175,
+    "marques_hors_catalogue": 75,
+    "noms_recombines": 25,
+    "notions_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 12,
+    "geographie": 348,
+    "marques": 4,
+    "mixte": 4,
+    "pieces": 116,
+    "vehicules": 21,
+    "vocabulaire_metier": 25
+   },
+   "absents_par_sous_nature": {
+    "code_voisin": 30,
+    "lieu_inconnu": 87,
+    "lieu_index_negatif": 88,
+    "marque_hors_catalogue": 75,
+    "nom_recombine": 25,
+    "notion_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 5030,
+   "fichier": "challenges/saisies_banc_pessimiste.csv",
+   "geographie_plus_peuples": 483,
+   "graine": 20261123,
+   "modes": {
+    "entendu": 974,
+    "lu": 4056
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "presents_vises": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "rejets": {
+    "absent devenu un nom du catalogue": 1,
+    "réponse attendue avec une entité de la partition test": 957
+   },
+   "scenario": "pessimiste",
+   "sha256": "f2d3d764959e1a87"
+  },
   "certif": {
    "absents_alloues": {
     "lieux_hors_perimetre": 636,
@@ -699,6 +760,74 @@
     "trouvé par l'exact ou l'index négatif (calibration)": 1182
    },
    "sha256": "178a48667d049cc0"
+  },
+  "certif_pessimiste": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 637,
+    "marques_hors_catalogue": 45,
+    "noms_recombines": 61,
+    "notions_metier": 429,
+    "synonyme_manquant": 54
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 35,
+    "douane": 15,
+    "geographie": 924,
+    "marques": 25,
+    "mixte": 5,
+    "pieces": 127,
+    "vehicules": 35,
+    "vocabulaire_metier": 45
+   },
+   "absents_par_sous_nature": {
+    "lieu_inconnu": 319,
+    "lieu_index_negatif": 318,
+    "marque_hors_catalogue": 42,
+    "nom_recombine": 61,
+    "notion_metier": 420,
+    "synonyme_manquant": 51
+   },
+   "absents_reportes_faute_de_stock": 208,
+   "cas": 12245,
+   "fichier": "challenges/saisies_certif_pessimiste.csv",
+   "geographie_plus_peuples": 0,
+   "graine": 20261124,
+   "modes": {
+    "entendu": 2917,
+    "lu": 9328
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 2558,
+    "douane": 771,
+    "geographie": 3000,
+    "marques": 212,
+    "pieces": 2083,
+    "vehicules": 2306,
+    "vocabulaire_metier": 104
+   },
+   "presents_vises": {
+    "clients": 3000,
+    "douane": 3000,
+    "geographie": 3000,
+    "marques": 3000,
+    "pieces": 3000,
+    "vehicules": 3000,
+    "vocabulaire_metier": 3000
+   },
+   "rejets": {
+    "0 faute et aucun mot oublié (calibration)": 17020,
+    "absent arrêté par l'index négatif (calibration)": 290,
+    "absent devenu un nom du catalogue": 3,
+    "réponse attendue avec une entité de la partition test": 11922,
+    "terme d'un autre jeu": 2155,
+    "terme déjà présent dans le jeu": 255,
+    "trouvé par l'exact ou l'index négatif (calibration)": 2049
+   },
+   "scenario": "pessimiste",
+   "sha256": "a4954c8b3149b7ec"
   }
  },
  "modele": {
@@ -710,5 +839,16 @@
   "fichier": "negatifs_retires.csv",
   "lieux_gardes": 10899,
   "lieux_retires": 10900
+ },
+ "scenario_pessimiste": {
+  "fichier_modele": "spec/modele_saisie_pessimiste.yaml",
+  "graines": {
+   "banc": 20261123,
+   "certif": 20261124
+  },
+  "modele": {
+   "date": "2026-11-17",
+   "version": "0.2-pessimiste"
+  }
  }
 }

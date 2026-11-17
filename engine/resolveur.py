@@ -135,7 +135,8 @@ class ResolveurExact:
 class ResolveurApproche(ResolveurExact):
     """Résolveur de l'étape 2 : l'étape 1, puis Jaro-Winkler borné si rien n'est trouvé (R-RES-03).
 
-    `politique` fixe le seuil et l'écart par type : SeuilFixe(0.88, 0.03), provisoire."""
+    `politique` fixe le seuil et l'écart : SeuilFixe(0.88, 0.03) (provisoire, par défaut), SeuilsCalibres
+    (par famille, R-RES-10) ou AucunApproche (exact seul)."""
 
     def __init__(self, catalogue: Catalogue, politique=None, index: IndexApproche | None = None):
         super().__init__(catalogue)
@@ -148,8 +149,8 @@ class ResolveurApproche(ResolveurExact):
             trace.append({"etape": "absent", "decisive": True, "raison": f"aucun alias du catalogue ; {raison}"})
             return set()
         etape = {"etape": "approche", "regle": "R-RES-03", "score": prop.score, "type": prop.cle,
-                 "meilleurs": [n for n, s in prop.voisins[:5]]}
-        regle = self.politique.regle(prop.cle)
+                 "types": sorted(prop.types), "meilleurs": [n for n, s in prop.voisins[:5]]}
+        regle = self.politique.regle(prop.cle, prop.types)
         if regle is None:
             trace.append({**etape, "etape": "absent", "decisive": True,
                           "raison": f"approché désactivé pour le type {prop.cle} ({self.politique.decrire()})"})

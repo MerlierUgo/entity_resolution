@@ -80,7 +80,10 @@ python build/human_questions.py check   # questions humaines et réponses attend
 python spec/check_spec.py               # cohérence de la spec
 python -m pytest -q tests               # tests unitaires
 python build/build_saisies.py           # jeux de saisies (banc, analyse, certif) depuis spec/modele_saisie.yaml
+python build/build_saisies.py --scenario pessimiste   # banc et certif du scénario pessimiste (valeurs v0.2)
 python -m engine.mesure_saisies         # moteur sur banc, analyse et échantillon réel (jamais la certif)
+python -m engine.calibration            # seuils SGR par famille → spec/seuils_fuzzy.yaml (certifs : comptes agrégés)
+python -m engine.comparaison_seuils     # A exact seul / B 0,88 / C seuils calibrés (jamais les certifs)
 python -m engine.rapport_saisies        # → reports/modele_saisie.html
 ```
 

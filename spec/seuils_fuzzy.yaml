@@ -1,0 +1,184 @@
+# Seuils de l'étape approchée par famille : calibration SGR (R-RES-10).
+# Écrit par python -m engine.calibration : ne pas modifier à la main.
+# Méthode : Geifman et El-Yaniv (2017), SGR. Pour chaque famille et chaque scénario de certification, θ est le
+# plus petit seuil de la grille dont la borne haute du risque (binomiale exacte, δ' = δ / taille de la grille)
+# est ≤ r*. Seuil final = le plus strict des deux scénarios ; null = approché désactivé pour la famille.
+# n : noms acceptés par le fuzzy ; k : pertes dangereuses parmi eux ; couverture : n / saisies passées par
+# l'approché. Garantie valable si le réel est entre les deux scénarios (modèle v0.3 et pessimiste).
+# Lu par le moteur : engine/approche.py · SeuilsCalibres.
+version: 1
+regle: R-RES-10
+date: '2026-11-17'
+parametres:
+  r_etoile: 0.005
+  delta: 0.05
+  delta_prime: 0.0025
+  correction: Bonferroni sur 20 seuils
+  ecart: 0.03
+  grille:
+    min: 0.8
+    max: 0.99
+    pas: 0.01
+    nombre: 20
+jeux:
+  central:
+    fichier: challenges/saisies_certif.csv
+    sha256: 178a48667d049cc0519ae03de7e9bf8f6019ba03f8fcc3a07b567dad7914b549
+  pessimiste:
+    fichier: challenges/saisies_certif_pessimiste.csv
+    sha256: a4954c8b3149b7ec4cac900306e03c7e0df4109368b131b70c5689238498f982
+familles:
+  clients:
+    central:
+      seuil: null
+      desactive: true
+      saisies_approche: 2473
+      meilleur_point:
+        theta: 0.91
+        n: 1095
+        k: 1
+        borne: 0.007475
+        couverture: 0.4428
+    pessimiste:
+      seuil: null
+      desactive: true
+      saisies_approche: 2391
+      meilleur_point:
+        theta: 0.92
+        n: 919
+        k: 4
+        borne: 0.014674
+        couverture: 0.3844
+    seuil_final: null
+  douane:
+    central:
+      seuil: null
+      desactive: true
+      saisies_approche: 782
+      meilleur_point:
+        theta: 0.98
+        n: 244
+        k: 0
+        borne: 0.024256
+        couverture: 0.312
+    pessimiste:
+      seuil: null
+      desactive: true
+      saisies_approche: 782
+      meilleur_point:
+        theta: 0.95
+        n: 391
+        k: 4
+        borne: 0.034249
+        couverture: 0.5
+    seuil_final: null
+  geographie:
+    central:
+      seuil: null
+      desactive: true
+      saisies_approche: 3966
+      meilleur_point:
+        theta: 0.97
+        n: 816
+        k: 1
+        borne: 0.010019
+        couverture: 0.2057
+    pessimiste:
+      seuil: null
+      desactive: true
+      saisies_approche: 4053
+      meilleur_point:
+        theta: 0.97
+        n: 713
+        k: 3
+        borne: 0.016569
+        couverture: 0.1759
+    seuil_final: null
+  marques:
+    central:
+      seuil: null
+      desactive: true
+      saisies_approche: 220
+      meilleur_point:
+        theta: 0.91
+        n: 115
+        k: 0
+        borne: 0.050766
+        couverture: 0.5227
+    pessimiste:
+      seuil: null
+      desactive: true
+      saisies_approche: 228
+      meilleur_point:
+        theta: 0.92
+        n: 117
+        k: 0
+        borne: 0.04992
+        couverture: 0.5132
+    seuil_final: null
+  pieces:
+    central:
+      seuil: null
+      desactive: true
+      saisies_approche: 2194
+      meilleur_point:
+        theta: 0.98
+        n: 604
+        k: 0
+        borne: 0.009871
+        couverture: 0.2753
+    pessimiste:
+      seuil: null
+      desactive: true
+      saisies_approche: 2188
+      meilleur_point:
+        theta: 0.98
+        n: 521
+        k: 0
+        borne: 0.011434
+        couverture: 0.2381
+    seuil_final: null
+  vehicules:
+    central:
+      seuil: null
+      desactive: true
+      saisies_approche: 2159
+      meilleur_point:
+        theta: 0.95
+        n: 964
+        k: 1
+        borne: 0.008487
+        couverture: 0.4465
+    pessimiste:
+      seuil: null
+      desactive: true
+      saisies_approche: 2139
+      meilleur_point:
+        theta: 0.95
+        n: 845
+        k: 1
+        borne: 0.009677
+        couverture: 0.395
+    seuil_final: null
+  vocabulaire_metier:
+    central:
+      seuil: null
+      desactive: true
+      saisies_approche: 147
+      meilleur_point:
+        theta: 0.89
+        n: 82
+        k: 0
+        borne: 0.070461
+        couverture: 0.5578
+    pessimiste:
+      seuil: null
+      desactive: true
+      saisies_approche: 172
+      meilleur_point:
+        theta: 0.95
+        n: 60
+        k: 0
+        borne: 0.095034
+        couverture: 0.3488
+    seuil_final: null

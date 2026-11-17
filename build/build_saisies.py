@@ -5,6 +5,8 @@ Générateur des jeux de saisies à partir du modèle de saisie explicite (spec/
     python build/build_saisies.py --sensibilite         en plus : banc et analyse aux valeurs de sensibilité
     python build/build_saisies.py --part-entendu 0.4 --part-absents 0.1 --jeux banc analyse
                                                         une variante, sans modifier le YAML
+    python build/build_saisies.py --scenario pessimiste banc et certification du scénario pessimiste
+                                                        (spec/modele_saisie_pessimiste.yaml, valeurs v0.2)
 
 Sorties (CSV en utf-8-sig) :
   challenges/saisies_banc.csv      suit la répartition par famille du modèle, garde les saisies à 0 faute ;
@@ -15,6 +17,8 @@ Sorties (CSV en utf-8-sig) :
   challenges/saisies_certif.csv    même construction, autre graine, aucun terme normalisé commun avec
                                    l'analyse ; ne sert qu'à calculer un seuil, une seule fois, plus tard ;
   challenges/sensibilite/…         variantes (part d'« entendu », part d'absents) ;
+  challenges/saisies_{banc,certif}_pessimiste.csv
+                                   scénario pessimiste (calibration des seuils, R-RES-10) ;
   challenges/negatifs_retires.csv  moitié des lieux de l'index négatif retirée de l'index CHARGÉ par le
                                    moteur pendant l'évaluation de ces jeux (absents inconnus) ;
   challenges/saisies_meta.json     graines, paramètres, volumes, manques, empreintes des fichiers.
@@ -54,6 +58,7 @@ from engine.resolveur import ResolveurExact  # noqa: E402
 from tirage_echantillon_reel import nom_a_dicter  # noqa: E402
 
 MODELE = SPEC / "modele_saisie.yaml"
+MODELE_PESSIMISTE = SPEC / "modele_saisie_pessimiste.yaml"   # scénario pessimiste (valeurs v0.2, calibration R-RES-10)
 ABSENTS = SPEC / "absents"
 RETIRES = CHAL / "negatifs_retires.csv"
 META = CHAL / "saisies_meta.json"
@@ -63,6 +68,9 @@ SENSI = CHAL / "sensibilite"
 # Modèle v0.3 : nouvelles graines (v0.2 : banc 20261117, analyse 20261118, certif 20261119 ;
 # v0.1 : banc 20261208, analyse 20261201, certif 20261215).
 GRAINES = {"banc": 20261120, "analyse": 20261121, "certif": 20261122}
+# Scénario pessimiste (spec/modele_saisie_pessimiste.yaml) : banc et certification seulement, graines à part.
+GRAINES_PESSIMISTE = {"banc": 20261123, "certif": 20261124}
+SUFFIXE_PESSIMISTE = "_pessimiste"
 GRAINE_NEGATIFS = 20261222   # inchangée : même partage de l'index négatif qu'en v0.1 et v0.2 (comparaison)
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"   # clavier.choix_de_la_lettre.quelconque
@@ -1155,13 +1163,40 @@ class Generateur:
 # ── jeux ──────────────────────────────────────────────────────────────────────────────────────────
 
 def plan_jeu(jeu: str, modele: Modele, suffixe: str = "", volume_banc: int = VOLUME_BANC,
-             volume_calib: int = VOLUME_CALIB) -> Plan:
+             volume_calib: int = VOLUME_CALIB, graines: dict | None = None) -> Plan:
+    graines = graines or GRAINES
     if jeu == "banc":
         n_pres = round(volume_banc * (1 - modele.absents_part))
         vol = {f: round(n_pres * w) for f, w in modele.repartition.items()}
-        return Plan("banc", GRAINES["banc"], False, vol, modele.absents_part, CODES_BANC, suffixe)
+        return Plan("banc", graines["banc"], False, vol, modele.absents_part, CODES_BANC, suffixe)
     vol = {f: volume_calib for f in sorted(modele.familles)}
-    return Plan(jeu, GRAINES[jeu], True, vol, modele.absents_part, 0, suffixe)
+    return Plan(jeu, graines[jeu], True, vol, modele.absents_part, 0, suffixe)
+
+
+def generer_pessimiste(args, ctx_central: Contexte, ret: set[str], gardes: list[str], meta: dict) -> None:
+    """Scénario pessimiste : banc et certification depuis spec/modele_saisie_pessimiste.yaml.
+    La certification pessimiste n'a aucun terme normalisé commun avec l'analyse (v0.3), comme la certification
+    centrale. Même catalogue, même partage de l'index négatif que les jeux centraux."""
+    modele = Modele.charger(MODELE_PESSIMISTE)
+    ctx = Contexte(modele, ctx_central.cat)
+    chemin_a = CHAL / "saisies_analyse.csv"
+    if not chemin_a.exists():
+        raise FileNotFoundError(f"{chemin_a} introuvable : générer l'analyse avant la certification pessimiste.")
+    interdits_certif = {r["terme_norm"] for r in read_csv(chemin_a)}
+    meta["scenario_pessimiste"] = {"modele": modele.source, "fichier_modele": str(MODELE_PESSIMISTE.relative_to(ROOT)).replace("\\", "/"),
+                                   "graines": GRAINES_PESSIMISTE}
+    for jeu in ("banc", "certif"):
+        plan = plan_jeu(jeu, modele, SUFFIXE_PESSIMISTE, args.volume_banc, args.volume_calib, GRAINES_PESSIMISTE)
+        lignes, info = generer_jeu(ctx, modele, plan, ret, gardes, interdits_certif if jeu == "certif" else set())
+        chemin = CHAL / f"saisies_{jeu}{SUFFIXE_PESSIMISTE}.csv"
+        write_csv(chemin, lignes, COLONNES)
+        info["fichier"] = str(chemin.relative_to(ROOT)).replace("\\", "/")
+        info["sha256"] = empreinte(chemin)
+        info["scenario"] = "pessimiste"
+        meta["jeux"][f"{jeu}{SUFFIXE_PESSIMISTE}"] = info
+        print(f"{info['fichier']} : {info['cas']} cas (graine {plan.graine}), présents "
+              + ", ".join(f"{f} {n}" for f, n in info["presents_par_famille"].items())
+              + f" ; absents {sum(info['absents_par_sous_nature'].values())}")
 
 
 def generer_jeu(ctx: Contexte, modele: Modele, plan: Plan, retires: set[str], gardes: list[str],
@@ -1225,6 +1260,8 @@ def main(argv=None) -> int:
                     help="génère aussi banc et analyse aux valeurs de sensibilité du modèle (une à la fois)")
     ap.add_argument("--volume-banc", type=int, default=VOLUME_BANC)
     ap.add_argument("--volume-calib", type=int, default=VOLUME_CALIB)
+    ap.add_argument("--scenario", choices=("central", "pessimiste"), default="central",
+                    help="pessimiste : seulement banc et certification depuis spec/modele_saisie_pessimiste.yaml")
     args = ap.parse_args(argv)
     console_utf8()
 
@@ -1234,6 +1271,12 @@ def main(argv=None) -> int:
     ecrire_retires(gardes, retires, ctx.cat)
     ret = set(retires)
     meta = json.loads(META.read_text(encoding="utf-8")) if META.exists() else {}
+    meta.setdefault("jeux", {})
+    if args.scenario == "pessimiste":
+        generer_pessimiste(args, ctx, ret, gardes, meta)
+        META.write_text(json.dumps(meta, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+        print(f"→ {META.name}")
+        return 0
     meta.update({"modele": modele.source, "graines": GRAINES, "graine_negatifs": GRAINE_NEGATIFS,
                  "negatifs": {"lieux_gardes": len(gardes), "lieux_retires": len(retires), "fichier": RETIRES.name},
                  "mots_clients_frequents_hors_listes": frequences_generiques(ctx)})

@@ -9,7 +9,8 @@ seuil fixe 0,88 PROVISOIRE (risque mesuré dans le tag calibration-v1).
     res.statut, res.ids, res.trace
 """
 from engine.catalogue import Catalogue
-from engine.approche import SeuilFixe
+from engine.approche import AucunApproche, SeuilFixe, SeuilsCalibres
 from engine.resolveur import Resolution, ResolveurApproche, ResolveurExact
 
-__all__ = ["Catalogue", "Resolution", "ResolveurApproche", "ResolveurExact", "SeuilFixe"]
+__all__ = ["AucunApproche", "Catalogue", "Resolution", "ResolveurApproche", "ResolveurExact", "SeuilFixe",
+           "SeuilsCalibres"]
