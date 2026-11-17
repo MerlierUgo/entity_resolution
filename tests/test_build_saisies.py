@@ -18,7 +18,7 @@ from common import normalize, read_csv  # noqa: E402
 
 CHAL = ROOT / "challenges"
 JEUX = {j: CHAL / f"saisies_{j}.csv" for j in ("banc", "analyse", "certif")}
-CHIFFRE = re.compile(r"\w*\d\w*")
+CHIFFRE = re.compile(r"\d+")         # chiffres jamais modifiés ; une fusion peut coller deux nombres (« ix3 50 » → « ix350 »)
 
 
 @pytest.fixture(scope="module")
@@ -83,12 +83,13 @@ def test_variante_sans_modifier_le_yaml(modele):
 # ── poids
 
 @pytest.mark.parametrize("bloc", ["modes", "fautes_lu", "fautes_entendu", "melange_lu", "melange_entendu",
-                                  "clavier", "phon", "nature", "repartition"])
+                                  "clavier", "espace", "choix_lettre", "phon", "nature", "repartition", "geo_banc"])
 def test_poids_respectes(modele, bloc):
     poids = {"modes": modele.modes, "fautes_lu": modele.fautes["lu"], "fautes_entendu": modele.fautes["entendu"],
              "melange_lu": modele.melange["lu"], "melange_entendu": modele.melange["entendu"],
-             "clavier": modele.clavier, "phon": modele.phon, "nature": modele.absents_nature,
-             "repartition": modele.repartition}[bloc]
+             "clavier": modele.clavier, "espace": modele.espace, "choix_lettre": modele.choix_lettre,
+             "phon": modele.phon, "nature": modele.absents_nature,
+             "repartition": modele.repartition, "geo_banc": modele.geo_banc}[bloc]
     rng = random.Random(1)
     n = 40_000
     c = Counter(bs.tirer(rng, poids) for _ in range(n))
@@ -143,7 +144,7 @@ def test_jamais_sur_un_code_ni_la_premiere_lettre(modele, ctx):
         for mode in ("lu", "entendu"):
             t, labels = pert.fautes(rng, nom.lower(), mode, 3)
             assert t[:1] == nom.lower()[:1], (nom, t, labels)
-            assert CHIFFRE.findall(t) == CHIFFRE.findall(nom.lower()), (nom, t, labels)
+            assert "".join(CHIFFRE.findall(t)) == "".join(CHIFFRE.findall(nom.lower())), (nom, t, labels)
 
 
 def test_jeux_jamais_sur_un_code(fichiers):
@@ -155,7 +156,7 @@ def test_jeux_jamais_sur_un_code(fichiers):
             if l["nature"] == "present" and not l["mots_oublies"]:
                 src = l["nom_source"].lower().replace(" – ", " ")
                 assert l["terme"][:1] == src[:1], (jeu, l["case_id"])
-                assert CHIFFRE.findall(l["terme"]) == CHIFFRE.findall(src), (jeu, l["case_id"])
+                assert "".join(CHIFFRE.findall(l["terme"])) == "".join(CHIFFRE.findall(src)), (jeu, l["case_id"])
 
 
 def test_calibration_fautive_et_approchee(fichiers, modele):
@@ -166,7 +167,7 @@ def test_calibration_fautive_et_approchee(fichiers, modele):
         assert all(l["perturbations"] or l["mots_oublies"] for l in pres), jeu
         assert len({l["terme_norm"] for l in lignes}) == len(lignes), jeu
         par_nom = Counter(normalize(l["nom_source"]) for l in pres)
-        assert max(par_nom.values()) <= modele.max_par_nom
+        assert max(par_nom.values()) <= modele.max_par_nom["calibration"]
 
 
 def test_analyse_et_certif_sans_terme_commun(fichiers):
@@ -194,3 +195,153 @@ def test_negatifs_partages_en_deux(ctx, partage):
     assert not set(gardes) & set(retires)
     assert abs(len(retires) - len(gardes)) <= 1
     assert set(gardes) | set(retires) == {k for k, (_, ra) in ctx.cat.negatifs.items() if ra == "lieu"}
+
+
+# ── modèle v0.3 (valeurs lues dans des clés, plus jamais recopiées depuis le texte)
+
+def test_v0_3_valeurs_lues(modele):
+    assert modele.source["version"] == "0.3"
+    assert modele.clavier == {"omission": 0.40, "substitution": 0.20, "inversion": 0.15, "insertion": 0.10,
+                              "doublement": 0.05, "espace": 0.10}
+    assert modele.espace == {"fusion": 0.70, "coupure": 0.30}
+    assert modele.fusion_mots_vides is False and modele.fusion_mots_a_chiffre is True
+    assert modele.coupure_morceau_min == 2
+    assert modele.choix_lettre == {"touche_voisine": 0.50, "quelconque": 0.50}
+    assert modele.fautes["entendu"] == {0: 0.33, 1: 0.27, 2: 0.20, 3: 0.20}
+    assert modele.phon["transcription_libre"] == 0.15 and "transcription_libre" not in modele.phon_reecritures
+    tr = modele.transcription
+    assert tr["nb_regles"] == {2: 0.5, 3: 0.5} and tr["tirage"] == "pondere"
+    assert tr["proba_voyelle"] == 0.5 and tr["longueur_min"] == 5 and ("o", "ou") in tr["voyelles"]
+    assert modele.omission_plafond == 0.6 and modele.nombre_plus_peuples == 300
+    assert modele.voisins_distance_max == 2
+    assert modele.max_par_nom == {"calibration": 3, "banc": None}
+
+
+def test_nombre_de_fautes_sans_classe_4(modele):
+    pert = bs.Perturbateur(modele)
+    rng = random.Random(4)
+    n = 40_000
+    for mode in ("lu", "entendu"):
+        c = Counter(pert.nb_fautes(rng, mode) for _ in range(n))
+        assert set(c) == set(modele.fautes[mode]) == {0, 1, 2, 3}
+        for k, w in modele.fautes[mode].items():
+            assert abs(c[k] / n - w) <= 0.02, (mode, k)
+
+
+def test_probabilite_oubli_par_type(modele):
+    assert modele.proba_oubli("article", "lu") == 0.25
+    assert modele.proba_oubli("commune", "lu") == 0.02            # autres
+    assert modele.proba_oubli("article", "entendu") == pytest.approx(0.30)
+    assert modele.proba_oubli("client", "entendu") == pytest.approx(0.18)
+    fort = bs.Modele(**{**modele.__dict__, "omission_mult_entendu": 3.0})
+    assert fort.proba_oubli("article", "entendu") == modele.omission_plafond
+
+
+def test_oubli_dernier_mot(ctx):
+    e = {"entity_type": "commune"}
+    r = bs._omettre_categorie(ctx, random.Random(1), e, "Sint-Lambrechts-Woluwe", "dernier_mot")
+    assert r == ("Sint-Lambrechts", ["Woluwe"])
+    assert bs._omettre_categorie(ctx, random.Random(1), e, "Liège", "dernier_mot") is None
+
+
+def test_espace_fusion_et_coupure(modele):
+    pert = bs.Perturbateur(modele)
+    assert (6, 7, "") in pert.sites_clavier("audi e tron", "espace", "fusion")     # « e tron » → « etron »
+    assert not pert.sites_clavier("bougie d allumage", "espace", "fusion")         # jamais avec un mot vide
+    assert (2, 3, "") in pert.sites_clavier("ds 4", "espace", "fusion")            # mot à chiffre permis
+    sans_chiffre = bs.Perturbateur(bs.Modele(**{**modele.__dict__, "fusion_mots_a_chiffre": False}))
+    assert not sans_chiffre.sites_clavier("ds 4", "espace", "fusion")
+    mot = "carrosseriebedrijf"
+    coupures = pert.sites_clavier(mot, "espace", "coupure")
+    assert coupures and all(2 <= a <= len(mot) - 2 for a, _, _ in coupures)       # morceaux d'au moins 2 lettres
+    assert not pert.sites_clavier("de la", "espace", "coupure")
+
+
+def test_choix_de_la_lettre(modele):
+    pert = bs.Perturbateur(modele)
+    mot = "standard"
+    voisine = pert.sites_clavier(mot, "substitution", "touche_voisine")
+    quelconque = pert.sites_clavier(mot, "substitution", "quelconque")
+    assert all(r in bs.VOISINS[mot[a]] for a, _, r in voisine)
+    assert any(r not in bs.VOISINS[mot[a]] for a, _, r in quelconque)
+    assert all(r != mot[a] for a, _, r in quelconque)
+
+
+def test_transcription_libre(modele):
+    pert = bs.Perturbateur(modele)
+    rng = random.Random(11)
+    src = "montataire brunssum"
+    vus = 0
+    for _ in range(300):
+        r = pert.transcription(rng, src)
+        if r is None:
+            continue
+        vus += 1
+        t, lab = r
+        regles = lab.split("[", 1)[1].rstrip("]").split(" + ")
+        assert sum(not x.startswith("voyelle(") for x in regles) in modele.transcription["nb_regles"], lab
+        assert t[:1] == "m" and t.count(" ") == 1
+        assert sum(a != b for a, b in zip(t.split(), src.split())) == 1, (t, lab)   # un seul mot réécrit
+    assert vus > 250
+    assert pert.transcription(rng, "ford ka") is None             # aucun mot de 5 lettres ou plus
+
+
+def test_jamais_retour_a_la_forme_de_depart(modele):
+    pert = bs.Perturbateur(modele)
+    rng = random.Random(5)
+    for nom in ("carrosseriebedrijf de smet", "montataire", "tervuren", "sint lambrechts woluwe"):
+        for _ in range(200):
+            t, labels = pert.fautes(rng, nom, "entendu", 3)
+            if labels:
+                assert normalize(t) != normalize(nom), (nom, labels)
+
+
+def test_premiere_lettre_toutes_fautes(modele, ctx):
+    pert = bs.Perturbateur(modele)
+    rng = random.Random(9)
+    noms = sorted({ctx.nom_source(e).replace(" – ", " ").lower() for e in list(ctx.ents)[::40]})
+    for nom in noms:
+        for mode in ("lu", "entendu"):
+            t, labels = pert.fautes(rng, nom, mode, 5)
+            assert t[:1] == nom[:1], (nom, t, labels)
+
+
+def test_attendu_voisins_bornes_a_2(ctx):
+    eid = next(e for e, x in ctx.ents.items() if x["entity_type"] == "localite_postale" and normalize(x["label"]) == "rongy")
+    att = ctx.attendu("rangie", "rongy", eid, None, None)
+    assert att["distance"] == 3
+    assert all(bs.distance("rangie", n) <= 2 for n in att["voisins"])
+
+
+def test_banc_geographie_plus_peuplee(fichiers, ctx, modele, partage):
+    import json
+    meta = json.loads(bs.META.read_text(encoding="utf-8"))["jeux"]["banc"]
+    geo = sum(1 for l in fichiers["banc"] if l["nature"] == "present" and l["famille"] == "geographie")
+    # le compteur inclut les tirages « au hasard » tombés parmi les plus peuplés
+    g = bs.Generateur(ctx, modele, bs.plan_jeu("banc", modele), set(partage[1]))
+    w = modele.geo_banc
+    attendu = w["plus_peuples"] + w["au_hasard"] * len(g.plus_peuples()) / len(g.eligibles("geographie"))
+    assert abs(meta["geographie_plus_peuples"] / geo - attendu) <= 0.05
+
+
+@pytest.mark.parametrize("avant, apres, message", [
+    ("tirage_des_regles: pondere", "tirage_des_regles: au_jugé", "tirage_des_regles"),
+    ("voisins_distance_max: 2", "voisins_distance_max: deux", "voisins_distance_max"),
+    ("fusion_mots_vides: false", "fusion_mots_vides: parfois", "fusion_mots_vides"),
+    ("  plafond: 0.6", "  plafond: 1.6", "plafond"),
+])
+def test_yaml_invalide_refuse(tmp_path, avant, apres, message):
+    y = bs.MODELE.read_text(encoding="utf-8")
+    assert y.count(avant) == 1, avant
+    (tmp_path / "m.yaml").write_text(y.replace(avant, apres), encoding="utf-8")
+    with pytest.raises(bs.ModeleInvalide, match=message):
+        bs.Modele.charger(tmp_path / "m.yaml")
+
+
+def test_mots_oublies_notes_a_la_generation(fichiers):
+    for jeu in ("banc", "analyse"):
+        for l in fichiers[jeu]:
+            if l["mots_oublies"]:
+                assert l["forme_courte"] and l["sous_nature"] == "mot_oublie", (jeu, l["case_id"])
+            else:
+                assert not l["forme_courte"], (jeu, l["case_id"])

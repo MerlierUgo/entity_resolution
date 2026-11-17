@@ -9,6 +9,7 @@ Générateur des jeux de saisies à partir du modèle de saisie explicite (spec/
 Sorties (CSV en utf-8-sig) :
   challenges/saisies_banc.csv      suit la répartition par famille du modèle, garde les saisies à 0 faute ;
                                    pas de plafond de cas par nom (un nom revient souvent dans le trafic) ;
+                                   géographie : part du modèle parmi les lieux les plus peuplés ;
   challenges/saisies_analyse.csv   pour concevoir : au moins VOLUME_CALIB saisies fautives par famille
                                    quand le catalogue le permet, plus les absents selon la part du modèle ;
   challenges/saisies_certif.csv    même construction, autre graine, aucun terme normalisé commun avec
@@ -59,8 +60,12 @@ META = CHAL / "saisies_meta.json"
 SENSI = CHAL / "sensibilite"
 
 # Paramètres de fabrication (pas des valeurs du modèle) : notés dans chaque fichier produit.
-GRAINES = {"banc": 20261208, "analyse": 20261201, "certif": 20261215}
-GRAINE_NEGATIFS = 20261222
+# Modèle v0.3 : nouvelles graines (v0.2 : banc 20261117, analyse 20261118, certif 20261119 ;
+# v0.1 : banc 20261208, analyse 20261201, certif 20261215).
+GRAINES = {"banc": 20261120, "analyse": 20261121, "certif": 20261122}
+GRAINE_NEGATIFS = 20261222   # inchangée : même partage de l'index négatif qu'en v0.1 et v0.2 (comparaison)
+
+ALPHABET = "abcdefghijklmnopqrstuvwxyz"   # clavier.choix_de_la_lettre.quelconque
 VOLUME_CALIB = 3000      # saisies fautives visées par famille (modèle : calibration_volume, « au moins 3 000 »)
 VOLUME_BANC = 5000       # saisies du banc d'essai, toutes familles
 CODES_BANC = 30          # codes voisins gardés dans le banc (MN-AMO-70514 / 70513) : jamais rapprochés
@@ -68,7 +73,7 @@ PREFIXES = {"banc": "SB", "analyse": "SA", "certif": "SC"}
 
 COLONNES = ["case_id", "jeu", "graine", "famille", "mode", "terme", "terme_norm", "indice_type",
             "attendu_statut", "attendu_ids", "nature", "sous_nature", "perturbations", "nb_perturbations",
-            "mots_oublies", "distance", "voisins", "nom_source", "entity_id_source", "atteint_approche"]
+            "mots_oublies", "forme_courte", "distance", "voisins", "nom_source", "entity_id_source", "atteint_approche"]
 
 # ── clavier AZERTY belge (seule table en dur) ──────────────────────────────────────────────────────
 # Rangées de lettres ; la rangée du bas commence par la touche « < » (clavier ISO), d'où le décalage.
@@ -175,10 +180,18 @@ class Modele:
     fautes: dict                 # mode → {n: poids}
     melange: dict                # mode → {clavier, phonetique}
     clavier: dict                # type → poids
-    phon: dict                   # règle → poids
-    phon_reecritures: dict       # règle → [Reecriture]
-    omission_proba: dict         # mode → probabilité
-    omission_par_type: dict      # type d'entité → {catégorie: poids}
+    espace: dict                 # fusion | coupure → poids
+    choix_lettre: dict           # touche_voisine | quelconque → poids
+    fusion_mots_vides: bool      # clavier.espace : une fusion peut-elle toucher un mot vide ?
+    fusion_mots_a_chiffre: bool  # … un mot qui contient un chiffre ?
+    coupure_morceau_min: int     # longueur minimale de chaque morceau d'une coupure
+    transcription: dict          # nb_regles {n: poids}, tirage, proba_voyelle, longueur_min, voyelles [(x, y)]
+    phon: dict                   # règle → poids (transcription_libre comprise)
+    phon_reecritures: dict       # règle → [Reecriture] (les sept règles à motifs)
+    omission_proba: dict         # catégorie de type (article, modele_vehicule, client, autres) → probabilité en « lu »
+    omission_mult_entendu: float
+    omission_plafond: float
+    omission_par_type: dict      # catégorie de type → {catégorie de mot oublié: poids}
     generiques: frozenset        # mots génériques des clients (normalisés)
     familiaux: frozenset
     exclus_generiques: frozenset
@@ -188,8 +201,11 @@ class Modele:
     absents_nature: dict
     partage_negatif: dict
     longueur_min: int
-    max_par_nom: int
+    max_par_nom: dict            # calibration | banc → plafond (None : sans plafond)
     repartition: dict
+    geo_banc: dict               # plus_peuples | au_hasard → poids
+    nombre_plus_peuples: int
+    voisins_distance_max: int    # attendu § 8 : un voisin est ajouté s'il est à ≤ min(d, cette borne)
     part_indice: float
     familles: dict               # famille → [types]
     source: dict = field(default_factory=dict)
@@ -200,22 +216,72 @@ class Modele:
         if y.get("statut") != "valide":
             raise ModeleInvalide(f"{chemin.name} : statut « {y.get('statut')} », il faut « valide » pour générer.")
         modes = _poids(y["modes"], "modes", ignorer=("sensibilite_entendu",))
-        fautes = {m: {int(k): v for k, v in _poids(y["nombre_de_fautes"][m], f"nombre_de_fautes.{m}").items()}
-                  for m in modes}
+        nf = y["nombre_de_fautes"]
+        fautes = {m: {int(k): v for k, v in _poids(nf[m], f"nombre_de_fautes.{m}").items()} for m in modes}
+        if "classe_4" in nf:
+            raise ModeleInvalide(f"{chemin.name} · nombre_de_fautes.classe_4 : clé supprimée en v0.3 ; chaque classe "
+                                 "est maintenant un nombre exact de perturbations.")
         melange = {m: _poids(y["melange_fautes"][m], f"melange_fautes.{m}") for m in modes}
-        if y["clavier"].get("disposition") != "azerty_be":
+        cl = y["clavier"]
+        if cl.get("disposition") != "azerty_be":
             raise ModeleInvalide(f"{chemin.name} · clavier.disposition : seule azerty_be est connue du générateur.")
-        clavier = _poids(y["clavier"]["types"], "clavier.types")
-        inconnus = set(clavier) - {"omission", "substitution", "inversion", "insertion", "doublement"}
+        clavier = _poids(cl["types"], "clavier.types")
+        inconnus = set(clavier) - {"omission", "substitution", "inversion", "insertion", "doublement", "espace"}
         if inconnus:
             raise ModeleInvalide(f"{chemin.name} · clavier.types : type(s) inconnu(s) {sorted(inconnus)}.")
-        phon = _poids(y["phonetique"]["regles"], "phonetique.regles")
+        opts_espace = ("note", "fusion_mots_vides", "fusion_mots_a_chiffre", "coupure_morceau_min")
+        espace = _poids(cl["espace"], "clavier.espace", ignorer=opts_espace) if "espace" in clavier else {}
+        if espace and set(espace) != {"fusion", "coupure"}:
+            raise ModeleInvalide(f"{chemin.name} · clavier.espace : fusion et coupure attendues.")
+        ce = cl.get("espace", {})
+        fusion_vides, fusion_chiffre = ce.get("fusion_mots_vides"), ce.get("fusion_mots_a_chiffre")
+        morceau = ce.get("coupure_morceau_min")
+        if espace and (not isinstance(fusion_vides, bool) or not isinstance(fusion_chiffre, bool)
+                       or not isinstance(morceau, int) or morceau < 1):
+            raise ModeleInvalide(f"{chemin.name} · clavier.espace : fusion_mots_vides et fusion_mots_a_chiffre "
+                                 "(true / false) et coupure_morceau_min (entier ≥ 1) attendus.")
+        choix = _poids(cl.get("choix_de_la_lettre", {"touche_voisine": 1.0}), "clavier.choix_de_la_lettre")
+        if set(choix) - {"touche_voisine", "quelconque"}:
+            raise ModeleInvalide(f"{chemin.name} · clavier.choix_de_la_lettre : touche_voisine et quelconque attendues.")
+        regles = y["phonetique"]["regles"]
+        phon = _poids(regles, "phonetique.regles")
         reecr = {k: sorted({rw for mo in v["motifs"] for rw in parser_motif(mo)},
                            key=lambda x: (x.src, x.dst, x.position))
-                 for k, v in y["phonetique"]["regles"].items()}
+                 for k, v in regles.items() if "motifs" in v}
+        sans_motif = set(regles) - set(reecr)
+        if sans_motif - {"transcription_libre"}:
+            raise ModeleInvalide(f"{chemin.name} · phonetique.regles : règle(s) sans motifs {sorted(sans_motif)}.")
+        transcription = {}
+        if "transcription_libre" in regles:
+            tl = regles["transcription_libre"]
+            ou = f"{chemin.name} · phonetique.regles.transcription_libre"
+            try:
+                nbr = {int(k): v for k, v in _poids(tl["nombre_de_regles"], "transcription_libre.nombre_de_regles").items()}
+                transcription = {"nb_regles": nbr, "tirage": tl["tirage_des_regles"],
+                                 "proba_voyelle": float(tl["proba_voyelle_proche"]),
+                                 "longueur_min": int(tl["longueur_min_mot"]),
+                                 "voyelles": [tuple(str(x) for x in paire) for paire in tl["voyelles_proches"]]}
+            except KeyError as k:
+                raise ModeleInvalide(f"{ou} : clé {k} manquante.") from None
+            if transcription["tirage"] not in ("pondere", "uniforme"):
+                raise ModeleInvalide(f"{ou}.tirage_des_regles : « {transcription['tirage']} » (pondere ou uniforme).")
+            if min(nbr) < 1 or not 0 <= transcription["proba_voyelle"] <= 1 or \
+                    any(len(pr) != 2 for pr in transcription["voyelles"]):
+                raise ModeleInvalide(f"{ou} : nombre_de_regles ≥ 1, proba_voyelle_proche entre 0 et 1, "
+                                     "voyelles_proches en paires attendus.")
         om = y["omissions_de_mots"]
         par_type = {t: _poids(v, f"omissions_de_mots.par_famille.{t}")
                     for t, v in om["par_famille"].items() if isinstance(v, dict)}
+        proba = {str(k): float(v) for k, v in om["probabilite_par_type"].items()}
+        if set(proba) != set(par_type) or any(not 0 <= p <= 1 for p in proba.values()):
+            raise ModeleInvalide(f"{chemin.name} · omissions_de_mots : probabilite_par_type {sorted(proba)} et "
+                                 f"par_famille {sorted(par_type)} doivent avoir les mêmes clés, probabilités entre 0 et 1.")
+        plafond = float(om["plafond"])
+        if not 0 <= plafond <= 1:
+            raise ModeleInvalide(f"{chemin.name} · omissions_de_mots.plafond : {plafond} (entre 0 et 1).")
+        vmax = y["attendu"]["voisins_distance_max"]
+        if not isinstance(vmax, int) or vmax < 0:
+            raise ModeleInvalide(f"{chemin.name} · attendu.voisins_distance_max : « {vmax} » (entier ≥ 0).")
         mg = om["mots_generiques_clients"]
         nz = lambda xs: frozenset(normalize(x) for x in xs if normalize(x))
         ab = y["absents"]
@@ -229,9 +295,32 @@ class Modele:
         if hors:
             raise ModeleInvalide(f"{chemin.name} · repartition_par_famille : famille(s) {sorted(hors)} absente(s) "
                                  f"de {y['familles']}.")
+        gb = y["repartition_par_famille"].get("geographie_dans_le_banc", {"au_hasard": 1.0})
+        geo_banc = _poids(gb, "repartition_par_famille.geographie_dans_le_banc", ignorer=("note", "nombre_plus_peuples"))
+        if set(geo_banc) - {"plus_peuples", "au_hasard"}:
+            raise ModeleInvalide(f"{chemin.name} · geographie_dans_le_banc : plus_peuples et au_hasard attendues.")
+        n_peuples = gb.get("nombre_plus_peuples", 0)
+        if geo_banc.get("plus_peuples") and (not isinstance(n_peuples, int) or n_peuples < 1):
+            raise ModeleInvalide(f"{chemin.name} · geographie_dans_le_banc.nombre_plus_peuples : entier ≥ 1 attendu.")
         ex = y["exclusions"]
-        return cls(modes=modes, fautes=fautes, melange=melange, clavier=clavier, phon=phon, phon_reecritures=reecr,
-                   omission_proba={m: float(om["probabilite"][m]) for m in modes}, omission_par_type=par_type,
+        mx = ex["max_cas_par_nom"]
+        if not isinstance(mx, dict) or set(mx) != {"calibration", "banc"}:
+            raise ModeleInvalide(f"{chemin.name} · exclusions.max_cas_par_nom : clés calibration et banc attendues.")
+        max_par_nom = {}
+        for k, v in mx.items():
+            if v == "sans_plafond":
+                max_par_nom[k] = None
+            elif isinstance(v, int) and v > 0:
+                max_par_nom[k] = v
+            else:
+                raise ModeleInvalide(f"{chemin.name} · max_cas_par_nom.{k} : « {v} » (entier ou sans_plafond attendu).")
+        return cls(modes=modes, fautes=fautes, melange=melange, clavier=clavier, espace=espace, choix_lettre=choix,
+                   fusion_mots_vides=bool(fusion_vides), fusion_mots_a_chiffre=bool(fusion_chiffre),
+                   coupure_morceau_min=int(morceau or 1), transcription=transcription,
+                   phon=phon, phon_reecritures=reecr,
+                   omission_proba=proba, omission_mult_entendu=float(om["multiplicateur_entendu"]),
+                   omission_plafond=plafond, omission_par_type=par_type, geo_banc=geo_banc,
+                   nombre_plus_peuples=int(n_peuples), voisins_distance_max=vmax,
                    generiques=nz(mg["generiques"]), familiaux=nz(mg["complements_familiaux"]),
                    exclus_generiques=nz(mg["exclus_volontairement"]),
                    absents_part=float(ab["part"]), absents_sensibilite=list(ab["sensibilite"]),
@@ -239,9 +328,20 @@ class Modele:
                    absents_nature=_poids(ab["nature"], "absents.nature"),
                    partage_negatif=_poids({k: v for k, v in ab["partage_index_negatif"].items() if k != "graine"},
                                           "absents.partage_index_negatif"),
-                   longueur_min=int(ex["longueur_minimale"]), max_par_nom=int(ex["max_cas_par_nom"]),
+                   longueur_min=int(ex["longueur_minimale"]), max_par_nom=max_par_nom,
                    repartition=rep, part_indice=float(y["attendu"]["indice_de_type"]["part_avec_indice"]),
                    familles=familles, source={"version": y.get("version"), "date": str(y.get("date"))})
+
+    def categorie_oubli(self, typ: str) -> str:
+        """Clé de omissions_de_mots pour un type d'entité : le type lui-même s'il est nommé, sinon « autres »."""
+        return typ if typ in self.omission_proba and typ != "autres" else "autres"
+
+    def proba_oubli(self, typ: str, mode: str) -> float:
+        """Probabilité d'oubli d'un mot (§ 4) : par type en « lu » ; × multiplicateur en « entendu », plafonnée."""
+        p = self.omission_proba[self.categorie_oubli(typ)]
+        if mode == "entendu":
+            p = min(p * self.omission_mult_entendu, self.omission_plafond)
+        return p
 
     def avec_parts(self, entendu: float | None = None, absents: float | None = None) -> "Modele":
         """Variante de sensibilité : autre part d'« entendu » (le reste en « lu ») ou d'absents."""
@@ -295,32 +395,54 @@ class Perturbateur:
             out.append((mo.start(), mo.end()))
         return out
 
-    # sites clavier : (début, fin, remplacement)
-    def sites_clavier(self, t: str, typ: str) -> list[tuple[int, int, str]]:
+    def est_vide(self, w: str) -> bool:
+        return normalize(w) in ("", *STOP) or w.lower() in STOP
+
+    # sites clavier : (début, fin, remplacement) ; sous-type pour espace (fusion | coupure) et
+    # pour substitution / insertion (touche_voisine | quelconque)
+    def sites_clavier(self, t: str, typ: str, sous: str = "touche_voisine") -> list[tuple[int, int, str]]:
         sites = []
+        if typ == "espace" and sous == "fusion":
+            # deux mots voisins séparés seulement par des espaces ou tirets ; mots vides et mots à chiffre
+            # selon clavier.espace ; la longueur minimale ne s'applique pas (« e tron » → « etron »)
+            def permis(w: str) -> bool:
+                if self.est_vide(w) and not self.m.fusion_mots_vides:
+                    return False
+                return self.m.fusion_mots_a_chiffre or not any(c.isdigit() for c in w)
+            mots = list(MOT.finditer(t))
+            for m1, m2 in zip(mots, mots[1:]):
+                sep = t[m1.end():m2.start()]
+                if sep and set(sep) <= {" ", "-"} and permis(m1.group()) and permis(m2.group()):
+                    sites.append((m1.end(), m2.start(), ""))
+            return sites
+        lettres = (lambda c: VOISINS.get(c, ())) if sous == "touche_voisine" else (lambda c: ALPHABET)
         for a, b in self.mots_eligibles(t):
             for p in range(max(a, 1), b):
                 c = t[p]
                 if typ == "omission":
                     sites.append((p, p + 1, ""))
                 elif typ == "substitution":
-                    sites += [(p, p + 1, v) for v in VOISINS.get(c, ())]
+                    sites += [(p, p + 1, v) for v in lettres(c) if v != c]
                 elif typ == "inversion":
                     if p + 1 < b and t[p + 1] != c:
                         sites.append((p, p + 2, t[p + 1] + c))
                 elif typ == "insertion":
-                    sites += [(p + 1, p + 1, v) for v in VOISINS.get(c, ())]
+                    sites += [(p + 1, p + 1, v) for v in lettres(c)]
                 elif typ == "doublement":
                     if p + 1 < b and t[p + 1] == c:
                         sites.append((p + 1, p + 2, ""))          # dédoublement
                     elif not (p > a and t[p - 1] == c):
                         sites.append((p + 1, p + 1, c))           # doublement
+                elif typ == "espace" and sous == "coupure":
+                    k = self.m.coupure_morceau_min
+                    if p - a >= k and b - p >= k:                 # jamais un morceau trop court
+                        sites.append((p, p, " "))
         return sites
 
-    def sites_phonetiques(self, t: str, regle: str) -> list[tuple[int, int, str, str]]:
+    def sites_phonetiques(self, t: str, regle: str, spans=None) -> list[tuple[int, int, str, str]]:
         sites = []
         voyelles = "aeiouyàâäéèêëîïôöûüù"
-        for a, b in self.mots_eligibles(t):
+        for a, b in (spans if spans is not None else self.mots_eligibles(t)):
             mot = t[a:b]
             for rw in self.m.phon_reecritures[regle]:
                 if rw.position == "fin":
@@ -343,35 +465,107 @@ class Perturbateur:
                         i = mot.find(rw.src, i + 1)
         return sites
 
-    def une_faute(self, rng: random.Random, t: str, mode: str, essais: int = 12) -> tuple[str, str] | None:
-        """Une perturbation visible après normalisation, ou None si le texte n'en admet aucune."""
+    def sites_voyelles(self, t: str, a: int, b: int) -> list[tuple[int, int, str, str]]:
+        """Voyelle remplacée par une voyelle de son proche (a ↔ e, e ↔ i, o ↔ ou, u ↔ ou, i ↔ y)."""
+        sites = []
+        for x, y in self.m.transcription["voyelles"]:
+            for src, dst in ((x, y), (y, x)):
+                i = t.find(src, a, b)
+                while 0 <= i and i + len(src) <= b:
+                    j = i + len(src)
+                    deja_ou = (src == "o" and t[j:j + 1] == "u") or (src == "u" and i > 0 and t[i - 1] == "o")
+                    if i >= 1 and not deja_ou:
+                        sites.append((i, j, dst, f"{src}→{dst}"))
+                    i = t.find(src, i + 1, b)
+        return sorted(set(sites))
+
+    def transcription(self, rng: random.Random, t: str) -> tuple[str, str] | None:
+        """transcription_libre (§ 3) : sur UN mot d'au moins longueur_min_mot lettres, un nombre de règles
+        phonétiques tiré selon nombre_de_regles, chaque règle tirée selon tirage_des_regles parmi les règles
+        à motifs (avec remise ; une règle sans site sur le mot est retirée du tirage), puis, avec la probabilité
+        proba_voyelle_proche, une voyelle de son proche. Si aucun mot n'admet le plus petit nombre de règles : None."""
+        tr = self.m.transcription
+        spans = [(a, b) for a, b in self.mots_eligibles(t) if b - a >= tr["longueur_min"]]
+        rng.shuffle(spans)
+        poids7 = {k: (v if tr["tirage"] == "pondere" else 1.0)
+                  for k, v in self.m.phon.items() if k in self.m.phon_reecritures}
+        for a, b in spans:
+            k = int(tirer(rng, tr["nb_regles"]))
+            cur, fin, faites, pool = t, b, [], dict(poids7)
+            etats = {normalize(t)}
+            while len(faites) < k and pool:
+                regle = tirer(rng, pool)
+                sites = [s_ for s_ in self.sites_phonetiques(cur, regle, [(a, fin)])
+                         if normalize(cur[:s_[0]] + s_[2] + cur[s_[1]:]) not in etats]
+                if not sites:
+                    del pool[regle]
+                    continue
+                x, y, r, motif = sites[rng.randrange(len(sites))]
+                cur = cur[:x] + r + cur[y:]
+                fin += len(r) - (y - x)
+                etats.add(normalize(cur))
+                faites.append(f"{regle}({motif})")
+            if len(faites) < min(tr["nb_regles"]):
+                continue
+            if rng.random() < tr["proba_voyelle"]:
+                sv = [s_ for s_ in self.sites_voyelles(cur, a, fin)
+                      if normalize(cur[:s_[0]] + s_[2] + cur[s_[1]:]) not in etats]
+                if sv:
+                    x, y, r, motif = sv[rng.randrange(len(sv))]
+                    cur = cur[:x] + r + cur[y:]
+                    faites.append(f"voyelle({motif})")
+            return cur, "phonetique:transcription_libre[" + " + ".join(faites) + "]"
+        return None
+
+    def une_faute(self, rng: random.Random, t: str, mode: str, essais: int = 12,
+                  vus: frozenset = frozenset()) -> tuple[str, str] | None:
+        """Une perturbation visible après normalisation, ou None si le texte n'en admet aucune.
+        `vus` : formes normalisées déjà atteintes ; une perturbation qui y ramène (e → ai puis ai → e)
+        ne compte pas et est retirée."""
+        vus = vus | {normalize(t)}
+        ok = lambda x: normalize(x) not in vus and x[:1] == t[:1] and normalize(x)
         for _ in range(essais):
             sorte = tirer(rng, self.m.melange[mode])
             if sorte == "clavier":
                 typ = tirer(rng, self.m.clavier)
-                sites = self.sites_clavier(t, typ)
+                sous = (tirer(rng, self.m.espace) if typ == "espace" else
+                        tirer(rng, self.m.choix_lettre) if typ in ("substitution", "insertion") else "")
+                sites = self.sites_clavier(t, typ, sous or "touche_voisine")
                 if not sites:
                     continue
                 a, b, r = sites[rng.randrange(len(sites))]
-                label = f"clavier:{typ}"
+                label = f"clavier:{typ}" + (f"({sous})" if sous else "")
             else:
                 regle = tirer(rng, self.m.phon)
+                if regle not in self.m.phon_reecritures:
+                    res = self.transcription(rng, t)
+                    if res is None:
+                        continue
+                    nouveau, label = res
+                    if ok(nouveau):
+                        return nouveau, label
+                    continue
                 sites = self.sites_phonetiques(t, regle)
                 if not sites:
                     continue
                 a, b, r, motif = sites[rng.randrange(len(sites))]
                 label = f"phonetique:{regle}({motif})"
             nouveau = t[:a] + r + t[b:]
-            if normalize(nouveau) != normalize(t) and nouveau[:1] == t[:1] and normalize(nouveau):
+            if ok(nouveau):
                 return nouveau, label
         return None
 
+    def nb_fautes(self, rng: random.Random, mode: str) -> int:
+        """Nombre de perturbations (§ 2)."""
+        return int(tirer(rng, self.m.fautes[mode]))
+
     def fautes(self, rng: random.Random, t: str, mode: str, n: int) -> tuple[str, list[str]]:
-        labels = []
+        labels, vus = [], set()
         for _ in range(n):
-            r = self.une_faute(rng, t, mode)
+            r = self.une_faute(rng, t, mode, vus=frozenset(vus))
             if r is None:
                 break
+            vus.add(normalize(t))
             t, lab = r
             labels.append(lab)
         return t, labels
@@ -468,7 +662,8 @@ class Contexte:
         - nom source homonyme : ce que donne l'exact sur le nom source ;
         - mot oublié : l'entité désignée par la forme courte (exact), sinon toutes les entités du même type
           dont un nom contient tous ses mots ;
-        - faute : on ajoute tout nom du même type à une distance OSA ≤ celle du nom visé.
+        - faute : on ajoute tout nom du même type à une distance OSA ≤ min(d, voisins_distance_max), d étant la
+          distance du nom visé (un nom plus proche que la source reste compatible).
         Les règles de contexte et l'indice de type s'appliquent ensuite, comme dans le moteur."""
         t = normalize(terme)
         vise = court_norm if court_norm is not None else source_norm
@@ -482,7 +677,7 @@ class Contexte:
         noms_voisins = []
         if d > 0:
             types = {self.cat.etype[e] for e in base} or types_src
-            for n in sorted(self.voisins(t, d, types)):
+            for n in sorted(self.voisins(t, min(d, self.m.voisins_distance_max), types)):
                 ids = {e for e in self.cat.noms[n] if self.cat.etype[e] in types} - base
                 if ids:
                     noms_voisins.append(n)
@@ -504,8 +699,7 @@ def _sans(mots: list[str], i: int) -> list[str]:
 def omettre(ctx: Contexte, rng: random.Random, eid: str, nom: str) -> tuple[str, list[str]] | None:
     """Oublie un mot selon le type de l'entité (modèle § 4). None si aucune catégorie n'est applicable."""
     e = ctx.ents[eid]
-    typ = e["entity_type"]
-    poids = dict(ctx.m.omission_par_type.get(typ, {}))
+    poids = dict(ctx.m.omission_par_type.get(ctx.m.categorie_oubli(e["entity_type"]), {}))
     while poids:
         cat_ = tirer(rng, poids)
         r = _omettre_categorie(ctx, rng, e, nom, cat_)
@@ -562,6 +756,16 @@ def _omettre_categorie(ctx: Contexte, rng, e: dict, nom: str, categorie: str):
         if categorie == "marque" and nb_marque and modele:
             return " ".join(modele), [" ".join(mots[:nb_marque])]
         return None
+    if categorie == "dernier_mot":
+        # autres types : le dernier mot (« Sint-Lambrechts-Woluwe » → « Sint-Lambrechts ») ; tirets et
+        # espaces séparent les mots ; il faut au moins deux mots
+        mots = list(MOT.finditer(nom))
+        if len(mots) < 2:
+            return None
+        reste = nom[:mots[-1].start()].rstrip(" -–'’&,")
+        if not normalize(reste):
+            return None
+        return reste, [mots[-1].group()]
     return None
 
 
@@ -612,9 +816,10 @@ class Generateur:
         self.vus: set[str] = set()
         self.par_nom: Counter = Counter()
         self.rejets: Counter = Counter()
-        # Plafond de cas par nom (exclusions.max_cas_par_nom) : jeux de calibration seulement. Le banc imite
-        # le trafic, où un nom revient souvent (décision de l'auteur, 16/11/2026) : pas de plafond.
-        self.cap = modele.max_par_nom if plan.calibration else 10 ** 9
+        self.peuples_banc = 0              # saisies géographiques du banc tirées parmi les plus peuplés
+        # Plafond de cas par nom (exclusions.max_cas_par_nom, par jeu) : calibration 3, banc sans plafond.
+        cap = modele.max_par_nom["calibration" if plan.calibration else "banc"]
+        self.cap = cap if cap is not None else 10 ** 9
 
     # filtre commun
     def atteint_approche(self, norm: str) -> bool:
@@ -646,12 +851,12 @@ class Generateur:
         nom = self.ctx.nom_source(eid)
         texte = nom.replace(" – ", " ")
         court_norm, oublies = None, []
-        if self.rng.random() < self.m.omission_proba[mode]:
+        if self.rng.random() < self.m.proba_oubli(self.ctx.cat.etype[eid], mode):
             r = omettre(self.ctx, self.rng, eid, nom)
             if r:
                 texte, oublies = r[0].replace(" – ", " "), r[1]
                 court_norm = normalize(texte)
-        n = int(tirer(self.rng, self.m.fautes[mode]))
+        n = self.pert.nb_fautes(self.rng, mode)
         terme, labels = self.pert.fautes(self.rng, texte.lower(), mode, n)
         return terme, labels, oublies, court_norm
 
@@ -682,14 +887,16 @@ class Generateur:
         self.vus.add(norm)
         return self.ligne(famille=ctx.famille_de[typ], mode=mode, terme=terme, norm=norm, hint=hint, att=att,
                           nature="present", sous=("mot_oublie" if oublies else "faute" if labels else "exact"),
-                          labels=labels, oublies=oublies, nom=nom, eid=eid, atteint=atteint)
+                          labels=labels, oublies=oublies, nom=nom, eid=eid, atteint=atteint,
+                          court=court_norm or "")
 
-    def ligne(self, *, famille, mode, terme, norm, hint, att, nature, sous, labels, oublies, nom, eid, atteint):
+    def ligne(self, *, famille, mode, terme, norm, hint, att, nature, sous, labels, oublies, nom, eid, atteint, court=""):
         return {"jeu": self.plan.jeu + self.plan.suffixe, "graine": self.plan.graine, "famille": famille,
                 "mode": mode, "terme": terme, "terme_norm": norm, "indice_type": hint,
                 "attendu_statut": att["statut"], "attendu_ids": "|".join(att["ids"]),
                 "nature": nature, "sous_nature": sous, "perturbations": " ; ".join(labels),
                 "nb_perturbations": len(labels), "mots_oublies": " ; ".join(oublies),
+                "forme_courte": court,  # forme après mots oubliés, notée à la génération (vide sans oubli)
                 "distance": att.get("distance", ""), "voisins": "|".join(att.get("voisins", [])[:10]),
                 "nom_source": nom, "entity_id_source": eid, "atteint_approche": int(atteint)}
 
@@ -713,7 +920,38 @@ class Generateur:
             out.append(eid)
         return out
 
+    def plus_peuples(self) -> list[str]:
+        """Les nombre_plus_peuples lieux éligibles les plus peuplés (même règle que tirage_echantillon_reel)."""
+        cache = self.ctx.__dict__.setdefault("_plus_peuples", {})
+        if "geo" not in cache:
+            pop = [e for e in self.eligibles("geographie") if (self.ctx.ents[e]["population"] or "").strip()]
+            pop.sort(key=lambda e: (-float(self.ctx.ents[e]["population"]), e))
+            cache["geo"] = pop[:self.m.nombre_plus_peuples]
+        return list(cache["geo"])
+
+    def presents_geo_banc(self, cible: int) -> list[dict]:
+        """Géographie du banc (§ 7, v0.2) : chaque saisie vient, selon geographie_dans_le_banc, des lieux les
+        plus peuplés ou de tous les lieux éligibles (tirage avec remise ; le banc n'a pas de plafond)."""
+        pools = {"plus_peuples": self.plus_peuples(), "au_hasard": self.eligibles("geographie")}
+        lignes, essais = [], 0
+        while len(lignes) < cible and essais < cible * 20:
+            essais += 1
+            pool = pools[tirer(self.rng, self.m.geo_banc)]
+            eid = pool[self.rng.randrange(len(pool))]
+            cle = normalize(self.ctx.nom_source(eid))
+            if self.par_nom[cle] >= self.cap:
+                continue
+            l = self.present(eid)
+            if l is None:
+                continue
+            self.peuples_banc += eid in pools["plus_peuples"]
+            self.par_nom[cle] += 1
+            lignes.append(l)
+        return lignes
+
     def presents(self, famille: str, cible: int) -> list[dict]:
+        if famille == "geographie" and not self.plan.calibration and "plus_peuples" in self.m.geo_banc:
+            return self.presents_geo_banc(cible)
         pool = self.eligibles(famille)
         self.rng.shuffle(pool)
         lignes = []
@@ -778,7 +1016,7 @@ class Generateur:
 
     def absent(self, terme: str, nature: str, sous: str, nom_source: str = "") -> dict | None:
         mode = self.tirer_mode()
-        n = int(tirer(self.rng, self.m.fautes[mode]))
+        n = self.pert.nb_fautes(self.rng, mode)
         tape, labels = self.pert.fautes(self.rng, terme.lower(), mode, n)
         norm = normalize(tape)
         if not norm or self.ctx.trouve_exact(norm):
@@ -942,6 +1180,7 @@ def generer_jeu(ctx: Contexte, modele: Modele, plan: Plan, retires: set[str], ga
         "absents_reportes_faute_de_stock": getattr(g, "report_absents", 0),
         "absents_ecartes_trouves_par_exact": getattr(g, "absents_trouves", {}),
         "modes": dict(sorted(Counter(l["mode"] for l in lignes).items())),
+        "geographie_plus_peuples": g.peuples_banc,
         "rejets": dict(sorted(g.rejets.items())),
     }
     return lignes, info

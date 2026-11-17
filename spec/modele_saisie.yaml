@@ -9,10 +9,28 @@
 #
 # Poids : relatifs à l'intérieur de chaque bloc, leur somme vaut 1 (contrôlé par le générateur).
 
-version: "0.2"
+version: "0.3"
 date: "2026-11-17"
 auteur: Ugo Merlier
 statut: valide            # valide | a_revoir
+
+changements_v0_3:
+  # v0.1 faisait des saisies moins fautives que le réel, v0.2 plus fautives (2,71 opérations par saisie
+  # entendue contre 2,13 réelles). v0.3 prend le milieu, arrondi, puis le modèle est FIGÉ : l'échantillon
+  # (un seul auteur, 252 saisies) ne permet pas d'aller plus finement sans le calquer sur une personne.
+  # L'incertitude restante est couverte par la sensibilité. Objectif : le réel tombe ENTRE v0.1 et v0.3.
+  - quoi: "clavier : omission 0,40 / substitution 0,20 / inversion 0,15 / insertion 0,10 / doublement 0,05 / espace 0,10"
+    pourquoi: "omissions réelles 43,5 % des opérations (v0.2 : 15,9 %) ; insertions quelconques réelles 7,2 % (v0.2 : 21,1 %)"
+  - quoi: "fautes, lu : 0,48 / 0,32 / 0,13 / 0,07 ; entendu : 0,33 / 0,27 / 0,20 / 0,20, classe 4 supprimée"
+    pourquoi: "entendu v0.2 trop fautif (3 fautes et plus : 32,8 % contre 24,6 % réel)"
+  - quoi: transcription_libre 0,30 → 0,15 ; consonne_double ramenée à 0,05 des règles simples
+    pourquoi: "doublements en mode entendu : 13,7 % générés contre 2,7 % réels"
+  - quoi: "oubli de mots : article 0,25, véhicule 0,20, client 0,15 ; multiplicateur entendu 1,2"
+    pourquoi: "v0.2 : 20,1 % (lu) et 41,4 % (entendu) contre 14,3 % et 24,6 % réels (en partie artefact de mesure)"
+  - quoi: valeurs auparavant écrites en prose transformées en clés lisibles par le générateur
+    pourquoi: le générateur ne doit plus recopier de constantes depuis du texte
+  - quoi: mesure des mots oubliés à la génération (métadonnée), plus redétectés après coup sur le généré
+    pourquoi: "les fusions et coupures trompaient le repérage : 12 % d'oublis inventés"
 
 changements_v0_2:
   # Chaque changement vient d'un écart mesuré entre le générateur v0.1 et l'échantillon réel
@@ -72,9 +90,8 @@ modes:
 # 2. Nombre de fautes par saisie (en perturbations, pas en lettres ; mots oubliés à part, § 4)
 # ---------------------------------------------------------------------------------------------
 nombre_de_fautes:
-  lu:      {0: 0.50, 1: 0.30, 2: 0.11, 3: 0.09}            # v0.2 ; réel : 0 faute 50,6 %, 3 et plus 9,1 %
-  entendu: {0: 0.33, 1: 0.25, 2: 0.17, 3: 0.13, 4: 0.12}   # v0.2 ; réel : 0 faute 33,7 %, 3 et plus 24,6 %
-  classe_4: "« 4 » veut dire 4 ou 5 perturbations, tirées à parts égales"
+  lu:      {0: 0.48, 1: 0.32, 2: 0.13, 3: 0.07}   # v0.3 ; réel : 0 faute 50,6 %, 1 faute 33,8 %, 3 et plus 9,1 %
+  entendu: {0: 0.33, 1: 0.27, 2: 0.20, 3: 0.20}   # v0.3 ; réel : 0 faute 33,7 %, 2 fautes 18,9 %, 3 et plus 24,6 %
   compte: >
     Une perturbation ne compte que si elle change la forme normalisée (un accent seul ou un « s » final
     absorbé par la normalisation ne compte pas) : le générateur l'annule et en tire une autre.
@@ -93,18 +110,21 @@ melange_fautes:                 # pour chaque faute tirée : clavier ou phonéti
 clavier:
   disposition: azerty_be
   types:
-    omission:     0.30   # knech (Knecht), selet (Select), couvertur
-    substitution: 0.25   # standatd (r → t), mercedez (s → z)
+    omission:     0.40   # knech (Knecht), selet (Select), couvertur
+    substitution: 0.20   # standatd (r → t), mercedez (s → z)
     inversion:    0.15   # prmeium, tsfi
-    insertion:    0.15   # premiumù
+    insertion:    0.10   # premiumù
     doublement:   0.05   # lettre doublée ou dédoublée : carroserie
-    espace:       0.10   # v0.2 : mots collés ou coupés
+    espace:       0.10   # mots collés ou coupés
   espace:
     fusion: 0.70         # deux mots collés : « e tron » → « etron », « sint lambrechts » → « sintlambrechts »
     coupure: 0.30        # un mot coupé en deux : « carrosseriebedrijf » → « carrosserie bedrijf »
+    fusion_mots_vides: false     # précisé le 2026-11-17 : jamais avec un mot vide (de, la, d')
+    fusion_mots_a_chiffre: true  # précisé le 2026-11-17 : « ds 4 » → « ds4 » observé dans le réel
+    coupure_morceau_min: 2       # une coupure ne crée jamais un morceau de moins de 2 lettres
     note: >
       Le tiret est déjà remplacé par un espace à la normalisation : « e-tron » et « e tron » sont identiques,
-      seule la fusion « etron » est une faute.
+      seule la fusion « etron » est une faute. S'il n'existe aucun site de fusion, une autre faute est tirée.
   choix_de_la_lettre:    # pour substitution et insertion (v0.2)
     touche_voisine: 0.50 # voisine sur un clavier AZERTY belge
     quelconque: 0.50     # n'importe quelle lettre de l'alphabet
@@ -114,10 +134,15 @@ clavier:
 
 phonetique:
   # Règles de réécriture à son identique ou proche ; uniquement des cas observés en dictée.
-  # v0.2 : les sept règles ci-dessous gardent leurs proportions sur 0,70 ; « transcription_libre » prend 0,30.
+  # v0.3 : transcription_libre 0,15 ; les sept règles simples se partagent 0,85 (consonne_double réduite).
   regles:
     transcription_libre:
-      poids: 0.30
+      poids: 0.15
+      nombre_de_regles: {2: 0.5, 3: 0.5}
+      tirage_des_regles: pondere      # précisé le 2026-11-17 : selon les poids des sept règles, avec remise
+      proba_voyelle_proche: 0.5
+      longueur_min_mot: 5
+      voyelles_proches: [[a, e], [e, i], [o, ou], [u, ou], [i, y]]
       exemples: ["montataire → montatère", "brunssum → bransom", "chaource → chaours", "tervuren → tervurant"]
       definition: >
         Le mot est réécrit « comme on l'entend » : on applique sur le MÊME mot 2 ou 3 règles phonétiques
@@ -127,36 +152,40 @@ phonetique:
       pourquoi: >
         Les règles une à une n'expliquent qu'≈ 11 % des fautes entendues réelles : les vraies transcriptions
         combinent plusieurs changements sur un même mot.
-    voyelles_e:      {poids: 0.14, exemples: ["montataire → montatère", "quantité → quantitée"],
+    voyelles_e:      {poids: 0.189, exemples: ["montataire → montatère", "quantité → quantitée"],
                       motifs: ["é ↔ è ↔ ai ↔ ei ↔ e", "er/et/ez final ↔ é", "aire ↔ ère"]}
-    finale_muette:   {poids: 0.14, exemples: ["chaource → chaours", "standard → standar", "courbevoie → courbevois"],
+    finale_muette:   {poids: 0.189, exemples: ["chaource → chaours", "standard → standar", "courbevoie → courbevois"],
                       motifs: ["ajout ou retrait de e, s, t, d, x en fin de mot"]}
-    s_c_k:           {poids: 0.105, exemples: ["sachs → saxe", "jacquet → jack"],
+    s_c_k:           {poids: 0.142, exemples: ["sachs → saxe", "jacquet → jack"],
                       motifs: ["s ↔ ss ↔ c ↔ ç", "c ↔ k ↔ qu ↔ ck", "x ↔ cs ↔ ks"]}
-    consonne_double: {poids: 0.105, exemples: ["carrosserie → carosserie"],
+    consonne_double: {poids: 0.047, exemples: ["carrosserie → carosserie"],
                       motifs: ["rr ↔ r", "ss ↔ s", "ll ↔ l", "tt ↔ t", "nn ↔ n", "mm ↔ m"]}
-    nasales:         {poids: 0.07, exemples: ["tervuren → tervurant"],
+    nasales:         {poids: 0.094, exemples: ["tervuren → tervurant"],
                       motifs: ["an ↔ en ↔ am ↔ em", "in ↔ ain ↔ ein ↔ im"]}
     neerlandais:
-      poids: 0.105
+      poids: 0.142
       exemples: ["roosbeek → rosbic", "spiere → speer", "brunssum → bransom"]
       motifs: ["oe → ou", "ee ↔ é", "ie ↔ i", "ij ↔ ei", "sch → ch", "beek → bic", "u → a", "oo → o"]
       pourquoi: >
         Mécanova couvre la Flandre et le sud des Pays-Bas ; utilisateurs supposés francophones.
         2 des 5 erreurs silencieuses de la dictée sont des noms flamands.
-    h_y_w_z:         {poids: 0.035, exemples: ["hopel → opel", "mercedes → mercedez"],
+    h_y_w_z:         {poids: 0.047, exemples: ["hopel → opel", "mercedes → mercedez"],
                       motifs: ["h initial muet", "y ↔ i", "w ↔ v", "z ↔ s"]}
 
 # ---------------------------------------------------------------------------------------------
 # 4. Mots oubliés
 # ---------------------------------------------------------------------------------------------
 omissions_de_mots:
-  probabilite_par_type:                             # v0.2 : selon le type d'entité, en mode « lu »
-    article: 0.35
-    modele_vehicule: 0.30
-    client: 0.25
-    autres: 0.02                                    # géographie, marques, vocabulaire métier : très rare
-  multiplicateur_entendu: 1.5                       # en mode « entendu », plafonné à 0,6
+  probabilite_par_type:                             # v0.3 : selon le type d'entité, en mode « lu »
+    article: 0.25
+    modele_vehicule: 0.20
+    client: 0.15
+    autres: 0.02                                    # tous les autres types : très rare
+  multiplicateur_entendu: 1.2
+  plafond: 0.6                                      # après multiplication
+  mesure: >
+    Sur les jeux générés, l'oubli est noté à la génération (colonne dédiée), jamais redétecté après coup.
+    Sur l'échantillon réel, il reste repéré par alignement des mots.
   reel: "mots oubliés : lu 14,3 %, entendu 24,6 % (surtout articles et véhicules)"
   par_famille:                                      # quel mot est oublié
     article:
@@ -241,7 +270,8 @@ repartition_par_famille:            # banc d'essai : à quoi ressemble le trafic
   vehicules: 0.05                   # mesuré 3 %, idem
   source: mentions d'entités dans les 34 questions de spec/questions.yaml
   geographie_dans_le_banc:          # v0.2
-    plus_peuples: 0.50              # parmi les 300 lieux les plus peuplés (ceux qu'on cite le plus)
+    plus_peuples: 0.50              # parmi les lieux les plus peuplés (ceux qu'on cite le plus)
+    nombre_plus_peuples: 300        # communes et villes (les localités postales n'ont pas de population)
     au_hasard: 0.50
     note: jeux de calibration tirés uniformément (ils doivent couvrir tous les noms)
   a_revoir: quand on aura de vraies questions d'utilisateurs
@@ -264,13 +294,15 @@ attendu:
     faute_avec_voisin: >
       ambiguous → l'entité source et tout autre nom du même type à une distance d'édition (OSA)
       inférieure ou égale à celle du nom source (ex. « fresin » → Fretin ou Fressin).
-      v0.2 : un voisin n'est ajouté que si sa distance au terme tapé est ≤ 2. Au-delà, l'attendu est
-      le seul nom source, et unknown est accepté comme sûr.
+      Un voisin n'est ajouté que si sa distance au terme tapé est ≤ min(d, voisins_distance_max), où d est
+      la distance du nom source au terme tapé (précisé le 2026-11-17). Si d dépasse la borne, l'attendu
+      est le nom source et ses voisins dans la borne, et unknown est accepté comme sûr.
     nom_source_homonyme: "ce que donne le résolveur exact sur le nom source (ex. « liege » → ambiguous)"
     mot_oublie_autre_entite: "l'entité désignée par la forme courte (ex. « skoda » → la marque)"
     mot_oublie_plusieurs: "ambiguous → toutes les entités compatibles avec la forme courte"
     absent: unknown
     synonyme_manquant: unknown
+  voisins_distance_max: 2
   indice_de_type:
     part_avec_indice: 0.50          # la moitié des cas ont un indice de type, l'autre non
     note: le corrigé est calculé avec le même indice que celui donné au moteur

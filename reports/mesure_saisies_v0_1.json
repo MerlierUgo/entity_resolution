@@ -1,0 +1,3977 @@
+{
+ "moteur": "Jaro-Winkler, SeuilFixe(0.88, 0.03), provisoire",
+ "negatifs_retires": 10900,
+ "meta_jeux": {
+  "analyse": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 632,
+    "marques_hors_catalogue": 45,
+    "noms_recombines": 61,
+    "notions_metier": 426,
+    "synonyme_manquant": 54
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 32,
+    "douane": 10,
+    "geographie": 915,
+    "marques": 19,
+    "mixte": 6,
+    "pieces": 153,
+    "vehicules": 38,
+    "vocabulaire_metier": 39
+   },
+   "absents_par_sous_nature": {
+    "lieu_inconnu": 316,
+    "lieu_index_negatif": 316,
+    "marque_hors_catalogue": 43,
+    "nom_recombine": 61,
+    "notion_metier": 424,
+    "synonyme_manquant": 52
+   },
+   "absents_reportes_faute_de_stock": 206,
+   "cas": 12175,
+   "fichier": "challenges/saisies_analyse.csv",
+   "graine": 20261201,
+   "modes": {
+    "entendu": 2798,
+    "lu": 9377
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 2555,
+    "douane": 771,
+    "geographie": 3000,
+    "marques": 212,
+    "pieces": 2084,
+    "vehicules": 2239,
+    "vocabulaire_metier": 102
+   },
+   "presents_vises": {
+    "clients": 3000,
+    "douane": 3000,
+    "geographie": 3000,
+    "marques": 3000,
+    "pieces": 3000,
+    "vehicules": 3000,
+    "vocabulaire_metier": 3000
+   },
+   "rejets": {
+    "0 faute et aucun mot oublié (calibration)": 14008,
+    "absent arrêté par l'index négatif (calibration)": 235,
+    "absent devenu un nom du catalogue": 1,
+    "réponse attendue avec une entité de la partition test": 6820,
+    "terme déjà présent dans le jeu": 306,
+    "trouvé par l'exact ou l'index négatif (calibration)": 603
+   },
+   "sha256": "0159e9311a8cd8ea"
+  },
+  "analyse_e0.10_a0.10": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 632,
+    "marques_hors_catalogue": 45,
+    "noms_recombines": 61,
+    "notions_metier": 426,
+    "synonyme_manquant": 54
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 34,
+    "douane": 15,
+    "geographie": 911,
+    "marques": 16,
+    "mixte": 7,
+    "pieces": 146,
+    "vehicules": 48,
+    "vocabulaire_metier": 35
+   },
+   "absents_par_sous_nature": {
+    "lieu_inconnu": 316,
+    "lieu_index_negatif": 316,
+    "marque_hors_catalogue": 43,
+    "nom_recombine": 61,
+    "notion_metier": 424,
+    "synonyme_manquant": 52
+   },
+   "absents_reportes_faute_de_stock": 206,
+   "cas": 12177,
+   "fichier": "challenges/sensibilite/saisies_analyse_e0.10_a0.10.csv",
+   "graine": 20261201,
+   "modes": {
+    "entendu": 1448,
+    "lu": 10729
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.1,
+   "presents_par_famille": {
+    "clients": 2555,
+    "douane": 771,
+    "geographie": 3000,
+    "marques": 213,
+    "pieces": 2085,
+    "vehicules": 2239,
+    "vocabulaire_metier": 102
+   },
+   "presents_vises": {
+    "clients": 3000,
+    "douane": 3000,
+    "geographie": 3000,
+    "marques": 3000,
+    "pieces": 3000,
+    "vehicules": 3000,
+    "vocabulaire_metier": 3000
+   },
+   "rejets": {
+    "0 faute et aucun mot oublié (calibration)": 14852,
+    "absent arrêté par l'index négatif (calibration)": 254,
+    "absent devenu un nom du catalogue": 1,
+    "réponse attendue avec une entité de la partition test": 7124,
+    "terme déjà présent dans le jeu": 391,
+    "trouvé par l'exact ou l'index négatif (calibration)": 589
+   },
+   "sha256": "046d645b511ba284"
+  },
+  "analyse_e0.20_a0.05": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 247,
+    "marques_hors_catalogue": 45,
+    "noms_recombines": 29,
+    "notions_metier": 202,
+    "synonyme_manquant": 54
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 16,
+    "douane": 4,
+    "geographie": 407,
+    "marques": 7,
+    "mixte": 2,
+    "pieces": 88,
+    "vehicules": 23,
+    "vocabulaire_metier": 26
+   },
+   "absents_par_sous_nature": {
+    "lieu_inconnu": 123,
+    "lieu_index_negatif": 124,
+    "marque_hors_catalogue": 43,
+    "nom_recombine": 29,
+    "notion_metier": 202,
+    "synonyme_manquant": 52
+   },
+   "absents_reportes_faute_de_stock": 45,
+   "cas": 11536,
+   "fichier": "challenges/sensibilite/saisies_analyse_e0.20_a0.05.csv",
+   "graine": 20261201,
+   "modes": {
+    "entendu": 2659,
+    "lu": 8877
+   },
+   "part_absents": 0.05,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 2555,
+    "douane": 771,
+    "geographie": 3000,
+    "marques": 212,
+    "pieces": 2084,
+    "vehicules": 2239,
+    "vocabulaire_metier": 102
+   },
+   "presents_vises": {
+    "clients": 3000,
+    "douane": 3000,
+    "geographie": 3000,
+    "marques": 3000,
+    "pieces": 3000,
+    "vehicules": 3000,
+    "vocabulaire_metier": 3000
+   },
+   "rejets": {
+    "0 faute et aucun mot oublié (calibration)": 14008,
+    "absent arrêté par l'index négatif (calibration)": 114,
+    "réponse attendue avec une entité de la partition test": 6820,
+    "terme déjà présent dans le jeu": 167,
+    "trouvé par l'exact ou l'index négatif (calibration)": 603
+   },
+   "sha256": "eff54a468321d938"
+  },
+  "analyse_e0.20_a0.25": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 2940,
+    "marques_hors_catalogue": 45,
+    "noms_recombines": 183,
+    "notions_metier": 432,
+    "synonyme_manquant": 54
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 71,
+    "douane": 45,
+    "geographie": 3075,
+    "marques": 42,
+    "mixte": 10,
+    "pieces": 211,
+    "vehicules": 105,
+    "vocabulaire_metier": 83
+   },
+   "absents_par_sous_nature": {
+    "lieu_inconnu": 1470,
+    "lieu_index_negatif": 1470,
+    "marque_hors_catalogue": 43,
+    "nom_recombine": 183,
+    "notion_metier": 424,
+    "synonyme_manquant": 52
+   },
+   "absents_reportes_faute_de_stock": 1661,
+   "cas": 14605,
+   "fichier": "challenges/sensibilite/saisies_analyse_e0.20_a0.25.csv",
+   "graine": 20261201,
+   "modes": {
+    "entendu": 3332,
+    "lu": 11273
+   },
+   "part_absents": 0.25,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 2555,
+    "douane": 771,
+    "geographie": 3000,
+    "marques": 212,
+    "pieces": 2084,
+    "vehicules": 2239,
+    "vocabulaire_metier": 102
+   },
+   "presents_vises": {
+    "clients": 3000,
+    "douane": 3000,
+    "geographie": 3000,
+    "marques": 3000,
+    "pieces": 3000,
+    "vehicules": 3000,
+    "vocabulaire_metier": 3000
+   },
+   "rejets": {
+    "0 faute et aucun mot oublié (calibration)": 14008,
+    "absent arrêté par l'index négatif (calibration)": 1076,
+    "absent devenu un nom du catalogue": 7,
+    "réponse attendue avec une entité de la partition test": 6820,
+    "terme déjà présent dans le jeu": 309,
+    "trouvé par l'exact ou l'index négatif (calibration)": 603
+   },
+   "sha256": "2588aa5876309b9f"
+  },
+  "analyse_e0.40_a0.10": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 632,
+    "marques_hors_catalogue": 45,
+    "noms_recombines": 61,
+    "notions_metier": 426,
+    "synonyme_manquant": 54
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 36,
+    "douane": 17,
+    "geographie": 912,
+    "marques": 22,
+    "mixte": 6,
+    "pieces": 144,
+    "vehicules": 37,
+    "vocabulaire_metier": 38
+   },
+   "absents_par_sous_nature": {
+    "lieu_inconnu": 316,
+    "lieu_index_negatif": 316,
+    "marque_hors_catalogue": 43,
+    "nom_recombine": 61,
+    "notion_metier": 424,
+    "synonyme_manquant": 52
+   },
+   "absents_reportes_faute_de_stock": 206,
+   "cas": 12175,
+   "fichier": "challenges/sensibilite/saisies_analyse_e0.40_a0.10.csv",
+   "graine": 20261201,
+   "modes": {
+    "entendu": 5536,
+    "lu": 6639
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.4,
+   "presents_par_famille": {
+    "clients": 2553,
+    "douane": 771,
+    "geographie": 3000,
+    "marques": 213,
+    "pieces": 2085,
+    "vehicules": 2239,
+    "vocabulaire_metier": 102
+   },
+   "presents_vises": {
+    "clients": 3000,
+    "douane": 3000,
+    "geographie": 3000,
+    "marques": 3000,
+    "pieces": 3000,
+    "vehicules": 3000,
+    "vocabulaire_metier": 3000
+   },
+   "rejets": {
+    "0 faute et aucun mot oublié (calibration)": 13216,
+    "absent arrêté par l'index négatif (calibration)": 212,
+    "absent devenu un nom du catalogue": 3,
+    "réponse attendue avec une entité de la partition test": 8019,
+    "terme déjà présent dans le jeu": 329,
+    "trouvé par l'exact ou l'index négatif (calibration)": 669
+   },
+   "sha256": "64107506b737c202"
+  },
+  "banc": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 175,
+    "marques_hors_catalogue": 75,
+    "noms_recombines": 25,
+    "notions_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 12,
+    "geographie": 353,
+    "marques": 5,
+    "mixte": 2,
+    "pieces": 111,
+    "vehicules": 18,
+    "vocabulaire_metier": 29
+   },
+   "absents_par_sous_nature": {
+    "code_voisin": 30,
+    "lieu_inconnu": 87,
+    "lieu_index_negatif": 88,
+    "marque_hors_catalogue": 75,
+    "nom_recombine": 25,
+    "notion_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 5030,
+   "fichier": "challenges/saisies_banc.csv",
+   "graine": 20261208,
+   "modes": {
+    "entendu": 972,
+    "lu": 4058
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "presents_vises": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "rejets": {
+    "absent devenu un nom du catalogue": 1,
+    "réponse attendue avec une entité de la partition test": 604
+   },
+   "sha256": "2c39cb33990c6ebb"
+  },
+  "banc_e0.10_a0.10": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 175,
+    "marques_hors_catalogue": 75,
+    "noms_recombines": 25,
+    "notions_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 7,
+    "geographie": 349,
+    "marques": 6,
+    "mixte": 3,
+    "pieces": 123,
+    "vehicules": 23,
+    "vocabulaire_metier": 19
+   },
+   "absents_par_sous_nature": {
+    "code_voisin": 30,
+    "lieu_inconnu": 87,
+    "lieu_index_negatif": 88,
+    "marque_hors_catalogue": 75,
+    "nom_recombine": 25,
+    "notion_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 5030,
+   "fichier": "challenges/sensibilite/saisies_banc_e0.10_a0.10.csv",
+   "graine": 20261208,
+   "modes": {
+    "entendu": 483,
+    "lu": 4547
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.1,
+   "presents_par_famille": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "presents_vises": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "rejets": {
+    "réponse attendue avec une entité de la partition test": 562
+   },
+   "sha256": "9a958eae5a3ef598"
+  },
+  "banc_e0.20_a0.05": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 88,
+    "marques_hors_catalogue": 38,
+    "noms_recombines": 12,
+    "notions_metier": 87,
+    "synonyme_manquant": 25
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 6,
+    "geographie": 177,
+    "marques": 3,
+    "pieces": 75,
+    "vehicules": 9,
+    "vocabulaire_metier": 10
+   },
+   "absents_par_sous_nature": {
+    "code_voisin": 30,
+    "lieu_inconnu": 44,
+    "lieu_index_negatif": 44,
+    "marque_hors_catalogue": 38,
+    "nom_recombine": 12,
+    "notion_metier": 87,
+    "synonyme_manquant": 25
+   },
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 5031,
+   "fichier": "challenges/sensibilite/saisies_banc_e0.20_a0.05.csv",
+   "graine": 20261208,
+   "modes": {
+    "entendu": 1011,
+    "lu": 4020
+   },
+   "part_absents": 0.05,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 238,
+    "geographie": 950,
+    "marques": 475,
+    "pieces": 1425,
+    "vehicules": 238,
+    "vocabulaire_metier": 1425
+   },
+   "presents_vises": {
+    "clients": 238,
+    "geographie": 950,
+    "marques": 475,
+    "pieces": 1425,
+    "vehicules": 238,
+    "vocabulaire_metier": 1425
+   },
+   "rejets": {
+    "absent devenu un nom du catalogue": 1,
+    "réponse attendue avec une entité de la partition test": 596
+   },
+   "sha256": "1cc8af1c1a2c0fc7"
+  },
+  "banc_e0.20_a0.25": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 438,
+    "marques_hors_catalogue": 188,
+    "noms_recombines": 62,
+    "notions_metier": 437,
+    "synonyme_manquant": 125
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 28,
+    "geographie": 880,
+    "marques": 14,
+    "mixte": 6,
+    "pieces": 242,
+    "vehicules": 57,
+    "vocabulaire_metier": 53
+   },
+   "absents_par_sous_nature": {
+    "code_voisin": 30,
+    "lieu_inconnu": 219,
+    "lieu_index_negatif": 219,
+    "marque_hors_catalogue": 188,
+    "nom_recombine": 62,
+    "notion_metier": 437,
+    "synonyme_manquant": 125
+   },
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 5031,
+   "fichier": "challenges/sensibilite/saisies_banc_e0.20_a0.25.csv",
+   "graine": 20261208,
+   "modes": {
+    "entendu": 955,
+    "lu": 4076
+   },
+   "part_absents": 0.25,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 188,
+    "geographie": 750,
+    "marques": 375,
+    "pieces": 1125,
+    "vehicules": 188,
+    "vocabulaire_metier": 1125
+   },
+   "presents_vises": {
+    "clients": 188,
+    "geographie": 750,
+    "marques": 375,
+    "pieces": 1125,
+    "vehicules": 188,
+    "vocabulaire_metier": 1125
+   },
+   "rejets": {
+    "réponse attendue avec une entité de la partition test": 466
+   },
+   "sha256": "722bfb7d6240344d"
+  },
+  "banc_e0.40_a0.10": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 175,
+    "marques_hors_catalogue": 75,
+    "noms_recombines": 25,
+    "notions_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 11,
+    "geographie": 359,
+    "marques": 9,
+    "mixte": 2,
+    "pieces": 113,
+    "vehicules": 14,
+    "vocabulaire_metier": 22
+   },
+   "absents_par_sous_nature": {
+    "code_voisin": 30,
+    "lieu_inconnu": 87,
+    "lieu_index_negatif": 88,
+    "marque_hors_catalogue": 75,
+    "nom_recombine": 25,
+    "notion_metier": 175,
+    "synonyme_manquant": 50
+   },
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 5030,
+   "fichier": "challenges/sensibilite/saisies_banc_e0.40_a0.10.csv",
+   "graine": 20261208,
+   "modes": {
+    "entendu": 2041,
+    "lu": 2989
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.4,
+   "presents_par_famille": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "presents_vises": {
+    "clients": 225,
+    "geographie": 900,
+    "marques": 450,
+    "pieces": 1350,
+    "vehicules": 225,
+    "vocabulaire_metier": 1350
+   },
+   "rejets": {
+    "absent devenu un nom du catalogue": 1,
+    "réponse attendue avec une entité de la partition test": 589
+   },
+   "sha256": "3e6f57d8c9198e94"
+  },
+  "certif": {
+   "absents_alloues": {
+    "lieux_hors_perimetre": 631,
+    "marques_hors_catalogue": 45,
+    "noms_recombines": 61,
+    "notions_metier": 426,
+    "synonyme_manquant": 54
+   },
+   "absents_ecartes_trouves_par_exact": {},
+   "absents_par_famille": {
+    "clients": 42,
+    "douane": 14,
+    "geographie": 915,
+    "marques": 19,
+    "mixte": 5,
+    "pieces": 132,
+    "vehicules": 36,
+    "vocabulaire_metier": 41
+   },
+   "absents_par_sous_nature": {
+    "lieu_inconnu": 315,
+    "lieu_index_negatif": 316,
+    "marque_hors_catalogue": 41,
+    "nom_recombine": 61,
+    "notion_metier": 420,
+    "synonyme_manquant": 51
+   },
+   "absents_reportes_faute_de_stock": 205,
+   "cas": 12158,
+   "fichier": "challenges/saisies_certif.csv",
+   "graine": 20261215,
+   "modes": {
+    "entendu": 2892,
+    "lu": 9266
+   },
+   "part_absents": 0.1,
+   "part_entendu": 0.2,
+   "presents_par_famille": {
+    "clients": 2554,
+    "douane": 771,
+    "geographie": 3000,
+    "marques": 213,
+    "pieces": 2085,
+    "vehicules": 2229,
+    "vocabulaire_metier": 102
+   },
+   "presents_vises": {
+    "clients": 3000,
+    "douane": 3000,
+    "geographie": 3000,
+    "marques": 3000,
+    "pieces": 3000,
+    "vehicules": 3000,
+    "vocabulaire_metier": 3000
+   },
+   "rejets": {
+    "0 faute et aucun mot oublié (calibration)": 14669,
+    "absent arrêté par l'index négatif (calibration)": 217,
+    "absent devenu un nom du catalogue": 1,
+    "réponse attendue avec une entité de la partition test": 6976,
+    "terme d'un autre jeu": 708,
+    "terme déjà présent dans le jeu": 103,
+    "trouvé par l'exact ou l'index négatif (calibration)": 653
+   },
+   "sha256": "b88cdff4b70812fd"
+  }
+ },
+ "mots_clients_frequents_hors_listes": [
+  [
+   "bmw",
+   0.0121
+  ],
+  [
+   "mercede",
+   0.0107
+  ],
+  [
+   "benz",
+   0.0107
+  ],
+  [
+   "dacia",
+   0.0107
+  ]
+ ],
+ "reel": {
+  "n": 252,
+  "par_mode": {
+   "entendu": 175,
+   "lu": 77
+  },
+  "vides": {
+   "entendu": 59,
+   "lu": 3
+  },
+  "libres": 22
+ },
+ "verification": {
+  "entendu": {
+   "reel": {
+    "n": 175,
+    "distance": {
+     "0": 33.7,
+     "1": 22.9,
+     "2": 18.9,
+     "3+": 24.6
+    },
+    "mots_oublies_pct": 24.6,
+    "types": [
+     [
+      "clavier : insertion autre",
+      33.1
+     ],
+     [
+      "clavier : omission",
+      16.7
+     ],
+     [
+      "clavier : substitution autre",
+      10.2
+     ],
+     [
+      "clavier : espace",
+      9.9
+     ],
+     [
+      "clavier : insertion voisine",
+      7.5
+     ],
+     [
+      "phonétique : voyelles_e",
+      4.3
+     ],
+     [
+      "phonétique : neerlandais",
+      3.5
+     ],
+     [
+      "phonétique : consonne_double",
+      3.5
+     ],
+     [
+      "clavier : inversion",
+      3.2
+     ],
+     [
+      "clavier : substitution voisine",
+      2.7
+     ],
+     [
+      "clavier : doublement",
+      2.7
+     ],
+     [
+      "phonétique : s_c_k",
+      1.3
+     ]
+    ],
+    "fautes_par_saisie": 2.13
+   },
+   "genere": {
+    "n": 1750,
+    "distance": {
+     "0": 34.5,
+     "1": 28.3,
+     "2": 21.5,
+     "3+": 15.7
+    },
+    "mots_oublies_pct": 13.0,
+    "types": [
+     [
+      "clavier : insertion autre",
+      14.0
+     ],
+     [
+      "clavier : insertion voisine",
+      12.3
+     ],
+     [
+      "phonétique : consonne_double",
+      12.1
+     ],
+     [
+      "clavier : substitution autre",
+      11.7
+     ],
+     [
+      "phonétique : voyelles_e",
+      9.5
+     ],
+     [
+      "clavier : omission",
+      8.2
+     ],
+     [
+      "phonétique : neerlandais",
+      7.8
+     ],
+     [
+      "clavier : substitution voisine",
+      5.6
+     ],
+     [
+      "clavier : doublement",
+      5.2
+     ],
+     [
+      "phonétique : s_c_k",
+      4.8
+     ],
+     [
+      "phonétique : nasales",
+      4.2
+     ],
+     [
+      "clavier : inversion",
+      3.4
+     ]
+    ],
+    "fautes_par_saisie": 1.25
+   }
+  },
+  "lu": {
+   "reel": {
+    "n": 77,
+    "distance": {
+     "0": 50.6,
+     "1": 33.8,
+     "2": 6.5,
+     "3+": 9.1
+    },
+    "mots_oublies_pct": 14.3,
+    "types": [
+     [
+      "clavier : omission",
+      43.5
+     ],
+     [
+      "clavier : substitution autre",
+      15.9
+     ],
+     [
+      "clavier : espace",
+      8.7
+     ],
+     [
+      "clavier : inversion",
+      8.7
+     ],
+     [
+      "clavier : insertion autre",
+      7.2
+     ],
+     [
+      "clavier : insertion voisine",
+      4.3
+     ],
+     [
+      "phonétique : neerlandais",
+      4.3
+     ],
+     [
+      "clavier : substitution voisine",
+      2.9
+     ],
+     [
+      "phonétique : nasales",
+      1.4
+     ],
+     [
+      "phonétique : s_c_k",
+      1.4
+     ],
+     [
+      "phonétique : voyelles_e",
+      1.4
+     ]
+    ],
+    "fautes_par_saisie": 0.9
+   },
+   "genere": {
+    "n": 770,
+    "distance": {
+     "0": 50.4,
+     "1": 33.5,
+     "2": 12.7,
+     "3+": 3.4
+    },
+    "mots_oublies_pct": 5.6,
+    "types": [
+     [
+      "clavier : omission",
+      29.1
+     ],
+     [
+      "clavier : substitution voisine",
+      21.1
+     ],
+     [
+      "clavier : inversion",
+      13.2
+     ],
+     [
+      "clavier : insertion voisine",
+      9.7
+     ],
+     [
+      "phonétique : consonne_double",
+      5.2
+     ],
+     [
+      "phonétique : neerlandais",
+      4.5
+     ],
+     [
+      "clavier : substitution autre",
+      4.5
+     ],
+     [
+      "phonétique : voyelles_e",
+      3.7
+     ],
+     [
+      "clavier : doublement",
+      3.2
+     ],
+     [
+      "clavier : insertion autre",
+      3.0
+     ],
+     [
+      "phonétique : s_c_k",
+      1.5
+     ],
+     [
+      "clavier : espace",
+      1.3
+     ]
+    ],
+    "fautes_par_saisie": 0.7
+   }
+  },
+  "exemples": [
+   {
+    "mode": "entendu",
+    "nom": "PEUGEOT",
+    "reel": "peugeot",
+    "genere": "peugeot",
+    "perturbations": ""
+   },
+   {
+    "mode": "entendu",
+    "nom": "FERRARI",
+    "reel": "ferrari",
+    "genere": "feirrare",
+    "perturbations": "clavier:omission ; phonetique:voyelles_e(e→ei) ; phonetique:finale_muette(∅→e)"
+   },
+   {
+    "mode": "entendu",
+    "nom": "Garage Lefèbvre",
+    "reel": "garage lefevre",
+    "genere": "garage lefèbvre",
+    "perturbations": ""
+   },
+   {
+    "mode": "entendu",
+    "nom": "Roosbeek",
+    "reel": "rosbic",
+    "genere": "roosbeek",
+    "perturbations": ""
+   },
+   {
+    "mode": "entendu",
+    "nom": "BMW 220D",
+    "reel": "bmw 220d",
+    "genere": "bmw 220d",
+    "perturbations": ""
+   },
+   {
+    "mode": "entendu",
+    "nom": "MERCEDES-BENZ GLB 250 4MATIC",
+    "reel": "mersedez benz glb 250 4matic",
+    "genere": "merssedezd-benz glb 250 4matic",
+    "perturbations": "phonetique:finale_muette(∅→d) ; phonetique:h_y_w_z(s→z) ; phonetique:s_c_k(c→ss)"
+   },
+   {
+    "mode": "entendu",
+    "nom": "Freyming-Merlebach",
+    "reel": "fremin de merleback",
+    "genere": "freyming-merlebach",
+    "perturbations": ""
+   },
+   {
+    "mode": "entendu",
+    "nom": "Balai d'essuie-glace – Bosch Standard",
+    "reel": "aled essuie glasse bosh standard",
+    "genere": "balai d'essuie-glace bosch standard",
+    "perturbations": ""
+   },
+   {
+    "mode": "entendu",
+    "nom": "Seny",
+    "reel": "sunny",
+    "genere": "sesny",
+    "perturbations": "clavier:insertion"
+   },
+   {
+    "mode": "entendu",
+    "nom": "Volant moteur – Mécanova Select Éco",
+    "reel": "volant moteur mecanova select eco",
+    "genere": "volant moteur meecanova select éco",
+    "perturbations": "phonetique:neerlandais(é→ee)"
+   },
+   {
+    "mode": "entendu",
+    "nom": "Filtre à huile – Knecht Standard",
+    "reel": "filtre à huile knec standard",
+    "genere": "filltre à huile knequhtr standard",
+    "perturbations": "phonetique:s_c_k(c→qu) ; phonetique:consonne_double(l→ll) ; clavier:insertion"
+   },
+   {
+    "mode": "entendu",
+    "nom": "Vase d'expansion – Behr Premium",
+    "reel": "vase d'expention der premium",
+    "genere": "vase d'edpansion behr premium",
+    "perturbations": "clavier:substitution"
+   },
+   {
+    "mode": "entendu",
+    "nom": "BMW X2 SDRIVE20D",
+    "reel": "bmw x2 20d",
+    "genere": "bmw x2 sdrive20d",
+    "perturbations": ""
+   },
+   {
+    "mode": "entendu",
+    "nom": "Sedan",
+    "reel": "sedan",
+    "genere": "sedn",
+    "perturbations": "clavier:omission"
+   },
+   {
+    "mode": "entendu",
+    "nom": "Dacia Bonnevoie-Sud",
+    "reel": "dacia bonne voie sud",
+    "genere": "dacia bonnevoiai-sud",
+    "perturbations": "phonetique:voyelles_e(e→ai)"
+   },
+   {
+    "mode": "lu",
+    "nom": "Comines",
+    "reel": "ines",
+    "genere": "cominbeq",
+    "perturbations": "clavier:substitution ; clavier:insertion"
+   },
+   {
+    "mode": "lu",
+    "nom": "AUDI Q8 55 E-TRON",
+    "reel": "audi q8 55 etron",
+    "genere": "audi q8 55 e-tron",
+    "perturbations": ""
+   },
+   {
+    "mode": "lu",
+    "nom": "MERCEDES-BENZ E 220 D 4MATIC",
+    "reel": "mercedes bens e 220",
+    "genere": "mercedess-benz e 220 d 4matic",
+    "perturbations": "clavier:insertion"
+   },
+   {
+    "mode": "lu",
+    "nom": "Broekhem",
+    "reel": "broehkem",
+    "genere": "borekhem",
+    "perturbations": "clavier:inversion"
+   },
+   {
+    "mode": "lu",
+    "nom": "Autobedrijf de Wit",
+    "reel": "autobertridj et kit",
+    "genere": "aatobecrjf de wit",
+    "perturbations": "clavier:omission ; clavier:substitution ; phonetique:neerlandais(u→a)"
+   },
+   {
+    "mode": "lu",
+    "nom": "MERCEDES-BENZ CLE 220D",
+    "reel": "mercedes benz e 220d",
+    "genere": "mercedes-bamz cle 220d",
+    "perturbations": "phonetique:nasales(en→am)"
+   },
+   {
+    "mode": "lu",
+    "nom": "Filtre à huile – Purflux Premium",
+    "reel": "filtre à huile purflux premium",
+    "genere": "filtre à huile puflux premium",
+    "perturbations": "clavier:substitution ; clavier:omission"
+   },
+   {
+    "mode": "lu",
+    "nom": "LAND ROVER",
+    "reel": "land rover",
+    "genere": "land rove",
+    "perturbations": "clavier:omission"
+   }
+  ],
+  "detection_oublis_sur_genere": {
+   "vrai_detecte": 233,
+   "vrai_manque": 2,
+   "faux_detecte": 37,
+   "faux_ok": 2248
+  }
+ },
+ "banc": {
+  "global": {
+   "n": 5030,
+   "ideal": 86.02,
+   "sur": 97.65,
+   "silencieux": 58,
+   "silencieux_pct": 1.15,
+   "trop_confiant": 13,
+   "incorrect": 47
+  },
+  "par_famille": {
+   "clients": {
+    "n": 237,
+    "ideal": 69.2,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "geographie": {
+    "n": 1253,
+    "ideal": 85.47,
+    "sur": 92.9,
+    "silencieux": 41,
+    "silencieux_pct": 3.27,
+    "trop_confiant": 12,
+    "incorrect": 36
+   },
+   "marques": {
+    "n": 455,
+    "ideal": 89.01,
+    "sur": 99.78,
+    "silencieux": 1,
+    "silencieux_pct": 0.22,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "mixte": {
+    "n": 2,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "pieces": {
+    "n": 1461,
+    "ideal": 83.5,
+    "sur": 98.43,
+    "silencieux": 13,
+    "silencieux_pct": 0.89,
+    "trop_confiant": 0,
+    "incorrect": 10
+   },
+   "vehicules": {
+    "n": 243,
+    "ideal": 85.19,
+    "sur": 99.59,
+    "silencieux": 1,
+    "silencieux_pct": 0.41,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "vocabulaire_metier": {
+    "n": 1379,
+    "ideal": 91.23,
+    "sur": 99.71,
+    "silencieux": 2,
+    "silencieux_pct": 0.15,
+    "trop_confiant": 1,
+    "incorrect": 1
+   },
+   "TOTAL": {
+    "n": 5030,
+    "ideal": 86.02,
+    "sur": 97.65,
+    "silencieux": 58,
+    "silencieux_pct": 1.15,
+    "trop_confiant": 13,
+    "incorrect": 47
+   }
+  },
+  "par_nature": {
+   "absent/code_voisin": {
+    "n": 30,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "absent/lieu_inconnu": {
+    "n": 87,
+    "ideal": 70.11,
+    "sur": 70.11,
+    "silencieux": 13,
+    "silencieux_pct": 14.94,
+    "trop_confiant": 0,
+    "incorrect": 13
+   },
+   "absent/lieu_index_negatif": {
+    "n": 88,
+    "ideal": 89.77,
+    "sur": 89.77,
+    "silencieux": 5,
+    "silencieux_pct": 5.68,
+    "trop_confiant": 0,
+    "incorrect": 4
+   },
+   "absent/marque_hors_catalogue": {
+    "n": 75,
+    "ideal": 88.0,
+    "sur": 88.0,
+    "silencieux": 3,
+    "silencieux_pct": 4.0,
+    "trop_confiant": 0,
+    "incorrect": 6
+   },
+   "absent/nom_recombine": {
+    "n": 25,
+    "ideal": 84.0,
+    "sur": 84.0,
+    "silencieux": 1,
+    "silencieux_pct": 4.0,
+    "trop_confiant": 0,
+    "incorrect": 3
+   },
+   "absent/notion_metier": {
+    "n": 175,
+    "ideal": 85.14,
+    "sur": 85.14,
+    "silencieux": 18,
+    "silencieux_pct": 10.29,
+    "trop_confiant": 0,
+    "incorrect": 8
+   },
+   "absent/synonyme_manquant": {
+    "n": 50,
+    "ideal": 60.0,
+    "sur": 60.0,
+    "silencieux": 11,
+    "silencieux_pct": 22.0,
+    "trop_confiant": 0,
+    "incorrect": 9
+   },
+   "present/exact": {
+    "n": 1991,
+    "ideal": 100.0,
+    "sur": 100.0,
+    "silencieux": 0,
+    "silencieux_pct": 0.0,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "present/faute": {
+    "n": 2390,
+    "ideal": 78.62,
+    "sur": 99.04,
+    "silencieux": 6,
+    "silencieux_pct": 0.25,
+    "trop_confiant": 13,
+    "incorrect": 4
+   },
+   "present/mot_oublie": {
+    "n": 119,
+    "ideal": 17.65,
+    "sur": 99.16,
+    "silencieux": 1,
+    "silencieux_pct": 0.84,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "TOTAL": {
+    "n": 5030,
+    "ideal": 86.02,
+    "sur": 97.65,
+    "silencieux": 58,
+    "silencieux_pct": 1.15,
+    "trop_confiant": 13,
+    "incorrect": 47
+   }
+  },
+  "par_mode": {
+   "entendu": {
+    "n": 972,
+    "ideal": 81.28,
+    "sur": 97.84,
+    "silencieux": 16,
+    "silencieux_pct": 1.65,
+    "trop_confiant": 2,
+    "incorrect": 3
+   },
+   "lu": {
+    "n": 4058,
+    "ideal": 87.16,
+    "sur": 97.61,
+    "silencieux": 42,
+    "silencieux_pct": 1.03,
+    "trop_confiant": 11,
+    "incorrect": 44
+   },
+   "TOTAL": {
+    "n": 5030,
+    "ideal": 86.02,
+    "sur": 97.65,
+    "silencieux": 58,
+    "silencieux_pct": 1.15,
+    "trop_confiant": 13,
+    "incorrect": 47
+   }
+  },
+  "par_indice": {
+   "avec indice": {
+    "n": 2542,
+    "ideal": 85.92,
+    "sur": 97.4,
+    "silencieux": 35,
+    "silencieux_pct": 1.38,
+    "trop_confiant": 7,
+    "incorrect": 24
+   },
+   "sans indice": {
+    "n": 2488,
+    "ideal": 86.13,
+    "sur": 97.91,
+    "silencieux": 23,
+    "silencieux_pct": 0.92,
+    "trop_confiant": 6,
+    "incorrect": 23
+   },
+   "TOTAL": {
+    "n": 5030,
+    "ideal": 86.02,
+    "sur": 97.65,
+    "silencieux": 58,
+    "silencieux_pct": 1.15,
+    "trop_confiant": 13,
+    "incorrect": 47
+   }
+  },
+  "risque_approche": {
+   "clients": {
+    "acceptes": 64,
+    "silencieux": 0,
+    "risque_pct": 0.0
+   },
+   "geographie": {
+    "acceptes": 420,
+    "silencieux": 40,
+    "risque_pct": 9.52
+   },
+   "marques": {
+    "acceptes": 169,
+    "silencieux": 0,
+    "risque_pct": 0.0
+   },
+   "pieces": {
+    "acceptes": 125,
+    "silencieux": 13,
+    "risque_pct": 10.4
+   },
+   "vehicules": {
+    "acceptes": 88,
+    "silencieux": 1,
+    "risque_pct": 1.14
+   },
+   "vocabulaire_metier": {
+    "acceptes": 546,
+    "silencieux": 2,
+    "risque_pct": 0.37
+   },
+   "TOTAL": {
+    "acceptes": 1412,
+    "silencieux": 56,
+    "risque_pct": 3.97
+   }
+  }
+ },
+ "analyse": {
+  "global": {
+   "n": 12175,
+   "ideal": 69.19,
+   "sur": 96.3,
+   "silencieux": 194,
+   "silencieux_pct": 1.59,
+   "trop_confiant": 104,
+   "incorrect": 153
+  },
+  "par_famille": {
+   "clients": {
+    "n": 2587,
+    "ideal": 49.01,
+    "sur": 98.07,
+    "silencieux": 14,
+    "silencieux_pct": 0.54,
+    "trop_confiant": 19,
+    "incorrect": 17
+   },
+   "douane": {
+    "n": 781,
+    "ideal": 77.85,
+    "sur": 99.1,
+    "silencieux": 6,
+    "silencieux_pct": 0.77,
+    "trop_confiant": 0,
+    "incorrect": 1
+   },
+   "geographie": {
+    "n": 3915,
+    "ideal": 77.78,
+    "sur": 91.44,
+    "silencieux": 138,
+    "silencieux_pct": 3.52,
+    "trop_confiant": 77,
+    "incorrect": 120
+   },
+   "marques": {
+    "n": 231,
+    "ideal": 75.32,
+    "sur": 97.4,
+    "silencieux": 6,
+    "silencieux_pct": 2.6,
+    "trop_confiant": 0,
+    "incorrect": 0
+   },
+   "mixte": {
+    "n": 6,
+    "ideal": 66.67,
+    "sur": 66.67,
+    "silencieux": 1,
+    "silencieux_pct": 16.67,
+    "trop_confiant": 0,
+    "incorrect": 1
+   },
+   "pieces": {
+    "n": 2237,
+    "ideal": 74.56,
+    "sur": 98.48,
+    "silencieux": 23,
+    "silencieux_pct": 1.03,
+    "trop_confiant": 1,
+    "incorrect": 10
+   },
+   "vehicules": {
+    "n": 2277,
+    "ideal": 67.59,
+    "sur": 99.39,
+    "silencieux": 4,
+    "silencieux_pct": 0.18,
+    "trop_confiant": 7,
+    "incorrect": 3
+   },
+   "vocabulaire_metier": {
+    "n": 141,
+    "ideal": 83.69,
+    "sur": 97.87,
+    "silencieux": 2,
+    "silencieux_pct": 1.42,
+    "trop_confiant": 0,
+    "incorrect": 1
+   },
+   "TOTAL": {
+    "n": 12175,
+    "ideal": 69.19,
+    "sur": 96.3,
+    "silencieux": 194,
+    "silencieux_pct": 1.59,
+    "trop_confiant": 104,
+    "incorrect": 153
+   }
+  },
+  "par_nature": {
+   "absent/lieu_inconnu": {
+    "n": 316,
+    "ideal": 63.61,
+    "sur": 63.61,
+    "silencieux": 58,
+    "silencieux_pct": 18.35,
+    "trop_confiant": 0,
+    "incorrect": 57
+   },
+   "absent/lieu_index_negatif": {
+    "n": 316,
+    "ideal": 74.68,
+    "sur": 74.68,
+    "silencieux": 47,
+    "silencieux_pct": 14.87,
+    "trop_confiant": 0,
+    "incorrect": 33
+   },
+   "absent/marque_hors_catalogue": {
+    "n": 43,
+    "ideal": 81.4,
+    "sur": 81.4,
+    "silencieux": 2,
+    "silencieux_pct": 4.65,
+    "trop_confiant": 0,
+    "incorrect": 6
+   },
+   "absent/nom_recombine": {
+    "n": 61,
+    "ideal": 81.97,
+    "sur": 81.97,
+    "silencieux": 6,
+    "silencieux_pct": 9.84,
+    "trop_confiant": 0,
+    "incorrect": 5
+   },
+   "absent/notion_metier": {
+    "n": 424,
+    "ideal": 86.79,
+    "sur": 86.79,
+    "silencieux": 34,
+    "silencieux_pct": 8.02,
+    "trop_confiant": 0,
+    "incorrect": 22
+   },
+   "absent/synonyme_manquant": {
+    "n": 52,
+    "ideal": 65.38,
+    "sur": 65.38,
+    "silencieux": 14,
+    "silencieux_pct": 26.92,
+    "trop_confiant": 0,
+    "incorrect": 4
+   },
+   "present/faute": {
+    "n": 10194,
+    "ideal": 72.47,
+    "sur": 98.68,
+    "silencieux": 21,
+    "silencieux_pct": 0.21,
+    "trop_confiant": 104,
+    "incorrect": 10
+   },
+   "present/mot_oublie": {
+    "n": 769,
+    "ideal": 14.56,
+    "sur": 96.36,
+    "silencieux": 12,
+    "silencieux_pct": 1.56,
+    "trop_confiant": 0,
+    "incorrect": 16
+   },
+   "TOTAL": {
+    "n": 12175,
+    "ideal": 69.19,
+    "sur": 96.3,
+    "silencieux": 194,
+    "silencieux_pct": 1.59,
+    "trop_confiant": 104,
+    "incorrect": 153
+   }
+  },
+  "par_mode": {
+   "entendu": {
+    "n": 2798,
+    "ideal": 65.65,
+    "sur": 96.32,
+    "silencieux": 39,
+    "silencieux_pct": 1.39,
+    "trop_confiant": 21,
+    "incorrect": 43
+   },
+   "lu": {
+    "n": 9377,
+    "ideal": 70.25,
+    "sur": 96.29,
+    "silencieux": 155,
+    "silencieux_pct": 1.65,
+    "trop_confiant": 83,
+    "incorrect": 110
+   },
+   "TOTAL": {
+    "n": 12175,
+    "ideal": 69.19,
+    "sur": 96.3,
+    "silencieux": 194,
+    "silencieux_pct": 1.59,
+    "trop_confiant": 104,
+    "incorrect": 153
+   }
+  },
+  "par_indice": {
+   "avec indice": {
+    "n": 6128,
+    "ideal": 69.3,
+    "sur": 96.3,
+    "silencieux": 115,
+    "silencieux_pct": 1.88,
+    "trop_confiant": 61,
+    "incorrect": 51
+   },
+   "sans indice": {
+    "n": 6047,
+    "ideal": 69.08,
+    "sur": 96.3,
+    "silencieux": 79,
+    "silencieux_pct": 1.31,
+    "trop_confiant": 43,
+    "incorrect": 102
+   },
+   "TOTAL": {
+    "n": 12175,
+    "ideal": 69.19,
+    "sur": 96.3,
+    "silencieux": 194,
+    "silencieux_pct": 1.59,
+    "trop_confiant": 104,
+    "incorrect": 153
+   }
+  },
+  "risque_approche": {
+   "clients": {
+    "acceptes": 1218,
+    "silencieux": 14,
+    "risque_pct": 1.15
+   },
+   "douane": {
+    "acceptes": 611,
+    "silencieux": 6,
+    "risque_pct": 0.98
+   },
+   "geographie": {
+    "acceptes": 2493,
+    "silencieux": 138,
+    "risque_pct": 5.54
+   },
+   "marques": {
+    "acceptes": 163,
+    "silencieux": 6,
+    "risque_pct": 3.68
+   },
+   "mixte": {
+    "acceptes": 1,
+    "silencieux": 1,
+    "risque_pct": 100.0
+   },
+   "pieces": {
+    "acceptes": 737,
+    "silencieux": 23,
+    "risque_pct": 3.12
+   },
+   "vehicules": {
+    "acceptes": 1511,
+    "silencieux": 4,
+    "risque_pct": 0.26
+   },
+   "vocabulaire_metier": {
+    "acceptes": 83,
+    "silencieux": 2,
+    "risque_pct": 2.41
+   },
+   "TOTAL": {
+    "acceptes": 6817,
+    "silencieux": 194,
+    "risque_pct": 2.85
+   }
+  },
+  "diagnostic": {
+   "present_confondu": {
+    "n": 33,
+    "par_famille": {
+     "clients": 14,
+     "geographie": 14,
+     "marques": 3,
+     "pieces": 1,
+     "vocabulaire_metier": 1
+    },
+    "par_sous_nature": {
+     "faute": 21,
+     "mot_oublie": 12
+    },
+    "par_mode": {
+     "entendu": 9,
+     "lu": 24
+    },
+    "avec_voisin_a_une_faute": 1,
+    "exemples": [
+     {
+      "case_id": "SA-00201",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "rimmns",
+      "nom_source": "Rummen",
+      "sous_nature": "faute",
+      "perturbations": "clavier:substitution ; clavier:substitution ; clavier:inversion",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Rummen"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Rimogne"
+      ],
+      "score": 0.9067,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-01308",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "vlsse",
+      "nom_source": "Vossem",
+      "sous_nature": "faute",
+      "perturbations": "clavier:omission ; clavier:substitution",
+      "mots_oublies": "",
+      "indice": "localite_postale",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Asse",
+       "Vossem",
+       "Visé",
+       "Fosse"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Vlissegem"
+      ],
+      "score": 0.8815,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-02149",
+      "famille": "geographie",
+      "mode": "entendu",
+      "terme": "thrisourt",
+      "nom_source": "Thoricourt",
+      "sous_nature": "faute",
+      "perturbations": "clavier:omission ; phonetique:s_c_k(c→s)",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Thoricourt"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Thiescourt"
+      ],
+      "score": 0.917,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-05405",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "tjomrn",
+      "nom_source": "Thommen",
+      "sous_nature": "faute",
+      "perturbations": "clavier:omission ; clavier:substitution ; clavier:substitution",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Thommen",
+       "Thon",
+       "Komen"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Thorn"
+      ],
+      "score": 0.9,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-05811",
+      "famille": "clients",
+      "mode": "entendu",
+      "terme": "oomsxt",
+      "nom_source": "Carrosseriebedrijf Ooms",
+      "sous_nature": "mot_oublie",
+      "perturbations": "phonetique:finale_muette(∅→x) ; phonetique:finale_muette(∅→t)",
+      "mots_oublies": "mot_generique:Carrosseriebedrijf",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Carrosseriebedrijf Ooms SRL"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Oost"
+      ],
+      "score": 0.9111,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-06415",
+      "famille": "clients",
+      "mode": "lu",
+      "terme": "centre beautor",
+      "nom_source": "Centre Auto Beautor",
+      "sous_nature": "mot_oublie",
+      "perturbations": "",
+      "mots_oublies": "mot_generique:Auto",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Centre Auto Beautor SARL"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Centre auto"
+      ],
+      "score": 0.9571,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-07297",
+      "famille": "geographie",
+      "mode": "entendu",
+      "terme": "munnçeter",
+      "nom_source": "Munster",
+      "sous_nature": "faute",
+      "perturbations": "clavier:insertion ; phonetique:consonne_double(n→nn) ; phonetique:s_c_k(s→ç)",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Munster"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Mondorf-les-Bains"
+      ],
+      "score": 0.902,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-07455",
+      "famille": "clients",
+      "mode": "lu",
+      "terme": "bruneau",
+      "nom_source": "Auto Bruneau",
+      "sous_nature": "mot_oublie",
+      "perturbations": "",
+      "mots_oublies": "mot_generique:Auto",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Auto Bruneau SARL"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Brunehaut"
+      ],
+      "score": 0.9556,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-08467",
+      "famille": "clients",
+      "mode": "lu",
+      "terme": "durieyx",
+      "nom_source": "Garage Durieux",
+      "sous_nature": "mot_oublie",
+      "perturbations": "clavier:substitution",
+      "mots_oublies": "mot_generique:Garage",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Garage Durieux SRL"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Dury"
+      ],
+      "score": 0.9222,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-11107",
+      "famille": "pieces",
+      "mode": "lu",
+      "terme": "oiigne",
+      "nom_source": "Origine",
+      "sous_nature": "faute",
+      "perturbations": "clavier:inversion ; clavier:omission ; clavier:inversion",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "resolved",
+      "attendu_labels": [
+       "Origine"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Oignies"
+      ],
+      "score": 0.9556,
+      "voisin_a_une_faute": ""
+     }
+    ]
+   },
+   "present_trop_confiant": {
+    "n": 104,
+    "par_famille": {
+     "clients": 19,
+     "geographie": 77,
+     "pieces": 1,
+     "vehicules": 7
+    },
+    "par_sous_nature": {
+     "faute": 104
+    },
+    "par_mode": {
+     "entendu": 21,
+     "lu": 83
+    },
+    "avec_voisin_a_une_faute": 43,
+    "exemples": [
+     {
+      "case_id": "SA-00629",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "raenem",
+      "nom_source": "Ravenel",
+      "sous_nature": "faute",
+      "perturbations": "clavier:omission ; clavier:substitution",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Ravenel",
+       "Racquinghem",
+       "Sevenum"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Racquinghem"
+      ],
+      "score": 0.9333,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-01033",
+      "famille": "vehicules",
+      "mode": "lu",
+      "terme": "fiat 500 abaarthy",
+      "nom_source": "FIAT 500 ABARTH",
+      "sous_nature": "faute",
+      "perturbations": "clavier:doublement ; clavier:insertion",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "500 ABARTH",
+       "ABARTH 500"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "500 ABARTH"
+      ],
+      "score": 0.9765,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-01184",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "senthnbheim",
+      "nom_source": "Sentheim",
+      "sous_nature": "faute",
+      "perturbations": "clavier:insertion ; clavier:insertion ; clavier:insertion",
+      "mots_oublies": "",
+      "indice": "ville",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Sentheim",
+       "Cernay"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Sentheim"
+      ],
+      "score": 0.9455,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-03661",
+      "famille": "clients",
+      "mode": "lu",
+      "terme": "carroessrie laurent",
+      "nom_source": "Carrosserie Laurent",
+      "sous_nature": "faute",
+      "perturbations": "clavier:inversion ; clavier:inversion",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Carrosserie Laurent SRL",
+       "Laurent Carrosserie SPRL"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Carrosserie Laurent SRL"
+      ],
+      "score": 0.9895,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-08186",
+      "famille": "clients",
+      "mode": "lu",
+      "terme": "chrlier carrosseri",
+      "nom_source": "Charlier Carrosserie",
+      "sous_nature": "faute",
+      "perturbations": "clavier:omission ; clavier:omission",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Carlier Carrosserie SA",
+       "Charlier Carrosserie SRL"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Charlier Carrosserie SRL"
+      ],
+      "score": 0.9141,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-09090",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "budle",
+      "nom_source": "Budel",
+      "sous_nature": "faute",
+      "perturbations": "clavier:inversion",
+      "mots_oublies": "",
+      "indice": "ville",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Bulles",
+       "Budel"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Budel"
+      ],
+      "score": 0.9533,
+      "voisin_a_une_faute": "bulle"
+     },
+     {
+      "case_id": "SA-09688",
+      "famille": "vehicules",
+      "mode": "lu",
+      "terme": "fiat abartth 500",
+      "nom_source": "FIAT ABARTH 500",
+      "sous_nature": "faute",
+      "perturbations": "clavier:doublement",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "500 ABARTH",
+       "ABARTH 500"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "ABARTH 500"
+      ],
+      "score": 0.9875,
+      "voisin_a_une_faute": "fiat 500 abarth"
+     },
+     {
+      "case_id": "SA-10082",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "mesvn",
+      "nom_source": "Mesvin",
+      "sous_nature": "faute",
+      "perturbations": "clavier:omission",
+      "mots_oublies": "",
+      "indice": "localite_postale",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Mesvin",
+       "Mesen"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Mesvin"
+      ],
+      "score": 0.9667,
+      "voisin_a_une_faute": "mesen"
+     },
+     {
+      "case_id": "SA-10474",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "pirneign",
+      "nom_source": "Piringen",
+      "sous_nature": "faute",
+      "perturbations": "clavier:inversion ; phonetique:voyelles_e(e→ei) ; clavier:omission",
+      "mots_oublies": "",
+      "indice": "localite_postale",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Tienen",
+       "Piringen",
+       "Sinsin",
+       "Treignes"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Piringen"
+      ],
+      "score": 0.9417,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-10734",
+      "famille": "geographie",
+      "mode": "entendu",
+      "terme": "vaalss",
+      "nom_source": "Vaals",
+      "sous_nature": "faute",
+      "perturbations": "phonetique:consonne_double(s→ss)",
+      "mots_oublies": "",
+      "indice": "ville",
+      "attendu": "ambiguous",
+      "attendu_labels": [
+       "Vaals",
+       "Aalst"
+      ],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Vaals"
+      ],
+      "score": 0.9333,
+      "voisin_a_une_faute": ""
+     }
+    ]
+   },
+   "absent_accepte": {
+    "n": 161,
+    "par_famille": {
+     "douane": 6,
+     "geographie": 124,
+     "marques": 3,
+     "mixte": 1,
+     "pieces": 22,
+     "vehicules": 4,
+     "vocabulaire_metier": 1
+    },
+    "par_sous_nature": {
+     "lieu_inconnu": 58,
+     "lieu_index_negatif": 47,
+     "marque_hors_catalogue": 2,
+     "nom_recombine": 6,
+     "notion_metier": 34,
+     "synonyme_manquant": 14
+    },
+    "par_mode": {
+     "entendu": 30,
+     "lu": 131
+    },
+    "avec_voisin_a_une_faute": 19,
+    "exemples": [
+     {
+      "case_id": "SA-01804",
+      "famille": "geographie",
+      "mode": "entendu",
+      "terme": "essenc",
+      "nom_source": "essence",
+      "sous_nature": "notion_metier",
+      "perturbations": "clavier:omission",
+      "mots_oublies": "",
+      "indice": "commune",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Essen"
+      ],
+      "score": 0.9667,
+      "voisin_a_une_faute": "essen"
+     },
+     {
+      "case_id": "SA-02186",
+      "famille": "pieces",
+      "mode": "lu",
+      "terme": "verggeroux",
+      "nom_source": "Vergeroux",
+      "sous_nature": "lieu_inconnu",
+      "perturbations": "clavier:doublement",
+      "mots_oublies": "",
+      "indice": "categorie_piece",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Carburateurs"
+      ],
+      "score": 0.8833,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-03909",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "frandhis",
+      "nom_source": "franchise",
+      "sous_nature": "notion_metier",
+      "perturbations": "clavier:substitution ; clavier:omission",
+      "mots_oublies": "",
+      "indice": "ville",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "La Francheville"
+      ],
+      "score": 0.9048,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-05677",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "ettenhuasen",
+      "nom_source": "Ettenhausen",
+      "sous_nature": "lieu_index_negatif",
+      "perturbations": "clavier:inversion",
+      "mots_oublies": "",
+      "indice": "ville",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Etting"
+      ],
+      "score": 0.8909,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-07292",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "steimbke",
+      "nom_source": "Steimbke",
+      "sous_nature": "lieu_inconnu",
+      "perturbations": "",
+      "mots_oublies": "",
+      "indice": "ville",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Steige"
+      ],
+      "score": 0.8917,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-07368",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "aobres",
+      "nom_source": "Ambres",
+      "sous_nature": "lieu_index_negatif",
+      "perturbations": "clavier:substitution ; clavier:substitution",
+      "mots_oublies": "",
+      "indice": "commune",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Aubel"
+      ],
+      "score": 0.9067,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-08032",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "chevaux",
+      "nom_source": "chevaux",
+      "sous_nature": "notion_metier",
+      "perturbations": "",
+      "mots_oublies": "",
+      "indice": "",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Chézeaux"
+      ],
+      "score": 0.8944,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-08543",
+      "famille": "geographie",
+      "mode": "lu",
+      "terme": "buxgge",
+      "nom_source": "budget",
+      "sous_nature": "notion_metier",
+      "perturbations": "clavier:omission ; clavier:doublement ; clavier:substitution",
+      "mots_oublies": "",
+      "indice": "arrondissement",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Bruges"
+      ],
+      "score": 0.9,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-09951",
+      "famille": "pieces",
+      "mode": "lu",
+      "terme": "cardan",
+      "nom_source": "cardan",
+      "sous_nature": "synonyme_manquant",
+      "perturbations": "",
+      "mots_oublies": "",
+      "indice": "categorie_piece",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Arbres de transmission"
+      ],
+      "score": 0.9091,
+      "voisin_a_une_faute": ""
+     },
+     {
+      "case_id": "SA-10811",
+      "famille": "geographie",
+      "mode": "entendu",
+      "terme": "eisennharz",
+      "nom_source": "Eisenharz",
+      "sous_nature": "lieu_index_negatif",
+      "perturbations": "phonetique:consonne_double(n→nn)",
+      "mots_oublies": "",
+      "indice": "commune",
+      "attendu": "unknown",
+      "attendu_labels": [],
+      "moteur": "resolved",
+      "moteur_labels": [
+       "Eischen"
+      ],
+      "score": 0.92,
+      "voisin_a_une_faute": ""
+     }
+    ]
+   },
+   "absent_ambigu": {
+    "n": 127
+   },
+   "absents_total": {
+    "lieu_inconnu": 316,
+    "lieu_index_negatif": 316,
+    "marque_hors_catalogue": 43,
+    "nom_recombine": 61,
+    "notion_metier": 424,
+    "synonyme_manquant": 52
+   },
+   "presents_total": 10963
+  }
+ },
+ "reel_moteur": {
+  "sans_indice": {
+   "par_mode": {
+    "entendu": {
+     "n": 175,
+     "ideal": 47.43,
+     "sur": 95.43,
+     "silencieux": 1,
+     "silencieux_pct": 0.57,
+     "trop_confiant": 3,
+     "incorrect": 4
+    },
+    "lu": {
+     "n": 77,
+     "ideal": 71.43,
+     "sur": 98.7,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 1,
+     "incorrect": 0
+    },
+    "TOTAL": {
+     "n": 252,
+     "ideal": 54.76,
+     "sur": 96.43,
+     "silencieux": 1,
+     "silencieux_pct": 0.4,
+     "trop_confiant": 4,
+     "incorrect": 4
+    }
+   },
+   "par_famille": {
+    "clients": {
+     "n": 42,
+     "ideal": 50.0,
+     "sur": 97.62,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "geographie": {
+     "n": 55,
+     "ideal": 52.73,
+     "sur": 85.45,
+     "silencieux": 1,
+     "silencieux_pct": 1.82,
+     "trop_confiant": 4,
+     "incorrect": 3
+    },
+    "marques": {
+     "n": 24,
+     "ideal": 83.33,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "pieces": {
+     "n": 63,
+     "ideal": 57.14,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "vehicules": {
+     "n": 48,
+     "ideal": 35.42,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "vocabulaire_metier": {
+     "n": 20,
+     "ideal": 75.0,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "TOTAL": {
+     "n": 252,
+     "ideal": 54.76,
+     "sur": 96.43,
+     "silencieux": 1,
+     "silencieux_pct": 0.4,
+     "trop_confiant": 4,
+     "incorrect": 4
+    }
+   },
+   "approche_seule": {
+    "lu": {
+     "acceptes": 13,
+     "silencieux": 0
+    },
+    "entendu": {
+     "acceptes": 25,
+     "silencieux": 0
+    }
+   }
+  },
+  "avec_indice": {
+   "par_mode": {
+    "entendu": {
+     "n": 175,
+     "ideal": 48.57,
+     "sur": 95.43,
+     "silencieux": 1,
+     "silencieux_pct": 0.57,
+     "trop_confiant": 6,
+     "incorrect": 1
+    },
+    "lu": {
+     "n": 77,
+     "ideal": 75.32,
+     "sur": 98.7,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 1,
+     "incorrect": 0
+    },
+    "TOTAL": {
+     "n": 252,
+     "ideal": 56.75,
+     "sur": 96.43,
+     "silencieux": 1,
+     "silencieux_pct": 0.4,
+     "trop_confiant": 7,
+     "incorrect": 1
+    }
+   },
+   "par_famille": {
+    "clients": {
+     "n": 42,
+     "ideal": 50.0,
+     "sur": 97.62,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "geographie": {
+     "n": 55,
+     "ideal": 58.18,
+     "sur": 85.45,
+     "silencieux": 1,
+     "silencieux_pct": 1.82,
+     "trop_confiant": 7,
+     "incorrect": 0
+    },
+    "marques": {
+     "n": 24,
+     "ideal": 91.67,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "pieces": {
+     "n": 63,
+     "ideal": 57.14,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "vehicules": {
+     "n": 48,
+     "ideal": 35.42,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "vocabulaire_metier": {
+     "n": 20,
+     "ideal": 75.0,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "TOTAL": {
+     "n": 252,
+     "ideal": 56.75,
+     "sur": 96.43,
+     "silencieux": 1,
+     "silencieux_pct": 0.4,
+     "trop_confiant": 7,
+     "incorrect": 1
+    }
+   },
+   "approche_seule": {
+    "lu": {
+     "acceptes": 16,
+     "silencieux": 0
+    },
+    "entendu": {
+     "acceptes": 29,
+     "silencieux": 0
+    }
+   }
+  },
+  "erreurs_sans_indice": [
+   {
+    "mode": "entendu",
+    "nom": "Rongy",
+    "saisie": "rangie",
+    "note": "trop_confiant",
+    "attendu": "ambiguous",
+    "attendu_labels": [
+     "Boom",
+     "Brecht",
+     "Edegem",
+     "Essen"
+    ],
+    "moteur_labels": [
+     "Ragnies"
+    ],
+    "score": 0.9556
+   },
+   {
+    "mode": "entendu",
+    "nom": "Spiere",
+    "saisie": "speer",
+    "note": "trop_confiant",
+    "attendu": "ambiguous",
+    "attendu_labels": [
+     "Geer",
+     "Peer",
+     "Heers",
+     "Meer"
+    ],
+    "moteur_labels": [
+     "Peer"
+    ],
+    "score": 0.9333
+   },
+   {
+    "mode": "entendu",
+    "nom": "Seny",
+    "saisie": "sunny",
+    "note": "trop_confiant",
+    "attendu": "ambiguous",
+    "attendu_labels": [
+     "Seny",
+     "Sugny",
+     "Suxy"
+    ],
+    "moteur_labels": [
+     "Sugny"
+    ],
+    "score": 0.8933
+   },
+   {
+    "mode": "entendu",
+    "nom": "Hopel",
+    "saisie": "opel",
+    "note": "silencieux",
+    "attendu": "ambiguous",
+    "attendu_labels": [
+     "Ospel",
+     "Hopel"
+    ],
+    "moteur_labels": [
+     "OPEL"
+    ],
+    "score": null
+   },
+   {
+    "mode": "lu",
+    "nom": "Péruwelz",
+    "saisie": "perumwls",
+    "note": "trop_confiant",
+    "attendu": "ambiguous",
+    "attendu_labels": [
+     "Perwez",
+     "Péruwelz"
+    ],
+    "moteur_labels": [
+     "Péruwelz"
+    ],
+    "score": 0.9214
+   }
+  ],
+  "libres": [
+   {
+    "mode": "entendu",
+    "saisie": "lille",
+    "statut": "ambiguous",
+    "etape": "exact",
+    "labels": [
+     "Lille",
+     "Lille",
+     "Agence Lille"
+    ],
+    "score": null
+   },
+   {
+    "mode": "entendu",
+    "saisie": "amiens",
+    "statut": "resolved",
+    "etape": "exact",
+    "labels": [
+     "Amiens"
+    ],
+    "score": null
+   },
+   {
+    "mode": "entendu",
+    "saisie": "citroen",
+    "statut": "resolved",
+    "etape": "exact",
+    "labels": [
+     "CITROEN"
+    ],
+    "score": null
+   },
+   {
+    "mode": "entendu",
+    "saisie": "porshe",
+    "statut": "resolved",
+    "etape": "approche",
+    "labels": [
+     "PORSCHE"
+    ],
+    "score": 0.9714
+   },
+   {
+    "mode": "entendu",
+    "saisie": "volant moteur",
+    "statut": "resolved",
+    "etape": "exact",
+    "labels": [
+     "Volants d'inertie"
+    ],
+    "score": null
+   },
+   {
+    "mode": "entendu",
+    "saisie": "filtre a gazoile",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.9095
+   },
+   {
+    "mode": "lu",
+    "saisie": "lyon",
+    "statut": "unknown",
+    "etape": "index_negatif",
+    "labels": [],
+    "score": null
+   },
+   {
+    "mode": "lu",
+    "saisie": "courbevois",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.8778
+   },
+   {
+    "mode": "lu",
+    "saisie": "kia",
+    "statut": "resolved",
+    "etape": "exact",
+    "labels": [
+     "KIA"
+    ],
+    "score": null
+   },
+   {
+    "mode": "lu",
+    "saisie": "byd seal",
+    "statut": "resolved",
+    "etape": "exact",
+    "labels": [
+     "SEAL"
+    ],
+    "score": null
+   },
+   {
+    "mode": "lu",
+    "saisie": "volant moteur",
+    "statut": "resolved",
+    "etape": "exact",
+    "labels": [
+     "Volants d'inertie"
+    ],
+    "score": null
+   },
+   {
+    "mode": "lu",
+    "saisie": "double ambrayage",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.825
+   },
+   {
+    "mode": "lu",
+    "saisie": "boite 6 vitesses",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.6889
+   },
+   {
+    "mode": "lu",
+    "saisie": "hybridation",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.7708
+   },
+   {
+    "mode": "lu",
+    "saisie": "tabelau de brod",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.775
+   },
+   {
+    "mode": "lu",
+    "saisie": "tete haute",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.87
+   },
+   {
+    "mode": "lu",
+    "saisie": "airbag",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.85
+   },
+   {
+    "mode": "lu",
+    "saisie": "ceinture de sécurité",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.8574
+   },
+   {
+    "mode": "lu",
+    "saisie": "choc pietons",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.8338
+   },
+   {
+    "mode": "lu",
+    "saisie": "clignotants",
+    "statut": "resolved",
+    "etape": "exact",
+    "labels": [
+     "Clignotants"
+    ],
+    "score": null
+   },
+   {
+    "mode": "lu",
+    "saisie": "loa",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": null
+   },
+   {
+    "mode": "lu",
+    "saisie": "loaction longue durée",
+    "statut": "unknown",
+    "etape": "absent",
+    "labels": [],
+    "score": 0.8032
+   }
+  ]
+ },
+ "sensibilite": {
+  "analyse_e0.10_a0.10": {
+   "part_entendu": 0.1,
+   "part_absents": 0.1,
+   "jeu": "analyse",
+   "global": {
+    "n": 12177,
+    "ideal": 70.05,
+    "sur": 96.29,
+    "silencieux": 196,
+    "silencieux_pct": 1.61,
+    "trop_confiant": 106,
+    "incorrect": 150
+   },
+   "par_famille": {
+    "clients": {
+     "n": 2589,
+     "ideal": 49.98,
+     "sur": 97.84,
+     "silencieux": 16,
+     "silencieux_pct": 0.62,
+     "trop_confiant": 19,
+     "incorrect": 21
+    },
+    "douane": {
+     "n": 786,
+     "ideal": 80.28,
+     "sur": 99.24,
+     "silencieux": 6,
+     "silencieux_pct": 0.76,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "geographie": {
+     "n": 3911,
+     "ideal": 78.6,
+     "sur": 91.36,
+     "silencieux": 143,
+     "silencieux_pct": 3.66,
+     "trop_confiant": 81,
+     "incorrect": 114
+    },
+    "marques": {
+     "n": 229,
+     "ideal": 79.04,
+     "sur": 97.82,
+     "silencieux": 3,
+     "silencieux_pct": 1.31,
+     "trop_confiant": 2,
+     "incorrect": 0
+    },
+    "mixte": {
+     "n": 7,
+     "ideal": 100.0,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "pieces": {
+     "n": 2231,
+     "ideal": 74.99,
+     "sur": 98.74,
+     "silencieux": 15,
+     "silencieux_pct": 0.67,
+     "trop_confiant": 0,
+     "incorrect": 13
+    },
+    "vehicules": {
+     "n": 2287,
+     "ideal": 67.95,
+     "sur": 99.34,
+     "silencieux": 10,
+     "silencieux_pct": 0.44,
+     "trop_confiant": 4,
+     "incorrect": 1
+    },
+    "vocabulaire_metier": {
+     "n": 137,
+     "ideal": 84.67,
+     "sur": 97.08,
+     "silencieux": 3,
+     "silencieux_pct": 2.19,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "TOTAL": {
+     "n": 12177,
+     "ideal": 70.05,
+     "sur": 96.29,
+     "silencieux": 196,
+     "silencieux_pct": 1.61,
+     "trop_confiant": 106,
+     "incorrect": 150
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 1263,
+     "silencieux": 16,
+     "risque_pct": 1.27
+    },
+    "douane": {
+     "acceptes": 628,
+     "silencieux": 6,
+     "risque_pct": 0.96
+    },
+    "geographie": {
+     "acceptes": 2520,
+     "silencieux": 143,
+     "risque_pct": 5.67
+    },
+    "marques": {
+     "acceptes": 169,
+     "silencieux": 3,
+     "risque_pct": 1.78
+    },
+    "pieces": {
+     "acceptes": 739,
+     "silencieux": 15,
+     "risque_pct": 2.03
+    },
+    "vehicules": {
+     "acceptes": 1517,
+     "silencieux": 10,
+     "risque_pct": 0.66
+    },
+    "vocabulaire_metier": {
+     "acceptes": 87,
+     "silencieux": 3,
+     "risque_pct": 3.45
+    },
+    "TOTAL": {
+     "acceptes": 6923,
+     "silencieux": 196,
+     "risque_pct": 2.83
+    }
+   },
+   "diagnostic_n": {
+    "present_confondu": 33,
+    "present_trop_confiant": 106,
+    "absent_accepte": 163,
+    "absent_ambigu": 121
+   }
+  },
+  "analyse_e0.20_a0.05": {
+   "part_entendu": 0.2,
+   "part_absents": 0.05,
+   "jeu": "analyse",
+   "global": {
+    "n": 11536,
+    "ideal": 68.86,
+    "sur": 97.47,
+    "silencieux": 103,
+    "silencieux_pct": 0.89,
+    "trop_confiant": 104,
+    "incorrect": 85
+   },
+   "par_famille": {
+    "clients": {
+     "n": 2571,
+     "ideal": 48.66,
+     "sur": 98.02,
+     "silencieux": 15,
+     "silencieux_pct": 0.58,
+     "trop_confiant": 19,
+     "incorrect": 17
+    },
+    "douane": {
+     "n": 775,
+     "ideal": 78.32,
+     "sur": 99.74,
+     "silencieux": 2,
+     "silencieux_pct": 0.26,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "geographie": {
+     "n": 3407,
+     "ideal": 78.54,
+     "sur": 94.25,
+     "silencieux": 60,
+     "silencieux_pct": 1.76,
+     "trop_confiant": 77,
+     "incorrect": 59
+    },
+    "marques": {
+     "n": 219,
+     "ideal": 74.43,
+     "sur": 97.72,
+     "silencieux": 5,
+     "silencieux_pct": 2.28,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "mixte": {
+     "n": 2,
+     "ideal": 100.0,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "pieces": {
+     "n": 2172,
+     "ideal": 74.36,
+     "sur": 98.99,
+     "silencieux": 14,
+     "silencieux_pct": 0.64,
+     "trop_confiant": 1,
+     "incorrect": 7
+    },
+    "vehicules": {
+     "n": 2262,
+     "ideal": 67.46,
+     "sur": 99.47,
+     "silencieux": 3,
+     "silencieux_pct": 0.13,
+     "trop_confiant": 7,
+     "incorrect": 2
+    },
+    "vocabulaire_metier": {
+     "n": 128,
+     "ideal": 81.25,
+     "sur": 96.88,
+     "silencieux": 4,
+     "silencieux_pct": 3.12,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "TOTAL": {
+     "n": 11536,
+     "ideal": 68.86,
+     "sur": 97.47,
+     "silencieux": 103,
+     "silencieux_pct": 0.89,
+     "trop_confiant": 104,
+     "incorrect": 85
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 1219,
+     "silencieux": 15,
+     "risque_pct": 1.23
+    },
+    "douane": {
+     "acceptes": 607,
+     "silencieux": 2,
+     "risque_pct": 0.33
+    },
+    "geographie": {
+     "acceptes": 2415,
+     "silencieux": 60,
+     "risque_pct": 2.48
+    },
+    "marques": {
+     "acceptes": 162,
+     "silencieux": 5,
+     "risque_pct": 3.09
+    },
+    "pieces": {
+     "acceptes": 728,
+     "silencieux": 14,
+     "risque_pct": 1.92
+    },
+    "vehicules": {
+     "acceptes": 1510,
+     "silencieux": 3,
+     "risque_pct": 0.2
+    },
+    "vocabulaire_metier": {
+     "acceptes": 85,
+     "silencieux": 4,
+     "risque_pct": 4.71
+    },
+    "TOTAL": {
+     "acceptes": 6726,
+     "silencieux": 103,
+     "risque_pct": 1.53
+    }
+   },
+   "diagnostic_n": {
+    "present_confondu": 33,
+    "present_trop_confiant": 104,
+    "absent_accepte": 70,
+    "absent_ambigu": 59
+   }
+  },
+  "analyse_e0.20_a0.25": {
+   "part_entendu": 0.2,
+   "part_absents": 0.25,
+   "jeu": "analyse",
+   "global": {
+    "n": 14605,
+    "ideal": 69.58,
+    "sur": 92.17,
+    "silencieux": 580,
+    "silencieux_pct": 3.97,
+    "trop_confiant": 104,
+    "incorrect": 459
+   },
+   "par_famille": {
+    "clients": {
+     "n": 2626,
+     "ideal": 49.43,
+     "sur": 97.75,
+     "silencieux": 16,
+     "silencieux_pct": 0.61,
+     "trop_confiant": 19,
+     "incorrect": 24
+    },
+    "douane": {
+     "n": 816,
+     "ideal": 76.72,
+     "sur": 97.06,
+     "silencieux": 21,
+     "silencieux_pct": 2.57,
+     "trop_confiant": 0,
+     "incorrect": 3
+    },
+    "geographie": {
+     "n": 6075,
+     "ideal": 75.29,
+     "sur": 84.1,
+     "silencieux": 478,
+     "silencieux_pct": 7.87,
+     "trop_confiant": 77,
+     "incorrect": 411
+    },
+    "marques": {
+     "n": 254,
+     "ideal": 75.98,
+     "sur": 96.06,
+     "silencieux": 10,
+     "silencieux_pct": 3.94,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "mixte": {
+     "n": 10,
+     "ideal": 70.0,
+     "sur": 70.0,
+     "silencieux": 2,
+     "silencieux_pct": 20.0,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "pieces": {
+     "n": 2295,
+     "ideal": 74.68,
+     "sur": 98.0,
+     "silencieux": 31,
+     "silencieux_pct": 1.35,
+     "trop_confiant": 1,
+     "incorrect": 14
+    },
+    "vehicules": {
+     "n": 2344,
+     "ideal": 68.0,
+     "sur": 98.89,
+     "silencieux": 15,
+     "silencieux_pct": 0.64,
+     "trop_confiant": 7,
+     "incorrect": 4
+    },
+    "vocabulaire_metier": {
+     "n": 185,
+     "ideal": 84.32,
+     "sur": 95.14,
+     "silencieux": 7,
+     "silencieux_pct": 3.78,
+     "trop_confiant": 0,
+     "incorrect": 2
+    },
+    "TOTAL": {
+     "n": 14605,
+     "ideal": 69.58,
+     "sur": 92.17,
+     "silencieux": 580,
+     "silencieux_pct": 3.97,
+     "trop_confiant": 104,
+     "incorrect": 459
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 1220,
+     "silencieux": 16,
+     "risque_pct": 1.31
+    },
+    "douane": {
+     "acceptes": 626,
+     "silencieux": 21,
+     "risque_pct": 3.35
+    },
+    "geographie": {
+     "acceptes": 2833,
+     "silencieux": 478,
+     "risque_pct": 16.87
+    },
+    "marques": {
+     "acceptes": 167,
+     "silencieux": 10,
+     "risque_pct": 5.99
+    },
+    "mixte": {
+     "acceptes": 2,
+     "silencieux": 2,
+     "risque_pct": 100.0
+    },
+    "pieces": {
+     "acceptes": 745,
+     "silencieux": 31,
+     "risque_pct": 4.16
+    },
+    "vehicules": {
+     "acceptes": 1522,
+     "silencieux": 15,
+     "risque_pct": 0.99
+    },
+    "vocabulaire_metier": {
+     "acceptes": 88,
+     "silencieux": 7,
+     "risque_pct": 7.95
+    },
+    "TOTAL": {
+     "acceptes": 7203,
+     "silencieux": 580,
+     "risque_pct": 8.05
+    }
+   },
+   "diagnostic_n": {
+    "present_confondu": 33,
+    "present_trop_confiant": 104,
+    "absent_accepte": 547,
+    "absent_ambigu": 433
+   }
+  },
+  "analyse_e0.40_a0.10": {
+   "part_entendu": 0.4,
+   "part_absents": 0.1,
+   "jeu": "analyse",
+   "global": {
+    "n": 12175,
+    "ideal": 68.07,
+    "sur": 96.36,
+    "silencieux": 196,
+    "silencieux_pct": 1.61,
+    "trop_confiant": 99,
+    "incorrect": 148
+   },
+   "par_famille": {
+    "clients": {
+     "n": 2589,
+     "ideal": 46.12,
+     "sur": 97.76,
+     "silencieux": 15,
+     "silencieux_pct": 0.58,
+     "trop_confiant": 16,
+     "incorrect": 27
+    },
+    "douane": {
+     "n": 788,
+     "ideal": 76.9,
+     "sur": 98.86,
+     "silencieux": 9,
+     "silencieux_pct": 1.14,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "geographie": {
+     "n": 3912,
+     "ideal": 77.89,
+     "sur": 91.9,
+     "silencieux": 136,
+     "silencieux_pct": 3.48,
+     "trop_confiant": 74,
+     "incorrect": 107
+    },
+    "marques": {
+     "n": 235,
+     "ideal": 77.45,
+     "sur": 97.45,
+     "silencieux": 4,
+     "silencieux_pct": 1.7,
+     "trop_confiant": 0,
+     "incorrect": 2
+    },
+    "mixte": {
+     "n": 6,
+     "ideal": 83.33,
+     "sur": 83.33,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "pieces": {
+     "n": 2229,
+     "ideal": 72.77,
+     "sur": 98.56,
+     "silencieux": 25,
+     "silencieux_pct": 1.12,
+     "trop_confiant": 0,
+     "incorrect": 7
+    },
+    "vehicules": {
+     "n": 2276,
+     "ideal": 66.61,
+     "sur": 99.25,
+     "silencieux": 6,
+     "silencieux_pct": 0.26,
+     "trop_confiant": 9,
+     "incorrect": 2
+    },
+    "vocabulaire_metier": {
+     "n": 140,
+     "ideal": 82.86,
+     "sur": 97.86,
+     "silencieux": 1,
+     "silencieux_pct": 0.71,
+     "trop_confiant": 0,
+     "incorrect": 2
+    },
+    "TOTAL": {
+     "n": 12175,
+     "ideal": 68.07,
+     "sur": 96.36,
+     "silencieux": 196,
+     "silencieux_pct": 1.61,
+     "trop_confiant": 99,
+     "incorrect": 148
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 1146,
+     "silencieux": 15,
+     "risque_pct": 1.31
+    },
+    "douane": {
+     "acceptes": 607,
+     "silencieux": 9,
+     "risque_pct": 1.48
+    },
+    "geographie": {
+     "acceptes": 2474,
+     "silencieux": 136,
+     "risque_pct": 5.5
+    },
+    "marques": {
+     "acceptes": 165,
+     "silencieux": 4,
+     "risque_pct": 2.42
+    },
+    "pieces": {
+     "acceptes": 732,
+     "silencieux": 25,
+     "risque_pct": 3.42
+    },
+    "vehicules": {
+     "acceptes": 1491,
+     "silencieux": 6,
+     "risque_pct": 0.4
+    },
+    "vocabulaire_metier": {
+     "acceptes": 79,
+     "silencieux": 1,
+     "risque_pct": 1.27
+    },
+    "TOTAL": {
+     "acceptes": 6694,
+     "silencieux": 196,
+     "risque_pct": 2.93
+    }
+   },
+   "diagnostic_n": {
+    "present_confondu": 35,
+    "present_trop_confiant": 99,
+    "absent_accepte": 161,
+    "absent_ambigu": 111
+   }
+  },
+  "banc_e0.10_a0.10": {
+   "part_entendu": 0.1,
+   "part_absents": 0.1,
+   "jeu": "banc",
+   "global": {
+    "n": 5030,
+    "ideal": 85.83,
+    "sur": 97.26,
+    "silencieux": 78,
+    "silencieux_pct": 1.55,
+    "trop_confiant": 16,
+    "incorrect": 44
+   },
+   "par_famille": {
+    "clients": {
+     "n": 232,
+     "ideal": 71.55,
+     "sur": 97.41,
+     "silencieux": 4,
+     "silencieux_pct": 1.72,
+     "trop_confiant": 1,
+     "incorrect": 1
+    },
+    "geographie": {
+     "n": 1249,
+     "ideal": 84.15,
+     "sur": 92.31,
+     "silencieux": 52,
+     "silencieux_pct": 4.16,
+     "trop_confiant": 12,
+     "incorrect": 32
+    },
+    "marques": {
+     "n": 456,
+     "ideal": 86.4,
+     "sur": 98.68,
+     "silencieux": 5,
+     "silencieux_pct": 1.1,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "mixte": {
+     "n": 3,
+     "ideal": 66.67,
+     "sur": 66.67,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "pieces": {
+     "n": 1473,
+     "ideal": 85.27,
+     "sur": 98.85,
+     "silencieux": 12,
+     "silencieux_pct": 0.81,
+     "trop_confiant": 0,
+     "incorrect": 5
+    },
+    "vehicules": {
+     "n": 248,
+     "ideal": 79.03,
+     "sur": 99.19,
+     "silencieux": 2,
+     "silencieux_pct": 0.81,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "vocabulaire_metier": {
+     "n": 1369,
+     "ideal": 91.45,
+     "sur": 99.27,
+     "silencieux": 3,
+     "silencieux_pct": 0.22,
+     "trop_confiant": 3,
+     "incorrect": 4
+    },
+    "TOTAL": {
+     "n": 5030,
+     "ideal": 85.83,
+     "sur": 97.26,
+     "silencieux": 78,
+     "silencieux_pct": 1.55,
+     "trop_confiant": 16,
+     "incorrect": 44
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 66,
+     "silencieux": 4,
+     "risque_pct": 6.06
+    },
+    "geographie": {
+     "acceptes": 418,
+     "silencieux": 51,
+     "risque_pct": 12.2
+    },
+    "marques": {
+     "acceptes": 158,
+     "silencieux": 4,
+     "risque_pct": 2.53
+    },
+    "pieces": {
+     "acceptes": 110,
+     "silencieux": 12,
+     "risque_pct": 10.91
+    },
+    "vehicules": {
+     "acceptes": 78,
+     "silencieux": 2,
+     "risque_pct": 2.56
+    },
+    "vocabulaire_metier": {
+     "acceptes": 560,
+     "silencieux": 3,
+     "risque_pct": 0.54
+    },
+    "TOTAL": {
+     "acceptes": 1390,
+     "silencieux": 76,
+     "risque_pct": 5.47
+    }
+   }
+  },
+  "banc_e0.20_a0.05": {
+   "part_entendu": 0.2,
+   "part_absents": 0.05,
+   "jeu": "banc",
+   "global": {
+    "n": 5031,
+    "ideal": 85.63,
+    "sur": 98.31,
+    "silencieux": 40,
+    "silencieux_pct": 0.8,
+    "trop_confiant": 25,
+    "incorrect": 20
+   },
+   "par_famille": {
+    "clients": {
+     "n": 244,
+     "ideal": 68.03,
+     "sur": 98.77,
+     "silencieux": 1,
+     "silencieux_pct": 0.41,
+     "trop_confiant": 1,
+     "incorrect": 1
+    },
+    "geographie": {
+     "n": 1127,
+     "ideal": 87.22,
+     "sur": 95.56,
+     "silencieux": 25,
+     "silencieux_pct": 2.22,
+     "trop_confiant": 12,
+     "incorrect": 13
+    },
+    "marques": {
+     "n": 478,
+     "ideal": 89.54,
+     "sur": 99.16,
+     "silencieux": 1,
+     "silencieux_pct": 0.21,
+     "trop_confiant": 2,
+     "incorrect": 1
+    },
+    "pieces": {
+     "n": 1500,
+     "ideal": 82.87,
+     "sur": 99.0,
+     "silencieux": 10,
+     "silencieux_pct": 0.67,
+     "trop_confiant": 0,
+     "incorrect": 5
+    },
+    "vehicules": {
+     "n": 247,
+     "ideal": 80.97,
+     "sur": 99.19,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 2,
+     "incorrect": 0
+    },
+    "vocabulaire_metier": {
+     "n": 1435,
+     "ideal": 89.76,
+     "sur": 99.23,
+     "silencieux": 3,
+     "silencieux_pct": 0.21,
+     "trop_confiant": 8,
+     "incorrect": 0
+    },
+    "TOTAL": {
+     "n": 5031,
+     "ideal": 85.63,
+     "sur": 98.31,
+     "silencieux": 40,
+     "silencieux_pct": 0.8,
+     "trop_confiant": 25,
+     "incorrect": 20
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 72,
+     "silencieux": 1,
+     "risque_pct": 1.39
+    },
+    "geographie": {
+     "acceptes": 425,
+     "silencieux": 25,
+     "risque_pct": 5.88
+    },
+    "marques": {
+     "acceptes": 179,
+     "silencieux": 1,
+     "risque_pct": 0.56
+    },
+    "pieces": {
+     "acceptes": 113,
+     "silencieux": 10,
+     "risque_pct": 8.85
+    },
+    "vehicules": {
+     "acceptes": 87,
+     "silencieux": 0,
+     "risque_pct": 0.0
+    },
+    "vocabulaire_metier": {
+     "acceptes": 557,
+     "silencieux": 3,
+     "risque_pct": 0.54
+    },
+    "TOTAL": {
+     "acceptes": 1433,
+     "silencieux": 40,
+     "risque_pct": 2.79
+    }
+   }
+  },
+  "banc_e0.20_a0.25": {
+   "part_entendu": 0.2,
+   "part_absents": 0.25,
+   "jeu": "banc",
+   "global": {
+    "n": 5031,
+    "ideal": 84.79,
+    "sur": 94.39,
+    "silencieux": 167,
+    "silencieux_pct": 3.32,
+    "trop_confiant": 18,
+    "incorrect": 97
+   },
+   "par_famille": {
+    "clients": {
+     "n": 216,
+     "ideal": 70.37,
+     "sur": 97.69,
+     "silencieux": 1,
+     "silencieux_pct": 0.46,
+     "trop_confiant": 0,
+     "incorrect": 4
+    },
+    "geographie": {
+     "n": 1630,
+     "ideal": 83.8,
+     "sur": 87.73,
+     "silencieux": 112,
+     "silencieux_pct": 6.87,
+     "trop_confiant": 14,
+     "incorrect": 74
+    },
+    "marques": {
+     "n": 389,
+     "ideal": 89.97,
+     "sur": 97.94,
+     "silencieux": 7,
+     "silencieux_pct": 1.8,
+     "trop_confiant": 0,
+     "incorrect": 1
+    },
+    "mixte": {
+     "n": 6,
+     "ideal": 100.0,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "pieces": {
+     "n": 1367,
+     "ideal": 81.78,
+     "sur": 96.56,
+     "silencieux": 33,
+     "silencieux_pct": 2.41,
+     "trop_confiant": 0,
+     "incorrect": 14
+    },
+    "vehicules": {
+     "n": 245,
+     "ideal": 80.82,
+     "sur": 96.73,
+     "silencieux": 5,
+     "silencieux_pct": 2.04,
+     "trop_confiant": 2,
+     "incorrect": 1
+    },
+    "vocabulaire_metier": {
+     "n": 1178,
+     "ideal": 91.34,
+     "sur": 98.81,
+     "silencieux": 9,
+     "silencieux_pct": 0.76,
+     "trop_confiant": 2,
+     "incorrect": 3
+    },
+    "TOTAL": {
+     "n": 5031,
+     "ideal": 84.79,
+     "sur": 94.39,
+     "silencieux": 167,
+     "silencieux_pct": 3.32,
+     "trop_confiant": 18,
+     "incorrect": 97
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 55,
+     "silencieux": 1,
+     "risque_pct": 1.82
+    },
+    "geographie": {
+     "acceptes": 438,
+     "silencieux": 111,
+     "risque_pct": 25.34
+    },
+    "marques": {
+     "acceptes": 151,
+     "silencieux": 7,
+     "risque_pct": 4.64
+    },
+    "pieces": {
+     "acceptes": 131,
+     "silencieux": 33,
+     "risque_pct": 25.19
+    },
+    "vehicules": {
+     "acceptes": 67,
+     "silencieux": 5,
+     "risque_pct": 7.46
+    },
+    "vocabulaire_metier": {
+     "acceptes": 466,
+     "silencieux": 9,
+     "risque_pct": 1.93
+    },
+    "TOTAL": {
+     "acceptes": 1308,
+     "silencieux": 166,
+     "risque_pct": 12.69
+    }
+   }
+  },
+  "banc_e0.40_a0.10": {
+   "part_entendu": 0.4,
+   "part_absents": 0.1,
+   "jeu": "banc",
+   "global": {
+    "n": 5030,
+    "ideal": 84.1,
+    "sur": 96.96,
+    "silencieux": 77,
+    "silencieux_pct": 1.53,
+    "trop_confiant": 24,
+    "incorrect": 52
+   },
+   "par_famille": {
+    "clients": {
+     "n": 236,
+     "ideal": 61.02,
+     "sur": 98.73,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 1,
+     "incorrect": 2
+    },
+    "geographie": {
+     "n": 1259,
+     "ideal": 84.59,
+     "sur": 91.5,
+     "silencieux": 46,
+     "silencieux_pct": 3.65,
+     "trop_confiant": 21,
+     "incorrect": 40
+    },
+    "marques": {
+     "n": 459,
+     "ideal": 85.4,
+     "sur": 98.47,
+     "silencieux": 5,
+     "silencieux_pct": 1.09,
+     "trop_confiant": 0,
+     "incorrect": 2
+    },
+    "mixte": {
+     "n": 2,
+     "ideal": 100.0,
+     "sur": 100.0,
+     "silencieux": 0,
+     "silencieux_pct": 0.0,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "pieces": {
+     "n": 1463,
+     "ideal": 81.34,
+     "sur": 98.56,
+     "silencieux": 14,
+     "silencieux_pct": 0.96,
+     "trop_confiant": 0,
+     "incorrect": 7
+    },
+    "vehicules": {
+     "n": 239,
+     "ideal": 80.33,
+     "sur": 98.74,
+     "silencieux": 3,
+     "silencieux_pct": 1.26,
+     "trop_confiant": 0,
+     "incorrect": 0
+    },
+    "vocabulaire_metier": {
+     "n": 1372,
+     "ideal": 90.74,
+     "sur": 99.13,
+     "silencieux": 9,
+     "silencieux_pct": 0.66,
+     "trop_confiant": 2,
+     "incorrect": 1
+    },
+    "TOTAL": {
+     "n": 5030,
+     "ideal": 84.1,
+     "sur": 96.96,
+     "silencieux": 77,
+     "silencieux_pct": 1.53,
+     "trop_confiant": 24,
+     "incorrect": 52
+    }
+   },
+   "risque_approche": {
+    "clients": {
+     "acceptes": 56,
+     "silencieux": 0,
+     "risque_pct": 0.0
+    },
+    "geographie": {
+     "acceptes": 460,
+     "silencieux": 44,
+     "risque_pct": 9.57
+    },
+    "marques": {
+     "acceptes": 185,
+     "silencieux": 4,
+     "risque_pct": 2.16
+    },
+    "pieces": {
+     "acceptes": 143,
+     "silencieux": 14,
+     "risque_pct": 9.79
+    },
+    "vehicules": {
+     "acceptes": 73,
+     "silencieux": 3,
+     "risque_pct": 4.11
+    },
+    "vocabulaire_metier": {
+     "acceptes": 608,
+     "silencieux": 9,
+     "risque_pct": 1.48
+    },
+    "TOTAL": {
+     "acceptes": 1525,
+     "silencieux": 74,
+     "risque_pct": 4.85
+    }
+   }
+  }
+ }
+}

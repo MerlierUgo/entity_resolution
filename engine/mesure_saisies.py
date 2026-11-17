@@ -5,12 +5,17 @@ Mesures sur les jeux de saisies générés depuis spec/modele_saisie.yaml, et su
 
 Quatre parties :
   1. vérification du générateur contre l'échantillon réel (human/echantillon_reel/saisies_combinees.csv) :
-     mêmes indicateurs des deux côtés, par mode (distance OSA, mots oubliés, types de fautes, exemples).
+     mêmes indicateurs des deux côtés, par mode (distance OSA, mots oubliés, types de fautes, exemples) ;
+     mots oubliés repérés par alignement sur le réel, notés à la génération sur le généré.
      Le côté généré est un « miroir » : les mêmes noms, dans le même mode, tapés MIROIR fois par le
      générateur ;
   2. moteur actuel (Jaro-Winkler, seuil fixe 0,88 PROVISOIRE, écart 0,03) sur saisies_banc.csv ;
   3. diagnostic des erreurs à 0,88 sur saisies_analyse.csv ;
   4. moteur sur l'échantillon réel, puis les mesures 2 et 3 aux valeurs de sensibilité.
+
+Collision exacte (modèle § 8, v0.2) : saisie fautive qui tombe exactement sur un autre nom réel (« opel »
+tapé pour la localité Hopel, résolu vers la marque). Comptée dans le total des erreurs silencieuses,
+affichée à part, exclue des métriques « fuzzy seul » (risque_approche) : aucun seuil n'y peut rien.
 
 Aucun seuil n'est calculé ici. saisies_certif.csv n'est JAMAIS ouvert : on ne l'utilisera qu'une fois,
 plus tard, le moteur figé, pour calculer un seuil sans regarder ses erreurs.
@@ -94,12 +99,21 @@ def noter(att_statut: str, att_ids, statut: str, ids) -> str:
     return "incorrect"
 
 
+def collision_exacte(note: str, etape: str, fautive: bool) -> bool:
+    """Erreur silencieuse d'une saisie fautive résolue AVANT l'approché (exact ou mots triés) : la saisie
+    tombe exactement sur un autre nom réel."""
+    return note == "silencieux" and etape != "approche" and fautive
+
+
 def taux(c: Counter) -> dict:
-    n = sum(c.values())
+    """c : notes, plus « collision » (sous-ensemble des silencieux)."""
+    n = sum(c[k] for k in NOTES)
     if not n:
         return {"n": 0}
     return {"n": n, "ideal": round(100 * c["ideal"] / n, 2), "sur": round(100 * (c["ideal"] + c["sur"]) / n, 2),
             "silencieux": c["silencieux"], "silencieux_pct": round(100 * c["silencieux"] / n, 2),
+            "dont_collision_exacte": c["collision"],
+            "silencieux_hors_collision_pct": round(100 * (c["silencieux"] - c["collision"]) / n, 2),
             "trop_confiant": c["trop_confiant"], "incorrect": c["incorrect"]}
 
 
@@ -126,25 +140,28 @@ def evaluer(ev: Evaluateur, lignes: list[dict]) -> list[dict]:
     for l in lignes:
         r = ev(l["terme"], l["indice_type"])
         att = [i for i in l["attendu_ids"].split("|") if i]
+        note = noter(l["attendu_statut"], att, r["statut"], r["ids"])
+        fautive = bool(l["perturbations"] or l["mots_oublies"])
         out.append({**l, "r_statut": r["statut"], "r_ids": r["ids"], "r_etape": r["etape"], "r_score": r["score"],
-                    "r_noms": r["noms"], "note": noter(l["attendu_statut"], att, r["statut"], r["ids"])})
+                    "r_noms": r["noms"], "note": note, "collision": collision_exacte(note, r["etape"], fautive)})
     return out
 
 
 def tableau(res: list[dict], cle) -> dict:
     groupes = defaultdict(Counter)
     for r in res:
-        if cle(r) != "TOTAL":
-            groupes[cle(r)][r["note"]] += 1
-        groupes["TOTAL"][r["note"]] += 1
+        for k in ({cle(r), "TOTAL"}):
+            groupes[k][r["note"]] += 1
+            groupes[k]["collision"] += bool(r.get("collision"))
     return {k: taux(v) for k, v in sorted(groupes.items(), key=lambda kv: (kv[0] == "TOTAL", kv[0]))}
 
 
 def risque_approche(res: list[dict]) -> dict:
-    """Parmi les termes acceptés par l'approché seul (resolved à l'étape approchée), part d'erreurs silencieuses."""
+    """Parmi les termes acceptés par l'approché seul (resolved à l'étape approchée), part d'erreurs silencieuses.
+    Les collisions exactes n'y entrent jamais (résolues avant l'approché ; exclues aussi explicitement)."""
     par = defaultdict(Counter)
     for r in res:
-        if r["r_etape"] == "approche" and r["r_statut"] == "resolved":
+        if r["r_etape"] == "approche" and r["r_statut"] == "resolved" and not r.get("collision"):
             for k in (r["famille"], "TOTAL"):
                 par[k]["acceptes"] += 1
                 par[k]["silencieux"] += r["note"] == "silencieux"
@@ -184,9 +201,12 @@ def exemple(ctx, r: dict, voisin: str = "") -> dict:
 def diagnostic(ctx: bs.Contexte, res: list[dict], rng: random.Random) -> dict:
     """Erreurs à 0,88 : présents confondus, présents trop confiants, absents acceptés (par sous-nature).
     Pour chaque erreur : un autre nom réel du même type est-il à une seule faute du terme tapé ?"""
-    cats = {"present_confondu": [r for r in res if r["nature"] == "present" and r["note"] == "silencieux"],
+    cats = {"collision_exacte": [r for r in res if r.get("collision")],
+            "present_confondu": [r for r in res if r["nature"] == "present" and r["note"] == "silencieux"
+                                 and not r.get("collision")],
             "present_trop_confiant": [r for r in res if r["nature"] == "present" and r["note"] == "trop_confiant"],
-            "absent_accepte": [r for r in res if r["nature"] == "absent" and r["note"] == "silencieux"]}
+            "absent_accepte": [r for r in res if r["nature"] == "absent" and r["note"] == "silencieux"
+                               and not r.get("collision")]}
     out = {}
     for nom, lignes in cats.items():
         details = []
@@ -348,13 +368,19 @@ class Decomposeur:
         return out + [f"clavier : {o}" for o in operations(cur, t)]
 
 
-def indicateurs(paires: list[tuple[str, str]], dec: Decomposeur) -> dict:
-    """paires (nom source, saisie). Distance OSA après retrait des mots oubliés, part de mots oubliés,
-    types de fautes."""
+def indicateurs(paires: list[tuple], dec: Decomposeur) -> dict:
+    """paires (nom source, saisie) ou (nom source, saisie, mots oubliés, forme courte normalisée).
+    Distance OSA après retrait des mots oubliés, part de mots oubliés, types de fautes.
+    Sans les deux derniers éléments (échantillon réel), les mots oubliés sont repérés par alignement ;
+    avec (saisies générées, modèle v0.3), ceux notés à la génération sont utilisés tels quels."""
     dist, n_oubli, types, nb_types = Counter(), 0, Counter(), 0
-    for src, tape in paires:
+    for paire in paires:
+        src, tape = paire[0], paire[1]
         s, t = normalize(src), normalize(tape)
-        oublies, court = mots_oublies(s, t)
+        if len(paire) == 4:
+            oublies, court = list(paire[2]), (paire[3] if paire[2] else s)
+        else:
+            oublies, court = mots_oublies(s, t)
         n_oubli += bool(oublies)
         d = bs.distance(t, court) if t != court else 0
         dist["3+" if d >= 3 else str(d)] += 1
@@ -365,7 +391,7 @@ def indicateurs(paires: list[tuple[str, str]], dec: Decomposeur) -> dict:
     return {"n": n,
             "distance": {k: round(100 * dist[k] / n, 1) for k in ("0", "1", "2", "3+")} if n else {},
             "mots_oublies_pct": round(100 * n_oubli / n, 1) if n else None,
-            "types": [(k, round(100 * v / nb_types, 1)) for k, v in types.most_common(12)] if nb_types else [],
+            "types": [(k, round(100 * v / nb_types, 1)) for k, v in types.most_common()] if nb_types else [],
             "fautes_par_saisie": round(nb_types / n, 2) if n else None}
 
 
@@ -391,7 +417,8 @@ def read_csv_sc(chemin: Path) -> list[dict]:
 
 
 def verification(ctx: bs.Contexte, modele: bs.Modele, reels: list[dict], dec: Decomposeur) -> dict:
-    """Mêmes indicateurs pour le réel et pour le générateur (miroir : mêmes noms, même mode)."""
+    """Mêmes indicateurs pour le réel et pour le générateur (miroir : mêmes noms, même mode).
+    Mots oubliés : repérés par alignement sur le réel, notés à la génération sur le généré (v0.3)."""
     gen = bs.Generateur(ctx, modele, bs.Plan("miroir", GRAINE_MESURE, False, {}, 0.0), set())
     out, exemples = {}, []
     rng = random.Random(GRAINE_MESURE)
@@ -403,7 +430,7 @@ def verification(ctx: bs.Contexte, modele: bs.Modele, reels: list[dict], dec: De
         for r in rr:
             for _ in range(MIROIR):
                 terme, labels, oublies, court = gen.taper(r["entity_id"], mode)
-                paires_g.append((r["nom_cible"], terme))
+                paires_g.append((r["nom_cible"], terme, oublies, court))
                 vrais.append((r["nom_cible"], terme, bool(oublies), labels))
         for src, terme, vrai, _ in vrais:
             detecte = bool(mots_oublies(normalize(src), normalize(terme))[0])
@@ -433,11 +460,12 @@ def moteur_reel(ctx: bs.Contexte, ev: Evaluateur, reels: list[dict], libres: lis
             att = ctx.attendu(r["saisie"], src, r["entity_id"], court if oublies else None, hint)
             rep = ev(r["saisie"], hint)
             note = noter(att["statut"], att["ids"], rep["statut"], rep["ids"])
+            coll = collision_exacte(note, rep["etape"], t != src)
             res.append({"mode": r["mode_modele"], "famille": r["famille"], "note": note, "r_etape": rep["etape"],
-                        "r_statut": rep["statut"]})
+                        "r_statut": rep["statut"], "collision": coll})
             if note in ("silencieux", "trop_confiant") and not avec:
                 lignes_err.append({"mode": r["mode_modele"], "nom": r["nom_cible"], "saisie": r["saisie"],
-                                   "note": note, "attendu": att["statut"],
+                                   "note": "collision_exacte" if coll else note, "attendu": att["statut"],
                                    "attendu_labels": [ctx.cat.label[i] for i in att["ids"]][:4],
                                    "moteur_labels": [ctx.cat.label[i] for i in rep["ids"]][:4],
                                    "score": rep["score"]})
@@ -446,7 +474,8 @@ def moteur_reel(ctx: bs.Contexte, ev: Evaluateur, reels: list[dict], libres: lis
                     "approche_seule": {m: {"acceptes": sum(1 for x in res if x["mode"] == m and x["r_etape"] == "approche"
                                                            and x["r_statut"] == "resolved"),
                                            "silencieux": sum(1 for x in res if x["mode"] == m and x["r_etape"] == "approche"
-                                                             and x["r_statut"] == "resolved" and x["note"] == "silencieux")}
+                                                             and x["r_statut"] == "resolved" and x["note"] == "silencieux"),
+                                           "collisions_exactes": sum(1 for x in res if x["mode"] == m and x["collision"])}
                                        for m in ("lu", "entendu")}}
     out["erreurs_sans_indice"] = lignes_err
     out["libres"] = []
@@ -485,7 +514,7 @@ def main(argv=None) -> int:
     print("vérification du générateur : faite", flush=True)
 
     banc = evaluer(ev_jeux, charger_jeu(CHAL / "saisies_banc.csv"))
-    out["banc"] = mesures_jeu(banc)
+    out["banc"] = {**mesures_jeu(banc), "diagnostic": diagnostic(ctx, banc, rng)}
     print(f"banc : {out['banc']['global']}", flush=True)
     analyse = evaluer(ev_jeux, charger_jeu(CHAL / "saisies_analyse.csv"))
     out["analyse"] = {**mesures_jeu(analyse), "diagnostic": diagnostic(ctx, analyse, rng)}
