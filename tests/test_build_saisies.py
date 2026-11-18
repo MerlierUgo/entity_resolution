@@ -165,15 +165,31 @@ def test_calibration_fautive_et_approchee(fichiers, modele):
         assert all(l["atteint_approche"] == "1" for l in lignes), jeu
         pres = [l for l in lignes if l["nature"] == "present"]
         assert all(l["perturbations"] or l["mots_oublies"] for l in pres), jeu
-        assert len({l["terme_norm"] for l in lignes}) == len(lignes), jeu
-        par_nom = Counter(normalize(l["nom_source"]) for l in pres)
-        assert max(par_nom.values()) <= modele.max_par_nom["calibration"]
+    # analyse : un terme au plus une fois, au plus 3 cas par nom
+    lignes = fichiers["analyse"]
+    assert len({l["terme_norm"] for l in lignes}) == len(lignes)
+    par_nom = Counter(normalize(l["nom_source"]) for l in lignes if l["nature"] == "present")
+    assert max(par_nom.values()) <= modele.max_par_nom["calibration"]
+
+
+def test_certification_sans_plafond_et_volumes(fichiers, modele):
+    """Certification : sans plafond par nom, doublons de termes permis (tirages indépendants, R-RES-10) ;
+    30 000 saisies fautives par famille, 110 000 en géographie, quand le générateur les atteint."""
+    assert modele.max_par_nom["certification"] is None
+    for chemin in (JEUX["certif"], CHAL / "saisies_certif_pessimiste.csv"):
+        lignes = fichiers["certif"] if chemin == JEUX["certif"] else read_csv(chemin)
+        pres = Counter(l["famille"] for l in lignes if l["nature"] == "present")
+        assert pres["geographie"] == bs.VOLUME_CERTIF_GEO, chemin.name
+        assert all(n == bs.VOLUME_CERTIF for f, n in pres.items() if f != "geographie"), (chemin.name, pres)
+        par_nom = Counter(normalize(l["nom_source"]) for l in lignes if l["nature"] == "present")
+        assert max(par_nom.values()) > 3                        # le plafond est bien levé
 
 
 def test_analyse_et_certif_sans_terme_commun(fichiers):
     a = {l["terme_norm"] for l in fichiers["analyse"]}
-    c = {l["terme_norm"] for l in fichiers["certif"]}
-    assert not a & c
+    for c in ({l["terme_norm"] for l in fichiers["certif"]},
+              {l["terme_norm"] for l in read_csv(CHAL / "saisies_certif_pessimiste.csv")}):
+        assert not a & c
 
 
 # ── réponse attendue (§ 8)
@@ -214,7 +230,7 @@ def test_v0_3_valeurs_lues(modele):
     assert tr["proba_voyelle"] == 0.5 and tr["longueur_min"] == 5 and ("o", "ou") in tr["voyelles"]
     assert modele.omission_plafond == 0.6 and modele.nombre_plus_peuples == 300
     assert modele.voisins_distance_max == 2
-    assert modele.max_par_nom == {"calibration": 3, "banc": None}
+    assert modele.max_par_nom == {"calibration": 3, "banc": None, "certification": None}
 
 
 def test_nombre_de_fautes_sans_classe_4(modele):

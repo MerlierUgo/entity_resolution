@@ -3,7 +3,7 @@
  "graines": {
   "analyse": 20261121,
   "banc": 20261120,
-  "certif": 20261122
+  "certif": 20261127
  },
  "jeux": {
   "analyse": {
@@ -696,138 +696,136 @@
   },
   "certif": {
    "absents_alloues": {
-    "lieux_hors_perimetre": 636,
-    "marques_hors_catalogue": 45,
-    "noms_recombines": 61,
-    "notions_metier": 429,
-    "synonyme_manquant": 54
+    "lieux_hors_perimetre": 11278,
+    "marques_hors_catalogue": 4833,
+    "noms_recombines": 1611,
+    "notions_metier": 11278,
+    "synonyme_manquant": 3222
    },
    "absents_ecartes_trouves_par_exact": {},
    "absents_par_famille": {
-    "clients": 38,
-    "douane": 13,
-    "geographie": 921,
-    "marques": 16,
-    "mixte": 8,
-    "pieces": 133,
-    "vehicules": 43,
-    "vocabulaire_metier": 36
+    "clients": 918,
+    "douane": 375,
+    "geographie": 22778,
+    "marques": 530,
+    "mixte": 164,
+    "pieces": 5387,
+    "vehicules": 1086,
+    "vocabulaire_metier": 984
    },
    "absents_par_sous_nature": {
-    "lieu_inconnu": 318,
-    "lieu_index_negatif": 318,
-    "marque_hors_catalogue": 42,
-    "nom_recombine": 61,
-    "notion_metier": 420,
-    "synonyme_manquant": 49
+    "lieu_inconnu": 5639,
+    "lieu_index_negatif": 5639,
+    "marque_hors_catalogue": 4833,
+    "nom_recombine": 1611,
+    "notion_metier": 11278,
+    "synonyme_manquant": 3222
    },
-   "absents_reportes_faute_de_stock": 207,
-   "cas": 12231,
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 322222,
    "fichier": "challenges/saisies_certif.csv",
    "geographie_plus_peuples": 0,
-   "graine": 20261122,
+   "graine": 20261127,
    "modes": {
-    "entendu": 2966,
-    "lu": 9265
+    "entendu": 78434,
+    "lu": 243788
    },
    "part_absents": 0.1,
    "part_entendu": 0.2,
    "presents_par_famille": {
-    "clients": 2553,
-    "douane": 771,
-    "geographie": 3000,
-    "marques": 213,
-    "pieces": 2085,
-    "vehicules": 2299,
-    "vocabulaire_metier": 102
+    "clients": 30000,
+    "douane": 30000,
+    "geographie": 110000,
+    "marques": 30000,
+    "pieces": 30000,
+    "vehicules": 30000,
+    "vocabulaire_metier": 30000
    },
    "presents_vises": {
-    "clients": 3000,
-    "douane": 3000,
-    "geographie": 3000,
-    "marques": 3000,
-    "pieces": 3000,
-    "vehicules": 3000,
-    "vocabulaire_metier": 3000
+    "clients": 30000,
+    "douane": 30000,
+    "geographie": 110000,
+    "marques": 30000,
+    "pieces": 30000,
+    "vehicules": 30000,
+    "vocabulaire_metier": 30000
    },
    "rejets": {
-    "0 faute et aucun mot oublié (calibration)": 16748,
-    "absent arrêté par l'index négatif (calibration)": 277,
-    "absent devenu un nom du catalogue": 3,
-    "réponse attendue avec une entité de la partition test": 9212,
-    "terme d'un autre jeu": 1860,
-    "terme déjà présent dans le jeu": 187,
-    "trouvé par l'exact ou l'index négatif (calibration)": 1182
+    "0 faute et aucun mot oublié (calibration)": 269176,
+    "absent arrêté par l'index négatif (calibration)": 4739,
+    "absent devenu un nom du catalogue": 54,
+    "réponse attendue avec une entité de la partition test": 37907,
+    "terme d'un autre jeu": 21500,
+    "trouvé par l'exact ou l'index négatif (calibration)": 8722
    },
-   "sha256": "178a48667d049cc0"
+   "sha256": "fe9a083d103abf89"
   },
   "certif_pessimiste": {
    "absents_alloues": {
-    "lieux_hors_perimetre": 637,
-    "marques_hors_catalogue": 45,
-    "noms_recombines": 61,
-    "notions_metier": 429,
-    "synonyme_manquant": 54
+    "lieux_hors_perimetre": 11278,
+    "marques_hors_catalogue": 4833,
+    "noms_recombines": 1611,
+    "notions_metier": 11278,
+    "synonyme_manquant": 3222
    },
    "absents_ecartes_trouves_par_exact": {},
    "absents_par_famille": {
-    "clients": 35,
-    "douane": 15,
-    "geographie": 924,
-    "marques": 25,
-    "mixte": 5,
-    "pieces": 127,
-    "vehicules": 35,
-    "vocabulaire_metier": 45
+    "clients": 934,
+    "douane": 387,
+    "geographie": 22896,
+    "marques": 530,
+    "mixte": 171,
+    "pieces": 5301,
+    "vehicules": 1034,
+    "vocabulaire_metier": 969
    },
    "absents_par_sous_nature": {
-    "lieu_inconnu": 319,
-    "lieu_index_negatif": 318,
-    "marque_hors_catalogue": 42,
-    "nom_recombine": 61,
-    "notion_metier": 420,
-    "synonyme_manquant": 51
+    "lieu_inconnu": 5639,
+    "lieu_index_negatif": 5639,
+    "marque_hors_catalogue": 4833,
+    "nom_recombine": 1611,
+    "notion_metier": 11278,
+    "synonyme_manquant": 3222
    },
-   "absents_reportes_faute_de_stock": 208,
-   "cas": 12245,
+   "absents_reportes_faute_de_stock": 0,
+   "cas": 322222,
    "fichier": "challenges/saisies_certif_pessimiste.csv",
    "geographie_plus_peuples": 0,
-   "graine": 20261124,
+   "graine": 20261128,
    "modes": {
-    "entendu": 2917,
-    "lu": 9328
+    "entendu": 79385,
+    "lu": 242837
    },
    "part_absents": 0.1,
    "part_entendu": 0.2,
    "presents_par_famille": {
-    "clients": 2558,
-    "douane": 771,
-    "geographie": 3000,
-    "marques": 212,
-    "pieces": 2083,
-    "vehicules": 2306,
-    "vocabulaire_metier": 104
+    "clients": 30000,
+    "douane": 30000,
+    "geographie": 110000,
+    "marques": 30000,
+    "pieces": 30000,
+    "vehicules": 30000,
+    "vocabulaire_metier": 30000
    },
    "presents_vises": {
-    "clients": 3000,
-    "douane": 3000,
-    "geographie": 3000,
-    "marques": 3000,
-    "pieces": 3000,
-    "vehicules": 3000,
-    "vocabulaire_metier": 3000
+    "clients": 30000,
+    "douane": 30000,
+    "geographie": 110000,
+    "marques": 30000,
+    "pieces": 30000,
+    "vehicules": 30000,
+    "vocabulaire_metier": 30000
    },
    "rejets": {
-    "0 faute et aucun mot oublié (calibration)": 17020,
-    "absent arrêté par l'index négatif (calibration)": 290,
-    "absent devenu un nom du catalogue": 3,
-    "réponse attendue avec une entité de la partition test": 11922,
-    "terme d'un autre jeu": 2155,
-    "terme déjà présent dans le jeu": 255,
-    "trouvé par l'exact ou l'index négatif (calibration)": 2049
+    "0 faute et aucun mot oublié (calibration)": 273463,
+    "absent arrêté par l'index négatif (calibration)": 4984,
+    "absent devenu un nom du catalogue": 47,
+    "réponse attendue avec une entité de la partition test": 46098,
+    "terme d'un autre jeu": 23269,
+    "trouvé par l'exact ou l'index négatif (calibration)": 13133
    },
    "scenario": "pessimiste",
-   "sha256": "a4954c8b3149b7ec"
+   "sha256": "0f471244f582d6c1"
   }
  },
  "modele": {
@@ -844,7 +842,7 @@
   "fichier_modele": "spec/modele_saisie_pessimiste.yaml",
   "graines": {
    "banc": 20261123,
-   "certif": 20261124
+   "certif": 20261128
   },
   "modele": {
    "date": "2026-11-17",

@@ -67,14 +67,18 @@ SENSI = CHAL / "sensibilite"
 # Paramètres de fabrication (pas des valeurs du modèle) : notés dans chaque fichier produit.
 # Modèle v0.3 : nouvelles graines (v0.2 : banc 20261117, analyse 20261118, certif 20261119 ;
 # v0.1 : banc 20261208, analyse 20261201, certif 20261215).
-GRAINES = {"banc": 20261120, "analyse": 20261121, "certif": 20261122}
+GRAINES = {"banc": 20261120, "analyse": 20261121, "certif": 20261127}
+# certif : 20261122 (3 000 par famille), 20261125 (~10 000), 20261127 (30 000, 110 000 en géographie, sans plafond
+# par nom) ; les deux premières ont été consultées en agrégé par une calibration.
 # Scénario pessimiste (spec/modele_saisie_pessimiste.yaml) : banc et certification seulement, graines à part.
-GRAINES_PESSIMISTE = {"banc": 20261123, "certif": 20261124}
+GRAINES_PESSIMISTE = {"banc": 20261123, "certif": 20261128}   # certif : 20261124 puis 20261126 avant
 SUFFIXE_PESSIMISTE = "_pessimiste"
 GRAINE_NEGATIFS = 20261222   # inchangée : même partage de l'index négatif qu'en v0.1 et v0.2 (comparaison)
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"   # clavier.choix_de_la_lettre.quelconque
 VOLUME_CALIB = 3000      # saisies fautives visées par famille (modèle : calibration_volume, « au moins 3 000 »)
+VOLUME_CERTIF = 30000    # certification : saisies fautives par famille (calibration R-RES-10), sans plafond par nom
+VOLUME_CERTIF_GEO = 110000   # certification, géographie
 VOLUME_BANC = 5000       # saisies du banc d'essai, toutes familles
 CODES_BANC = 30          # codes voisins gardés dans le banc (MN-AMO-70514 / 70513) : jamais rapprochés
 PREFIXES = {"banc": "SB", "analyse": "SA", "certif": "SC"}
@@ -209,7 +213,7 @@ class Modele:
     absents_nature: dict
     partage_negatif: dict
     longueur_min: int
-    max_par_nom: dict            # calibration | banc → plafond (None : sans plafond)
+    max_par_nom: dict            # calibration (analyse) | banc | certification → plafond (None : sans plafond)
     repartition: dict
     geo_banc: dict               # plus_peuples | au_hasard → poids
     nombre_plus_peuples: int
@@ -312,8 +316,9 @@ class Modele:
             raise ModeleInvalide(f"{chemin.name} · geographie_dans_le_banc.nombre_plus_peuples : entier ≥ 1 attendu.")
         ex = y["exclusions"]
         mx = ex["max_cas_par_nom"]
-        if not isinstance(mx, dict) or set(mx) != {"calibration", "banc"}:
-            raise ModeleInvalide(f"{chemin.name} · exclusions.max_cas_par_nom : clés calibration et banc attendues.")
+        if not isinstance(mx, dict) or not {"calibration", "banc"} <= set(mx) <= {"calibration", "banc", "certification"}:
+            raise ModeleInvalide(f"{chemin.name} · exclusions.max_cas_par_nom : clés calibration, banc (et certification) "
+                                 "attendues.")
         max_par_nom = {}
         for k, v in mx.items():
             if v == "sans_plafond":
@@ -322,6 +327,7 @@ class Modele:
                 max_par_nom[k] = v
             else:
                 raise ModeleInvalide(f"{chemin.name} · max_cas_par_nom.{k} : « {v} » (entier ou sans_plafond attendu).")
+        max_par_nom.setdefault("certification", max_par_nom["calibration"])   # absente : comme l'analyse
         return cls(modes=modes, fautes=fautes, melange=melange, clavier=clavier, espace=espace, choix_lettre=choix,
                    fusion_mots_vides=bool(fusion_vides), fusion_mots_a_chiffre=bool(fusion_chiffre),
                    coupure_morceau_min=int(morceau or 1), transcription=transcription,
@@ -826,8 +832,12 @@ class Generateur:
         self.rejets: Counter = Counter()
         self.peuples_banc = 0              # saisies géographiques du banc tirées parmi les plus peuplés
         # Plafond de cas par nom (exclusions.max_cas_par_nom, par jeu) : calibration 3, banc sans plafond.
-        cap = modele.max_par_nom["calibration" if plan.calibration else "banc"]
+        cle = "banc" if not plan.calibration else "certification" if plan.jeu == "certif" else "calibration"
+        cap = modele.max_par_nom[cle]
         self.cap = cap if cap is not None else 10 ** 9
+        # Certification sans plafond : tirages indépendants, un même terme fautif peut revenir s'il est tiré deux
+        # fois (décision de l'auteur, 17/11/2026). L'analyse garde un terme au plus une fois.
+        self.doublons = plan.jeu == "certif" and cap is None
 
     # filtre commun
     def atteint_approche(self, norm: str) -> bool:
@@ -841,7 +851,7 @@ class Generateur:
         if norm in self.interdits:
             self.rejets["terme d'un autre jeu"] += 1
             return False
-        if self.plan.calibration and norm in self.vus:
+        if self.plan.calibration and not self.doublons and norm in self.vus:
             self.rejets["terme déjà présent dans le jeu"] += 1
             return False
         return True
@@ -1163,13 +1173,13 @@ class Generateur:
 # ── jeux ──────────────────────────────────────────────────────────────────────────────────────────
 
 def plan_jeu(jeu: str, modele: Modele, suffixe: str = "", volume_banc: int = VOLUME_BANC,
-             volume_calib: int = VOLUME_CALIB, graines: dict | None = None) -> Plan:
+             volume_calib: int = VOLUME_CALIB, graines: dict | None = None, volume_geo: int | None = None) -> Plan:
     graines = graines or GRAINES
     if jeu == "banc":
         n_pres = round(volume_banc * (1 - modele.absents_part))
         vol = {f: round(n_pres * w) for f, w in modele.repartition.items()}
         return Plan("banc", graines["banc"], False, vol, modele.absents_part, CODES_BANC, suffixe)
-    vol = {f: volume_calib for f in sorted(modele.familles)}
+    vol = {f: (volume_geo if f == "geographie" and volume_geo else volume_calib) for f in sorted(modele.familles)}
     return Plan(jeu, graines[jeu], True, vol, modele.absents_part, 0, suffixe)
 
 
@@ -1185,8 +1195,10 @@ def generer_pessimiste(args, ctx_central: Contexte, ret: set[str], gardes: list[
     interdits_certif = {r["terme_norm"] for r in read_csv(chemin_a)}
     meta["scenario_pessimiste"] = {"modele": modele.source, "fichier_modele": str(MODELE_PESSIMISTE.relative_to(ROOT)).replace("\\", "/"),
                                    "graines": GRAINES_PESSIMISTE}
-    for jeu in ("banc", "certif"):
-        plan = plan_jeu(jeu, modele, SUFFIXE_PESSIMISTE, args.volume_banc, args.volume_calib, GRAINES_PESSIMISTE)
+    for jeu in [j for j in ("banc", "certif") if j in args.jeux]:
+        plan = plan_jeu(jeu, modele, SUFFIXE_PESSIMISTE, args.volume_banc,
+                        args.volume_certif if jeu == "certif" else args.volume_calib, GRAINES_PESSIMISTE,
+                        args.volume_certif_geo if jeu == "certif" else None)
         lignes, info = generer_jeu(ctx, modele, plan, ret, gardes, interdits_certif if jeu == "certif" else set())
         chemin = CHAL / f"saisies_{jeu}{SUFFIXE_PESSIMISTE}.csv"
         write_csv(chemin, lignes, COLONNES)
@@ -1259,7 +1271,9 @@ def main(argv=None) -> int:
     ap.add_argument("--sensibilite", action="store_true",
                     help="génère aussi banc et analyse aux valeurs de sensibilité du modèle (une à la fois)")
     ap.add_argument("--volume-banc", type=int, default=VOLUME_BANC)
-    ap.add_argument("--volume-calib", type=int, default=VOLUME_CALIB)
+    ap.add_argument("--volume-calib", type=int, default=VOLUME_CALIB, help="analyse : saisies fautives par famille")
+    ap.add_argument("--volume-certif", type=int, default=VOLUME_CERTIF, help="certification : saisies fautives par famille")
+    ap.add_argument("--volume-certif-geo", type=int, default=VOLUME_CERTIF_GEO, help="certification : géographie")
     ap.add_argument("--scenario", choices=("central", "pessimiste"), default="central",
                     help="pessimiste : seulement banc et certification depuis spec/modele_saisie_pessimiste.yaml")
     args = ap.parse_args(argv)
@@ -1303,7 +1317,9 @@ def main(argv=None) -> int:
     for mv, suffixe, dossier, jeux in variantes:
         termes_analyse: set[str] = set()
         for jeu in [j for j in ("banc", "analyse", "certif") if j in jeux]:
-            plan = plan_jeu(jeu, mv, suffixe, args.volume_banc, args.volume_calib)
+            plan = plan_jeu(jeu, mv, suffixe, args.volume_banc,
+                            args.volume_certif if jeu == "certif" else args.volume_calib,
+                            volume_geo=args.volume_certif_geo if jeu == "certif" else None)
             interdits = set()
             if jeu == "certif":
                 chemin_a = dossier / f"saisies_analyse{suffixe}.csv"

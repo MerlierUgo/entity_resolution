@@ -427,50 +427,76 @@ def courbe_svg(famille: str, scen: dict, r_etoile: float, final) -> str:
             f'aria-label="{e(titre)} ; borne haute et risque observé selon la couverture">{"".join(el)}</svg></figure>')
 
 
+def texte_volume(v: dict) -> str:
+    if v.get("theta") is None:
+        return e(v.get("raison", "·"))
+    pp = v.get("premier_palier") or {}
+    fx = lambda x: str(round(x, 1)).replace(".", ",")
+    return (f"passer {pp.get('theta', 0):.2f} : ≈ {nb(pp.get('saisies_approche_necessaires'))} saisies (× {fx(pp.get('facteur', 1))}) ; "
+            f"atteindre θ {v['theta']:.2f} (taux observé {pct(100 * v['taux_observe'], 2)}) : ≈ "
+            f"{nb(v['saisies_approche_necessaires'])} saisies passées par l'approché (× {fx(v['facteur'])})")
+
+
 def section_calibration(cal: dict, comp: dict) -> str:
     p = cal["parametres"]
-    r_etoile = p["r_etoile"]
+    r_etoile, delta = p["r_etoile"], p["delta"]
     lignes = []
     for f, final in cal["familles"].items():
         for sc, d in cal["scenarios"].items():
             fd = d["familles"][f]
             c = fd["choix"]
+            ech = c.get("premier_echec")
+            txt_ech = (f"θ {ech['theta']:.2f} (n {nb(ech['n'])}, k {nb(ech['k'])}, borne {pct(100 * ech['borne'], 2)})"
+                       if ech else "aucun")
             if c["desactive"]:
-                mp = c["meilleur_point"]
-                lignes.append([e(f), e(NOMS_SCENARIOS.get(sc, sc)), nb(fd["saisies_approche"]), "<span class='mal'>désactivé</span>",
-                               f"θ {mp['theta']:.2f}" if mp.get("theta") is not None else "·", nb(mp["n"]), nb(mp["k"]),
-                               pct(100 * mp["borne"], 2), pct(100 * mp["couverture"])])
+                lignes.append([e(f), e(NOMS_SCENARIOS.get(sc, sc)), nb(fd["saisies_approche"]),
+                               "<span class='mal'>désactivé</span>", "·", "·", "·", "·", txt_ech,
+                               texte_volume(fd["volume_necessaire"])])
             else:
-                lignes.append([e(f), e(NOMS_SCENARIOS.get(sc, sc)), nb(fd["saisies_approche"]), f"<b>{c['seuil']:.2f}</b>", "·",
-                               nb(c["n"]), nb(c["k"]), pct(100 * c["borne"], 2), pct(100 * c["couverture"])])
+                lignes.append([e(f), e(NOMS_SCENARIOS.get(sc, sc)), nb(fd["saisies_approche"]), f"<b>{c['seuil']:.2f}</b>",
+                               nb(c["n"]), nb(c["k"]), pct(100 * c["borne"], 2), pct(100 * c["couverture"]), txt_ech,
+                               texte_volume(fd["volume_necessaire"])])
         lignes.append([f"<b>{e(f)}</b>", "<b>seuil final</b>", "", "<b>désactivé</b>" if final is None else f"<b>{final:.2f}</b>",
-                       "", "", "", "", ""])
-    n_min = math.log(1 / p["delta_prime"]) / r_etoile
-    dp_txt = f"{p['delta_prime']:.4f}".replace(".", ",")
+                       "", "", "", "", "", ""])
+    n_min = math.log(1 / delta) / r_etoile
     courbes = "".join(courbe_svg(f, {sc: d["familles"][f] for sc, d in cal["scenarios"].items()}, r_etoile, final)
                       for f, final in cal["familles"].items())
     leg = "".join(f'<span><i style="background:{COULEUR_SCENARIO[sc]}"></i>{e(NOMS_SCENARIOS[sc])}</span>'
                   for sc in cal["scenarios"])
-    comptes = " ; ".join(f"{NOMS_SCENARIOS.get(sc, sc)} : {nb(d['comptes'].get('approche'))} saisies passées par l'approché, "
+    comptes = " ; ".join(f"{NOMS_SCENARIOS.get(sc, sc)} ({nb(d.get('saisies'))} saisies) : "
+                         f"{nb(d['comptes'].get('approche'))} passées par l'approché, "
+                         f"{nb(d['comptes'].get('ambigues_hors_n', 0))} répondues ambiguous (hors de n), "
                          f"{nb(d['comptes'].get('familles_melangees', 0))} écartées (noms de plusieurs familles), "
                          f"{nb(d['comptes'].get('hors_approche', 0))} arrêtées avant"
                          for sc, d in cal["scenarios"].items())
+    volumes = " ; ".join(f"{NOMS_SCENARIOS.get(sc, sc)} : " + ", ".join(f"{f} {nb(v)}" for f, v in d.get("presents_par_famille", {}).items())
+                         for sc, d in cal["scenarios"].items())
     return f"""
-<section id="calibration"><h2>7. Calibration SGR des seuils par famille (R-RES-10)</h2>
-<p>Méthode SGR (Geifman et El-Yaniv, 2017) : pour chaque famille, le plus petit θ d'une grille de {p['grille'][0]:.2f} à
-{p['grille'][-1]:.2f} ({len(p['grille'])} seuils) dont la borne haute du risque, binomiale exacte à δ' = δ / {len(p['grille'])}
-= {dp_txt}, est ≤ r* = {pct(100 * r_etoile, 1)} (δ = {pct(100 * p['delta'], 0)}). Calcul sur les deux
-jeux de certification, une fois chacun, en comptes agrégés seulement ; seuil final = le plus strict des deux. Écart
-inchangé ({str(p['ecart']).replace('.', ',')}). Seuils écrits dans <code>spec/seuils_fuzzy.yaml</code>.</p>
+<section id="calibration"><h2>7. Calibration des seuils par famille (R-RES-10)</h2>
+<p>Garantie de risque sélectif (Geifman et El-Yaniv, 2017) : au plus r* = {pct(100 * r_etoile, 1)} d'erreurs silencieuses
+parmi les noms que le fuzzy résout, avec une confiance de {pct(100 * (1 - delta), 0)}. <b>n</b> = saisies que le fuzzy
+résout (resolved) ; un ambiguous n'est ni un choix ni une perte et sort de n ; <b>k</b> = pertes parmi elles.</p>
+<p>Choix du seuil par <b>test en séquence fixe</b> (Angelopoulos et al., 2021, « Learn then Test », arXiv 2110.01052) :
+θ testés dans un ordre fixé à l'avance, de {p['grille'][-1]:.2f} à {p['grille'][0]:.2f} ; chacun au niveau δ entier
+({pct(100 * delta, 0)}) avec la borne binomiale exacte ; il passe si B*(k, n, δ) ≤ r* ; arrêt au premier échec, θ retenu =
+le dernier qui a passé ; si {p['grille'][-1]:.2f} échoue, approché désactivé. Calcul sur les deux jeux de certification,
+une fois chacun, en comptes agrégés seulement ; seuil final = le plus strict des deux. Écart inchangé
+({str(p['ecart']).replace('.', ',')}). Seuils écrits dans <code>spec/seuils_fuzzy.yaml</code>.</p>
 <p class="note">{e(comptes)}.</p>
-<p><b>Volume nécessaire</b> : même sans aucune perte, la borne n'atteint r* qu'à partir de ln(1/δ') / r* ≈
-{nb(round(n_min))} noms acceptés par le fuzzy dans la famille ; avec 1 perte, il en faut environ 1,6 fois plus.</p>
-{table(["Famille", "Scénario", "Saisies passées par l'approché", "θ retenu", "Meilleur point (désactivée)", "n acceptés",
-        "k pertes", "Borne B*", "Couverture"], lignes)}
+<p class="note">Saisies fautives par famille dans les jeux de certification (cible ≈ 10 000, plafond de 3 cas par nom) :
+{e(volumes)}.</p>
+<p><b>Volume minimal</b> : même sans aucune perte, un θ ne passe qu'avec au moins ln(1/δ) / r* ≈ {nb(round(n_min))} noms
+résolus ; la séquence commençant à {p['grille'][-1]:.2f}, c'est d'abord le nombre de noms résolus au seuil le plus strict
+qui compte. « Volume nécessaire » : estimation, si les taux d'erreur observés se maintiennent, en saisies de la famille passées par
+l'approché (et facteur par rapport au jeu actuel) : pour passer le premier palier ({p['grille'][-1]:.2f}), qui seul
+débloque la séquence, puis pour atteindre le θ le plus permissif dont tous les θ supérieurs ont un taux observé sous r*
+(ce volume explose quand le taux observé approche r*).</p>
+{table(["Famille", "Scénario", "Saisies passées par l'approché", "θ retenu", "n résolus", "k pertes", "Borne B*",
+        "Couverture", "Premier échec", "Volume nécessaire estimé"], lignes)}
 <h3>Courbes risque-couverture</h3>
 <p class="note">Un point par θ de la grille, de droite (θ = {p['grille'][0]:.2f}, couverture maximale) à gauche. Trait plein :
 borne haute B* ; pointillé : risque observé k/n ; ligne fine : r*. Le point marqué est le θ retenu, ou, pour une famille
-désactivée, le meilleur point (borne la plus basse). Axe vertical écrêté à 10 %.</p>
+désactivée, le meilleur point (borne la plus basse), donné pour information. Axe vertical écrêté à 10 %.</p>
 <div class="leg">{leg}<span>trait plein : borne B*</span><span>pointillé : risque observé</span></div>
 <div class="minis">{courbes}</div>
 {section_comparaison(comp)}
@@ -500,6 +526,26 @@ ENTETES_ABC = ["Jeu", "Config.", "Cas", "Idéal", "Sûr", "Silencieux", "dont co
                "Risque du fuzzy seul"]
 
 
+def table_c_par_famille(comp: dict, seuils: dict) -> str:
+    """Pour C : ce que chaque seuil rattrape, par famille (idéal A → C, couverture du fuzzy, erreurs silencieuses)."""
+    lignes = []
+    for nom in ("banc", "banc_pessimiste", "reel_sans_indice"):
+        jeu = comp["jeux"].get(nom)
+        if not jeu:
+            continue
+        for f in sorted(jeu["C"]["par_famille"]):
+            a, b, c = jeu["A"]["par_famille"].get(f, {}), jeu["B"]["par_famille"].get(f, {}), jeu["C"]["par_famille"][f]
+            if not c.get("n"):
+                continue
+            t = seuils.get(f, "·")
+            lignes.append([e(NOMS_JEUX.get(nom, nom)), e(f), "désactivé" if t is None else (f"{t:.2f}" if t != "·" else "·"),
+                           nb(c["n"]), pct(a.get("ideal")), pct(c["ideal"]), ecart(a.get("ideal"), c["ideal"]),
+                           pct(b.get("ideal")), pct(c["couverture_fuzzy"]), cell_sil(c),
+                           pct(c["risque_fuzzy_pct"], 2) + f" ({nb(c['silencieux_fuzzy'])} / {nb(c['acceptes_fuzzy'])})"])
+    return table(["Jeu", "Famille", "θ (C)", "Cas", "Idéal A", "Idéal C", "C − A (points)", "Idéal B", "Couverture du fuzzy (C)",
+                  "Silencieux (C)", "Risque du fuzzy seul (C)"], lignes)
+
+
 def section_comparaison(comp: dict) -> str:
     pol = " ; ".join(f"<b>{k}</b> = {e(v)}" for k, v in comp["politiques"].items())
     familles = sorted({f for cfg in comp["jeux"].values() for m in cfg.values() for f in m["par_famille"]})
@@ -512,8 +558,12 @@ def section_comparaison(comp: dict) -> str:
     return f"""
 <h3>Comparaison A / B / C (mesure « avant corrections »)</h3>
 <p>{pol}. Les jeux de certification ne sont jamais évalués ici. « Couverture du fuzzy » : part des saisies passées par
-l'étape approchée où le fuzzy accepte un nom ; « risque du fuzzy seul » : erreurs silencieuses parmi ces noms acceptés.</p>
+l'étape approchée que le fuzzy résout (un ambiguous n'en fait pas partie) ; « risque du fuzzy seul » : erreurs silencieuses
+parmi ces saisies résolues.</p>
 {table(ENTETES_ABC, lignes_abc(comp["jeux"]))}
+<h3>C par famille : ce que chaque seuil rattrape</h3>
+<p class="note">Idéal de C comparé à A (exact seul) et à B (0,88), couverture du fuzzy sous le seuil calibré de la famille.</p>
+{table_c_par_famille(comp, comp.get("seuils_c", {}))}
 {"".join(blocs)}"""
 
 

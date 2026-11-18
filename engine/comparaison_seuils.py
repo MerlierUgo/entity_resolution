@@ -11,8 +11,9 @@ sensibilité des absents (banc et analyse, absents 5 % et 25 %). Les deux jeux d
 évalués ici (ils servent à la calibration seulement, en comptes agrégés).
 
 Indicateurs, global et par famille : idéal, sûr, erreurs silencieuses (dont collisions exactes), couverture du
-fuzzy (part des saisies passées par l'étape approchée où le fuzzy accepte un nom), et risque du fuzzy seul
-(erreurs silencieuses parmi les noms acceptés par le fuzzy). Notation du modèle de saisie § 8
+fuzzy (part des saisies passées par l'étape approchée que le fuzzy RÉSOUT ; un ambiguous n'en fait pas partie,
+même définition de n que la calibration, R-RES-10), et risque du fuzzy seul (erreurs silencieuses parmi ces
+saisies résolues par le fuzzy). Notation du modèle de saisie § 8
 (engine/mesure_saisies.py · noter).
 """
 from __future__ import annotations
@@ -53,7 +54,7 @@ def evaluer(res: ResolveurApproche, cas: list[dict], cache: dict) -> list[dict]:
         note = noter(c["attendu_statut"], c["attendu_ids"], statut, ids)
         out.append({"famille": c["famille"], "note": note, "statut": statut,
                     "collision": collision_exacte(note, etape, c["fautive"]),
-                    "approche": app, "accepte_fuzzy": etape == "approche"})
+                    "approche": app, "accepte_fuzzy": etape == "approche" and statut == "resolved"})
     return out
 
 
@@ -108,7 +109,8 @@ def main(argv=None) -> int:
     ctx = bs.Contexte(modele)
     cat_jeux = charger_catalogue_jeux(ctx.cat)
     pol = politiques()
-    out = {"politiques": {k: p.decrire() for k, p in pol.items()}, "jeux": {}}
+    out = {"politiques": {k: p.decrire() for k, p in pol.items()}, "seuils_c": dict(sorted(pol["C"].seuils.items())),
+           "jeux": {}}
     resolveurs = {("jeux", k): ResolveurApproche(cat_jeux, p) for k, p in pol.items()}
     resolveurs.update({("reel", k): ResolveurApproche(ctx.cat, p) for k, p in pol.items()})
     caches = defaultdict(dict)

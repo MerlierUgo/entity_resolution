@@ -14,7 +14,7 @@ from engine.approche import SeuilsCalibres  # noqa: E402
 from engine.catalogue import Catalogue, read_csv  # noqa: E402
 
 THETAS = cal.grille()
-DP = cal.DELTA / len(THETAS)
+DP = cal.DELTA          # séquence fixe : chaque θ est testé au niveau δ entier (plus de Bonferroni)
 
 
 # ── borne binomiale
@@ -27,7 +27,7 @@ def test_grille_par_defaut():
 def test_borne_k0_connue(n):
     b = cal.borne_haute(0, n, DP)
     assert b == pytest.approx(1 - DP ** (1 / n), rel=1e-6)          # solution exacte pour k = 0
-    assert b == pytest.approx(math.log(1 / DP) / n, rel=0.01)       # ≈ ln(1/δ')/n
+    assert b == pytest.approx(math.log(1 / DP) / n, rel=0.01)       # ≈ ln(1/δ)/n
 
 
 @pytest.mark.parametrize("k, n", [(1, 100), (5, 2000), (30, 4000), (99, 100)])
@@ -54,28 +54,59 @@ def point(theta, n, k):
             "couverture": 0.5}
 
 
-def test_plus_petit_theta_admissible():
-    pts = [point(0.80, 3000, 40), point(0.81, 2800, 8), point(0.82, 2500, 0), point(0.83, 2400, 0), point(0.84, 100, 0)]
-    assert pts[1]["borne"] > 0.005 >= pts[2]["borne"]
+def test_sequence_fixe_arret_au_premier_echec():
+    # testés de 0,99 vers 0,80 : 0,99 0,98 0,97 passent, 0,96 échoue → arrêt, θ retenu 0,97, même si 0,95
+    # (testé seulement si 0,96 avait passé) aurait passé
+    pts = [point(0.99, 900, 0), point(0.98, 1500, 0), point(0.97, 2400, 1), point(0.96, 2600, 30),
+           point(0.95, 5000, 0)]
+    assert pts[3]["borne"] > 0.005 >= max(p["borne"] for p in pts[:3] + pts[4:])
     c = cal.choisir(pts, 0.005)
-    assert not c["desactive"] and c["seuil"] == 0.82 and c["n"] == 2500 and c["k"] == 0
-    # non monotone : un θ admissible plus bas qu'un θ refusé est quand même retenu
-    pts = [point(0.80, 3000, 40), point(0.81, 2500, 0), point(0.82, 2400, 9)]
-    assert cal.choisir(pts, 0.005)["seuil"] == 0.81
+    assert not c["desactive"] and c["seuil"] == 0.97 and c["n"] == 2400 and c["k"] == 1
+    assert c["premier_echec"]["theta"] == 0.96 and c["theta_testes"] == 4
+    # l'ordre de la liste fournie ne compte pas : la séquence est fixée à l'avance
+    assert cal.choisir(list(reversed(pts)), 0.005)["seuil"] == 0.97
+
+
+def test_sequence_fixe_tous_passent():
+    pts = [point(t, 3000, 0) for t in (0.99, 0.98, 0.97)]
+    c = cal.choisir(pts, 0.005)
+    assert c["seuil"] == 0.97 and c["premier_echec"] is None and c["theta_testes"] == 3
+
+
+def test_sequence_fixe_desactivee_si_le_premier_echoue():
+    pts = [point(0.99, 50, 0), point(0.98, 4000, 0), point(0.97, 6000, 1)]
+    c = cal.choisir(pts, 0.005)
+    assert c["desactive"] and c["seuil"] is None and c["premier_echec"]["theta"] == 0.99
+    assert c["meilleur_point"]["theta"] == 0.98          # pour information seulement
 
 
 def test_famille_desactivee_faute_de_cas():
     pts = cal.courbe([], THETAS, DP)
     assert all(p["n"] == 0 and p["borne"] == 1.0 for p in pts)
     c = cal.choisir(pts, 0.005)
-    assert c["desactive"] and c["seuil"] is None and "meilleur_point" in c
-    # 500 noms acceptés sans aucune perte ne suffisent pas pour r* = 0,5 % (il en faut ≈ ln(400)/0,005 ≈ 1 200)
-    peu = [(0.95, True, False)] * 500
-    c = cal.choisir(cal.courbe(peu, THETAS, DP), 0.005)
-    assert c["desactive"] and c["meilleur_point"]["n"] == 500 and c["meilleur_point"]["k"] == 0
+    assert c["desactive"] and c["seuil"] is None
+    # 500 noms résolus sans aucune perte ne suffisent pas pour r* = 0,5 % (il en faut ≈ ln(1/δ)/0,005 ≈ 600)
+    peu = [(0.995, True, False)] * 500
+    assert cal.choisir(cal.courbe(peu, THETAS, DP), 0.005)["desactive"]
+    assert not cal.choisir(cal.courbe([(0.995, True, False)] * 700, THETAS, DP), 0.005)["desactive"]
+
+
+def test_volume_necessaire():
+    # k = 0 : B* = 1 − δ^(1/n) ≤ r*  ⇔  n ≥ ln δ / ln(1 − r*) (≈ ln(1/δ)/r* ≈ 599)
+    assert cal.n_necessaire(0.0, 0.005, DP) == math.ceil(math.log(DP) / math.log(1 - 0.005))
+    assert cal.n_necessaire(0.006, 0.005, DP) is None                 # taux observé au-dessus de r*
+    assert cal.n_necessaire(0.001, 0.005, DP) > cal.n_necessaire(0.0, 0.005, DP)
+    # 0,99 : 100 noms sans perte ; 0,98 : 1 000 noms sans perte → il faut ~6× plus de données pour passer 0,99
+    pts = [point(0.99, 100, 0), point(0.98, 1000, 0), point(0.97, 1500, 15)]
+    v = cal.volume_necessaire(pts, 2000, 0.005, DP)
+    assert v["theta"] == 0.98 and v["facteur"] == pytest.approx(cal.n_necessaire(0.0, 0.005, DP) / 100)
+    assert v["saisies_approche_necessaires"] == math.ceil(v["facteur"] * 2000)
+    assert v["premier_palier"]["theta"] == 0.99 and v["premier_palier"]["facteur"] == pytest.approx(v["facteur"])
+    assert cal.volume_necessaire([point(0.99, 0, 0)], 10, 0.005, DP)["theta"] is None
 
 
 def test_courbe_compte_n_k_et_couverture():
+    # le deuxième élément dit « résolue par le fuzzy » : un ambiguous ou un refus vaut False et sort de n
     saisies = [(0.95, True, False)] * 10 + [(0.85, True, True)] * 2 + [(0.90, False, False)] * 3 + [(0.70, False, False)]
     pts = {p["theta"]: p for p in cal.courbe(saisies, THETAS, DP)}
     assert pts[0.80]["n"] == 12 and pts[0.80]["k"] == 2 and pts[0.80]["couverture"] == 12 / 16
@@ -141,3 +172,22 @@ def test_politique_par_famille(tmp_path):
     assert pol.regle("mixte", frozenset({"commune", "marque_vehicule"})) is None            # deux familles
     assert pol.regle("article", frozenset({"article"})) is None                               # désactivée
     assert pol.regle("inconnu", frozenset({"inconnu"})) is None                               # hors famille
+
+
+def test_n_sans_les_ambigus(petite_calibration):
+    """Une saisie que le fuzzy répond ambiguous n'entre pas dans n (ni choix ni perte)."""
+    cat, familles, scen, d = petite_calibration
+    famille_de = {t: f for f, ts in familles.items() for t in ts}
+    res = cal.ResolveurApproche(cat, cal.SeuilFixe(0.80, cal.ECART))
+    lignes = read_csv(scen["central"])
+    par, comptes = cal.saisies_par_famille(res, famille_de, lignes)
+    resolues = sum(r for v in par.values() for _, r, _ in v)
+    attendues = 0
+    for l in lignes:
+        r = res.resoudre(l["terme"], l["indice_type"] or None)
+        app = next((t for t in r.trace if t.get("regle") == "R-RES-03"), None)
+        fams = {famille_de.get(t) for t in (app or {}).get("types", [])}
+        if app and len(fams) == 1 and None not in fams and r.etape == "approche" and r.statut == "resolved":
+            attendues += 1
+    assert resolues == attendues
+    assert comptes.get("ambigues_hors_n", 0) > 0          # il y a bien des ambiguous, exclus de n

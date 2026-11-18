@@ -2,7 +2,16 @@
  "politiques": {
   "A": "exact seul (approché désactivé)",
   "B": "seuil fixe 0.88, écart 0.03",
-  "C": "seuils calibrés par famille (R-RES-10) : clients désactivé, douane désactivé, geographie désactivé, marques désactivé, pieces désactivé, vehicules désactivé, vocabulaire_metier désactivé"
+  "C": "seuils calibrés par famille (R-RES-10) : clients 0.95, douane 0.97, geographie désactivé, marques désactivé, pieces 0.98, vehicules 0.94, vocabulaire_metier désactivé"
+ },
+ "seuils_c": {
+  "clients": 0.95,
+  "douane": 0.97,
+  "geographie": null,
+  "marques": null,
+  "pieces": 0.98,
+  "vehicules": 0.94,
+  "vocabulaire_metier": null
  },
  "jeux": {
   "banc": {
@@ -150,10 +159,10 @@
      "trop_confiant": 13,
      "incorrect": 60,
      "passe_par_approche": 2771,
-     "acceptes_fuzzy": 1672,
-     "couverture_fuzzy": 60.34,
+     "acceptes_fuzzy": 1143,
+     "couverture_fuzzy": 41.25,
      "silencieux_fuzzy": 63,
-     "risque_fuzzy_pct": 3.77
+     "risque_fuzzy_pct": 5.51
     },
     "par_famille": {
      "clients": {
@@ -167,10 +176,10 @@
       "trop_confiant": 0,
       "incorrect": 4,
       "passe_par_approche": 136,
-      "acceptes_fuzzy": 67,
-      "couverture_fuzzy": 49.26,
+      "acceptes_fuzzy": 59,
+      "couverture_fuzzy": 43.38,
       "silencieux_fuzzy": 4,
-      "risque_fuzzy_pct": 5.97
+      "risque_fuzzy_pct": 6.78
      },
      "geographie": {
       "n": 1253,
@@ -183,10 +192,10 @@
       "trop_confiant": 9,
       "incorrect": 44,
       "passe_par_approche": 765,
-      "acceptes_fuzzy": 443,
-      "couverture_fuzzy": 57.91,
+      "acceptes_fuzzy": 352,
+      "couverture_fuzzy": 46.01,
       "silencieux_fuzzy": 36,
-      "risque_fuzzy_pct": 8.13
+      "risque_fuzzy_pct": 10.23
      },
      "marques": {
       "n": 461,
@@ -199,10 +208,10 @@
       "trop_confiant": 1,
       "incorrect": 4,
       "passe_par_approche": 213,
-      "acceptes_fuzzy": 154,
-      "couverture_fuzzy": 72.3,
+      "acceptes_fuzzy": 139,
+      "couverture_fuzzy": 65.26,
       "silencieux_fuzzy": 3,
-      "risque_fuzzy_pct": 1.95
+      "risque_fuzzy_pct": 2.16
      },
      "mixte": {
       "n": 1,
@@ -231,10 +240,10 @@
       "trop_confiant": 0,
       "incorrect": 7,
       "passe_par_approche": 897,
-      "acceptes_fuzzy": 496,
-      "couverture_fuzzy": 55.3,
+      "acceptes_fuzzy": 107,
+      "couverture_fuzzy": 11.93,
       "silencieux_fuzzy": 14,
-      "risque_fuzzy_pct": 2.82
+      "risque_fuzzy_pct": 13.08
      },
      "vehicules": {
       "n": 246,
@@ -247,10 +256,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 110,
-      "acceptes_fuzzy": 51,
-      "couverture_fuzzy": 46.36,
+      "acceptes_fuzzy": 48,
+      "couverture_fuzzy": 43.64,
       "silencieux_fuzzy": 1,
-      "risque_fuzzy_pct": 1.96
+      "risque_fuzzy_pct": 2.08
      },
      "vocabulaire_metier": {
       "n": 1372,
@@ -263,46 +272,46 @@
       "trop_confiant": 3,
       "incorrect": 1,
       "passe_par_approche": 649,
-      "acceptes_fuzzy": 460,
-      "couverture_fuzzy": 70.88,
+      "acceptes_fuzzy": 437,
+      "couverture_fuzzy": 67.33,
       "silencieux_fuzzy": 4,
-      "risque_fuzzy_pct": 0.87
+      "risque_fuzzy_pct": 0.92
      }
     }
    },
    "C": {
     "global": {
      "n": 5030,
-     "ideal": 52.35,
-     "sur": 99.92,
+     "ideal": 58.99,
+     "sur": 99.86,
      "silencieux": 1,
      "silencieux_pct": 0.02,
      "dont_collision_exacte": 1,
      "silencieux_hors_collision": 0,
      "trop_confiant": 3,
-     "incorrect": 0,
+     "incorrect": 3,
      "passe_par_approche": 2771,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
+     "acceptes_fuzzy": 126,
+     "couverture_fuzzy": 4.55,
      "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "risque_fuzzy_pct": 0.0
     },
     "par_famille": {
      "clients": {
       "n": 235,
-      "ideal": 46.38,
-      "sur": 100.0,
+      "ideal": 67.23,
+      "sur": 98.72,
       "silencieux": 0,
       "silencieux_pct": 0.0,
       "dont_collision_exacte": 0,
       "silencieux_hors_collision": 0,
       "trop_confiant": 0,
-      "incorrect": 0,
+      "incorrect": 3,
       "passe_par_approche": 136,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 47,
+      "couverture_fuzzy": 34.56,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "geographie": {
       "n": 1253,
@@ -354,7 +363,7 @@
      },
      "pieces": {
       "n": 1462,
-      "ideal": 44.05,
+      "ideal": 60.88,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -363,14 +372,14 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 897,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 40,
+      "couverture_fuzzy": 4.46,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 246,
-      "ideal": 55.28,
+      "ideal": 71.14,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -379,10 +388,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 110,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 39,
+      "couverture_fuzzy": 35.45,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vocabulaire_metier": {
       "n": 1372,
@@ -548,10 +557,10 @@
      "trop_confiant": 11,
      "incorrect": 56,
      "passe_par_approche": 2800,
-     "acceptes_fuzzy": 1552,
-     "couverture_fuzzy": 55.43,
+     "acceptes_fuzzy": 1100,
+     "couverture_fuzzy": 39.29,
      "silencieux_fuzzy": 70,
-     "risque_fuzzy_pct": 4.51
+     "risque_fuzzy_pct": 6.36
     },
     "par_famille": {
      "clients": {
@@ -565,10 +574,10 @@
       "trop_confiant": 0,
       "incorrect": 5,
       "passe_par_approche": 153,
-      "acceptes_fuzzy": 65,
-      "couverture_fuzzy": 42.48,
+      "acceptes_fuzzy": 54,
+      "couverture_fuzzy": 35.29,
       "silencieux_fuzzy": 3,
-      "risque_fuzzy_pct": 4.62
+      "risque_fuzzy_pct": 5.56
      },
      "geographie": {
       "n": 1248,
@@ -581,10 +590,10 @@
       "trop_confiant": 7,
       "incorrect": 42,
       "passe_par_approche": 747,
-      "acceptes_fuzzy": 418,
-      "couverture_fuzzy": 55.96,
+      "acceptes_fuzzy": 333,
+      "couverture_fuzzy": 44.58,
       "silencieux_fuzzy": 41,
-      "risque_fuzzy_pct": 9.81
+      "risque_fuzzy_pct": 12.31
      },
      "marques": {
       "n": 454,
@@ -597,10 +606,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 187,
-      "acceptes_fuzzy": 127,
-      "couverture_fuzzy": 67.91,
+      "acceptes_fuzzy": 118,
+      "couverture_fuzzy": 63.1,
       "silencieux_fuzzy": 2,
-      "risque_fuzzy_pct": 1.57
+      "risque_fuzzy_pct": 1.69
      },
      "mixte": {
       "n": 4,
@@ -629,10 +638,10 @@
       "trop_confiant": 0,
       "incorrect": 6,
       "passe_par_approche": 921,
-      "acceptes_fuzzy": 414,
-      "couverture_fuzzy": 44.95,
+      "acceptes_fuzzy": 96,
+      "couverture_fuzzy": 10.42,
       "silencieux_fuzzy": 15,
-      "risque_fuzzy_pct": 3.62
+      "risque_fuzzy_pct": 15.62
      },
      "vehicules": {
       "n": 246,
@@ -645,10 +654,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 109,
-      "acceptes_fuzzy": 53,
-      "couverture_fuzzy": 48.62,
+      "acceptes_fuzzy": 51,
+      "couverture_fuzzy": 46.79,
       "silencieux_fuzzy": 2,
-      "risque_fuzzy_pct": 3.77
+      "risque_fuzzy_pct": 3.92
      },
      "vocabulaire_metier": {
       "n": 1375,
@@ -661,46 +670,46 @@
       "trop_confiant": 4,
       "incorrect": 3,
       "passe_par_approche": 680,
-      "acceptes_fuzzy": 475,
-      "couverture_fuzzy": 69.85,
+      "acceptes_fuzzy": 448,
+      "couverture_fuzzy": 65.88,
       "silencieux_fuzzy": 7,
-      "risque_fuzzy_pct": 1.47
+      "risque_fuzzy_pct": 1.56
      }
     }
    },
    "C": {
     "global": {
      "n": 5030,
-     "ideal": 52.11,
-     "sur": 99.92,
+     "ideal": 57.3,
+     "sur": 99.9,
      "silencieux": 1,
      "silencieux_pct": 0.02,
      "dont_collision_exacte": 1,
      "silencieux_hors_collision": 0,
      "trop_confiant": 3,
-     "incorrect": 0,
+     "incorrect": 1,
      "passe_par_approche": 2800,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
+     "acceptes_fuzzy": 113,
+     "couverture_fuzzy": 4.04,
      "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "risque_fuzzy_pct": 0.0
     },
     "par_famille": {
      "clients": {
       "n": 237,
-      "ideal": 39.24,
-      "sur": 100.0,
+      "ideal": 55.7,
+      "sur": 99.58,
       "silencieux": 0,
       "silencieux_pct": 0.0,
       "dont_collision_exacte": 0,
       "silencieux_hors_collision": 0,
       "trop_confiant": 0,
-      "incorrect": 0,
+      "incorrect": 1,
       "passe_par_approche": 153,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 40,
+      "couverture_fuzzy": 26.14,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "geographie": {
       "n": 1248,
@@ -752,7 +761,7 @@
      },
      "pieces": {
       "n": 1466,
-      "ideal": 43.04,
+      "ideal": 55.25,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -761,14 +770,14 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 921,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 31,
+      "couverture_fuzzy": 3.37,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 246,
-      "ideal": 57.72,
+      "ideal": 75.2,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -777,10 +786,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 109,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 42,
+      "couverture_fuzzy": 38.53,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vocabulaire_metier": {
       "n": 1375,
@@ -930,10 +939,10 @@
      "trop_confiant": 18,
      "incorrect": 32,
      "passe_par_approche": 2667,
-     "acceptes_fuzzy": 1687,
-     "couverture_fuzzy": 63.25,
+     "acceptes_fuzzy": 1169,
+     "couverture_fuzzy": 43.83,
      "silencieux_fuzzy": 45,
-     "risque_fuzzy_pct": 2.67
+     "risque_fuzzy_pct": 3.85
     },
     "par_famille": {
      "clients": {
@@ -947,10 +956,10 @@
       "trop_confiant": 0,
       "incorrect": 2,
       "passe_par_approche": 137,
-      "acceptes_fuzzy": 66,
-      "couverture_fuzzy": 48.18,
+      "acceptes_fuzzy": 59,
+      "couverture_fuzzy": 43.07,
       "silencieux_fuzzy": 4,
-      "risque_fuzzy_pct": 6.06
+      "risque_fuzzy_pct": 6.78
      },
      "geographie": {
       "n": 1121,
@@ -963,10 +972,10 @@
       "trop_confiant": 10,
       "incorrect": 23,
       "passe_par_approche": 634,
-      "acceptes_fuzzy": 432,
-      "couverture_fuzzy": 68.14,
+      "acceptes_fuzzy": 360,
+      "couverture_fuzzy": 56.78,
       "silencieux_fuzzy": 26,
-      "risque_fuzzy_pct": 6.02
+      "risque_fuzzy_pct": 7.22
      },
      "marques": {
       "n": 480,
@@ -979,10 +988,10 @@
       "trop_confiant": 0,
       "incorrect": 2,
       "passe_par_approche": 219,
-      "acceptes_fuzzy": 162,
-      "couverture_fuzzy": 73.97,
+      "acceptes_fuzzy": 147,
+      "couverture_fuzzy": 67.12,
       "silencieux_fuzzy": 3,
-      "risque_fuzzy_pct": 1.85
+      "risque_fuzzy_pct": 2.04
      },
      "pieces": {
       "n": 1497,
@@ -995,10 +1004,10 @@
       "trop_confiant": 0,
       "incorrect": 5,
       "passe_par_approche": 879,
-      "acceptes_fuzzy": 509,
-      "couverture_fuzzy": 57.91,
+      "acceptes_fuzzy": 109,
+      "couverture_fuzzy": 12.4,
       "silencieux_fuzzy": 6,
-      "risque_fuzzy_pct": 1.18
+      "risque_fuzzy_pct": 5.5
      },
      "vehicules": {
       "n": 250,
@@ -1011,10 +1020,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 131,
-      "acceptes_fuzzy": 61,
-      "couverture_fuzzy": 46.56,
+      "acceptes_fuzzy": 59,
+      "couverture_fuzzy": 45.04,
       "silencieux_fuzzy": 1,
-      "risque_fuzzy_pct": 1.64
+      "risque_fuzzy_pct": 1.69
      },
      "vocabulaire_metier": {
       "n": 1437,
@@ -1027,46 +1036,46 @@
       "trop_confiant": 8,
       "incorrect": 0,
       "passe_par_approche": 667,
-      "acceptes_fuzzy": 457,
-      "couverture_fuzzy": 68.52,
+      "acceptes_fuzzy": 435,
+      "couverture_fuzzy": 65.22,
       "silencieux_fuzzy": 5,
-      "risque_fuzzy_pct": 1.09
+      "risque_fuzzy_pct": 1.15
      }
     }
    },
    "C": {
     "global": {
      "n": 5031,
-     "ideal": 50.11,
-     "sur": 99.82,
-     "silencieux": 1,
-     "silencieux_pct": 0.02,
+     "ideal": 56.71,
+     "sur": 99.78,
+     "silencieux": 2,
+     "silencieux_pct": 0.04,
      "dont_collision_exacte": 1,
-     "silencieux_hors_collision": 0,
+     "silencieux_hors_collision": 1,
      "trop_confiant": 8,
-     "incorrect": 0,
+     "incorrect": 1,
      "passe_par_approche": 2667,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
-     "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "acceptes_fuzzy": 145,
+     "couverture_fuzzy": 5.44,
+     "silencieux_fuzzy": 1,
+     "risque_fuzzy_pct": 0.69
     },
     "par_famille": {
      "clients": {
       "n": 246,
-      "ideal": 47.56,
-      "sur": 100.0,
+      "ideal": 68.29,
+      "sur": 99.59,
       "silencieux": 0,
       "silencieux_pct": 0.0,
       "dont_collision_exacte": 0,
       "silencieux_hors_collision": 0,
       "trop_confiant": 0,
-      "incorrect": 0,
+      "incorrect": 1,
       "passe_par_approche": 137,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 47,
+      "couverture_fuzzy": 34.31,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "geographie": {
       "n": 1121,
@@ -1087,22 +1096,22 @@
      "marques": {
       "n": 480,
       "ideal": 52.29,
-      "sur": 99.79,
-      "silencieux": 1,
-      "silencieux_pct": 0.21,
+      "sur": 99.58,
+      "silencieux": 2,
+      "silencieux_pct": 0.42,
       "dont_collision_exacte": 1,
-      "silencieux_hors_collision": 0,
+      "silencieux_hors_collision": 1,
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 219,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
-      "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "acceptes_fuzzy": 1,
+      "couverture_fuzzy": 0.46,
+      "silencieux_fuzzy": 1,
+      "risque_fuzzy_pct": 100.0
      },
      "pieces": {
       "n": 1497,
-      "ideal": 44.02,
+      "ideal": 59.32,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -1111,14 +1120,14 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 879,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 45,
+      "couverture_fuzzy": 5.12,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 250,
-      "ideal": 46.8,
+      "ideal": 67.6,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -1127,10 +1136,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 131,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 52,
+      "couverture_fuzzy": 39.69,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vocabulaire_metier": {
       "n": 1437,
@@ -1296,10 +1305,10 @@
      "trop_confiant": 13,
      "incorrect": 122,
      "passe_par_approche": 3074,
-     "acceptes_fuzzy": 1612,
-     "couverture_fuzzy": 52.44,
+     "acceptes_fuzzy": 1073,
+     "couverture_fuzzy": 34.91,
      "silencieux_fuzzy": 165,
-     "risque_fuzzy_pct": 10.24
+     "risque_fuzzy_pct": 15.38
     },
     "par_famille": {
      "clients": {
@@ -1313,10 +1322,10 @@
       "trop_confiant": 0,
       "incorrect": 2,
       "passe_par_approche": 132,
-      "acceptes_fuzzy": 58,
-      "couverture_fuzzy": 43.94,
+      "acceptes_fuzzy": 53,
+      "couverture_fuzzy": 40.15,
       "silencieux_fuzzy": 5,
-      "risque_fuzzy_pct": 8.62
+      "risque_fuzzy_pct": 9.43
      },
      "geographie": {
       "n": 1642,
@@ -1329,10 +1338,10 @@
       "trop_confiant": 7,
       "incorrect": 93,
       "passe_par_approche": 1147,
-      "acceptes_fuzzy": 497,
-      "couverture_fuzzy": 43.33,
+      "acceptes_fuzzy": 364,
+      "couverture_fuzzy": 31.73,
       "silencieux_fuzzy": 108,
-      "risque_fuzzy_pct": 21.73
+      "risque_fuzzy_pct": 29.67
      },
      "marques": {
       "n": 392,
@@ -1345,10 +1354,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 179,
-      "acceptes_fuzzy": 121,
-      "couverture_fuzzy": 67.6,
+      "acceptes_fuzzy": 112,
+      "couverture_fuzzy": 62.57,
       "silencieux_fuzzy": 5,
-      "risque_fuzzy_pct": 4.13
+      "risque_fuzzy_pct": 4.46
      },
      "mixte": {
       "n": 9,
@@ -1361,10 +1370,10 @@
       "trop_confiant": 0,
       "incorrect": 2,
       "passe_par_approche": 9,
-      "acceptes_fuzzy": 3,
-      "couverture_fuzzy": 33.33,
+      "acceptes_fuzzy": 1,
+      "couverture_fuzzy": 11.11,
       "silencieux_fuzzy": 1,
-      "risque_fuzzy_pct": 33.33
+      "risque_fuzzy_pct": 100.0
      },
      "pieces": {
       "n": 1358,
@@ -1377,10 +1386,10 @@
       "trop_confiant": 0,
       "incorrect": 19,
       "passe_par_approche": 888,
-      "acceptes_fuzzy": 462,
-      "couverture_fuzzy": 52.03,
+      "acceptes_fuzzy": 106,
+      "couverture_fuzzy": 11.94,
       "silencieux_fuzzy": 37,
-      "risque_fuzzy_pct": 8.01
+      "risque_fuzzy_pct": 34.91
      },
      "vehicules": {
       "n": 236,
@@ -1393,10 +1402,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 125,
-      "acceptes_fuzzy": 49,
-      "couverture_fuzzy": 39.2,
+      "acceptes_fuzzy": 48,
+      "couverture_fuzzy": 38.4,
       "silencieux_fuzzy": 3,
-      "risque_fuzzy_pct": 6.12
+      "risque_fuzzy_pct": 6.25
      },
      "vocabulaire_metier": {
       "n": 1181,
@@ -1409,46 +1418,46 @@
       "trop_confiant": 6,
       "incorrect": 6,
       "passe_par_approche": 594,
-      "acceptes_fuzzy": 422,
-      "couverture_fuzzy": 71.04,
+      "acceptes_fuzzy": 389,
+      "couverture_fuzzy": 65.49,
       "silencieux_fuzzy": 6,
-      "risque_fuzzy_pct": 1.42
+      "risque_fuzzy_pct": 1.54
      }
     }
    },
    "C": {
     "global": {
      "n": 5031,
-     "ideal": 59.89,
-     "sur": 99.88,
+     "ideal": 65.28,
+     "sur": 99.86,
      "silencieux": 0,
      "silencieux_pct": 0.0,
      "dont_collision_exacte": 0,
      "silencieux_hors_collision": 0,
      "trop_confiant": 6,
-     "incorrect": 0,
+     "incorrect": 1,
      "passe_par_approche": 3074,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
+     "acceptes_fuzzy": 105,
+     "couverture_fuzzy": 3.42,
      "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "risque_fuzzy_pct": 0.0
     },
     "par_famille": {
      "clients": {
       "n": 213,
-      "ideal": 49.3,
-      "sur": 100.0,
+      "ideal": 69.95,
+      "sur": 99.53,
       "silencieux": 0,
       "silencieux_pct": 0.0,
       "dont_collision_exacte": 0,
       "silencieux_hors_collision": 0,
       "trop_confiant": 0,
-      "incorrect": 0,
+      "incorrect": 1,
       "passe_par_approche": 132,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 41,
+      "couverture_fuzzy": 31.06,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "geographie": {
       "n": 1642,
@@ -1500,7 +1509,7 @@
      },
      "pieces": {
       "n": 1358,
-      "ideal": 49.26,
+      "ideal": 63.48,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -1509,14 +1518,14 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 888,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 31,
+      "couverture_fuzzy": 3.49,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 236,
-      "ideal": 59.32,
+      "ideal": 73.73,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -1525,10 +1534,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 125,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 33,
+      "couverture_fuzzy": 26.4,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vocabulaire_metier": {
       "n": 1181,
@@ -1710,10 +1719,10 @@
      "trop_confiant": 103,
      "incorrect": 93,
      "passe_par_approche": 11344,
-     "acceptes_fuzzy": 7022,
-     "couverture_fuzzy": 61.9,
+     "acceptes_fuzzy": 5689,
+     "couverture_fuzzy": 50.15,
      "silencieux_fuzzy": 117,
-     "risque_fuzzy_pct": 1.67
+     "risque_fuzzy_pct": 2.06
     },
     "par_famille": {
      "clients": {
@@ -1727,10 +1736,10 @@
       "trop_confiant": 11,
       "incorrect": 20,
       "passe_par_approche": 2567,
-      "acceptes_fuzzy": 1222,
-      "couverture_fuzzy": 47.6,
+      "acceptes_fuzzy": 1042,
+      "couverture_fuzzy": 40.59,
       "silencieux_fuzzy": 19,
-      "risque_fuzzy_pct": 1.55
+      "risque_fuzzy_pct": 1.82
      },
      "douane": {
       "n": 776,
@@ -1743,10 +1752,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 776,
-      "acceptes_fuzzy": 520,
-      "couverture_fuzzy": 67.01,
+      "acceptes_fuzzy": 502,
+      "couverture_fuzzy": 64.69,
       "silencieux_fuzzy": 1,
-      "risque_fuzzy_pct": 0.19
+      "risque_fuzzy_pct": 0.2
      },
      "geographie": {
       "n": 3415,
@@ -1759,10 +1768,10 @@
       "trop_confiant": 85,
       "incorrect": 60,
       "passe_par_approche": 3354,
-      "acceptes_fuzzy": 2484,
-      "couverture_fuzzy": 74.06,
+      "acceptes_fuzzy": 2110,
+      "couverture_fuzzy": 62.91,
       "silencieux_fuzzy": 77,
-      "risque_fuzzy_pct": 3.1
+      "risque_fuzzy_pct": 3.65
      },
      "marques": {
       "n": 227,
@@ -1775,10 +1784,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 211,
-      "acceptes_fuzzy": 141,
-      "couverture_fuzzy": 66.82,
+      "acceptes_fuzzy": 134,
+      "couverture_fuzzy": 63.51,
       "silencieux_fuzzy": 1,
-      "risque_fuzzy_pct": 0.71
+      "risque_fuzzy_pct": 0.75
      },
      "mixte": {
       "n": 4,
@@ -1807,10 +1816,10 @@
       "trop_confiant": 0,
       "incorrect": 10,
       "passe_par_approche": 2168,
-      "acceptes_fuzzy": 1319,
-      "couverture_fuzzy": 60.84,
+      "acceptes_fuzzy": 607,
+      "couverture_fuzzy": 28.0,
       "silencieux_fuzzy": 13,
-      "risque_fuzzy_pct": 0.99
+      "risque_fuzzy_pct": 2.14
      },
      "vehicules": {
       "n": 2473,
@@ -1823,8 +1832,8 @@
       "trop_confiant": 7,
       "incorrect": 3,
       "passe_par_approche": 2149,
-      "acceptes_fuzzy": 1265,
-      "couverture_fuzzy": 58.86,
+      "acceptes_fuzzy": 1227,
+      "couverture_fuzzy": 57.1,
       "silencieux_fuzzy": 2,
       "risque_fuzzy_pct": 0.16
      },
@@ -1839,62 +1848,62 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 115,
-      "acceptes_fuzzy": 70,
-      "couverture_fuzzy": 60.87,
+      "acceptes_fuzzy": 66,
+      "couverture_fuzzy": 57.39,
       "silencieux_fuzzy": 3,
-      "risque_fuzzy_pct": 4.29
+      "risque_fuzzy_pct": 4.55
      }
     }
    },
    "C": {
     "global": {
      "n": 11758,
-     "ideal": 4.96,
-     "sur": 100.0,
-     "silencieux": 0,
-     "silencieux_pct": 0.0,
+     "ideal": 27.96,
+     "sur": 99.82,
+     "silencieux": 3,
+     "silencieux_pct": 0.03,
      "dont_collision_exacte": 0,
-     "silencieux_hors_collision": 0,
-     "trop_confiant": 0,
-     "incorrect": 0,
+     "silencieux_hors_collision": 3,
+     "trop_confiant": 14,
+     "incorrect": 4,
      "passe_par_approche": 11344,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
-     "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "acceptes_fuzzy": 2346,
+     "couverture_fuzzy": 20.68,
+     "silencieux_fuzzy": 3,
+     "risque_fuzzy_pct": 0.13
     },
     "par_famille": {
      "clients": {
       "n": 2572,
-      "ideal": 0.74,
-      "sur": 100.0,
-      "silencieux": 0,
-      "silencieux_pct": 0.0,
+      "ideal": 32.97,
+      "sur": 99.38,
+      "silencieux": 2,
+      "silencieux_pct": 0.08,
       "dont_collision_exacte": 0,
-      "silencieux_hors_collision": 0,
-      "trop_confiant": 0,
-      "incorrect": 0,
+      "silencieux_hors_collision": 2,
+      "trop_confiant": 10,
+      "incorrect": 4,
       "passe_par_approche": 2567,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
-      "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "acceptes_fuzzy": 813,
+      "couverture_fuzzy": 31.67,
+      "silencieux_fuzzy": 2,
+      "risque_fuzzy_pct": 0.25
      },
      "douane": {
       "n": 776,
-      "ideal": 0.64,
-      "sur": 100.0,
-      "silencieux": 0,
-      "silencieux_pct": 0.0,
+      "ideal": 35.57,
+      "sur": 99.87,
+      "silencieux": 1,
+      "silencieux_pct": 0.13,
       "dont_collision_exacte": 0,
-      "silencieux_hors_collision": 0,
+      "silencieux_hors_collision": 1,
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 776,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
-      "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "acceptes_fuzzy": 273,
+      "couverture_fuzzy": 35.18,
+      "silencieux_fuzzy": 1,
+      "risque_fuzzy_pct": 0.37
      },
      "geographie": {
       "n": 3415,
@@ -1946,7 +1955,7 @@
      },
      "pieces": {
       "n": 2172,
-      "ideal": 4.05,
+      "ideal": 31.31,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -1955,26 +1964,26 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 2168,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 244,
+      "couverture_fuzzy": 11.25,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 2473,
-      "ideal": 0.89,
-      "sur": 100.0,
+      "ideal": 41.85,
+      "sur": 99.84,
       "silencieux": 0,
       "silencieux_pct": 0.0,
       "dont_collision_exacte": 0,
       "silencieux_hors_collision": 0,
-      "trop_confiant": 0,
+      "trop_confiant": 4,
       "incorrect": 0,
       "passe_par_approche": 2149,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 1016,
+      "couverture_fuzzy": 47.28,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vocabulaire_metier": {
       "n": 119,
@@ -2156,10 +2165,10 @@
      "trop_confiant": 103,
      "incorrect": 467,
      "passe_par_approche": 14413,
-     "acceptes_fuzzy": 7879,
-     "couverture_fuzzy": 54.67,
+     "acceptes_fuzzy": 6172,
+     "couverture_fuzzy": 42.82,
      "silencieux_fuzzy": 600,
-     "risque_fuzzy_pct": 7.62
+     "risque_fuzzy_pct": 9.72
     },
     "par_famille": {
      "clients": {
@@ -2173,10 +2182,10 @@
       "trop_confiant": 11,
       "incorrect": 19,
       "passe_par_approche": 2631,
-      "acceptes_fuzzy": 1221,
-      "couverture_fuzzy": 46.41,
+      "acceptes_fuzzy": 1042,
+      "couverture_fuzzy": 39.6,
       "silencieux_fuzzy": 19,
-      "risque_fuzzy_pct": 1.56
+      "risque_fuzzy_pct": 1.82
      },
      "douane": {
       "n": 816,
@@ -2189,10 +2198,10 @@
       "trop_confiant": 0,
       "incorrect": 2,
       "passe_par_approche": 816,
-      "acceptes_fuzzy": 552,
-      "couverture_fuzzy": 67.65,
+      "acceptes_fuzzy": 532,
+      "couverture_fuzzy": 65.2,
       "silencieux_fuzzy": 31,
-      "risque_fuzzy_pct": 5.62
+      "risque_fuzzy_pct": 5.83
      },
      "geographie": {
       "n": 6125,
@@ -2205,10 +2214,10 @@
       "trop_confiant": 85,
       "incorrect": 414,
       "passe_par_approche": 6011,
-      "acceptes_fuzzy": 3254,
-      "couverture_fuzzy": 54.13,
+      "acceptes_fuzzy": 2526,
+      "couverture_fuzzy": 42.02,
       "silencieux_fuzzy": 493,
-      "risque_fuzzy_pct": 15.15
+      "risque_fuzzy_pct": 19.52
      },
      "marques": {
       "n": 266,
@@ -2221,10 +2230,10 @@
       "trop_confiant": 0,
       "incorrect": 1,
       "passe_par_approche": 248,
-      "acceptes_fuzzy": 150,
-      "couverture_fuzzy": 60.48,
+      "acceptes_fuzzy": 142,
+      "couverture_fuzzy": 57.26,
       "silencieux_fuzzy": 9,
-      "risque_fuzzy_pct": 6.0
+      "risque_fuzzy_pct": 6.34
      },
      "mixte": {
       "n": 16,
@@ -2237,10 +2246,10 @@
       "trop_confiant": 0,
       "incorrect": 3,
       "passe_par_approche": 15,
-      "acceptes_fuzzy": 3,
-      "couverture_fuzzy": 20.0,
+      "acceptes_fuzzy": 0,
+      "couverture_fuzzy": 0.0,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": 0.0
+      "risque_fuzzy_pct": null
      },
      "pieces": {
       "n": 2295,
@@ -2253,10 +2262,10 @@
       "trop_confiant": 0,
       "incorrect": 17,
       "passe_par_approche": 2289,
-      "acceptes_fuzzy": 1342,
-      "couverture_fuzzy": 58.63,
+      "acceptes_fuzzy": 623,
+      "couverture_fuzzy": 27.22,
       "silencieux_fuzzy": 29,
-      "risque_fuzzy_pct": 2.16
+      "risque_fuzzy_pct": 4.65
      },
      "vehicules": {
       "n": 2554,
@@ -2269,10 +2278,10 @@
       "trop_confiant": 7,
       "incorrect": 8,
       "passe_par_approche": 2227,
-      "acceptes_fuzzy": 1280,
-      "couverture_fuzzy": 57.48,
+      "acceptes_fuzzy": 1237,
+      "couverture_fuzzy": 55.55,
       "silencieux_fuzzy": 12,
-      "risque_fuzzy_pct": 0.94
+      "risque_fuzzy_pct": 0.97
      },
      "vocabulaire_metier": {
       "n": 180,
@@ -2285,62 +2294,62 @@
       "trop_confiant": 0,
       "incorrect": 3,
       "passe_par_approche": 176,
-      "acceptes_fuzzy": 77,
-      "couverture_fuzzy": 43.75,
+      "acceptes_fuzzy": 70,
+      "couverture_fuzzy": 39.77,
       "silencieux_fuzzy": 7,
-      "risque_fuzzy_pct": 9.09
+      "risque_fuzzy_pct": 10.0
      }
     }
    },
    "C": {
     "global": {
      "n": 14888,
-     "ideal": 24.94,
-     "sur": 100.0,
-     "silencieux": 0,
-     "silencieux_pct": 0.0,
+     "ideal": 43.09,
+     "sur": 99.84,
+     "silencieux": 6,
+     "silencieux_pct": 0.04,
      "dont_collision_exacte": 0,
-     "silencieux_hors_collision": 0,
-     "trop_confiant": 0,
-     "incorrect": 0,
+     "silencieux_hors_collision": 6,
+     "trop_confiant": 14,
+     "incorrect": 4,
      "passe_par_approche": 14413,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
-     "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "acceptes_fuzzy": 2349,
+     "couverture_fuzzy": 16.3,
+     "silencieux_fuzzy": 6,
+     "risque_fuzzy_pct": 0.26
     },
     "par_famille": {
      "clients": {
       "n": 2636,
-      "ideal": 3.15,
-      "sur": 100.0,
-      "silencieux": 0,
-      "silencieux_pct": 0.0,
+      "ideal": 34.64,
+      "sur": 99.43,
+      "silencieux": 2,
+      "silencieux_pct": 0.08,
       "dont_collision_exacte": 0,
-      "silencieux_hors_collision": 0,
-      "trop_confiant": 0,
-      "incorrect": 0,
+      "silencieux_hors_collision": 2,
+      "trop_confiant": 10,
+      "incorrect": 3,
       "passe_par_approche": 2631,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
-      "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "acceptes_fuzzy": 813,
+      "couverture_fuzzy": 30.9,
+      "silencieux_fuzzy": 2,
+      "risque_fuzzy_pct": 0.25
      },
      "douane": {
       "n": 816,
-      "ideal": 5.51,
-      "sur": 100.0,
-      "silencieux": 0,
-      "silencieux_pct": 0.0,
+      "ideal": 38.48,
+      "sur": 99.63,
+      "silencieux": 3,
+      "silencieux_pct": 0.37,
       "dont_collision_exacte": 0,
-      "silencieux_hors_collision": 0,
+      "silencieux_hors_collision": 3,
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 816,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
-      "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "acceptes_fuzzy": 275,
+      "couverture_fuzzy": 33.7,
+      "silencieux_fuzzy": 3,
+      "risque_fuzzy_pct": 1.09
      },
      "geographie": {
       "n": 6125,
@@ -2392,7 +2401,7 @@
      },
      "pieces": {
       "n": 2295,
-      "ideal": 9.19,
+      "ideal": 34.99,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -2401,26 +2410,26 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 2289,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 244,
+      "couverture_fuzzy": 10.66,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 2554,
-      "ideal": 4.03,
-      "sur": 100.0,
-      "silencieux": 0,
-      "silencieux_pct": 0.0,
+      "ideal": 43.62,
+      "sur": 99.77,
+      "silencieux": 1,
+      "silencieux_pct": 0.04,
       "dont_collision_exacte": 0,
-      "silencieux_hors_collision": 0,
-      "trop_confiant": 0,
-      "incorrect": 0,
+      "silencieux_hors_collision": 1,
+      "trop_confiant": 4,
+      "incorrect": 1,
       "passe_par_approche": 2227,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
-      "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "acceptes_fuzzy": 1017,
+      "couverture_fuzzy": 45.67,
+      "silencieux_fuzzy": 1,
+      "risque_fuzzy_pct": 0.1
      },
      "vocabulaire_metier": {
       "n": 180,
@@ -2570,8 +2579,8 @@
      "trop_confiant": 3,
      "incorrect": 4,
      "passe_par_approche": 149,
-     "acceptes_fuzzy": 70,
-     "couverture_fuzzy": 46.98,
+     "acceptes_fuzzy": 38,
+     "couverture_fuzzy": 25.5,
      "silencieux_fuzzy": 0,
      "risque_fuzzy_pct": 0.0
     },
@@ -2587,8 +2596,8 @@
       "trop_confiant": 0,
       "incorrect": 1,
       "passe_par_approche": 26,
-      "acceptes_fuzzy": 8,
-      "couverture_fuzzy": 30.77,
+      "acceptes_fuzzy": 5,
+      "couverture_fuzzy": 19.23,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -2603,8 +2612,8 @@
       "trop_confiant": 3,
       "incorrect": 3,
       "passe_par_approche": 36,
-      "acceptes_fuzzy": 29,
-      "couverture_fuzzy": 80.56,
+      "acceptes_fuzzy": 17,
+      "couverture_fuzzy": 47.22,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -2619,8 +2628,8 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 7,
-      "acceptes_fuzzy": 5,
-      "couverture_fuzzy": 71.43,
+      "acceptes_fuzzy": 3,
+      "couverture_fuzzy": 42.86,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -2635,8 +2644,8 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 40,
-      "acceptes_fuzzy": 15,
-      "couverture_fuzzy": 37.5,
+      "acceptes_fuzzy": 1,
+      "couverture_fuzzy": 2.5,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -2651,8 +2660,8 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 27,
-      "acceptes_fuzzy": 5,
-      "couverture_fuzzy": 18.52,
+      "acceptes_fuzzy": 4,
+      "couverture_fuzzy": 14.81,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -2677,36 +2686,36 @@
    "C": {
     "global": {
      "n": 252,
-     "ideal": 36.11,
-     "sur": 99.6,
+     "ideal": 42.06,
+     "sur": 99.21,
      "silencieux": 1,
      "silencieux_pct": 0.4,
      "dont_collision_exacte": 1,
      "silencieux_hors_collision": 0,
      "trop_confiant": 0,
-     "incorrect": 0,
+     "incorrect": 1,
      "passe_par_approche": 149,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
+     "acceptes_fuzzy": 10,
+     "couverture_fuzzy": 6.71,
      "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "risque_fuzzy_pct": 0.0
     },
     "par_famille": {
      "clients": {
       "n": 42,
-      "ideal": 38.1,
-      "sur": 100.0,
+      "ideal": 50.0,
+      "sur": 97.62,
       "silencieux": 0,
       "silencieux_pct": 0.0,
       "dont_collision_exacte": 0,
       "silencieux_hors_collision": 0,
       "trop_confiant": 0,
-      "incorrect": 0,
+      "incorrect": 1,
       "passe_par_approche": 26,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 5,
+      "couverture_fuzzy": 19.23,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "geographie": {
       "n": 55,
@@ -2742,7 +2751,7 @@
      },
      "pieces": {
       "n": 63,
-      "ideal": 34.92,
+      "ideal": 44.44,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -2751,14 +2760,14 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 40,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 1,
+      "couverture_fuzzy": 2.5,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 48,
-      "ideal": 27.08,
+      "ideal": 35.42,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -2767,10 +2776,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 27,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 4,
+      "couverture_fuzzy": 14.81,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vocabulaire_metier": {
       "n": 20,
@@ -2920,8 +2929,8 @@
      "trop_confiant": 6,
      "incorrect": 1,
      "passe_par_approche": 149,
-     "acceptes_fuzzy": 68,
-     "couverture_fuzzy": 45.64,
+     "acceptes_fuzzy": 45,
+     "couverture_fuzzy": 30.2,
      "silencieux_fuzzy": 0,
      "risque_fuzzy_pct": 0.0
     },
@@ -2937,8 +2946,8 @@
       "trop_confiant": 0,
       "incorrect": 1,
       "passe_par_approche": 26,
-      "acceptes_fuzzy": 8,
-      "couverture_fuzzy": 30.77,
+      "acceptes_fuzzy": 5,
+      "couverture_fuzzy": 19.23,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -2953,8 +2962,8 @@
       "trop_confiant": 6,
       "incorrect": 0,
       "passe_par_approche": 36,
-      "acceptes_fuzzy": 27,
-      "couverture_fuzzy": 75.0,
+      "acceptes_fuzzy": 22,
+      "couverture_fuzzy": 61.11,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -2985,8 +2994,8 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 40,
-      "acceptes_fuzzy": 15,
-      "couverture_fuzzy": 37.5,
+      "acceptes_fuzzy": 1,
+      "couverture_fuzzy": 2.5,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -3001,8 +3010,8 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 27,
-      "acceptes_fuzzy": 5,
-      "couverture_fuzzy": 18.52,
+      "acceptes_fuzzy": 4,
+      "couverture_fuzzy": 14.81,
       "silencieux_fuzzy": 0,
       "risque_fuzzy_pct": 0.0
      },
@@ -3027,36 +3036,36 @@
    "C": {
     "global": {
      "n": 252,
-     "ideal": 36.11,
-     "sur": 99.21,
+     "ideal": 42.06,
+     "sur": 98.81,
      "silencieux": 1,
      "silencieux_pct": 0.4,
      "dont_collision_exacte": 1,
      "silencieux_hors_collision": 0,
      "trop_confiant": 1,
-     "incorrect": 0,
+     "incorrect": 1,
      "passe_par_approche": 149,
-     "acceptes_fuzzy": 0,
-     "couverture_fuzzy": 0.0,
+     "acceptes_fuzzy": 10,
+     "couverture_fuzzy": 6.71,
      "silencieux_fuzzy": 0,
-     "risque_fuzzy_pct": null
+     "risque_fuzzy_pct": 0.0
     },
     "par_famille": {
      "clients": {
       "n": 42,
-      "ideal": 38.1,
-      "sur": 100.0,
+      "ideal": 50.0,
+      "sur": 97.62,
       "silencieux": 0,
       "silencieux_pct": 0.0,
       "dont_collision_exacte": 0,
       "silencieux_hors_collision": 0,
       "trop_confiant": 0,
-      "incorrect": 0,
+      "incorrect": 1,
       "passe_par_approche": 26,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 5,
+      "couverture_fuzzy": 19.23,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "geographie": {
       "n": 55,
@@ -3092,7 +3101,7 @@
      },
      "pieces": {
       "n": 63,
-      "ideal": 34.92,
+      "ideal": 44.44,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -3101,14 +3110,14 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 40,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 1,
+      "couverture_fuzzy": 2.5,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vehicules": {
       "n": 48,
-      "ideal": 27.08,
+      "ideal": 35.42,
       "sur": 100.0,
       "silencieux": 0,
       "silencieux_pct": 0.0,
@@ -3117,10 +3126,10 @@
       "trop_confiant": 0,
       "incorrect": 0,
       "passe_par_approche": 27,
-      "acceptes_fuzzy": 0,
-      "couverture_fuzzy": 0.0,
+      "acceptes_fuzzy": 4,
+      "couverture_fuzzy": 14.81,
       "silencieux_fuzzy": 0,
-      "risque_fuzzy_pct": null
+      "risque_fuzzy_pct": 0.0
      },
      "vocabulaire_metier": {
       "n": 20,

@@ -1,184 +1,408 @@
-# Seuils de l'étape approchée par famille : calibration SGR (R-RES-10).
+# Seuils de l'étape approchée par famille (R-RES-10).
 # Écrit par python -m engine.calibration : ne pas modifier à la main.
-# Méthode : Geifman et El-Yaniv (2017), SGR. Pour chaque famille et chaque scénario de certification, θ est le
-# plus petit seuil de la grille dont la borne haute du risque (binomiale exacte, δ' = δ / taille de la grille)
-# est ≤ r*. Seuil final = le plus strict des deux scénarios ; null = approché désactivé pour la famille.
-# n : noms acceptés par le fuzzy ; k : pertes dangereuses parmi eux ; couverture : n / saisies passées par
-# l'approché. Garantie valable si le réel est entre les deux scénarios (modèle v0.3 et pessimiste).
+# Garantie SGR (Geifman et El-Yaniv, 2017) ; choix du seuil par test en séquence fixe (Angelopoulos et al., 2021,
+# « Learn then Test », arXiv 2110.01052) : θ testés de 0,99 à 0,80, chacun au niveau δ, avec la borne binomiale
+# exacte ; arrêt au premier échec ; θ retenu = le dernier qui a passé ; null = approché désactivé.
+# n : noms résolus (resolved) par le fuzzy ; k : pertes dangereuses parmi eux ; couverture : n / saisies passées
+# par l'approché. Seuil final = le plus strict des deux scénarios. Garantie valable si le réel est entre les
+# deux scénarios (modèle v0.3 et pessimiste). volume_necessaire : estimation si les taux observés se maintiennent.
 # Lu par le moteur : engine/approche.py · SeuilsCalibres.
-version: 1
+version: 2
 regle: R-RES-10
 date: '2026-11-17'
 parametres:
   r_etoile: 0.005
   delta: 0.05
-  delta_prime: 0.0025
-  correction: Bonferroni sur 20 seuils
+  methode: séquence fixe (Learn then Test, arXiv 2110.01052), de θ max à θ min, chaque θ au niveau δ
+  n: noms résolus (resolved) par le fuzzy ; un ambiguous sort de n
   ecart: 0.03
   grille:
     min: 0.8
     max: 0.99
     pas: 0.01
     nombre: 20
+    ordre_de_test: décroissant
 jeux:
   central:
     fichier: challenges/saisies_certif.csv
-    sha256: 178a48667d049cc0519ae03de7e9bf8f6019ba03f8fcc3a07b567dad7914b549
+    sha256: fe9a083d103abf89a2004f2b0c2036362839be7712d082f04bb87828f2f3d763
+    saisies: 322222
   pessimiste:
     fichier: challenges/saisies_certif_pessimiste.csv
-    sha256: a4954c8b3149b7ec4cac900306e03c7e0df4109368b131b70c5689238498f982
+    sha256: 0f471244f582d6c1ae0785eb6740894ddc9ad414aed3b074fc0398b5487302be
+    saisies: 322222
 familles:
   clients:
     central:
-      seuil: null
-      desactive: true
-      saisies_approche: 2473
-      meilleur_point:
+      seuil: 0.92
+      n: 10151
+      k: 34
+      borne: 0.004457
+      couverture: 0.3458
+      saisies_approche: 29351
+      theta_testes: 9
+      premier_echec:
         theta: 0.91
-        n: 1095
-        k: 1
-        borne: 0.007475
-        couverture: 0.4428
+        n: 10435
+        k: 43
+        borne: 0.005311
+        couverture: 0.3555
+      volume_necessaire:
+        theta_vise: 0.9
+        taux_observe: 0.004813
+        noms_resolus_necessaires: 386265
+        saisies_approche_necessaires: 1069856
+        facteur: 36.45
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 29351
+          facteur: 1.0
     pessimiste:
-      seuil: null
-      desactive: true
-      saisies_approche: 2391
-      meilleur_point:
-        theta: 0.92
-        n: 919
-        k: 4
-        borne: 0.014674
-        couverture: 0.3844
-    seuil_final: null
+      seuil: 0.95
+      n: 7060
+      k: 22
+      borne: 0.004447
+      couverture: 0.2496
+      saisies_approche: 28288
+      theta_testes: 6
+      premier_echec:
+        theta: 0.94
+        n: 7612
+        k: 32
+        borne: 0.005643
+        couverture: 0.2691
+      volume_necessaire:
+        theta_vise: 0.93
+        taux_observe: 0.004829
+        noms_resolus_necessaires: 465475
+        saisies_approche_necessaires: 1630431
+        facteur: 57.64
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 28288
+          facteur: 1.0
+    seuil_final: 0.95
   douane:
     central:
-      seuil: null
-      desactive: true
-      saisies_approche: 782
-      meilleur_point:
-        theta: 0.98
-        n: 244
-        k: 0
-        borne: 0.024256
-        couverture: 0.312
-    pessimiste:
-      seuil: null
-      desactive: true
-      saisies_approche: 782
-      meilleur_point:
+      seuil: 0.96
+      n: 13011
+      k: 40
+      borne: 0.004
+      couverture: 0.4303
+      saisies_approche: 30237
+      theta_testes: 5
+      premier_echec:
         theta: 0.95
-        n: 391
-        k: 4
-        borne: 0.034249
-        couverture: 0.5
-    seuil_final: null
+        n: 14755
+        k: 63
+        borne: 0.005264
+        couverture: 0.488
+      volume_necessaire:
+        theta_vise: 0.95
+        taux_observe: 0.00427
+        noms_resolus_necessaires: 26413
+        saisies_approche_necessaires: 54128
+        facteur: 1.79
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 30237
+          facteur: 1.0
+    pessimiste:
+      seuil: 0.97
+      n: 10455
+      k: 31
+      borne: 0.004
+      couverture: 0.3456
+      saisies_approche: 30253
+      theta_testes: 4
+      premier_echec:
+        theta: 0.96
+        n: 12318
+        k: 57
+        borne: 0.005766
+        couverture: 0.4072
+      volume_necessaire:
+        theta_vise: 0.96
+        taux_observe: 0.004627
+        noms_resolus_necessaires: 95826
+        saisies_approche_necessaires: 235349
+        facteur: 7.78
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 30253
+          facteur: 1.0
+    seuil_final: 0.97
   geographie:
     central:
-      seuil: null
-      desactive: true
-      saisies_approche: 3966
-      meilleur_point:
-        theta: 0.97
-        n: 816
-        k: 1
-        borne: 0.010019
-        couverture: 0.2057
+      seuil: 0.97
+      n: 28529
+      k: 34
+      borne: 0.001586
+      couverture: 0.2136
+      saisies_approche: 133546
+      theta_testes: 4
+      premier_echec:
+        theta: 0.96
+        n: 40715
+        k: 228
+        borne: 0.006247
+        couverture: 0.3049
+      volume_necessaire:
+        theta_vise: 0.97
+        taux_observe: 0.001192
+        noms_resolus_necessaires: 28529
+        saisies_approche_necessaires: 133546
+        facteur: 1.0
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 133546
+          facteur: 1.0
     pessimiste:
       seuil: null
       desactive: true
-      saisies_approche: 4053
+      saisies_approche: 135455
+      premier_echec:
+        theta: 0.99
+        n: 586
+        k: 0
+        borne: 0.005099
+        couverture: 0.0043
       meilleur_point:
-        theta: 0.97
-        n: 713
-        k: 3
-        borne: 0.016569
-        couverture: 0.1759
+        theta: 0.98
+        n: 11617
+        k: 5
+        borne: 0.000905
+        couverture: 0.0858
+      volume_necessaire:
+        theta_vise: 0.97
+        taux_observe: 0.00187
+        noms_resolus_necessaires: 26197
+        saisies_approche_necessaires: 138229
+        facteur: 1.02
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 138229
+          facteur: 1.02
     seuil_final: null
   marques:
     central:
       seuil: null
       desactive: true
-      saisies_approche: 220
-      meilleur_point:
-        theta: 0.91
-        n: 115
+      saisies_approche: 26728
+      premier_echec:
+        theta: 0.99
+        n: 129
         k: 0
-        borne: 0.050766
-        couverture: 0.5227
+        borne: 0.022955
+        couverture: 0.0048
+      meilleur_point:
+        theta: 0.98
+        n: 2440
+        k: 0
+        borne: 0.001227
+        couverture: 0.0913
+      volume_necessaire:
+        theta_vise: 0.89
+        taux_observe: 0.004722
+        noms_resolus_necessaires: 176183
+        saisies_approche_necessaires: 247063
+        facteur: 9.24
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 123902
+          facteur: 4.64
     pessimiste:
       seuil: null
       desactive: true
-      saisies_approche: 228
-      meilleur_point:
-        theta: 0.92
-        n: 117
+      saisies_approche: 26675
+      premier_echec:
+        theta: 0.99
+        n: 139
         k: 0
-        borne: 0.04992
-        couverture: 0.5132
+        borne: 0.021321
+        couverture: 0.0052
+      meilleur_point:
+        theta: 0.97
+        n: 4698
+        k: 2
+        borne: 0.001339
+        couverture: 0.1761
+      volume_necessaire:
+        theta_vise: 0.9
+        taux_observe: 0.004676
+        noms_resolus_necessaires: 130630
+        saisies_approche_necessaires: 203657
+        facteur: 7.63
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 114761
+          facteur: 4.3
     seuil_final: null
   pieces:
     central:
-      seuil: null
-      desactive: true
-      saisies_approche: 2194
-      meilleur_point:
-        theta: 0.98
-        n: 604
-        k: 0
-        borne: 0.009871
-        couverture: 0.2753
+      seuil: 0.98
+      n: 1523
+      k: 1
+      borne: 0.003111
+      couverture: 0.0431
+      saisies_approche: 35312
+      theta_testes: 3
+      premier_echec:
+        theta: 0.97
+        n: 2140
+        k: 129
+        borne: 0.069434
+        couverture: 0.0606
+      volume_necessaire:
+        theta_vise: 0.98
+        taux_observe: 0.000657
+        noms_resolus_necessaires: 1523
+        saisies_approche_necessaires: 35312
+        facteur: 1.0
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 35312
+          facteur: 1.0
     pessimiste:
-      seuil: null
-      desactive: true
-      saisies_approche: 2188
-      meilleur_point:
-        theta: 0.98
-        n: 521
-        k: 0
-        borne: 0.011434
-        couverture: 0.2381
-    seuil_final: null
+      seuil: 0.98
+      n: 1324
+      k: 0
+      borne: 0.00226
+      couverture: 0.0376
+      saisies_approche: 35246
+      theta_testes: 3
+      premier_echec:
+        theta: 0.97
+        n: 1930
+        k: 153
+        borne: 0.090131
+        couverture: 0.0548
+      volume_necessaire:
+        theta_vise: 0.98
+        taux_observe: 0.0
+        noms_resolus_necessaires: 1324
+        saisies_approche_necessaires: 35246
+        facteur: 1.0
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 35246
+          facteur: 1.0
+    seuil_final: 0.98
   vehicules:
     central:
-      seuil: null
-      desactive: true
-      saisies_approche: 2159
-      meilleur_point:
-        theta: 0.95
-        n: 964
-        k: 1
-        borne: 0.008487
-        couverture: 0.4465
+      seuil: 0.93
+      n: 14200
+      k: 50
+      borne: 0.004455
+      couverture: 0.4814
+      saisies_approche: 29500
+      theta_testes: 8
+      premier_echec:
+        theta: 0.92
+        n: 14838
+        k: 69
+        borne: 0.005679
+        couverture: 0.503
+      volume_necessaire:
+        theta_vise: 0.92
+        taux_observe: 0.00465
+        noms_resolus_necessaires: 112630
+        saisies_approche_necessaires: 223925
+        facteur: 7.59
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 29500
+          facteur: 1.0
     pessimiste:
-      seuil: null
-      desactive: true
-      saisies_approche: 2139
-      meilleur_point:
-        theta: 0.95
-        n: 845
-        k: 1
-        borne: 0.009677
-        couverture: 0.395
-    seuil_final: null
+      seuil: 0.94
+      n: 11862
+      k: 46
+      borne: 0.004956
+      couverture: 0.4078
+      saisies_approche: 29089
+      theta_testes: 7
+      premier_echec:
+        theta: 0.93
+        n: 12664
+        k: 61
+        borne: 0.005958
+        couverture: 0.4354
+      volume_necessaire:
+        theta_vise: 0.93
+        taux_observe: 0.004817
+        noms_resolus_necessaires: 404399
+        saisies_approche_necessaires: 928898
+        facteur: 31.93
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 29089
+          facteur: 1.0
+    seuil_final: 0.94
   vocabulaire_metier:
     central:
       seuil: null
       desactive: true
-      saisies_approche: 147
-      meilleur_point:
-        theta: 0.89
-        n: 82
+      saisies_approche: 30064
+      premier_echec:
+        theta: 0.99
+        n: 181
         k: 0
-        borne: 0.070461
-        couverture: 0.5578
+        borne: 0.016415
+        couverture: 0.006
+      meilleur_point:
+        theta: 0.98
+        n: 6278
+        k: 0
+        borne: 0.000477
+        couverture: 0.2088
+      volume_necessaire:
+        theta_vise: 0.89
+        taux_observe: 0.004557
+        noms_resolus_necessaires: 69563
+        saisies_approche_necessaires: 100329
+        facteur: 3.34
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 99328
+          facteur: 3.3
     pessimiste:
       seuil: null
       desactive: true
-      saisies_approche: 172
-      meilleur_point:
-        theta: 0.95
-        n: 60
+      saisies_approche: 30105
+      premier_echec:
+        theta: 0.99
+        n: 161
         k: 0
-        borne: 0.095034
-        couverture: 0.3488
+        borne: 0.018435
+        couverture: 0.0053
+      meilleur_point:
+        theta: 0.98
+        n: 5749
+        k: 0
+        borne: 0.000521
+        couverture: 0.191
+      volume_necessaire:
+        theta_vise: 0.89
+        taux_observe: 0.004528
+        noms_resolus_necessaires: 74654
+        saisies_approche_necessaires: 111819
+        facteur: 3.71
+        premier_palier:
+          theta: 0.99
+          noms_resolus_necessaires: 598
+          saisies_approche_necessaires: 111819
+          facteur: 3.71
     seuil_final: null

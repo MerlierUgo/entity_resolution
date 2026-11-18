@@ -223,6 +223,7 @@ exclusions:
   max_cas_par_nom:
     calibration: 3
     banc: sans_plafond              # le banc suit le trafic, où un petit vocabulaire revient souvent
+    certification: sans_plafond     # comme spec/modele_saisie.yaml (2026-11-17) : tirages indépendants (R-RES-10)
   graine: une_par_jeu               # notée dans l'en-tête de chaque fichier généré
 
 # ---------------------------------------------------------------------------------------------
