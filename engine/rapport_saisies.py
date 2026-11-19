@@ -6,7 +6,8 @@ et les mesures des versions précédentes conservées (reports/mesure_saisies_v0
 
 Sections : jeux générés, vérification du générateur contre l'échantillon réel (réel / v0.1 / v0.2 / v0.3, et pour
 chaque indicateur : le réel tombe-t-il entre v0.1 et v0.3 ?), moteur à 0,88 (seuil fixe provisoire) sur le banc,
-diagnostic des erreurs (banc et analyse), échantillon réel, sensibilité. Rien n'est corrigé par ce script.
+diagnostic des erreurs (banc et analyse), échantillon réel, sensibilité, calibration (R-RES-10) et, en section 8,
+pourquoi certaines familles n'obtiennent pas de seuil (engine/rapport_familles.py). Rien n'est corrigé par ce script.
 """
 from __future__ import annotations
 
@@ -15,6 +16,8 @@ import json
 import math
 import sys
 
+from engine import rapport_familles
+from engine.calibration import borne_haute
 from engine.catalogue import ROOT, console_utf8
 
 ENTREE = ROOT / "reports" / "mesure_saisies.json"
@@ -24,6 +27,7 @@ COURANTE = "v0.3"
 SORTIE = ROOT / "reports" / "modele_saisie.html"
 CALIBRATION = ROOT / "reports" / "calibration.json"           # python -m engine.calibration
 COMPARAISON = ROOT / "reports" / "comparaison_seuils.json"    # python -m engine.comparaison_seuils
+ANALYSE_FAMILLES = ROOT / "reports" / "analyse_familles.json"  # python -m engine.analyse_familles
 
 # Changements décidés par l'auteur (spec/modele_saisie.yaml · changements_v0_2 et _v0_3), rappelés pour lecture.
 CHANGEMENTS = {
@@ -483,7 +487,8 @@ le dernier qui a passé ; si {p['grille'][-1]:.2f} échoue, approché désactiv�
 une fois chacun, en comptes agrégés seulement ; seuil final = le plus strict des deux. Écart inchangé
 ({str(p['ecart']).replace('.', ',')}). Seuils écrits dans <code>spec/seuils_fuzzy.yaml</code>.</p>
 <p class="note">{e(comptes)}.</p>
-<p class="note">Saisies fautives par famille dans les jeux de certification (cible ≈ 10 000, plafond de 3 cas par nom) :
+<p class="note">Saisies fautives par famille dans les jeux de certification (cible 30 000 par famille et 110 000 en
+géographie, sans plafond de cas par nom ; un terme présent dans le jeu d'analyse en est retiré) :
 {e(volumes)}.</p>
 <p><b>Volume minimal</b> : même sans aucune perte, un θ ne passe qu'avec au moins ln(1/δ) / r* ≈ {nb(round(n_min))} noms
 résolus ; la séquence commençant à {p['grille'][-1]:.2f}, c'est d'abord le nombre de noms résolus au seuil le plus strict
@@ -594,7 +599,7 @@ nav a{color:var(--fg2);margin-right:1em;font-size:.9rem}.cles{display:grid;grid-
 """
 
 
-def page(d: dict, prec: dict, cal: dict, comp: dict) -> str:
+def page(d: dict, prec: dict, cal: dict, comp: dict, af: dict) -> str:
     b, a = d["banc"]["global"], d["analyse"]["global"]
     ra = d["analyse"]["risque_approche"].get("TOTAL", {})
     rb = d["banc"]["risque_approche"].get("TOTAL", {})
@@ -609,7 +614,7 @@ def page(d: dict, prec: dict, cal: dict, comp: dict) -> str:
              f"erreurs silencieuses sur l'échantillon réel, dont {nb(reel.get('dont_collision_exacte'))} collision(s) exacte(s)")]
     tuiles = "".join(f'<div class="cle"><b>{v}</b><span>{e(t)}</span></div>' for v, t in cles)
     return f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Modèle de saisie</title><style>{CSS}</style></head><body><main>
+<title>Modèle de saisie</title><style>{CSS}{rapport_familles.CSS}</style></head><body><main>
 <div class="eyebrow">POC Mécanova · entity resolution · moteur à seuil fixe 0,88 (provisoire) · modèle de saisie {COURANTE} (figé)</div>
 <h1>Modèle de saisie {COURANTE} : jeux générés, encadrement du réel, mesures du moteur à 0,88</h1>
 <p class="lede">Les jeux de test viennent d'un modèle de saisie explicite (<code>spec/modele_saisie.yaml</code>,
@@ -619,8 +624,8 @@ calculé et le jeu de certification n'est pas ouvert.</p>
 <div class="cles">{tuiles}</div>
 <p class="note">Analyse : {nb(a["n"])} cas, idéal {pct(a["ideal"])}, {nb(a["silencieux"])} silencieuses dont
 {nb(a.get("dont_collision_exacte"))} collision(s) exacte(s).</p>
-<nav><a href="#jeux">Jeux</a><a href="#verification">Vérification</a><a href="#banc">Banc</a><a href="#diagnostic">Diagnostic</a><a href="#reel">Réel</a><a href="#sensibilite">Sensibilité</a><a href="#calibration">Calibration</a></nav>
-{section_jeux(d, prec)}{section_verification(d, prec)}{section_banc(d, prec)}{section_diagnostic(d, prec)}{section_reel(d, prec)}{section_sensibilite(d, prec)}{section_calibration(cal, comp)}
+<nav><a href="#jeux">Jeux</a><a href="#verification">Vérification</a><a href="#banc">Banc</a><a href="#diagnostic">Diagnostic</a><a href="#reel">Réel</a><a href="#sensibilite">Sensibilité</a><a href="#calibration">Calibration</a><a href="#pourquoi">Familles sans seuil</a></nav>
+{section_jeux(d, prec)}{section_verification(d, prec)}{section_banc(d, prec)}{section_diagnostic(d, prec)}{section_reel(d, prec)}{section_sensibilite(d, prec)}{section_calibration(cal, comp)}{rapport_familles.section_pourquoi(af, cal, borne_haute)}
 <p class="note">Généré par <code>python -m engine.rapport_saisies</code> depuis <code>reports/mesure_saisies.json</code>
 (<code>python -m engine.mesure_saisies</code>) et les mesures conservées des versions précédentes
 (<code>reports/mesure_saisies_v0_1.json</code>, <code>reports/mesure_saisies_v0_2.json</code>) ; calibration et comparaison
@@ -638,12 +643,14 @@ def main() -> int:
         raise SystemExit(f"mesures des versions précédentes introuvables : {manquants}.")
     d = json.loads(ENTREE.read_text(encoding="utf-8"))
     prec = {k: json.loads(p.read_text(encoding="utf-8")) for k, p in PRECEDENTES.items()}
-    for chemin, cmd in ((CALIBRATION, "engine.calibration"), (COMPARAISON, "engine.comparaison_seuils")):
+    for chemin, cmd in ((CALIBRATION, "engine.calibration"), (COMPARAISON, "engine.comparaison_seuils"),
+                        (ANALYSE_FAMILLES, "engine.analyse_familles")):
         if not chemin.exists():
             raise SystemExit(f"{chemin} introuvable : lancer python -m {cmd}.")
     cal = json.loads(CALIBRATION.read_text(encoding="utf-8"))
     comp = json.loads(COMPARAISON.read_text(encoding="utf-8"))
-    SORTIE.write_text(page(d, prec, cal, comp), encoding="utf-8")
+    af = json.loads(ANALYSE_FAMILLES.read_text(encoding="utf-8"))
+    SORTIE.write_text(page(d, prec, cal, comp, af), encoding="utf-8")
     print(f"→ {SORTIE.relative_to(ROOT)}")
     return 0
 

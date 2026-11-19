@@ -84,6 +84,7 @@ python build/build_saisies.py --scenario pessimiste   # banc et certif du scéna
 python -m engine.mesure_saisies         # moteur sur banc, analyse et échantillon réel (jamais la certif)
 python -m engine.calibration            # seuils SGR par famille → spec/seuils_fuzzy.yaml (certifs : comptes agrégés)
 python -m engine.comparaison_seuils     # A exact seul / B 0,88 / C seuils calibrés (jamais les certifs)
+python -m engine.analyse_familles       # longueurs et scores par famille (analyse + catalogue, jamais les certifs)
 python -m engine.rapport_saisies        # → reports/modele_saisie.html
 ```
 

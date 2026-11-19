@@ -1,0 +1,615 @@
+{
+ "jeu": "saisies_analyse.csv",
+ "theta_moteur": 0.8,
+ "paliers": [
+  0.99,
+  0.98,
+  0.97,
+  0.95,
+  0.9
+ ],
+ "saisies_analyse": 12405,
+ "fautives_presentes": 11175,
+ "longueurs": {
+  "par_famille": {
+   "clients": {
+    "n": 3184,
+    "moyenne": 19.6796,
+    "p05": 12.0,
+    "q1": 17.0,
+    "mediane": 20.0,
+    "q3": 22.0,
+    "p95": 27.0,
+    "min": 7,
+    "max": 41,
+    "part_le_8": 0.0013,
+    "part_ge_20": 0.5107
+   },
+   "douane": {
+    "n": 279,
+    "moyenne": 95.3907,
+    "p05": 27.8,
+    "q1": 58.5,
+    "mediane": 86.0,
+    "q3": 127.5,
+    "p95": 188.3,
+    "min": 11,
+    "max": 239,
+    "part_le_8": 0.0,
+    "part_ge_20": 0.9642
+   },
+   "geographie": {
+    "n": 12230,
+    "moyenne": 9.3869,
+    "p05": 4.0,
+    "q1": 6.0,
+    "mediane": 8.0,
+    "q3": 11.0,
+    "p95": 18.0,
+    "min": 1,
+    "max": 42,
+    "part_le_8": 0.5011,
+    "part_ge_20": 0.0251
+   },
+   "marques": {
+    "n": 170,
+    "moyenne": 7.7824,
+    "p05": 3.0,
+    "q1": 5.0,
+    "mediane": 6.0,
+    "q3": 10.0,
+    "p95": 16.0,
+    "min": 2,
+    "max": 29,
+    "part_le_8": 0.6647,
+    "part_ge_20": 0.0176
+   },
+   "pieces": {
+    "n": 1783,
+    "moyenne": 22.0746,
+    "p05": 8.0,
+    "q1": 13.0,
+    "mediane": 21.0,
+    "q3": 30.0,
+    "p95": 40.0,
+    "min": 2,
+    "max": 59,
+    "part_le_8": 0.0566,
+    "part_ge_20": 0.5435
+   },
+   "vehicules": {
+    "n": 2276,
+    "moyenne": 14.1169,
+    "p05": 4.0,
+    "q1": 8.0,
+    "mediane": 13.0,
+    "q3": 18.0,
+    "p95": 27.0,
+    "min": 1,
+    "max": 41,
+    "part_le_8": 0.2654,
+    "part_ge_20": 0.2192
+   },
+   "vocabulaire_metier": {
+    "n": 219,
+    "moyenne": 11.3425,
+    "p05": 3.0,
+    "q1": 7.0,
+    "mediane": 11.0,
+    "q3": 15.0,
+    "p95": 20.0,
+    "min": 1,
+    "max": 33,
+    "part_le_8": 0.3105,
+    "part_ge_20": 0.0594
+   }
+  },
+  "ecartes": {
+   "mixte": 13
+  }
+ },
+ "scores": {
+  "clients": {
+   "fautives": 2553,
+   "avec_score": 2548,
+   "sans_score": {
+    "absent": 5
+   },
+   "score": {
+    "n": 2548,
+    "moyenne": 0.9453,
+    "p05": 0.8395,
+    "q1": 0.9273,
+    "mediane": 0.9631,
+    "q3": 0.9833,
+    "p95": 0.99,
+    "min": 0.5968,
+    "max": 0.9946
+   },
+   "part_ge": {
+    "0.99": 0.0644,
+    "0.98": 0.2971,
+    "0.97": 0.429,
+    "0.95": 0.6071,
+    "0.90": 0.8509
+   },
+   "long_source": {
+    "n": 2553,
+    "moyenne": 17.5123,
+    "p05": 11.0,
+    "q1": 15.0,
+    "mediane": 18.0,
+    "q3": 20.0,
+    "p95": 25.0,
+    "min": 8,
+    "max": 37
+   },
+   "issues": {
+    "0.80": {
+     "resolved": 1069,
+     "ambiguous_voisins": 171,
+     "ambiguous_homonymes": 34,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 1207,
+     "unknown_sous_seuil": 67
+    },
+    "0.95": {
+     "resolved": 828,
+     "ambiguous_voisins": 72,
+     "ambiguous_homonymes": 28,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 619,
+     "unknown_sous_seuil": 1001
+    },
+    "0.99": {
+     "resolved": 78,
+     "ambiguous_voisins": 6,
+     "ambiguous_homonymes": 2,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 78,
+     "unknown_sous_seuil": 2384
+    }
+   }
+  },
+  "douane": {
+   "fautives": 771,
+   "avec_score": 771,
+   "sans_score": {},
+   "score": {
+    "n": 771,
+    "moyenne": 0.9598,
+    "p05": 0.9053,
+    "q1": 0.9384,
+    "mediane": 0.9657,
+    "q3": 0.9899,
+    "p95": 0.9982,
+    "min": 0.5423,
+    "max": 0.9992
+   },
+   "part_ge": {
+    "0.99": 0.249,
+    "0.98": 0.3774,
+    "0.97": 0.4617,
+    "0.95": 0.6498,
+    "0.90": 0.9637
+   },
+   "long_source": {
+    "n": 771,
+    "moyenne": 95.4864,
+    "p05": 24.5,
+    "q1": 58.0,
+    "mediane": 86.0,
+    "q3": 127.0,
+    "p95": 193.0,
+    "min": 11,
+    "max": 239
+   },
+   "issues": {
+    "0.80": {
+     "resolved": 508,
+     "ambiguous_voisins": 19,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 240,
+     "unknown_sous_seuil": 4
+    },
+    "0.95": {
+     "resolved": 361,
+     "ambiguous_voisins": 11,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 129,
+     "unknown_sous_seuil": 270
+    },
+    "0.99": {
+     "resolved": 151,
+     "ambiguous_voisins": 8,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 33,
+     "unknown_sous_seuil": 579
+    }
+   }
+  },
+  "geographie": {
+   "fautives": 3000,
+   "avec_score": 2959,
+   "sans_score": {
+    "absent": 41
+   },
+   "score": {
+    "n": 2959,
+    "moyenne": 0.9381,
+    "p05": 0.85,
+    "q1": 0.916,
+    "mediane": 0.95,
+    "q3": 0.9714,
+    "p95": 0.9833,
+    "min": 0.73,
+    "max": 0.9933
+   },
+   "part_ge": {
+    "0.99": 0.0071,
+    "0.98": 0.1267,
+    "0.97": 0.2856,
+    "0.95": 0.5154,
+    "0.90": 0.83
+   },
+   "long_source": {
+    "n": 3000,
+    "moyenne": 9.286,
+    "p05": 5.0,
+    "q1": 7.0,
+    "mediane": 9.0,
+    "q3": 11.0,
+    "p95": 17.0,
+    "min": 3,
+    "max": 41
+   },
+   "issues": {
+    "0.80": {
+     "resolved": 2161,
+     "ambiguous_voisins": 408,
+     "ambiguous_homonymes": 49,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 320,
+     "unknown_sous_seuil": 21
+    },
+    "0.95": {
+     "resolved": 1293,
+     "ambiguous_voisins": 85,
+     "ambiguous_homonymes": 28,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 119,
+     "unknown_sous_seuil": 1434
+    },
+    "0.99": {
+     "resolved": 21,
+     "ambiguous_voisins": 0,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 0,
+     "unknown_sous_seuil": 2938
+    }
+   }
+  },
+  "marques": {
+   "fautives": 213,
+   "avec_score": 198,
+   "sans_score": {
+    "absent": 15
+   },
+   "score": {
+    "n": 198,
+    "moyenne": 0.9238,
+    "p05": 0.825,
+    "q1": 0.8933,
+    "mediane": 0.94,
+    "q3": 0.9667,
+    "p95": 0.9846,
+    "min": 0.6806,
+    "max": 0.9913
+   },
+   "part_ge": {
+    "0.99": 0.0051,
+    "0.98": 0.1212,
+    "0.97": 0.2374,
+    "0.95": 0.4192,
+    "0.90": 0.7121
+   },
+   "long_source": {
+    "n": 213,
+    "moyenne": 7.9155,
+    "p05": 4.0,
+    "q1": 5.0,
+    "mediane": 6.0,
+    "q3": 10.0,
+    "p95": 16.0,
+    "min": 4,
+    "max": 23
+   },
+   "issues": {
+    "0.80": {
+     "resolved": 155,
+     "ambiguous_voisins": 11,
+     "ambiguous_homonymes": 2,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 25,
+     "unknown_sous_seuil": 5
+    },
+    "0.95": {
+     "resolved": 74,
+     "ambiguous_voisins": 1,
+     "ambiguous_homonymes": 1,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 7,
+     "unknown_sous_seuil": 115
+    },
+    "0.99": {
+     "resolved": 1,
+     "ambiguous_voisins": 0,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 0,
+     "unknown_sous_seuil": 197
+    }
+   }
+  },
+  "pieces": {
+   "fautives": 2084,
+   "avec_score": 2081,
+   "sans_score": {
+    "absent": 3
+   },
+   "score": {
+    "n": 2081,
+    "moyenne": 0.9522,
+    "p05": 0.8667,
+    "q1": 0.9322,
+    "mediane": 0.9618,
+    "q3": 0.9854,
+    "p95": 0.9939,
+    "min": 0.7222,
+    "max": 0.996
+   },
+   "part_ge": {
+    "0.99": 0.1711,
+    "0.98": 0.321,
+    "0.97": 0.4229,
+    "0.95": 0.6175,
+    "0.90": 0.9034
+   },
+   "long_source": {
+    "n": 2084,
+    "moyenne": 28.2342,
+    "p05": 13.0,
+    "q1": 23.0,
+    "mediane": 29.0,
+    "q3": 34.0,
+    "p95": 42.0,
+    "min": 4,
+    "max": 51
+   },
+   "issues": {
+    "0.80": {
+     "resolved": 610,
+     "ambiguous_voisins": 65,
+     "ambiguous_homonymes": 655,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 736,
+     "unknown_sous_seuil": 15
+    },
+    "0.95": {
+     "resolved": 433,
+     "ambiguous_voisins": 24,
+     "ambiguous_homonymes": 517,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 311,
+     "unknown_sous_seuil": 796
+    },
+    "0.99": {
+     "resolved": 111,
+     "ambiguous_voisins": 0,
+     "ambiguous_homonymes": 208,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 37,
+     "unknown_sous_seuil": 1725
+    }
+   }
+  },
+  "vehicules": {
+   "fautives": 2451,
+   "avec_score": 2128,
+   "sans_score": {
+    "absent": 323
+   },
+   "score": {
+    "n": 2128,
+    "moyenne": 0.953,
+    "p05": 0.8715,
+    "q1": 0.9371,
+    "mediane": 0.9664,
+    "q3": 0.9833,
+    "p95": 0.9917,
+    "min": 0.6833,
+    "max": 0.995
+   },
+   "part_ge": {
+    "0.99": 0.0874,
+    "0.98": 0.3148,
+    "0.97": 0.4544,
+    "0.95": 0.6461,
+    "0.90": 0.9008
+   },
+   "long_source": {
+    "n": 2451,
+    "moyenne": 18.2615,
+    "p05": 8.0,
+    "q1": 13.0,
+    "mediane": 17.0,
+    "q3": 23.0,
+    "p95": 30.5,
+    "min": 4,
+    "max": 40
+   },
+   "issues": {
+    "0.80": {
+     "resolved": 1273,
+     "ambiguous_voisins": 39,
+     "ambiguous_homonymes": 6,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 792,
+     "unknown_sous_seuil": 18
+    },
+    "0.95": {
+     "resolved": 916,
+     "ambiguous_voisins": 18,
+     "ambiguous_homonymes": 3,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 438,
+     "unknown_sous_seuil": 753
+    },
+    "0.99": {
+     "resolved": 130,
+     "ambiguous_voisins": 3,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 53,
+     "unknown_sous_seuil": 1942
+    }
+   }
+  },
+  "vocabulaire_metier": {
+   "fautives": 103,
+   "avec_score": 99,
+   "sans_score": {
+    "absent": 4
+   },
+   "score": {
+    "n": 99,
+    "moyenne": 0.9464,
+    "p05": 0.8565,
+    "q1": 0.9304,
+    "mediane": 0.96,
+    "q3": 0.9818,
+    "p95": 0.9883,
+    "min": 0.7889,
+    "max": 0.9899
+   },
+   "part_ge": {
+    "0.99": 0.0,
+    "0.98": 0.2828,
+    "0.97": 0.3737,
+    "0.95": 0.5859,
+    "0.90": 0.8586
+   },
+   "long_source": {
+    "n": 103,
+    "moyenne": 12.3398,
+    "p05": 4.1,
+    "q1": 11.0,
+    "mediane": 12.0,
+    "q3": 15.0,
+    "p95": 18.0,
+    "min": 4,
+    "max": 22
+   },
+   "issues": {
+    "0.80": {
+     "resolved": 68,
+     "ambiguous_voisins": 5,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 24,
+     "unknown_sous_seuil": 2
+    },
+    "0.95": {
+     "resolved": 47,
+     "ambiguous_voisins": 1,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 10,
+     "unknown_sous_seuil": 41
+    },
+    "0.99": {
+     "resolved": 0,
+     "ambiguous_voisins": 0,
+     "ambiguous_homonymes": 0,
+     "unknown_regles": 0,
+     "unknown_garde_fou": 0,
+     "unknown_sous_seuil": 99
+    }
+   }
+  }
+ },
+ "une_faute": {
+  "par_tranche": {
+   "≤ 6": {
+    "n": 507,
+    "moyenne": 0.9403,
+    "p05": 0.8758,
+    "q1": 0.9236,
+    "mediane": 0.95,
+    "q3": 0.9611,
+    "p95": 0.9714,
+    "min": 0.8083,
+    "max": 0.9714,
+    "part_ge_099": 0.0,
+    "part_ge_095": 0.57
+   },
+   "7–10": {
+    "n": 1061,
+    "moyenne": 0.9589,
+    "p05": 0.9071,
+    "q1": 0.9481,
+    "mediane": 0.9704,
+    "q3": 0.9778,
+    "p95": 0.98,
+    "min": 0.7815,
+    "max": 0.9818,
+    "part_ge_099": 0.0,
+    "part_ge_095": 0.7436
+   },
+   "11–15": {
+    "n": 1037,
+    "moyenne": 0.9706,
+    "p05": 0.9248,
+    "q1": 0.9636,
+    "mediane": 0.9818,
+    "q3": 0.9846,
+    "p95": 0.9867,
+    "min": 0.8384,
+    "max": 0.9875,
+    "part_ge_099": 0.0,
+    "part_ge_095": 0.8592
+   },
+   "16–25": {
+    "n": 1640,
+    "moyenne": 0.9757,
+    "p05": 0.9323,
+    "q1": 0.9693,
+    "mediane": 0.9843,
+    "q3": 0.9895,
+    "p95": 0.9913,
+    "min": 0.7996,
+    "max": 0.9923,
+    "part_ge_099": 0.2,
+    "part_ge_095": 0.8854
+   },
+   "> 25": {
+    "n": 1288,
+    "moyenne": 0.9739,
+    "p05": 0.9231,
+    "q1": 0.9582,
+    "mediane": 0.9852,
+    "q3": 0.9935,
+    "p95": 0.9977,
+    "min": 0.8425,
+    "max": 0.9992,
+    "part_ge_099": 0.4161,
+    "part_ge_095": 0.8113
+   }
+  },
+  "sans_score": 214
+ }
+}
